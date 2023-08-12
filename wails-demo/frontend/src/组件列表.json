@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "组件名称": "开关",
+    "标题": "开关1",
+    "style": {
+      "left": 188,
+      "top": 72,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E开关1被点击().then(result => {console.log(result)})",
+    "选中": false
+  },
+  {
+    "id": 2,
+    "组件名称": "多选框",
+    "标题": "多选框2",
+    "style": {
+      "left": 147,
+      "top": 141,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E多选框2被点击().then(result => {console.log(result)})",
+    "选中": true
+  },
+  {
+    "id": 3,
+    "组件名称": "标签",
+    "标题": "标签3",
+    "style": {
+      "left": 262,
+      "top": 209,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E标签3被点击().then(result => {console.log(result)})"
+  },
+  {
+    "id": 4,
+    "组件名称": "编辑框",
+    "标题": "编辑框4",
+    "style": {
+      "left": 17,
+      "top": 53,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E编辑框4被点击().then(result => {console.log(result)})"
+  },
+  {
+    "id": 5,
+    "组件名称": "开关",
+    "标题": "开关5",
+    "style": {
+      "left": 101,
+      "top": 223,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E开关5被点击().then(result => {console.log(result)})",
+    "选中": false
+  },
+  {
+    "id": 6,
+    "组件名称": "多选框",
+    "标题": "多选框6",
+    "style": {
+      "left": 550,
+      "top": 111,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E多选框6被点击().then(result => {console.log(result)})"
+  },
+  {
+    "id": 7,
+    "组件名称": "按钮",
+    "标题": "按钮7",
+    "style": {
+      "left": 567,
+      "top": 136,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E按钮7被点击().then(result => {console.log(result)})"
+  },
+  {
+    "id": 8,
+    "组件名称": "按钮",
+    "标题": "按钮8",
+    "style": {
+      "left": 346,
+      "top": 111,
+      "width": 120,
+      "height": 48
+    },
+    "点击事件": "action.E按钮8被点击().then(result => {console.log(result)})"
+  }
+]
