@@ -90,7 +90,7 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 
-import Shape from '@/Shape.vue'; // 修改路径
+import Shape from '@/components/Shape.vue'
 
 onMounted(() => {
 })
