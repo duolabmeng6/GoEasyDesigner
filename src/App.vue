@@ -2,46 +2,23 @@
   <div class="container">
     <div class="工具条">
       <el-row>
-        <el-col :span="12"><div class="grid-content ep-bg-purple" />
-        <h2>窗口设计器</h2>
+        <el-col :span="12">
+          <div class="grid-content ep-bg-purple"/>
+          <h2>窗口设计器</h2>
         </el-col>
-        <el-col :span="12"><div class="grid-content ep-bg-purple-light" />
-            <el-button @click="加载界面">加载界面</el-button>
-            <el-button @click="保存界面">保存界面</el-button>
+        <el-col :span="12">
+          <div class="grid-content ep-bg-purple-light"/>
+          <el-button @click="加载界面">加载界面</el-button>
+          <el-button @click="保存界面">保存界面</el-button>
         </el-col>
       </el-row>
     </div>
     <div class="属性表格">
-
-      <table v-if="当前组件索引>=0">
-        <tr>
-          <th>顶边</th>
-          <td><el-input v-model="组件列表[当前组件索引].style.top"/></td>
-        </tr>
-        <tr>
-          <th>左边</th>
-          <td><el-input v-model="组件列表[当前组件索引].style.left"/></td>
-        </tr>
-        <tr>
-          <th>宽度</th>
-          <td><el-input v-model="组件列表[当前组件索引].style.width"/></td>
-        </tr>
-        <tr>
-          <th>高度</th>
-          <td><el-input v-model="组件列表[当前组件索引].style.height"/></td>
-        </tr>
-        <tr>
-          <th>标题</th>
-          <td><el-input v-model="组件列表[当前组件索引].标题"/></td>
-        </tr>
-        <tr>
-          <th>点击事件</th>
-          <td><el-input v-model="组件列表[当前组件索引].点击事件" type="textarea" /></td>
-        </tr>
-      </table>
+      <component v-if="store.当前组件索引==-1" is="画布属性"></component>
+      <component v-if="store.当前组件索引>=0" is="按钮属性"></component>
     </div>
     <div class="画布">
-      <div class="huabu"
+      <div class="huabu" :style="store.取窗口样式()"
            @mousedown="画布鼠标按下"
            @mousemove="画布鼠标移动"
            @mouseup="画布鼠标放开"
@@ -49,16 +26,16 @@
       >
 
         <Shape
-            v-for="(item, index) in 组件列表"
+            v-for="(item, index) in store.组件列表"
             :style="getStyle(item.style)"
             @update-style="updateStyle"
             :index="index"
-            :nowIndex="当前组件索引"
+            :nowIndex="store.当前组件索引"
         >
           <component class="test"
                      :is="item.组件名称"
                      :style="getStyle(item.style)"
-                     :属性="组件列表[index]"
+                     :属性="store.组件列表[index]"
                      @mousedown="组件鼠标按下($event, index)"
                      @mousemove="组件鼠标移动($event, index)"
                      @mouseup="组件鼠标放开($event, index)"
@@ -71,16 +48,40 @@
     </div>
     <div class="控件箱">
 
-      <div  v-for="(item, index) in 组件名称列表"
-            draggable="true"
-            @dragstart="组件开始拖动($event, item)"
-      >
-        <el-button
 
-        >
-          {{ item }}
-        </el-button>
-      </div>
+      <el-menu
+          class="el-menu-vertical-demo"
+          :default-openeds="['1', '2']"
+      >
+        <el-sub-menu index="1">
+          <template #title>
+            <el-icon>
+              <location/>
+            </el-icon>
+            <span>基本组件</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item v-for="(item, index) in 组件名称列表"
+                          draggable="true"
+                          @dragstart="组件开始拖动($event, item)"
+            >
+              {{ item }}
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-sub-menu>
+        <el-sub-menu index="2">
+          <template #title>
+            <el-icon>
+              <location/>
+            </el-icon>
+            <span>数据展示</span>
+          </template>
+          <el-menu-item-group>
+
+          </el-menu-item-group>
+        </el-sub-menu>
+      </el-menu>
+
 
     </div>
   </div>
@@ -89,56 +90,25 @@
 
 <script setup>
 import {onMounted, ref} from 'vue'
-
 import Shape from '@/components/Shape.vue'
+import {useCounterStore} from '@/stores/counter'
+
+const store = useCounterStore()
 
 onMounted(() => {
 })
 
 
-const objInfo = ref({
-  标题: '标题',
-  style: {
-    left: 20,
-    top: 20,
-    width: 100,
-    height: 100
-  }
-})
-const 组件列表 = ref([
-  // {
-  //   id: 1,
-  //   组件名称: "按钮",
-  //   标题: '标题1',
-  //   style: {
-  //     left: 20,
-  //     top: 20,
-  //     width: 100,
-  //     height: 100
-  //   }
-  // },
-  // {
-  //   id: 2,
-  //   标题: '标题2',
-  //   style: {
-  //     left: 40,
-  //     top: 40,
-  //     width: 100,
-  //     height: 100
-  //   }
-  // }
-])
-
 let 组件拖动状态 = false
-let 当前组件索引 = ref(-1)
 let 组件偏移X = 0
 let 组件偏移Y = 0
 let 组件索引id = 0
 
 function 创建组件(组件名称, left, top, width, height) {
   组件索引id = 组件索引id + 1
-  组件列表.value.push({
+  store.组件列表.push({
     id: 组件索引id,
+    名称: 组件名称 + 组件索引id,
     组件名称: 组件名称,
     标题: 组件名称 + 组件索引id,
     style: {
@@ -147,7 +117,7 @@ function 创建组件(组件名称, left, top, width, height) {
       width: width,
       height: height
     },
-    点击事件: "action.E" + 组件名称 + 组件索引id + "被点击().then(result => {console.log(result)})"
+    点击事件: 组件名称 + 组件索引id + "被点击"
   })
 }
 
@@ -162,7 +132,7 @@ function getStyle(style) {
 }
 
 function updateStyle(index, newStyle) {
-  组件列表.value[index].style = {...组件列表.value[index].style, ...newStyle};
+  store.组件列表[index].style = {...store.组件列表[index].style, ...newStyle};
 
 }
 
@@ -172,20 +142,20 @@ function 组件鼠标按下(event, index) {
 
   //console.log("组件鼠标按下",index)
   组件拖动状态 = true
-  当前组件索引.value = index
-  组件偏移X = event.clientX - 组件列表.value[index].style.left
-  组件偏移Y = event.clientY - 组件列表.value[index].style.top
+  store.当前组件索引 = index
+  组件偏移X = event.clientX - store.组件列表[index].style.left
+  组件偏移Y = event.clientY - store.组件列表[index].style.top
 }
 
 function 组件鼠标移动(event, index) {
   // console.log("组件鼠标移动",index)
-  if (当前组件索引.value == -1) {
+  if (store.当前组件索引 == -1) {
     return
   }
 
   if (组件拖动状态) {
-    组件列表.value[当前组件索引.value].style.left = event.clientX - 组件偏移X
-    组件列表.value[当前组件索引.value].style.top = event.clientY - 组件偏移Y
+    store.组件列表[store.当前组件索引].style.left = event.clientX - 组件偏移X
+    store.组件列表[store.当前组件索引].style.top = event.clientY - 组件偏移Y
   }
 }
 
@@ -196,7 +166,7 @@ function 组件鼠标放开(event, index) {
 
 function 画布鼠标按下(event) {
   console.log("画布鼠标按下")
-  当前组件索引.value = -1
+  store.当前组件索引 = -1
 
 }
 
@@ -239,19 +209,31 @@ function 加载界面() {
       console.log(json)
       const obj = JSON.parse(json)
       console.log(obj)
-      组件列表.value = obj
+      store.组件列表 = obj
     }
   }
   input.click()
 }
 
 function 保存界面() {
-  let json = JSON.stringify(组件列表.value, null, 2)
+  let njson = {
+    窗口:{
+      宽度: store.画布属性.宽度,
+      高度: store.画布属性.高度,
+    }
+  }
+  //循环 store.组件列表 加入 njson 中 使用 名称 作为key
+  for (let i = 0; i < store.组件列表.length; i++) {
+    let item = store.组件列表[i]
+    njson[item.名称] = item
+  }
+
+  let json = JSON.stringify(njson, null, 2)
   console.log(json)
   const blob = new Blob([json], {type: 'application/json'})
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
-  link.download = '组件列表.json'
+  link.download = 'store.组件列表.json'
   link.click()
 }
 
@@ -269,8 +251,6 @@ function 保存界面() {
 
 .huabu {
   background: rgb(240, 240, 240);
-  width: 500px;
-  height: 500px;
   position: relative;
   overflow: hidden;
 }

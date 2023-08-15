@@ -4,31 +4,20 @@ import { defineStore } from 'pinia'
 export const useCounterStore = defineStore('counter', {
   state: () => {
     return {
-      当前等待绘制的组件: "",
-      当前组件id:"",
-      当前组件名称:"",
-      当前组件:{},
-      绘制组件信息: [
-        {
-          id: "id1",
-          组件名称: "按钮",
-          style:{
-            top: 0,
-            left: 0,
-            width: 120,
-            height: 40,
-          },
-          标题: "按钮1"
+        画布属性: {
+            宽度: ref(600),
+            高度: ref(400),
         },
-      ],
-      调整方向角标按下: false
-
+        当前组件索引: ref(-1),
+        组件列表: ref([]),
     }
   },
-  // 也可以这样定义
-  // state: () => ({ count: 0 })
   actions: {
-
-
+      取窗口样式() {
+      const result = {}
+      result['width'] = this.画布属性.宽度 + "px"
+      result['height'] =  this.画布属性.高度 + "px"
+      return result
+    }
   },
 })

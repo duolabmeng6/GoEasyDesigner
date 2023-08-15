@@ -28,7 +28,18 @@ for (const path in modules) {
 }
 console.log(组件名称列表)
 //写出共享的变量
+let 组件名称顺序 = ['按钮', '编辑框', '标签', '开关']
+// 与组件名称列表合并但是根据组件名称顺序排序
+组件名称列表 = [...new Set([...组件名称顺序, ...组件名称列表])]
+
 app.config.globalProperties.组件名称列表 = 组件名称列表
+
+
+const modules2 = import.meta.globEager('./components/属性/*.vue')
+for (const path in modules2) {
+    const name = path.match(/\.\/components\/属性\/(.*)\.vue$/)[1]
+    app.component(name, modules2[path].default)
+}
 
 
 app.use(createPinia())

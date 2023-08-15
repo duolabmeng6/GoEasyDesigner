@@ -1,11 +1,11 @@
 <template>
-  <div class="huabu" ref="huabu"
+  <div class="huabu" :style="store.取窗口样式()"
   >
     <component class="test"
-               v-for="(item, index) in 组件列表"
+               v-for="(item, index) in store.组件列表"
                :is="item.组件名称"
                :style="getStyle(item.style)"
-               :属性="组件列表[index]"
+               :属性="store.组件列表[index]"
                data-index="index"
                @click="组件点击($event, index)"
     />
@@ -17,13 +17,20 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import {WindowSetSize} from "../wailsjs/runtime";
-import * as action from '../wailsjs/go/main/App'
-import 组件列表x from './组件列表.json'; // 根据实际文件路径进行修改
+// import 组件列表x from './组件列表.json'; // 根据实际文件路径进行修改
+import {useCounterStore} from '@/stores/counter'
+const store = useCounterStore()
+store.初始化组件信息()
 
-const 组件列表 = ref(组件列表x)
-console.log(组件列表 )
-// snip
-// const 组件列表 =
+
+
+onMounted(() => {
+  try {
+    WindowSetSize(store.数据.窗口.宽度 + 13, store.数据.窗口.高度 + 35)
+  }catch (e){
+
+  }
+})
 
 function getStyle(style) {
   const result = {}
@@ -34,30 +41,20 @@ function getStyle(style) {
   return result
 }
 
-const huabu = ref(null);
 
-onMounted(() => {
-  const width = ref(0);
-  const height = ref(0);
 
-  //获取 huabu的 实际可视像素宽度 高度
-  width.value = huabu.value.clientWidth;
-  height.value = huabu.value.clientHeight;
-
-  console.log(width.value, height.value)
-
-  WindowSetSize(width.value+13, height.value+35)
-})
 
 
 function 组件点击(e, index) {
+  // console.log(store.组件列表[index],index)
+  // console.log(store.组件列表[index].点击事件,index)
+  // store.按钮1被点击()
+  let 动态脚本 = "store."+store.组件列表[index].点击事件+"()"
   try {
-    console.log(组件列表[index].点击事件)
-    eval(组件列表[index].点击事件)
-  } catch (e) {
+    eval(动态脚本)
+  }catch (e){
     console.log(e)
   }
-  // action.Greet("点击事件").then(result => {console.log(result)})
 }
 
 </script>
@@ -76,8 +73,6 @@ body {
 
 .huabu {
   background: rgb(240, 240, 240);
-  width: 500px;
-  height: 500px;
   position: relative;
   overflow: hidden;
 }
