@@ -15,6 +15,10 @@ export const useCounterStore = defineStore('counter', {
             },
             当前组件索引: ref("-1"),
             组件列表: ref([]),
+            项目信息: ref({
+                设计文件路径: ref("C:\\eview\\v2\\wails-demo\\frontend\\src\\组件数据.json"),
+                窗口事件路径: ref("C:\\eview\\v2\\wails-demo\\frontend\\src\\窗口事件.js"),
+            }),
         }
     },
 
