@@ -32,7 +32,7 @@
           />
         </el-select>
         <div style="padding-top: 20px;"></div>
-        <component :is="store.当前组件名称()"></component>
+        <component :is="store.当前组件名称()" @添加事件被选择="添加事件被选择"></component>
       </div>
     </div>
     <div class="画布">
@@ -291,6 +291,22 @@ function 键盘按下(event, index) {
 
 function 当前组件名称() {
   return "按钮属性"
+}
+
+function 添加事件被选择(事件名称) {
+  if (事件名称 == "在此处选择加入事件处理函数") {
+    return
+  }
+  if (store.当前组件索引 == -1) {
+    return
+  }
+
+  console.log("添加事件被选择", 事件名称)
+  let n = store.组件列表[store.当前组件索引].名称
+  console.log("添加事件被选择", n + "_" + 事件名称)
+  let code = "store.组件列表[store.当前组件索引].事件" + 事件名称 + "=" + '"' + n + "_" + 事件名称 + '"'
+  console.log(code)
+  eval(code)
 }
 </script>
 
