@@ -1,4 +1,4 @@
-import {ref, computed} from 'vue'
+import {ref} from 'vue'
 import {defineStore} from 'pinia'
 
 export const useCounterStore = defineStore('counter', {
@@ -16,9 +16,11 @@ export const useCounterStore = defineStore('counter', {
             当前组件索引: ref("-1"),
             组件列表: ref([]),
             项目信息: ref({
-                设计文件路径: ref("C:\\eview\\v2\\wails-demo\\frontend\\src\\组件数据.json"),
-                窗口事件路径: ref("C:\\eview\\v2\\wails-demo\\frontend\\src\\窗口事件.js"),
+                设计文件路径: "",//"stores\\组件数据.json",
+                窗口事件文件路径: "",//"stores\\窗口事件.js",
+                IDE插件地址: "http://127.0.0.1:13403",
             }),
+            客户端模式: ref(false),
         }
     },
 

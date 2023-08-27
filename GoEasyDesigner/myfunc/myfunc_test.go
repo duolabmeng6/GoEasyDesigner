@@ -40,3 +40,10 @@ export function 绑定窗口事件(窗口) {
 	result2 := InsertCode(result, insertionCode2)
 	fmt.Println(result2)
 }
+
+func TestE发送跳转代码到ide(t *testing.T) {
+	插件URL地址 := "http://127.0.0.1:13403"
+	文件路径 := "C:\\eview\\v2\\wails-demo\\frontend\\src\\窗口事件.js"
+	跳转位置 := 1
+	E发送跳转代码到ide(插件URL地址, 文件路径, 跳转位置)
+}

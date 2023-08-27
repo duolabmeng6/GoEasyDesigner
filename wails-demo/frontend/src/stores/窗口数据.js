@@ -1,8 +1,8 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
-import 组件数据 from '../组件数据.json';
+import 组件数据 from '@/stores/组件数据.json';
 import {WindowSetSize} from "../../wailsjs/runtime"; // 根据实际文件路径进行修改
-import {绑定窗口事件} from '@/窗口事件'
+import {绑定窗口事件} from '@/stores/窗口事件'
 
 export const 引入窗口数据 = defineStore('窗口数据', {
     state: () => {
@@ -49,14 +49,14 @@ export const 引入窗口数据 = defineStore('窗口数据', {
             return result
         },
         组件点击(e, index) {
-            if (this.组件列表[index].点击事件 == "") {
+            if (this.组件列表[index].事件被单击 == "" || this.组件列表[index].事件被单击 == undefined) {
                 return
             }
-            let 动态脚本 = "this." + this.组件列表[index].点击事件 + "()"
+            let 动态脚本 = "this." + this.组件列表[index].事件被单击 + "()"
             try {
                 eval(动态脚本)
             } catch (e) {
-                console.log("调用未定义函数", this.组件列表[index].点击事件)
+                console.log("调用未定义函数", this.组件列表[index].事件被单击)
             }
         }
     },

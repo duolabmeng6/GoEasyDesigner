@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="属性.文本" placeholder="" style="width: 100%;height: 100%;" />
+    <el-input v-model="属性.内容" placeholder="" style="width: 100%;height: 100%;" />
 
   </div>
 

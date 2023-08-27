@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-checkbox v-model="属性.选中" :label="属性.文本" size="large" />
+    <el-checkbox v-model="属性.选中" :label="属性.标题" size="large" />
   </div>
 
 </template>

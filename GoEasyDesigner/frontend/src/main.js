@@ -41,7 +41,6 @@ for (const path in modules2) {
     app.component(name, modules2[path].default)
 }
 
-
 app.use(createPinia())
 app.use(ElementPlus)
 app.mount('#app')
