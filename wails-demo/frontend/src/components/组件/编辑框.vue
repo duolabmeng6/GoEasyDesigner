@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="属性.标题" placeholder="" style="width: 100%;height: 100%;" />
+    <el-input v-model="属性.文本" placeholder="" style="width: 100%;height: 100%;" />
 
   </div>
 
@@ -10,7 +10,7 @@
 export default {
   props: {
     属性: {
-      type: String,
+      type: Object,
       default: '',
     }
   },

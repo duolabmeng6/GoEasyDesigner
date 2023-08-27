@@ -8,7 +8,7 @@
 export default {
   props: {
     属性: {
-      type: String,
+      type: Object,
       default: '',
     }
   },

@@ -31,15 +31,21 @@
       </td>
     </tr>
     <tr>
+      <th>标题</th>
+      <td>
+        <el-input v-model="store.组件列表[store.当前组件索引].标题"/>
+      </td>
+    </tr>
+    <tr>
       <th>可视</th>
       <td>
         <el-switch v-model="store.组件列表[store.当前组件索引].可视"/>
       </td>
     </tr>
     <tr>
-      <th>标题</th>
+      <th>选中</th>
       <td>
-        <el-input v-model="store.组件列表[store.当前组件索引].标题"/>
+        <el-switch v-model="store.组件列表[store.当前组件索引].选中"/>
       </td>
     </tr>
     <tr>

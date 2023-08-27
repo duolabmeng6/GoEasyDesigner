@@ -14,31 +14,47 @@
       </el-row>
     </div>
     <div class="属性表格">
-      <component v-if="store.当前组件索引==-1" is="画布属性"></component>
-      <component v-if="store.当前组件索引>=0" is="按钮属性"></component>
+      <el-select v-model="store.当前组件索引" :dd="store.当前组件索引" class="m-2" placeholder="Select" size="large">
+        <el-option
+            key="-1"
+            label="窗口"
+            value="-1"
+        />
+        <el-option
+            v-for="(item, index) in store.组件列表"
+            :key="index"
+            :label="item.名称"
+            :value="index"
+        />
+      </el-select>
+
+      <component :is="store.当前组件名称()"></component>
     </div>
     <div class="画布">
       <div class="huabu" :style="store.取窗口样式()"
            @mousedown="画布鼠标按下"
            @mousemove="画布鼠标移动"
-           @mouseup="画布鼠标放开"
+           @mouseup="组件鼠标放开"
            @dragover.prevent @drop="画布拖放完成"
       >
 
         <Shape
             v-for="(item, index) in store.组件列表"
-            :style="getStyle(item.style)"
+            :style="getStyle(item)"
             @update-style="updateStyle"
             :index="index"
             :nowIndex="store.当前组件索引"
         >
           <component class="test"
                      :is="item.组件名称"
-                     :style="getStyle(item.style)"
+                     :style="getStyle(item)"
                      :属性="store.组件列表[index]"
                      @mousedown="组件鼠标按下($event, index)"
                      @mousemove="组件鼠标移动($event, index)"
                      @mouseup="组件鼠标放开($event, index)"
+                     @keydown="键盘按下($event, index)"
+
+
                      data-index="index"
           />
 
@@ -92,10 +108,16 @@
 import {onMounted, ref} from 'vue'
 import Shape from '@/components/Shape.vue'
 import {useCounterStore} from '@/stores/counter'
+import {创建按钮} from '@/components/创建组件属性/创建按钮'
+import {创建编辑框} from '@/components/创建组件属性/创建编辑框'
+import {创建标签} from '@/components/创建组件属性/创建标签'
+import {创建开关} from '@/components/创建组件属性/创建开关'
+import {创建多选框} from '@/components/创建组件属性/创建多选框'
 
 const store = useCounterStore()
 
 onMounted(() => {
+  console.log("store.当前组件索引", store.当前组件索引)
 })
 
 
@@ -106,28 +128,40 @@ let 组件索引id = 0
 
 function 创建组件(组件名称, left, top, width, height) {
   组件索引id = 组件索引id + 1
-  store.组件列表.push({
-    id: 组件索引id,
-    名称: 组件名称 + 组件索引id,
-    组件名称: 组件名称,
-    标题: 组件名称 + 组件索引id,
-    style: {
-      left: left,
-      top: top,
-      width: width,
-      height: height
-    },
-    点击事件: 组件名称 + 组件索引id + "被点击"
-  })
+  var d = {}
+  if (组件名称 == '按钮') {
+    d = 创建按钮(组件名称 + 组件索引id, left, top, width, height)
+  }
+  if (组件名称 == '编辑框') {
+    d = 创建编辑框(组件名称 + 组件索引id, left, top, width, height)
+  }
+  if (组件名称 == '标签') {
+    d = 创建标签(组件名称 + 组件索引id, left, top, width, height)
+  }
+  if (组件名称 == '开关') {
+    d = 创建开关(组件名称 + 组件索引id, left, top, width, height)
+  }
+  if (组件名称 == '多选框') {
+    d = 创建多选框(组件名称 + 组件索引id, left, top, width, height)
+  }
+
+  d.id = 组件索引id
+  d.可视 = true
+  console.log("创建组件", d)
+  store.组件列表.push(d)
+
 }
 
 function getStyle(style) {
-  // console.log(style)
+  console.log(style)
+  let s = style['style']
   const result = {}
-  result['width'] = style['width'] + "px"
-  result['height'] = style['height'] + "px"
-  result['top'] = style['top'] + "px"
-  result['left'] = style['left'] + "px"
+  result['width'] = s['width'] + "px"
+  result['height'] = s['height'] + "px"
+  result['top'] = s['top'] + "px"
+  result['left'] = s['left'] + "px"
+  result['display'] = style['可视'] ? 'block' : 'none'
+
   return result
 }
 
@@ -142,7 +176,7 @@ function 组件鼠标按下(event, index) {
 
   //console.log("组件鼠标按下",index)
   组件拖动状态 = true
-  store.当前组件索引 = index
+  store.当前组件索引 = parseInt(index)
   组件偏移X = event.clientX - store.组件列表[index].style.left
   组件偏移Y = event.clientY - store.组件列表[index].style.top
 }
@@ -164,9 +198,10 @@ function 组件鼠标放开(event, index) {
   组件拖动状态 = false
 }
 
+
 function 画布鼠标按下(event) {
   console.log("画布鼠标按下")
-  store.当前组件索引 = -1
+  store.当前组件索引 = "-1"
 
 }
 
@@ -217,9 +252,13 @@ function 加载界面() {
 
 function 保存界面() {
   let njson = {
-    窗口:{
+    窗口: {
       宽度: store.画布属性.宽度,
       高度: store.画布属性.高度,
+      左边: store.画布属性.左边,
+      顶边: store.画布属性.顶边,
+      标题: store.画布属性.标题,
+      可视: store.画布属性.可视,
     }
   }
   //循环 store.组件列表 加入 njson 中 使用 名称 作为key
@@ -233,10 +272,21 @@ function 保存界面() {
   const blob = new Blob([json], {type: 'application/json'})
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
-  link.download = 'store.组件列表.json'
+  link.download = '组件数据.json'
   link.click()
 }
 
+function 键盘按下(event, index) {
+  console.log("键盘按下", event.key, index)
+  if (event.key == 'Delete') {
+    store.当前组件索引 = -1
+    store.组件列表.splice(index, 1)
+  }
+}
+
+function 当前组件名称() {
+  return "按钮属性"
+}
 </script>
 
 <style>
@@ -258,6 +308,11 @@ function 保存界面() {
 
 .test {
 //border: black 1px solid; //position: absolute;
+}
+
+.test *{
+  pointer-events: none;
+
 }
 
 .container {
