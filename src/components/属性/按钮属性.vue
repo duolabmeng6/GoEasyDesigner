@@ -51,7 +51,7 @@
 <script setup>
 import {useCounterStore} from '@/stores/counter'
 import { ref, defineProps, defineEmits } from "vue";
-const emits = defineEmits();
+const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const store = useCounterStore()
 
 let 事件索引 = ref(0)

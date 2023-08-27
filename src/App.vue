@@ -158,7 +158,6 @@ function 创建组件(组件名称, left, top, width, height) {
 }
 
 function getStyle(style) {
-  console.log(style)
   let s = style['style']
   const result = {}
   result['width'] = s['width'] + "px"
@@ -307,6 +306,7 @@ function 添加事件被选择(事件名称) {
   let code = "store.组件列表[store.当前组件索引].事件" + 事件名称 + "=" + '"' + n + "_" + 事件名称 + '"'
   console.log(code)
   eval(code)
+  //这里需要编写一个插入代码的函数
 }
 </script>
 
