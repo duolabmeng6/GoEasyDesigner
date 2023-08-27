@@ -1,29 +1,14 @@
-# eview
+# GoEasyDesigner 窗口设计器
 
-This template should help get you started developing with Vue 3 in Vite.
+# 运行 
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+这里是调试前端的
+```
+cd GoEasyDesigner\frontend
+vite 
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
+wails 同时调试前端和后端
 ```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
+wails dev
 ```
