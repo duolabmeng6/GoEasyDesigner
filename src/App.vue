@@ -1,34 +1,39 @@
 <template>
   <div class="container">
     <div class="工具条">
-      <el-row>
-        <el-col :span="12">
-          <div class="grid-content ep-bg-purple"/>
-          <h2>窗口设计器</h2>
-        </el-col>
-        <el-col :span="12">
-          <div class="grid-content ep-bg-purple-light"/>
-          <el-button @click="加载界面">加载界面</el-button>
-          <el-button @click="保存界面">保存界面</el-button>
-        </el-col>
-      </el-row>
+      <div style="margin: 10px">
+
+        <el-row>
+          <el-col :span="12">
+            <div class="grid-content ep-bg-purple"/>
+            <h2>窗口设计器</h2>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content ep-bg-purple-light"/>
+            <el-button @click="加载界面">加载界面</el-button>
+            <el-button @click="保存界面">保存界面</el-button>
+          </el-col>
+        </el-row>
+      </div>
     </div>
     <div class="属性表格">
-      <el-select v-model="store.当前组件索引" :dd="store.当前组件索引" class="m-2" placeholder="Select" size="large">
-        <el-option
-            key="-1"
-            label="窗口"
-            value="-1"
-        />
-        <el-option
-            v-for="(item, index) in store.组件列表"
-            :key="index"
-            :label="item.名称"
-            :value="index"
-        />
-      </el-select>
-
-      <component :is="store.当前组件名称()"></component>
+      <div style="margin-left: 20px;margin-right: 20px ">
+        <el-select v-model="store.当前组件索引" :dd="store.当前组件索引" class="m-2" placeholder="Select" size="large">
+          <el-option
+              key="-1"
+              label="窗口"
+              value="-1"
+          />
+          <el-option
+              v-for="(item, index) in store.组件列表"
+              :key="index"
+              :label="item.名称"
+              :value="index"
+          />
+        </el-select>
+        <div style="padding-top: 20px;"></div>
+        <component :is="store.当前组件名称()"></component>
+      </div>
     </div>
     <div class="画布">
       <div class="huabu" :style="store.取窗口样式()"
@@ -130,19 +135,19 @@ function 创建组件(组件名称, left, top, width, height) {
   组件索引id = 组件索引id + 1
   var d = {}
   if (组件名称 == '按钮') {
-    d = 创建按钮(组件名称 + 组件索引id, left, top, width, height)
+    d = 创建按钮(组件名称 + 组件索引id, left, top, 120, 38)
   }
   if (组件名称 == '编辑框') {
-    d = 创建编辑框(组件名称 + 组件索引id, left, top, width, height)
+    d = 创建编辑框(组件名称 + 组件索引id, left, top, 120, 32)
   }
   if (组件名称 == '标签') {
-    d = 创建标签(组件名称 + 组件索引id, left, top, width, height)
+    d = 创建标签(组件名称 + 组件索引id, left, top, 60, 32)
   }
   if (组件名称 == '开关') {
-    d = 创建开关(组件名称 + 组件索引id, left, top, width, height)
+    d = 创建开关(组件名称 + 组件索引id, left, top, 60, 40)
   }
   if (组件名称 == '多选框') {
-    d = 创建多选框(组件名称 + 组件索引id, left, top, width, height)
+    d = 创建多选框(组件名称 + 组件索引id, left, top, 80, 35)
   }
 
   d.id = 组件索引id
@@ -310,7 +315,7 @@ function 当前组件名称() {
 //border: black 1px solid; //position: absolute;
 }
 
-.test *{
+.test * {
   pointer-events: none;
 
 }
