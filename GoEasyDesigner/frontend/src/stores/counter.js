@@ -18,7 +18,7 @@ export const useCounterStore = defineStore('counter', {
             项目信息: ref({
                 设计文件路径: "",//"stores\\组件数据.json",
                 窗口事件文件路径: "",//"stores\\窗口事件.js",
-                IDE插件地址: "http://127.0.0.1:13403",
+                IDE插件地址: "http://127.0.0.1:10750",
             }),
             客户端模式: ref(false),
         }

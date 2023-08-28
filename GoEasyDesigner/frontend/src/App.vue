@@ -465,11 +465,7 @@ function 保存() {
         return
       }
       store.项目信息.设计文件路径 = res
-      let res2 = res.split("\\")
-      res2.pop()
-      res2.push("窗口事件.js")
-      let res3 = res2.join("\\")
-      store.项目信息.窗口事件文件路径 = res3
+      store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
       console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
 
       E保存(store.项目信息.设计文件路径, json).then((res) => {
@@ -495,7 +491,15 @@ function 保存() {
 
 
 }
+function 取父目录(path) {
+  // 将所有的反斜杠 \ 替换为斜杠 /
+  var convertedPath = path.replace(/\\/g, '/');
 
+  // 使用正则表达式获取父目录
+  var parentDirectory = convertedPath.replace(/\/[^/]*$/, '');
+
+  return parentDirectory;
+}
 function 打开() {
   console.log("打开")
   E打开文件对话框().then((res) => {
@@ -503,12 +507,7 @@ function 打开() {
       return
     }
     store.项目信息.设计文件路径 = res
-    //取父目录 加上 窗口事件.js
-    let res2 = res.split("\\")
-    res2.pop()
-    res2.push("窗口事件.js")
-    let res3 = res2.join("\\")
-    store.项目信息.窗口事件文件路径 = res3
+    store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
     console.log("设计文件路径", store.项目信息.设计文件路径)
     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
     E读入文件(store.项目信息.设计文件路径).then((res) => {

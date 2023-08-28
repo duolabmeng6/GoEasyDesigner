@@ -29,7 +29,16 @@ export const 引入窗口数据 = defineStore('窗口数据', {
             }
 
             try {
-                WindowSetSize(parseInt(this.组件.窗口.宽度) + 13, parseInt(this.组件.窗口.高度) + 35)
+                console.log(window.navigator)
+                if (window.navigator && window.navigator.appVersion && window.navigator.appVersion.indexOf("Mac") !== -1) {
+                    console.log("macOS system.");
+                    WindowSetSize(parseInt(this.组件.窗口.宽度), parseInt(this.组件.窗口.高度)+28)
+
+                } else {
+                    console.log("window");
+                    WindowSetSize(parseInt(this.组件.窗口.宽度) + 13, parseInt(this.组件.窗口.高度) + 35)
+
+                }
                 WindowSetTitle(this.组件.窗口.标题)
             } catch (e) {
 
