@@ -1,7 +1,7 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
 import 组件数据 from '@/stores/组件数据.json';
-import {WindowSetSize} from "../../wailsjs/runtime"; // 根据实际文件路径进行修改
+import {WindowSetSize,WindowSetTitle} from "../../wailsjs/runtime"; // 根据实际文件路径进行修改
 import {绑定窗口事件} from '@/stores/窗口事件'
 
 export const 引入窗口数据 = defineStore('窗口数据', {
@@ -29,7 +29,8 @@ export const 引入窗口数据 = defineStore('窗口数据', {
             }
 
             try {
-                WindowSetSize(this.组件.窗口.宽度 + 13, this.组件.窗口.高度 + 35)
+                WindowSetSize(parseInt(this.组件.窗口.宽度) + 13, parseInt(this.组件.窗口.高度) + 35)
+                WindowSetTitle(this.组件.窗口.标题)
             } catch (e) {
 
             }

@@ -3,6 +3,8 @@
 
 export function E保存(arg1:string,arg2:string):Promise<string>;
 
+export function E保存件对话框():Promise<string>;
+
 export function E创建函数(arg1:string,arg2:string,arg3:string):Promise<string>;
 
 export function E打开文件对话框():Promise<string>;

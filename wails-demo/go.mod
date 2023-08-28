@@ -2,10 +2,7 @@ module changeme
 
 go 1.18
 
-require (
-	github.com/tdewolff/parse/v2 v2.6.7
-	github.com/wailsapp/wails/v2 v2.5.1
-)
+require github.com/wailsapp/wails/v2 v2.5.1
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect

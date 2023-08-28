@@ -1,23 +1,29 @@
 <template>
   <div class="container">
     <div class="工具条">
-      <div style="margin: 10px">
-
+      <div style="margin-top: 0px;margin-left: 10px;margin-right: 10px;margin-bottom: 10px;">
         <el-row>
-          <el-col :span="12">
-            <div class="grid-content ep-bg-purple"/>
-            <h2>窗口设计器</h2>
+
+          <el-col :span="4">
+            <div style="margin-top: 18px">窗口设计器</div>
           </el-col>
           <el-col :span="12">
-            <div class="grid-content ep-bg-purple-light"/>
+            <el-menu
+                :default-active="activeIndex"
+                class="el-menu-demo"
+                mode="horizontal"
+                @select="handleSelect"
+            >
+              <el-sub-menu index="2">
+                <template #title>工作空间</template>
+                <el-menu-item index="1-1" v-if="!store.客户端模式" @click="加载界面">加载界面</el-menu-item>
+                <el-menu-item index="1-2" v-if="!store.客户端模式" @click="保存界面">保存界面</el-menu-item>
 
-            <el-button v-if="!store.客户端模式" @click="加载界面">加载界面</el-button>
-            <el-button v-if="!store.客户端模式" @click="保存界面">保存界面</el-button>
-            <el-button v-if="store.客户端模式" @click="打开">打开</el-button>
-            <el-button v-if="store.客户端模式" @click="保存">保存</el-button>
-            <el-button v-if="store.客户端模式" @click="项目配置">项目配置</el-button>
-
-
+                <el-menu-item index="2-1" v-if="store.客户端模式" @click="打开">打开</el-menu-item>
+                <el-menu-item index="2-2" v-if="store.客户端模式" @click="保存">保存</el-menu-item>
+                <el-menu-item index="2-3" v-if="store.客户端模式" @click="项目配置">项目配置</el-menu-item>
+              </el-sub-menu>
+            </el-menu>
           </el-col>
         </el-row>
       </div>
@@ -151,7 +157,7 @@ import {创建编辑框} from '@/components/创建组件属性/创建编辑框'
 import {创建标签} from '@/components/创建组件属性/创建标签'
 import {创建开关} from '@/components/创建组件属性/创建开关'
 import {创建多选框} from '@/components/创建组件属性/创建多选框'
-import {E保存, E创建函数, E打开文件对话框, E读入文件} from "../wailsjs/go/main/App";
+import {E保存, E创建函数, E打开文件对话框, E读入文件,E保存件对话框} from "../wailsjs/go/main/App";
 import {WindowSetSize} from "../wailsjs/runtime";
 import {ElMessage} from "element-plus"; // 根据实际文件路径进行修改
 
@@ -440,7 +446,7 @@ function 保存() {
       可视: store.画布属性.可视,
     }
   }
-  //循环 store.组件列表 加入 njson 中 使用 名称 作为key
+//循环 store.组件列表 加入 njson 中 使用 名称 作为key
   for (let i = 0; i < store.组件列表.length; i++) {
     let item = store.组件列表[i]
     njson[item.名称] = item
@@ -448,6 +454,35 @@ function 保存() {
 
   let json = JSON.stringify(njson, null, 2)
 
+  if (store.项目信息.设计文件路径 == "") {
+    E保存件对话框().then((res) => {
+      if (res == "") {
+        ElMessage({
+          message: "未选择文件",
+          type: 'success',
+          duration: 3000, // 设置显示时间为5秒，单位为毫秒
+        });
+        return
+      }
+      store.项目信息.设计文件路径 = res
+      let res2 = res.split("\\")
+      res2.pop()
+      res2.push("窗口事件.js")
+      let res3 = res2.join("\\")
+      store.项目信息.窗口事件文件路径 = res3
+      console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
+
+      E保存(store.项目信息.设计文件路径, json).then((res) => {
+        console.log(res)
+        ElMessage({
+          message: res,
+          type: 'success',
+          duration: 3000, // 设置显示时间为5秒，单位为毫秒
+        });
+      })
+    })
+    return
+  }
   E保存(store.项目信息.设计文件路径, json).then((res) => {
     console.log(res)
 
@@ -457,6 +492,8 @@ function 保存() {
       duration: 3000, // 设置显示时间为5秒，单位为毫秒
     });
   })
+
+
 }
 
 function 打开() {

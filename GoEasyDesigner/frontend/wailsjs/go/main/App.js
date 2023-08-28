@@ -6,6 +6,10 @@ export function E保存(arg1, arg2) {
   return window['go']['main']['App']['E保存'](arg1, arg2);
 }
 
+export function E保存件对话框() {
+  return window['go']['main']['App']['E保存件对话框']();
+}
+
 export function E创建函数(arg1, arg2, arg3) {
   return window['go']['main']['App']['E创建函数'](arg1, arg2, arg3);
 }

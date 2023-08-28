@@ -68,6 +68,17 @@ func (a *App) E打开文件对话框() string {
 	}
 	return result
 }
+func (a *App) E保存件对话框() string {
+	println("E保存件对话框")
+	result, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:           "保存文件",
+		DefaultFilename: "组件数据.json",
+	})
+	if err != nil {
+		return ""
+	}
+	return result
+}
 func (a *App) E读入文件(文件路径 string) string {
 	return ecore.E读入文本(文件路径)
 }
