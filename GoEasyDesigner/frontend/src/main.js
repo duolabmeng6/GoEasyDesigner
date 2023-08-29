@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+// import App from './components/设计器组件/代码编辑器.vue'
 import App from './App3.vue'
 
 const app = createApp(App)
@@ -41,10 +42,25 @@ for (const path in modules2) {
     app.component(name, modules2[path].default)
 }
 
+const modules3 = import.meta.globEager('./components/设计器组件/*.vue')
+for (const path in modules3) {
+    const name = path.match(/\.\/components\/设计器组件\/(.*)\.vue$/)[1]
+    app.component(name, modules3[path].default)
+}
+
+
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
+import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
+app.use(VueMonacoEditorPlugin, {
+    paths: {
+        // The default CDN config
+        vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
+    },
+})
 
 app.use(createPinia())
 app.use(ElementPlus)

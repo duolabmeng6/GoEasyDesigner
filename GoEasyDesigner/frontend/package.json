@@ -8,13 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.1.0",
+    "@guolao/vue-monaco-editor": "^1.2.0",
     "element-plus": "^2.3.9",
     "pinia": "^2.1.4",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "monaco-editor-webpack-plugin": "^7.1.0",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-icons": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",

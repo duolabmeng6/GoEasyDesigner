@@ -53,7 +53,7 @@
                     :index="index"
                     :nowIndex="store.当前组件索引"
                 >
-                  <component class="test"
+                  <component class="绘制的组件"
                              :is="item.组件名称"
                              :style="getStyle(item)"
                              :属性="store.组件列表[index]"
@@ -72,12 +72,9 @@
             </Shape>
           </el-tab-pane>
           <el-tab-pane label="编辑代码">
-            <el-input
-                v-model="textarea"
-                :rows="10"
-                type="textarea"
-                placeholder="Please input"
-            />
+
+            <component is="代码编辑器"></component>
+
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -131,16 +128,15 @@
         <template v-if="store.客户端模式">
           <el-button :icon="Edit" @click="打开">打开</el-button>
           <el-button :icon="Edit" @click="保存">保存</el-button>
-          <el-button :icon="Edit" @click="项目配置">项目配置</el-button>
           <el-button :icon="Edit" @click="运行">运行</el-button>
           <el-button :icon="Edit" @click="编译">编译</el-button>
         </template>
-
+        <el-button :icon="Edit" @click="项目配置">项目配置</el-button>
       </el-button-group>
     </div>
   </div>
-
-
+  <component is="项目配置对话框" v-model="显示项目配置对话框" @确定="显示项目配置对话框=false"
+             @关闭="显示项目配置对话框=false"></component>
 </template>
 
 
@@ -148,6 +144,10 @@
 * {
   margin: 0;
   padding: 0;
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer / Edge */
 }
 
 .container {
@@ -158,6 +158,12 @@
   grid-auto-flow: row;
   height: 100vh;
   overflow: hidden;
+
+}
+
+.绘制的组件 * {
+  pointer-events: none;
+
 }
 
 .头部 {
@@ -243,7 +249,7 @@
 </style>
 <script setup>
 import {Edit} from "@element-plus/icons-vue";
-import {onMounted, ref} from 'vue'
+import {onBeforeUnmount, onMounted, ref, shallowRef} from 'vue'
 import Shape from '@/components/Shape.vue'
 import {useCounterStore} from '@/stores/counter'
 import {创建按钮} from '@/components/创建组件属性/创建按钮'
@@ -253,26 +259,15 @@ import {创建开关} from '@/components/创建组件属性/创建开关'
 import {创建多选框} from '@/components/创建组件属性/创建多选框'
 import {E保存, E创建函数, E打开文件对话框, E读入文件, E保存件对话框} from "../wailsjs/go/main/App";
 import {WindowSetSize} from "../wailsjs/runtime";
-import {ElMessage} from "element-plus"; // 根据实际文件路径进行修改
+import {ElMessage} from "element-plus";
+import 项目配置对话框 from "@/components/设计器组件/项目配置对话框.vue"; // 根据实际文件路径进行修改
 
 const store = useCounterStore()
-const dialogVisible = ref(false);
+const 显示项目配置对话框 = ref(false);
 
 function 项目配置() {
-  dialogVisible.value = true;
+  显示项目配置对话框.value = true;
   console.log("项目配置")
-}
-
-const 确定项目配置 = () => {
-  console.log("确定")
-  //弹出提示已保存
-  ElMessage({
-    message: '保存成功',
-    type: 'success',
-    duration: 3000, // 设置显示时间为5秒，单位为毫秒
-  });
-  dialogVisible.value = false;
-
 }
 
 onMounted(() => {
@@ -288,6 +283,11 @@ onMounted(() => {
 
 })
 
+onBeforeUnmount(() => {
+  if (editor) {
+    editor.dispose();
+  }
+})
 
 let 组件拖动状态 = false
 let 组件偏移X = 0
@@ -348,9 +348,11 @@ function getStyle(style) {
 function updateStyle(index, newStyle) {
   store.组件列表[index].style = {...store.组件列表[index].style, ...newStyle};
 }
+
 function updateStyle2(index, newStyle) {
   store.画布属性 = {...store.画布属性, ...newStyle};
 }
+
 function 组件鼠标按下(event, index) {
   //禁止冒泡
   event.stopPropagation();
