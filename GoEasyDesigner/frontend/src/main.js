@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-import App from './App.vue'
+import App from './App2.vue'
 
 const app = createApp(App)
 
@@ -39,6 +39,11 @@ const modules2 = import.meta.globEager('./components/属性/*.vue')
 for (const path in modules2) {
     const name = path.match(/\.\/components\/属性\/(.*)\.vue$/)[1]
     app.component(name, modules2[path].default)
+}
+
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
 }
 
 app.use(createPinia())
