@@ -17,7 +17,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "GoEasyDesigner 窗口设计器",
+		Title:  "GoEasyDesigner 窗口设计师",
 		Width:  1280,
 		Height: 768,
 		AssetServer: &assetserver.Options{

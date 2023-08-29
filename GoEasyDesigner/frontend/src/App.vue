@@ -5,7 +5,7 @@
         <el-row>
 
           <el-col :span="4">
-            <div style="margin-top: 18px">窗口设计器</div>
+            <div style="margin-top: 18px">窗口设计师</div>
           </el-col>
           <el-col :span="12">
             <el-menu

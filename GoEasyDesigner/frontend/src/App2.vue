@@ -6,7 +6,7 @@
             <el-icon>
               <Sunny/>
             </el-icon>
-            窗口设计器
+            窗口设计师
           </el-text>
         </el-col>
         <el-col :span="19" style="padding: 4px">

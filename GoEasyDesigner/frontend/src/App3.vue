@@ -119,7 +119,7 @@
         <el-icon>
           <Sunny/>
         </el-icon>
-        窗口设计器
+        窗口设计师
       </el-text>
     </div>
     <div class="工具条 clear-select">

@@ -1,4 +1,4 @@
-# GoEasyDesigner 窗口设计器
+# GoEasyDesigner 窗口设计师
 ![image-20230828083413650](README.assets/image-20230828083413650.png)
 ![image-20230828084834120](README.assets/image-20230828084834120.png)
 项目处于积极开发阶段
