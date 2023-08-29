@@ -5,17 +5,25 @@
 基于 go 语言 使用 wails框架, 支持 window macos linux 等系统.
 
 ### 项目进度
-- [x] window 兼容
-- [x] macos 兼容
-- [x] linux 兼容
+- [x] 兼容 window  macos  linux 
+- [x] 完成整体界面布局以及整体功能流程，界面绘制，属性修改，组件拖拽、双击组件跳转到对应的事件函数
 - [ ] 组件库完善中
-- [ ] 绘制体验完善中
+- [ ] 绘制布局容器体验完善中
 - [ ] 集成go语言开发环境完善中
 
 欢迎前端大佬pr
 
-# 安装 wails
+# 运行环境
 
+### 1.安装 go 语言
+
+https://golang.org/dl/
+
+### 2.安装 node 环境
+
+https://nodejs.org/zh-cn/download/
+
+### 3.安装 wails
 https://wails.io/zh-Hans/docs/gettingstarted/installation/
 
 ```
@@ -23,6 +31,8 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 ```
 
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
+
+### 目前没有编译版本，所以下载项目后自行玩耍
 
 # 运行 GoEasyDesigner
 
