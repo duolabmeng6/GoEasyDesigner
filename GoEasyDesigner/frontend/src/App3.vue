@@ -52,6 +52,7 @@
                     @update-style="updateStyle"
                     :index="index"
                     :nowIndex="store.当前组件索引"
+                    @keydown="键盘按下($event, index)"
                 >
                   <component class="绘制的组件"
                              :is="item.组件名称"
@@ -60,7 +61,6 @@
                              @mousedown="组件鼠标按下($event, index)"
                              @mousemove="组件鼠标移动($event, index)"
                              @mouseup="组件鼠标放开($event, index)"
-                             @keydown="键盘按下($event, index)"
                              @dblclick="组件被双击($event, index)"
 
                              data-index="index"
@@ -279,6 +279,8 @@ function 项目配置() {
 }
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
+  console.log("按下某键盘", event.key)
+  键盘按下(event, store.当前组件索引)
   if ((event.metaKey || event.ctrlKey) && event.key === "s") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法
