@@ -1,12 +1,11 @@
 <template>
   <vue-monaco-editor
       v-model:value="code"
-      theme="vs-dark"
+      theme="vs"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       language="javascript"
-      height="500px"
-      width="1500px"
+
   />
 </template>
 <style scoped>
@@ -37,7 +36,7 @@ const MONACO_EDITOR_OPTIONS = {
   }
 }
 
-const code = ref('function hello() {\n\talert("Hello world!");\n}')
+// const code = ref('function hello() {\n\talert("Hello world!");\n}')
 const editorRef = shallowRef()
 const handleMount = editor => (editorRef.value = editor)
 

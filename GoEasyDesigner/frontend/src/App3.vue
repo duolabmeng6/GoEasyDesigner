@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="头部"></div>
-    <div class="属性框">
+    <div class="头部 "></div>
+    <div class="属性框 clear-select">
       <el-tabs type="border-card" style="height: 100%">
         <el-tab-pane label="属性" style="height: 100%;">
           <div class="container2">
@@ -73,13 +73,16 @@
           </el-tab-pane>
           <el-tab-pane label="编辑代码">
 
-            <component is="代码编辑器"></component>
+            <component is="代码编辑器" v-model:value="code"
+                       height="400px"
+                       width="720px"
+            />
 
           </el-tab-pane>
         </el-tabs>
       </el-col>
     </div>
-    <div class="工具箱">
+    <div class="工具箱 clear-select">
       <el-tabs type="border-card" tab-position="top" style="height: 100%" class="demo-tabs">
         <el-tab-pane label="组件">
           <el-collapse model-value="1" @change="handleChange" accordion style="border: none">
@@ -111,7 +114,7 @@
         <el-tab-pane label="调试信息">调试信息</el-tab-pane>
       </el-tabs>
     </div>
-    <div class="标题">
+    <div class="标题 clear-select">
       <el-text size="large" style="">
         <el-icon>
           <Sunny/>
@@ -119,7 +122,7 @@
         窗口设计器
       </el-text>
     </div>
-    <div class="工具条">
+    <div class="工具条 clear-select">
       <el-button-group class="ml-4">
         <template v-if="!store.客户端模式">
           <el-button :icon="Edit" @click="加载界面">加载界面</el-button>
@@ -144,6 +147,10 @@
 * {
   margin: 0;
   padding: 0;
+
+}
+
+.clear-select{
   user-select: none;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -264,15 +271,36 @@ import 项目配置对话框 from "@/components/设计器组件/项目配置对�
 
 const store = useCounterStore()
 const 显示项目配置对话框 = ref(false);
+const code = ref('function hello() {\n\talert("Hello world!");\n}')
 
 function 项目配置() {
   显示项目配置对话框.value = true;
   console.log("项目配置")
 }
+function handleKeyDown(event) {
+  // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
+  if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了保存 Cmd/Ctrl + S");
+
+    console.log(code.value)
+    if(store.项目信息.窗口事件文件路径 != ""){
+      E保存(store.项目信息.窗口事件文件路径, code.value).then((res) => {
+        console.log(res)
+        ElMessage({
+          message: res,
+          type: 'success',
+          duration: 3000, // 设置显示时间为5秒，单位为毫秒
+        });
+      })
+    }
+  }
+}
 
 onMounted(() => {
   console.log("store.当前组件索引", store.当前组件索引)
-
+  document.addEventListener("keydown", handleKeyDown);
 
   try {
     WindowSetSize(1280 + 13, 720 + 35)
@@ -608,8 +636,12 @@ function 打开() {
     E读入文件(store.项目信息.设计文件路径).then((res) => {
       console.log(res)
       初始化界面数据(res)
-
     })
+    E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
+      console.log(res)
+      code.value = res
+    })
+
   })
 }
 
