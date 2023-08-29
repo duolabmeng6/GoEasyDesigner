@@ -2,7 +2,7 @@
   <div class="Shape" ref="shapeRef">
     <slot></slot>
     <div
-        v-if="index === nowIndex & nowIndex >= 0"
+        v-if="index == nowIndex"
         v-for="(direction, index) in directions"
         :key="index"
         :class="['dot', direction]"

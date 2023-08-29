@@ -1,4 +1,6 @@
 <template>
+  <div class="属性表格">
+
     <el-form
         label-position="left"
         label-width="100px"
@@ -26,29 +28,29 @@
         <el-input v-model="store.画布属性.标题"/>
       </el-form-item>
     </el-form>
+  </div>
+  <div class="添加组件事件">
 
-  <el-form
-      label-position="top"
-      label-width="100px"
-      style="max-width: 460px"
-  >
-    <el-form-item label="">
-      <el-select v-model="事件索引" class="m-2" placeholder="Select" size="large" @change="handleSelectChange">
+    <el-select v-model="事件索引"
+               class="m-2"
+               placeholder="Select"
+               size="large" @change="handleSelectChange"
+               style="width: 100%">
 
-        <el-option
-            v-for="(item, index) in 事件名称"
-            :key="index"
-            :label="item"
-            :value="index"
-        />
-      </el-select>
+      <el-option
+          v-for="(item, index) in 事件名称"
+          :key="index"
+          :label="item"
+          :value="index"
+      />
+    </el-select>
 
-    </el-form-item>
-  </el-form>
+  </div>
 </template>
 <script setup>
 import {useCounterStore} from '@/stores/counter'
-import { ref, defineProps, defineEmits } from "vue";
+import {ref, defineProps, defineEmits} from "vue";
+
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const store = useCounterStore()
 
