@@ -21,6 +21,10 @@ export const useCounterStore = defineStore('counter', {
                 IDE插件地址: "http://127.0.0.1:10750",
             }),
             客户端模式: ref(false),
+            list: ref(null),
+            当前拖拽组件数据: ref(null),
+            start_x: ref(0),
+            start_y: ref(0),
         }
     },
 
