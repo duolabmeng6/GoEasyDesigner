@@ -6,5 +6,7 @@ export default {
     left: "0",
     width: "200",
     height: "200",
+    background: "#fff",
     层级: 0,
+    子组件:[]
 }

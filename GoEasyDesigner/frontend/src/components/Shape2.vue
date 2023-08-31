@@ -2,7 +2,7 @@
   <div class="Shape" ref="shapeRef">
     <slot></slot>
     <div
-        v-if = "nowIndex == index"
+        v-if="nowIndex == index"
         v-for="(direction, index) in directions"
         :key="index"
         :class="['dot', direction]"
@@ -11,18 +11,37 @@
         @click.stop
 
     ></div>
-    
-    <div class="调整整体位置"
-         v-if = "nowIndex == index"
-         @mousedown="mousedown('all', $event)"
-        @click.stop
-    ></div>
+
+    <div class="调整整体位置">
+      <el-button-group
+          v-if="nowIndex == index"
+      >
+        <el-button type="primary" :icon="Aim" size="small"
+                   @mousedown="mousedown('all', $event)"
+                   @click.stop
+        ></el-button>
+        <el-button type="danger" @click.stop="删除" :icon="Delete" size="small"></el-button>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
 <script>
+import {Delete, Aim} from "@element-plus/icons-vue";
+
 export default {
   name: "DirectionalDots",
+  computed: {
+    Delete() {
+      return Delete
+    },
+    Aim() {
+      return Aim
+    }
+  },
+  components: {
+    Delete, Aim
+  },
   props: {
     index: {
       type: String,
@@ -42,7 +61,7 @@ export default {
     // console.log("nowIndex", this.nowIndex);
 
   },
-  emits: ['update-style'],
+  emits: ['update-style', '删除'],
   data() {
     return {
       directions: ["top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"],
@@ -54,6 +73,10 @@ export default {
     };
   },
   methods: {
+    删除: function () {
+      this.$emit('删除', this.item_data.id)
+
+    },
     mousedown: function (direction, event) {
       event.stopPropagation()
       event.preventDefault()
@@ -90,13 +113,13 @@ export default {
         let newHeight = newHeight2;
 
 
-        if (dthis.draggingDot =="all"){
+        if (dthis.draggingDot == "all") {
           //调整左边顶边
           newLeft += moveX;
           newTop += moveY;
           newWidth = dthis.$refs.shapeRef.width;
           newHeight = dthis.$refs.shapeRef.height;
-          dthis.$emit('update-style', dthis.item_data,{
+          dthis.$emit('update-style', dthis.item_data, {
             left: newLeft,
             top: newTop,
             width: newWidth,
@@ -136,7 +159,7 @@ export default {
           return
         }
         // console.log("移动后的位置",  dthis.index,newLeft, newTop, newWidth, newHeight);
-        dthis.$emit('update-style', dthis.item_data,{
+        dthis.$emit('update-style', dthis.item_data, {
           left: newLeft,
           top: newTop,
           width: newWidth,
@@ -226,17 +249,15 @@ export default {
   cursor: se-resize;
 }
 
-.调整整体位置{
-  bottom: -30px;
-  left: 50%;
+.调整整体位置 {
   transform: translateX(-50%);
-
-  width: 12px;
-  height: 12px;
-  background-color: #057aff;
-  position: absolute;
+  width: 100px;
+  height: 24px;
   cursor: pointer;
   z-index: 9999;
-
+  margin-top: 20px;
+  margin-left: 50%;
 }
+
+
 </style>

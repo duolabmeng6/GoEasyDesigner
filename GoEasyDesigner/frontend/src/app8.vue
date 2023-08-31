@@ -85,7 +85,7 @@ function 拖拽开始(event, 组件名称) {
   if (组件名称 == "按钮") {
   }
   if (组件名称 == "布局容器") {
-    新属性.border = "1px solid red"
+    新属性.border = "1px solid black"
   }
   if (组件名称 == "选择夹") {
     let id = 新属性.id
