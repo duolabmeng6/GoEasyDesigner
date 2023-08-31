@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 // import App from './components/设计器组件/代码编辑器.vue'
-import App from './App7.vue'
+import App from './App8.vue'
 
 const app = createApp(App)
 

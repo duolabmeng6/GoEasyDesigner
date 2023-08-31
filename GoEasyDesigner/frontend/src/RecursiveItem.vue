@@ -1,8 +1,9 @@
 <template>
   <Shape2
       :style="getItemStyle(item)"
+      style="position: absolute"
       @update-style="updateStyle"
-      :index="item.名称"
+      :index="item.id"
       :item_data="item"
       :nowIndex="store.当前组件索引"
   >
@@ -14,21 +15,18 @@
          @drop.stop="拖拽放下($event,item)"
          draggable="true"
          @click.stop="鼠标按下($event,item)"
+         v-show="item.可视"
+         :class="{ 'disabled': item.禁用 }"
     >
       <template v-if="item.组件名称=='按钮'">
-        <el-button :style="getItemStyle2(item)">{{ item.标题 }}</el-button>
+        <component is="按钮" :item="item" />
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
         <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
-        <el-tabs type="border-card" v-model="item.现行选中项" :style="getItemStyle2(item)" style="overflow: hidden;padding: 0">
-          <el-tab-pane
-              v-for="(tabItem, tabItemIndex) in item.子组件" :key="tabItemIndex"
-              :label="tabItem.title">
-            <RecursiveItem v-for="(tabItem2, tabItemIndex2) in tabItem.子组件" :key="tabItemIndex2" :item="tabItem2"/>
-          </el-tab-pane>
-        </el-tabs>
+        <component is="选择夹" :item="item" />
+
       </template>
       <template v-else>
         <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
@@ -43,6 +41,7 @@ import {defineProps} from 'vue';
 const {item} = defineProps(['item']);
 import {useCounterStore} from '@/stores/counter'
 import Shape2 from "@/components/Shape2.vue";
+import {getItemStyle} from "@/public";
 
 const store = useCounterStore()
 
@@ -62,29 +61,19 @@ tempCtx.fillText("松开放置", 10, 20);
 
 
 function updateStyle(item, newStyle) {
-  item.width = newStyle.width + "px"
-  item.height = newStyle.height + "px"
-  item.top = newStyle.top + "px"
-  item.left = newStyle.left + "px"
+  const properties = ['width', 'height', 'top', 'left'];
+
+  for (const property of properties) {
+    if (newStyle[property] !== undefined) {
+      item[property] = `${newStyle[property]}`;
+    }
+  }
+  return item
 }
 
 
-const getItemStyle = (item) => ({
-  position: 'absolute',
-  top: item.top,
-  left: item.left,
-  width: item.width,
-  height: item.height,
-  border: item.border,
-});
-const getItemStyle2 = (item) => ({
-  top: item.top,
-  left: item.left,
-  width: item.width,
-  height: item.height,
-});
 
-store.当前拖拽组件数据 = ref({})
+
 
 store.start_x = 0;
 store.start_y = 0;
@@ -142,7 +131,7 @@ function 拖拽放下(event, v) {
   let 放置目标组件数据 = v
   console.log("当前拖拽组件数据", store.当前拖拽组件数据)
   console.log("放置目标组件数据", 放置目标组件数据)
-  if (检查放置目标是否为自身组件的子组件(store.当前拖拽组件数据, 放置目标组件数据.名称)) {
+  if (检查放置目标是否为自身组件的子组件(store.当前拖拽组件数据, 放置目标组件数据.id)) {
     console.log("当前目标子组件是自己的 不能放置")
     return;
   }
@@ -156,7 +145,7 @@ function 拖拽放下(event, v) {
   console.log("x", x, "y", y)
 
 
-  if (放置目标组件数据.名称 == store.当前拖拽组件数据.名称) {
+  if (放置目标组件数据.id == store.当前拖拽组件数据.id) {
     const offsetX = store.start_x - x;
     const offsetY = store.start_y - y;
 
@@ -169,18 +158,18 @@ function 拖拽放下(event, v) {
 
     console.log("重新计算", "newLeft:", newLeft, "newTop:", newTop, "offsetX:", offsetX, "offsetY:", offsetY);
 
-    store.当前拖拽组件数据.left = newLeft + "px";
-    store.当前拖拽组件数据.top = newTop + "px";
+    store.当前拖拽组件数据.left = newLeft;
+    store.当前拖拽组件数据.top = newTop;
     return
   }
   x = x - store.start_x
   y = y - store.start_y
   console.log("重新计算", "x", x, "y", y)
-  store.当前拖拽组件数据.left = x + "px"
-  store.当前拖拽组件数据.top = y + "px"
+  store.当前拖拽组件数据.left = x
+  store.当前拖拽组件数据.top = y
 
-  递归删除(store.list, store.当前拖拽组件数据.名称)
-  递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.名称)
+  递归删除(store.list, store.当前拖拽组件数据.id)
+  递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.id)
 
 
   console.log(JSON.stringify(store.list, null, 2))
@@ -193,9 +182,9 @@ function 递归添加(源数据, 插入数据, 放置的容器名称) {
     if (item.子组件 == undefined) {
 
     } else {
-      if (item.名称 == 放置的容器名称) {
+      if (item.id == 放置的容器名称) {
         // console.log("找到了", item.子组件)
-        递归添加(item.子组件, 插入数据, "abc")
+        // 递归添加(item.子组件, 插入数据, "abc")
         item.子组件 = [插入数据, ...item.子组件]
 
       } else {
@@ -208,7 +197,7 @@ function 递归添加(源数据, 插入数据, 放置的容器名称) {
 function 递归删除(源数据, 删除的对象名称) {
   // console.log("递归删除", 源数据, 删除的对象名称)
   源数据.forEach((item, index) => {
-    if (item.名称 == 删除的对象名称) {
+    if (item.id == 删除的对象名称) {
       源数据.splice(index, 1);
     }
     if (item.子组件 == undefined) {
@@ -226,7 +215,7 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
   //遍历源数据
   for (let i = 0; i < 源数据.子组件.length; i++) {
     let item = 源数据.子组件[i];
-    if (item.名称 == 对象名称) {
+    if (item.id == 对象名称) {
       return true
     }
     if (item.子组件 == undefined) {
@@ -243,7 +232,7 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
 
 function 鼠标按下(event, v) {
   console.log("鼠标按下", v)
-  store.当前组件索引 = v.名称
+  store.当前组件索引 = v.id
   store.当前拖拽组件数据 = v
 }
 
@@ -254,19 +243,16 @@ function 鼠标按下(event, v) {
   position: relative;
   width: 100%;
   height: 100%;
-  cursor: pointer;
-  margin-right: 10px;
-  margin-bottom: 10px;
   overflow: hidden;
 }
-
-.子组件.高亮 {
-  background-color: rgb(10 152 227 / 26%);
+.el-tabs{
+  overflow: visible !important;
+  width: auto !important;
 }
 
-.el-tabs__content {
-  height: 100%;
-  padding: 0 !important;
-}
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.6; /* 可选：降低透明度来表示禁用状态 */
+}
 </style>

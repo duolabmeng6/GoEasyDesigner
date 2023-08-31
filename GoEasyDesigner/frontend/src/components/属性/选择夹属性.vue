@@ -28,19 +28,39 @@
       <el-form-item label="可视">
         <el-switch v-model="props.item.可视"/>
       </el-form-item>
-      <el-form-item label="标题">
-        <el-input v-model="props.item.标题"/>
+      <el-form-item label="现行选中项">
+        <el-input v-model="props.item.现行选中项"/>
       </el-form-item>
-      <el-form-item label="按钮类型">
-        <el-select v-model="props.item.按钮类型" style="width: 100%">
+      <el-form-item label="风格类型">
+        <el-select v-model="props.item.风格类型" style="width: 100%">
           <el-option
-              v-for="(item, index) in 按钮类型选项"
+              v-for="(item, index) in 风格类型选项"
               :key="item"
               :label="item"
               :value="item"
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="标签位置">
+        <el-select v-model="props.item.标签位置" style="width: 100%">
+          <el-option
+              v-for="(item, index) in 标签位置选项"
+              :key="item"
+              :label="item"
+              :value="item"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="选项卡">
+        <div v-for="(item, index) in props.item.子组件">
+          <el-input v-model="item.标题"/>
+          <el-button @click.stop="store.递归删除id(store.list, item.id)">删除</el-button>
+        </div>
+        <el-button @click.stop="store.新增子组件(item.id)">增加</el-button>
+      </el-form-item>
+
+
     </el-form>
   </div>
   <div class="添加组件事件">
@@ -65,13 +85,21 @@ import {ref, defineProps, defineEmits} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 按钮类型选项 = ref([
-  "default",
-  "primary",
-  "success",
-  "info",
-  "warning",
-  "danger",
+
+import {useCounterStore} from '@/stores/counter'
+
+const store = useCounterStore()
+
+
+let 风格类型选项 = ref([
+  "card",
+  "border-card",
+]);
+let 标签位置选项 = ref([
+  "left",
+  "right",
+  "top",
+  "bottom",
 ]);
 
 
@@ -102,4 +130,6 @@ const handleSelectChange = function () {
   emits("添加事件被选择", Name);
 
 }
+
+
 </script>

@@ -28,19 +28,6 @@
       <el-form-item label="可视">
         <el-switch v-model="props.item.可视"/>
       </el-form-item>
-      <el-form-item label="标题">
-        <el-input v-model="props.item.标题"/>
-      </el-form-item>
-      <el-form-item label="按钮类型">
-        <el-select v-model="props.item.按钮类型" style="width: 100%">
-          <el-option
-              v-for="(item, index) in 按钮类型选项"
-              :key="item"
-              :label="item"
-              :value="item"
-          />
-        </el-select>
-      </el-form-item>
     </el-form>
   </div>
   <div class="添加组件事件">
@@ -65,14 +52,6 @@ import {ref, defineProps, defineEmits} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 按钮类型选项 = ref([
-  "default",
-  "primary",
-  "success",
-  "info",
-  "warning",
-  "danger",
-]);
 
 
 let 事件索引 = ref(0)

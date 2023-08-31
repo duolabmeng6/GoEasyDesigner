@@ -2,45 +2,31 @@
   <div class="属性表格">
     <el-form
         label-position="left"
+        label-width="100px"
         style="max-width: 460px"
     >
       <el-form-item label="名称">
-        <el-input v-model="props.item.名称"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].名称"/>
       </el-form-item>
       <el-form-item label="顶边">
-        <el-input v-model="props.item.top"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].style.top"/>
       </el-form-item>
       <el-form-item label="左边">
-        <el-input v-model="props.item.left"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].style.left"/>
       </el-form-item>
       <el-form-item label="宽度">
-        <el-input v-model="props.item.width"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].style.width"/>
       </el-form-item>
       <el-form-item label="高度">
-        <el-input v-model="props.item.height"/>
-      </el-form-item>
-      <el-form-item label="层级">
-        <el-input v-model="props.item.层级"/>
-      </el-form-item>
-      <el-form-item label="禁用">
-        <el-switch v-model="props.item.禁用"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].style.height"/>
       </el-form-item>
       <el-form-item label="可视">
-        <el-switch v-model="props.item.可视"/>
+        <el-switch v-model="store.组件列表[store.当前组件索引].可视"/>
       </el-form-item>
       <el-form-item label="标题">
-        <el-input v-model="props.item.标题"/>
+        <el-input v-model="store.组件列表[store.当前组件索引].标题"/>
       </el-form-item>
-      <el-form-item label="按钮类型">
-        <el-select v-model="props.item.按钮类型" style="width: 100%">
-          <el-option
-              v-for="(item, index) in 按钮类型选项"
-              :key="item"
-              :label="item"
-              :value="item"
-          />
-        </el-select>
-      </el-form-item>
+
     </el-form>
   </div>
   <div class="添加组件事件">
@@ -61,19 +47,11 @@
 
 </template>
 <script setup>
+import {useCounterStore} from '@/stores/counter'
 import {ref, defineProps, defineEmits} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
-const props = defineProps(['item']);
-let 按钮类型选项 = ref([
-  "default",
-  "primary",
-  "success",
-  "info",
-  "warning",
-  "danger",
-]);
-
+const store = useCounterStore()
 
 let 事件索引 = ref(0)
 

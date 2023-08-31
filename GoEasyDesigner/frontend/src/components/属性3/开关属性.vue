@@ -19,19 +19,18 @@
     <el-form-item label="高度">
       <el-input v-model="store.组件列表[store.当前组件索引].style.height"/>
     </el-form-item>
-    <el-form-item label="内容">
-      <el-input v-model="store.组件列表[store.当前组件索引].内容"/>
-    </el-form-item>
     <el-form-item label="可视">
       <el-switch v-model="store.组件列表[store.当前组件索引].可视"/>
     </el-form-item>
-    <el-form-item label="内容被改变事件">
-      <el-input v-model="store.组件列表[store.当前组件索引].内容被改变事件" type="textarea"/>
+    <el-form-item label="选中">
+      <el-switch v-model="store.组件列表[store.当前组件索引].选中"/>
     </el-form-item>
+
   </el-form>
 </template>
 <script setup>
 import {useCounterStore} from '@/stores/counter'
+
 const store = useCounterStore()
 
 
