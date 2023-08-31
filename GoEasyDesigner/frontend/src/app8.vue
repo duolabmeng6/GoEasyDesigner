@@ -1,5 +1,13 @@
 <template>
   <el-row>
+    <el-col :span="24" style="margin-bottom: 20px">
+      <el-button :icon="Edit" @click="打开">打开</el-button>
+      <el-button :icon="Edit" @click="保存">保存</el-button>
+      <el-button :icon="Edit" @click="运行">运行</el-button>
+      <el-button :icon="Edit" @click="编译">编译</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
     <el-col :span="5" style="padding: 10px" class="clear-select">
 
       <div class="组件列表" v-if="store.当前拖拽组件数据 != undefined">
@@ -66,6 +74,7 @@ import {ref, inject} from 'vue';
 import RecursiveItem from "@/RecursiveItem.vue";
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
+import {Edit} from "@element-plus/icons-vue";
 
 const store = useCounterStore()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
@@ -143,6 +152,15 @@ store.list = list
 store.取组件列表()
 store.当前拖拽组件数据 = store.组件通过id查找结构("1")
 
+function 保存(){
+  console.log("保存")
+  let njson = JSON.stringify(store.list, null, 2)
+  const blob = new Blob([njson], {type: 'application/json'})
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = '组件数据.json'
+  link.click()
+}
 </script>
 
 <style>
