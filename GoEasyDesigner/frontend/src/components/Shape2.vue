@@ -12,7 +12,7 @@
 
     ></div>
 
-    <div class="调整整体位置">
+    <div class="调整整体位置" v-if="nowIndex!=='1'">
       <el-button-group
           v-if="nowIndex == index"
       >

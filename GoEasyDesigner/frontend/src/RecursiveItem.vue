@@ -176,7 +176,7 @@ function 拖拽放下(event, v) {
   console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
   store.当前组件索引 =store.当前拖拽组件数据.id
-  
+
 }
 
 function 递归添加(源数据, 插入数据, 放置的容器名称) {

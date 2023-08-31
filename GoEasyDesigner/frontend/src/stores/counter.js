@@ -13,7 +13,7 @@ export const useCounterStore = defineStore('counter', {
                 名称: ref("窗口"),
                 标题: ref("窗口"),
             },
-            当前组件索引: ref("-1"),
+            当前组件索引: ref("1"),
             组件列表: ref([]),
             项目信息: ref({
                 设计文件路径: "",//"stores\\组件数据.json",

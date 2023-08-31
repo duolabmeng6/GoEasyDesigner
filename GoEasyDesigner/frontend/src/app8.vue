@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="5" style="padding: 10px">
+    <el-col :span="5" style="padding: 10px" class="clear-select">
 
       <div class="组件列表" v-if="store.当前拖拽组件数据 != undefined">
         <el-select
@@ -28,7 +28,7 @@
 
       </div>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="4"  class="clear-select">
 
       <el-tabs type="border-card" tab-position="top" style="height: 100%" class="demo-tabs">
         <el-tab-pane label="组件">
@@ -140,6 +140,8 @@ const list = ref([
   }
 ])
 store.list = list
+store.取组件列表()
+store.当前拖拽组件数据 = store.组件通过id查找结构("1")
 
 </script>
 
@@ -147,4 +149,11 @@ store.list = list
 .子组件.高亮 {
   background-color: rgba(0, 166, 255, 0.3);
 }
+.clear-select{
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer / Edge */
+}
+
 </style>

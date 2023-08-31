@@ -26,7 +26,7 @@
     </el-form-item>
 
     <el-form label-position="top">
-      <el-form-item label="选项卡"
+      <el-form-item label="选项"
       >
         <el-row v-for="(item, index) in props.item.选项">
           <el-col :span="10">
