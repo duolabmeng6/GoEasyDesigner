@@ -14,16 +14,25 @@
          @drop.stop="拖拽放下($event,item)"
          draggable="true"
          @click.stop="鼠标按下($event,item)"
-
     >
       <template v-if="item.组件名称=='按钮'">
         <el-button :style="getItemStyle2(item)">{{ item.名称 }}</el-button>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
+        <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+      </template>
+      <template v-else-if="item.组件名称=='选择夹'">
+        <el-tabs type="border-card" v-model="item.现行选中项" :style="getItemStyle2(item)" style="overflow: hidden;padding: 0">
+          <el-tab-pane
+              v-for="(tabItem, tabItemIndex) in item.子组件" :key="tabItemIndex"
+              :label="tabItem.title">
+            <RecursiveItem v-for="(tabItem2, tabItemIndex2) in tabItem.子组件" :key="tabItemIndex2" :item="tabItem2"/>
+          </el-tab-pane>
+        </el-tabs>
       </template>
       <template v-else>
+        <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
-      <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
     </div>
   </Shape2>
 </template>
@@ -86,7 +95,7 @@ function 拖拽开始(event, v) {
     return
   }
   console.log("拖拽开始", v)
-  store.当前拖拽组件数据.value = v
+  store.当前拖拽组件数据 = v
   //修改鼠标为拖动状态
   event.dataTransfer.effectAllowed = "move";
 
@@ -110,7 +119,7 @@ function 拖拽进入(event, v) {
     event.stopPropagation();
     return
   }
-  console.log("拖拽进入", v)
+  // console.log("拖拽进入", v)
   event.target.classList.add('高亮');
 }
 
@@ -131,12 +140,14 @@ function 拖拽放下(event, v) {
 
   event.target.classList.remove('高亮');
   let 放置目标组件数据 = v
-  console.log("当前拖拽组件数据", store.当前拖拽组件数据.value)
+  console.log("当前拖拽组件数据", store.当前拖拽组件数据)
   console.log("放置目标组件数据", 放置目标组件数据)
-  if (放置目标组件数据.名称 == store.当前拖拽组件数据.value.名称) {
-    console.log("不能放置到自己身上")
-    return
+  if (检查放置目标是否为自身组件的子组件(store.当前拖拽组件数据, 放置目标组件数据.名称)) {
+    console.log("当前目标子组件是自己的 不能放置")
+    return;
   }
+
+
   // 获取当前鼠标相对于当前元素的相对位置
   let x = event.offsetX;
   let y = event.offsetY;
@@ -144,20 +155,40 @@ function 拖拽放下(event, v) {
   console.log("start_x", store.start_x, "start_y", store.start_y)
   console.log("x", x, "y", y)
 
+
+  if (放置目标组件数据.名称 == store.当前拖拽组件数据.名称) {
+    const offsetX = store.start_x - x;
+    const offsetY = store.start_y - y;
+
+    const initialLeft = parseInt(store.当前拖拽组件数据.left);
+    const initialTop = parseInt(store.当前拖拽组件数据.top);
+
+
+    const newLeft = initialLeft - offsetX; // 计算新的左偏移量
+    const newTop = initialTop - offsetY;   // 计算新的上偏移量
+
+    console.log("重新计算", "newLeft:", newLeft, "newTop:", newTop, "offsetX:", offsetX, "offsetY:", offsetY);
+
+    store.当前拖拽组件数据.left = newLeft + "px";
+    store.当前拖拽组件数据.top = newTop + "px";
+    return
+  }
   x = x - store.start_x
   y = y - store.start_y
   console.log("重新计算", "x", x, "y", y)
+  store.当前拖拽组件数据.left = x + "px"
+  store.当前拖拽组件数据.top = y + "px"
+
+  递归删除(store.list, store.当前拖拽组件数据.名称)
+  递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.名称)
 
 
-  store.当前拖拽组件数据.value.left = x + "px"
-  store.当前拖拽组件数据.value.top = y + "px"
+  console.log(JSON.stringify(store.list, null, 2))
 
-  递归删除(store.list, store.当前拖拽组件数据.value.名称)
-  递归添加(store.list, store.当前拖拽组件数据.value, 放置目标组件数据.名称)
 }
 
 function 递归添加(源数据, 插入数据, 放置的容器名称) {
-  console.log("递归添加", 源数据, 插入数据, 放置的容器名称)
+  // console.log("递归添加", 源数据, 插入数据, 放置的容器名称)
   源数据.forEach((item, index) => {
     if (item.子组件 == undefined) {
 
@@ -175,7 +206,7 @@ function 递归添加(源数据, 插入数据, 放置的容器名称) {
 }
 
 function 递归删除(源数据, 删除的对象名称) {
-  console.log("递归删除", 源数据, 删除的对象名称)
+  // console.log("递归删除", 源数据, 删除的对象名称)
   源数据.forEach((item, index) => {
     if (item.名称 == 删除的对象名称) {
       源数据.splice(index, 1);
@@ -188,9 +219,32 @@ function 递归删除(源数据, 删除的对象名称) {
   });
 }
 
+function 检查放置目标是否为自身组件的子组件(源数据, 对象名称) {
+  if (对象名称 == "") {
+    return false
+  }
+  //遍历源数据
+  for (let i = 0; i < 源数据.子组件.length; i++) {
+    let item = 源数据.子组件[i];
+    if (item.名称 == 对象名称) {
+      return true
+    }
+    if (item.子组件 == undefined) {
+
+    } else {
+      if (检查放置目标是否为自身组件的子组件(item, 对象名称)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+
 function 鼠标按下(event, v) {
   console.log("鼠标按下", v)
   store.当前组件索引 = v.名称
+  store.当前拖拽组件数据 = v
 }
 
 </script>
@@ -203,9 +257,16 @@ function 鼠标按下(event, v) {
   cursor: pointer;
   margin-right: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .子组件.高亮 {
   background-color: rgb(10 152 227 / 26%);
 }
+
+.el-tabs__content {
+  height: 100%;
+  padding: 0 !important;
+}
+
 </style>

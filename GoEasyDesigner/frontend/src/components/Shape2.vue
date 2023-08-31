@@ -38,8 +38,8 @@ export default {
     },
   },
   created() {
-    console.log("index", this.index);
-    console.log("nowIndex", this.nowIndex);
+    // console.log("index", this.index);
+    // console.log("nowIndex", this.nowIndex);
 
   },
   emits: ['update-style'],
@@ -161,6 +161,7 @@ export default {
 <style scoped>
 .Shape {
   position: absolute;
+
 }
 
 .dot {
@@ -169,6 +170,8 @@ export default {
   background-color: #057aff;
   position: absolute;
   cursor: pointer;
+  z-index: 9999;
+
 }
 
 .top {
@@ -233,5 +236,7 @@ export default {
   background-color: #057aff;
   position: absolute;
   cursor: pointer;
+  z-index: 9999;
+
 }
 </style>
