@@ -16,7 +16,7 @@
          @click.stop="鼠标按下($event,item)"
     >
       <template v-if="item.组件名称=='按钮'">
-        <el-button :style="getItemStyle2(item)">{{ item.名称 }}</el-button>
+        <el-button :style="getItemStyle2(item)">{{ item.标题 }}</el-button>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
         <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>

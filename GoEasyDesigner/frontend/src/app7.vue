@@ -1,7 +1,31 @@
 <template>
   <el-row>
-    <el-col :span="20">
-      <RecursiveItem v-for="(item, index) in store.list" :key="index" :item="item"/>
+    <el-col :span="4">
+      <el-row>
+        <el-col :span="24" v-if="store.当前拖拽组件数据 != undefined && store.当前拖拽组件数据.组件名称 == '选择夹'">
+          <div v-for="(item, index) in store.当前拖拽组件数据.子组件">
+            选项卡
+            <div>
+              <input v-model="item.title">
+              <button @click="删除子组件(item)">删除</button>
+            </div>
+          </div>
+          <button @click="新增子组件(store.当前拖拽组件数据)">增加</button>
+          现行选中项 <input v-model="store.当前拖拽组件数据.现行选中项">
+
+        </el-col>
+
+        <el-col :span="24" v-if="store.当前拖拽组件数据 != undefined && store.当前拖拽组件数据.组件名称 == '按钮'">
+          标题 <input v-model="store.当前拖拽组件数据.标题">
+        </el-col>
+      </el-row>
+
+    </el-col>
+    <el-col :span="16">
+      <div style="position: relative">
+        <RecursiveItem v-for="(item, index) in store.list" :key="index" :item="item"/>
+
+      </div>
     </el-col>
     <el-col :span="4">
       <el-col :span="24">
@@ -27,22 +51,6 @@
         </el-button>
       </el-col>
 
-      <el-col :span="24" v-if="store.当前拖拽组件数据 != undefined && store.当前拖拽组件数据.组件名称 == '选择夹'">
-        <div v-for="(item, index) in store.当前拖拽组件数据.子组件">
-          选项卡
-          <div>
-            <input v-model="item.title">
-            <button @click="删除子组件(item)">删除</button>
-          </div>
-        </div>
-        <button @click="新增子组件(store.当前拖拽组件数据)">增加</button>
-        现行选中项 <input v-model="store.当前拖拽组件数据.现行选中项">
-
-      </el-col>
-
-      <el-col :span="24" v-if="store.当前拖拽组件数据 != undefined && store.当前拖拽组件数据.组件名称 == '按钮'">
-        标题 <input v-model="store.当前拖拽组件数据.标题">
-      </el-col>
 
     </el-col>
   </el-row>
@@ -94,7 +102,7 @@ function 新增子组件(item) {
 
     ]
   }
-  item.子组件 = [ ...item.子组件,插入数据]
+  item.子组件 = [...item.子组件, 插入数据]
   console.log(" store.当前拖拽组件数据", store.当前拖拽组件数据)
   nextTick().then(() => {
     store.当前组件索引 = item.名称
@@ -139,7 +147,7 @@ function 拖拽开始(event, 组件名称) {
       left: "440px",
       width: "300px",
       height: "300px",
-      现行选中项:0,
+      现行选中项: 0,
       禁止放置: true,
       子组件: [
         {
@@ -354,54 +362,13 @@ const list = ref([
     "组件名称": "窗口",
     "top": "0px",
     "left": "0px",
-    "width": "800px",
-    "height": "600px",
+    "width": "500px",
+    "height": "800px",
     "border": "1px solid red",
     "禁止放置": false,
     "禁止拖动": true,
     "子组件": [
-      {
-        "组件名称": "选择夹",
-        "名称": "选择夹1",
-        "top": "163px",
-        "left": "351px",
-        "width": "300px",
-        "height": "300px",
-        "禁止放置": true,
-        "现行选中项":0,
-        "子组件": [
-          {
-            "title": "选项卡1",
-            "子组件": [
-              {
-                "名称": "选择夹1tab布局容器1",
-                "top": "0",
-                "left": "0",
-                "width": "100%",
-                "height": "100%",
-                "禁止放置": false,
-                "禁止拖动": true,
-                "子组件": []
-              }
-            ]
-          },
-          {
-            "title": "选项卡2",
-            "子组件": [
-              {
-                "名称": "选择夹1tab布局容器2",
-                "top": "0",
-                "left": "0",
-                "width": "100%",
-                "height": "100%",
-                "禁止放置": false,
-                "禁止拖动": true,
-                "子组件": []
-              }
-            ]
-          }
-        ]
-      }
+
     ]
   }
 ])
