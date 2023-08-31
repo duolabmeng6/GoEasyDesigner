@@ -4,30 +4,7 @@
         label-position="left"
         style="max-width: 460px"
     >
-      <el-form-item label="名称">
-        <el-input v-model="props.item.名称"/>
-      </el-form-item>
-      <el-form-item label="顶边">
-        <el-input v-model="props.item.top"/>
-      </el-form-item>
-      <el-form-item label="左边">
-        <el-input v-model="props.item.left"/>
-      </el-form-item>
-      <el-form-item label="宽度">
-        <el-input v-model="props.item.width"/>
-      </el-form-item>
-      <el-form-item label="高度">
-        <el-input v-model="props.item.height"/>
-      </el-form-item>
-      <el-form-item label="层级">
-        <el-input v-model="props.item.层级"/>
-      </el-form-item>
-      <el-form-item label="禁用">
-        <el-switch v-model="props.item.禁用"/>
-      </el-form-item>
-      <el-form-item label="可视">
-        <el-switch v-model="props.item.可视"/>
-      </el-form-item>
+      <component is="公用属性" :item="item"/>
       <el-form-item label="现行选中项">
         <el-input v-model="props.item.现行选中项"/>
       </el-form-item>
@@ -51,16 +28,21 @@
           />
         </el-select>
       </el-form-item>
-
-      <el-form-item label="选项卡">
-        <div v-for="(item, index) in props.item.子组件">
-          <el-input v-model="item.标题"/>
-          <el-button @click.stop="store.递归删除id(store.list, item.id)">删除</el-button>
-        </div>
-        <el-button @click.stop="store.新增子组件(item.id)">增加</el-button>
+    </el-form>
+    <el-form label-position="top">
+      <el-form-item label="选项卡"
+      >
+        <el-input v-for="(item, index) in props.item.子组件"
+                  v-model="item.标题"
+                  placeholder=""
+                  style="margin-bottom: 10px"
+        >
+          <template #append>
+            <el-button @click.stop="store.递归删除id(store.list, item.id)" :icon="Delete" size="small"></el-button>
+          </template>
+        </el-input>
+        <el-button @click.stop="store.新增子组件(item.id)" size="small">增加选择夹</el-button>
       </el-form-item>
-
-
     </el-form>
   </div>
   <div class="添加组件事件">
@@ -85,6 +67,8 @@ import {ref, defineProps, defineEmits} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
+
+import {Delete} from "@element-plus/icons-vue";
 
 import {useCounterStore} from '@/stores/counter'
 

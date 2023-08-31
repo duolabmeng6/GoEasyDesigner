@@ -19,16 +19,17 @@
          :class="{ 'disabled': item.禁用 }"
     >
       <template v-if="item.组件名称=='按钮'">
-        <component is="按钮" :item="item" />
+        <component is="按钮" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
         <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
-        <component is="选择夹" :item="item" />
-
+        <component is="选择夹" :item="item"/>
       </template>
       <template v-else>
+        <component :is="item.组件名称" :item="item"/>
+
         <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
     </div>
@@ -70,9 +71,6 @@ function updateStyle(item, newStyle) {
   }
   return item
 }
-
-
-
 
 
 store.start_x = 0;
@@ -209,7 +207,7 @@ function 递归删除(源数据, 删除的对象名称) {
 }
 
 function 检查放置目标是否为自身组件的子组件(源数据, 对象名称) {
-  if (对象名称 == "") {
+  if (对象名称 == "" || 对象名称 == undefined) {
     return false
   }
   //遍历源数据
@@ -222,6 +220,7 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
 
     } else {
       if (检查放置目标是否为自身组件的子组件(item, 对象名称)) {
+        console.log("当前对象名称",对象名称, "当前组件名称", item.名称)
         return true
       }
     }
@@ -234,6 +233,16 @@ function 鼠标按下(event, v) {
   console.log("鼠标按下", v)
   store.当前组件索引 = v.id
   store.当前拖拽组件数据 = v
+
+  if (v.父容器id != undefined) {
+    store.当前组件索引 = v.父容器id
+    store.当前拖拽组件数据 = store.组件通过id查找结构(v.父容器id)
+    console.log("当前拖拽组件数据", store.当前拖拽组件数据)
+    console.log("v.父容器id", v.父容器id)
+
+
+  }
+
 }
 
 </script>
@@ -245,7 +254,8 @@ function 鼠标按下(event, v) {
   height: 100%;
   overflow: hidden;
 }
-.el-tabs{
+
+.el-tabs {
   overflow: visible !important;
   width: auto !important;
 }

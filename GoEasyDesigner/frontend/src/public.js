@@ -12,6 +12,7 @@ const getItemStyle = (item) => {
         width: parseDimension(item.width),
         height: parseDimension(item.height),
         border: item.border,
+        background: item.background,
         zIndex: item.层级
     };
 

@@ -1,22 +1,24 @@
 <template>
-  <div>
-    <el-checkbox v-model="属性.选中" :label="属性.标题" size="large" />
-  </div>
+    <el-checkbox
+        :getItemStyle="getItemStyle(item)"
+
+        v-model="item.选中"
+                 :size="item.尺寸"
+                 :border="item.带边框"
+                 :label="item.标题"  />
 
 </template>
 
 <script>
+import {getItemStyle} from "@/public";
+
 export default {
+  methods: {getItemStyle},
   props: {
-    属性: {
+    item: {
       type: Object,
       default: '',
     }
   },
 }
 </script>
-
-<style>
-
-
-</style>

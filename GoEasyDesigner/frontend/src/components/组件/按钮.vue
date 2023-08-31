@@ -1,9 +1,10 @@
 <template>
   <el-button
-      :style="getItemStyle(item)"
+      :style="item.尺寸=='custom' ? getItemStyle(item):''"
       v-show="item.可视"
       v-bind:disabled="item.禁用"
       :type="item.按钮类型"
+      :size="item.尺寸"
   >{{ item.标题 }}</el-button>
 </template>
 

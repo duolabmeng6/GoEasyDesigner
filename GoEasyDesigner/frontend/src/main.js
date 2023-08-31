@@ -10,8 +10,8 @@ import App from './App8.vue'
 
 const app = createApp(App)
 
-// import 按钮 from '@/components/按钮.vue';
-// app.component('按钮', 按钮)
+// import 按钮.json from '@/components/按钮.json.vue';
+// app.component('按钮.json', 按钮.json)
 // import 编辑框 from '@/components/编辑框.vue';
 // app.component('编辑框', 编辑框)
 // import 标签 from '@/components/标签.vue';
@@ -29,12 +29,27 @@ for (const path in modules) {
 }
 console.log(组件名称列表)
 //写出共享的变量
-let 组件名称顺序 = ['按钮', '编辑框', '标签', '开关']
+let 组件名称顺序 = ['按钮', '编辑框', '标签', '开关','布局容器']
 // 与组件名称列表合并但是根据组件名称顺序排序
 组件名称列表 = [...new Set([...组件名称顺序, ...组件名称列表])]
 
 app.config.globalProperties.组件名称列表 = 组件名称列表
 
+
+// let 创建组件属性默认值 = {}
+// import 创建组件属性_按钮 from './components/创建组件属性/按钮.js';
+// import 创建组件属性_布局容器 from './components/创建组件属性/布局容器.js';
+// import 创建组件属性_选择夹 from './components/创建组件属性/选择夹.js';
+// 创建组件属性默认值["按钮"] = 创建组件属性_按钮
+// 创建组件属性默认值["布局容器"] = 创建组件属性_布局容器
+// 创建组件属性默认值["选择夹"] = 创建组件属性_选择夹
+let 创建组件属性默认值 = {}
+const modulesjs = import.meta.globEager('./components/创建组件属性/*.js')
+for (const path in modulesjs) {
+    const name = path.match(/\.\/components\/创建组件属性\/(.*)\.js$/)[1]
+    创建组件属性默认值[name] = modulesjs[path].default
+}
+app.provide('创建组件属性默认值', 创建组件属性默认值)
 
 const modules2 = import.meta.globEager('./components/属性/*.vue')
 for (const path in modules2) {

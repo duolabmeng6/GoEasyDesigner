@@ -4,35 +4,46 @@
       label-width="100px"
       style="max-width: 460px"
   >
-    <el-form-item label="名称">
-      <el-input v-model="store.组件列表[store.当前组件索引].名称"/>
-    </el-form-item>
-    <el-form-item label="顶边">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.top"/>
-    </el-form-item>
-    <el-form-item label="左边">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.left"/>
-    </el-form-item>
-    <el-form-item label="宽度">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.width"/>
-    </el-form-item>
-    <el-form-item label="高度">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.height"/>
-    </el-form-item>
-    <el-form-item label="可视">
-      <el-switch v-model="store.组件列表[store.当前组件索引].可视"/>
-    </el-form-item>
+    <component is="公用属性" :item="item"/>
+
+
     <el-form-item label="选中">
-      <el-switch v-model="store.组件列表[store.当前组件索引].选中"/>
+      <el-switch v-model="item.选中"/>
     </el-form-item>
+    <el-form-item label="尺寸">
+      <el-select v-model="props.item.尺寸" style="width: 100%">
+        <el-option
+            v-for="(item, index) in 尺寸选项"
+            :key="item"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item label="选中文本">
+      <el-input v-model="props.item.选中文本"/>
+    </el-form-item>
+    <el-form-item label="未选中文本">
+      <el-input v-model="props.item.未选中文本"/>
+    </el-form-item>
+    <el-form-item label="内置文字">
+      <el-switch v-model="props.item.内置文字"/>
+    </el-form-item>
+
 
   </el-form>
 </template>
 <script setup>
-import {useCounterStore} from '@/stores/counter'
+import {ref, defineProps, defineEmits} from "vue";
 
-const store = useCounterStore()
-
+const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
+const props = defineProps(['item']);
+let 尺寸选项 = ref([
+  {"label": "默认", "value": "default"},
+  {"label": "大号", "value": "large"},
+  {"label": "小号", "value": "small"},
+]);
 
 </script>
 

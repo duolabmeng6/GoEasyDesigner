@@ -4,30 +4,8 @@
         label-position="left"
         style="max-width: 460px"
     >
-      <el-form-item label="名称">
-        <el-input v-model="props.item.名称"/>
-      </el-form-item>
-      <el-form-item label="顶边">
-        <el-input v-model="props.item.top"/>
-      </el-form-item>
-      <el-form-item label="左边">
-        <el-input v-model="props.item.left"/>
-      </el-form-item>
-      <el-form-item label="宽度">
-        <el-input v-model="props.item.width"/>
-      </el-form-item>
-      <el-form-item label="高度">
-        <el-input v-model="props.item.height"/>
-      </el-form-item>
-      <el-form-item label="层级">
-        <el-input v-model="props.item.层级"/>
-      </el-form-item>
-      <el-form-item label="禁用">
-        <el-switch v-model="props.item.禁用"/>
-      </el-form-item>
-      <el-form-item label="可视">
-        <el-switch v-model="props.item.可视"/>
-      </el-form-item>
+      <component is="公用属性" :item="item"/>
+
       <el-form-item label="标题">
         <el-input v-model="props.item.标题"/>
       </el-form-item>
@@ -36,8 +14,18 @@
           <el-option
               v-for="(item, index) in 按钮类型选项"
               :key="item"
-              :label="item"
-              :value="item"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="尺寸">
+        <el-select v-model="props.item.尺寸" style="width: 100%">
+          <el-option
+              v-for="(item, index) in 尺寸选项"
+              :key="item"
+              :label="item.label"
+              :value="item.value"
           />
         </el-select>
       </el-form-item>
@@ -66,12 +54,19 @@ import {ref, defineProps, defineEmits} from "vue";
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
 let 按钮类型选项 = ref([
-  "default",
-  "primary",
-  "success",
-  "info",
-  "warning",
-  "danger",
+  {"label": "默认", "value": "default"},
+  {"label": "主要", "value": "primary"},
+  {"label": "成功", "value": "success"},
+  {"label": "信息", "value": "info"},
+  {"label": "警告", "value": "warning"},
+  {"label": "危险", "value": "danger"},
+]);
+
+let 尺寸选项 = ref([
+  {"label": "自定义", "value": "custom"},
+  {"label": "默认", "value": "default"},
+  {"label": "大号", "value": "large"},
+  {"label": "小号", "value": "small"},
 ]);
 
 

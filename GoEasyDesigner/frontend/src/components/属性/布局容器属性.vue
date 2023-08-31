@@ -4,30 +4,8 @@
         label-position="left"
         style="max-width: 460px"
     >
-      <el-form-item label="名称">
-        <el-input v-model="props.item.名称"/>
-      </el-form-item>
-      <el-form-item label="顶边">
-        <el-input v-model="props.item.top"/>
-      </el-form-item>
-      <el-form-item label="左边">
-        <el-input v-model="props.item.left"/>
-      </el-form-item>
-      <el-form-item label="宽度">
-        <el-input v-model="props.item.width"/>
-      </el-form-item>
-      <el-form-item label="高度">
-        <el-input v-model="props.item.height"/>
-      </el-form-item>
-      <el-form-item label="层级">
-        <el-input v-model="props.item.层级"/>
-      </el-form-item>
-      <el-form-item label="禁用">
-        <el-switch v-model="props.item.禁用"/>
-      </el-form-item>
-      <el-form-item label="可视">
-        <el-switch v-model="props.item.可视"/>
-      </el-form-item>
+      <component is="公用属性" :item="item"/>
+
     </el-form>
   </div>
   <div class="添加组件事件">

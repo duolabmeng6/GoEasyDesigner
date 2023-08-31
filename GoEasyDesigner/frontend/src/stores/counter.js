@@ -46,7 +46,7 @@ export const useCounterStore = defineStore('counter', {
 
         当前组件名称2() {
             console.log("this.当前拖拽组件数据.组件名称", this.当前拖拽组件数据.组件名称)
-            if (this.当前拖拽组件数据.组件名称 =="窗口") {
+            if (this.当前拖拽组件数据.组件名称 == "窗口") {
                 return "布局容器属性"
             }
             return this.当前拖拽组件数据.组件名称 + "属性"
@@ -102,6 +102,7 @@ export const useCounterStore = defineStore('counter', {
                         禁止拖动: true,
                         可视: true,
                         禁止: false,
+                        父容器id: id,
                         子组件: []
                     },
 
@@ -126,6 +127,23 @@ export const useCounterStore = defineStore('counter', {
                 }
             });
             return false
+        },
+        组件通过id查找结构(id) {
+            console.log("组件通过id查找结构", id);
+            return this.__组件通过id查找结构_递归(this.list, id);
+        },
+        __组件通过id查找结构_递归(源数据, id) {
+            for (const item of 源数据) {
+                if (item.id === id) {
+                    return item;
+                } else if (item.子组件) {
+                    const 子结果 = this.__组件通过id查找结构_递归(item.子组件, id);
+                    if (子结果) {
+                        return 子结果;
+                    }
+                }
+            }
+            return null;
         }
     },
 })

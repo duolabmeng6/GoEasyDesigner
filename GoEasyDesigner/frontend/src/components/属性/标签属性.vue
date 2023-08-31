@@ -4,38 +4,56 @@
       label-width="100px"
       style="max-width: 460px"
   >
-    <el-form-item label="名称">
-      <el-input v-model="store.组件列表[store.当前组件索引].名称"/>
-    </el-form-item>
-    <el-form-item label="顶边">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.top"/>
-    </el-form-item>
-    <el-form-item label="左边">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.left"/>
-    </el-form-item>
-    <el-form-item label="宽度">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.width"/>
-    </el-form-item>
-    <el-form-item label="高度">
-      <el-input v-model="store.组件列表[store.当前组件索引].style.height"/>
-    </el-form-item>
-    <el-form-item label="可视">
-      <el-switch v-model="store.组件列表[store.当前组件索引].可视"/>
-    </el-form-item>
+    <component is="公用属性" :item="item"/>
     <el-form-item label="标题">
-      <el-input v-model="store.组件列表[store.当前组件索引].标题"/>
+      <el-input v-model="item.标题"/>
     </el-form-item>
-    <el-form-item label="点击事件">
-      <el-input v-model="store.组件列表[store.当前组件索引].点击事件" type="textarea"/>
+    <el-form-item label="省略号">
+      <el-switch v-model="item.省略号"/>
+    </el-form-item>
+    <el-form-item label="尺寸">
+      <el-select v-model="props.item.尺寸" style="width: 100%">
+        <el-option
+            v-for="(item, index) in 尺寸选项"
+            :key="item"
+            :label="item"
+            :value="item"
+        />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item label="文字样式">
+      <el-select v-model="props.item.文字样式" style="width: 100%">
+        <el-option
+            v-for="(item, index) in 文字样式选项"
+            :key="item"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
     </el-form-item>
   </el-form>
 </template>
 <script setup>
-import {useCounterStore} from '@/stores/counter'
+import {ref, defineProps, defineEmits} from "vue";
 
-const store = useCounterStore()
+const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
+const props = defineProps(['item']);
+let 尺寸选项 = ref([
+  "default",
+  "large",
+  "small",
+]);
 
 
-
+let 文字样式选项 = ref([
+  {"label": "正常", "value": "p"},
+  {"label": "加粗", "value": "b"},
+  {"label": "斜体", "value": "i"},
+  {"label": "下标", "value": "sub"},
+  {"label": "插入线", "value": "ins"},
+  {"label": "删除线", "value": "del"},
+  {"label": "标记", "value": "mark"},
+]);
 
 </script>
