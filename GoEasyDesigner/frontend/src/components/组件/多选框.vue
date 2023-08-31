@@ -1,6 +1,6 @@
 <template>
 
-  <el-checkbox-group v-model="item.选中" :size="item.尺寸">
+  <el-checkbox-group v-model="item.现行选中项" :size="item.尺寸">
     <template v-if="item.按钮组">
       <el-checkbox-button
           v-for="(v, i) in item.选项"

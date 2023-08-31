@@ -1,6 +1,20 @@
 <template>
   <el-row>
-    <el-col :span="5">
+    <el-col :span="5" style="padding: 10px">
+
+      <div class="组件列表" v-if="store.当前拖拽组件数据 != undefined">
+        <el-select
+            v-model="store.当前组件索引" :dd="store.当前拖拽组件数据.id" class="m-2" placeholder="组件列表"
+                    style="width: 100%;margin-bottom: 20px;" @change="id=>console.log('id',store.当前拖拽组件数据 = store.组件通过id查找结构(id))">
+          <el-option
+              v-for="(item, index) in store.组件列表"
+              :key="index"
+              :label="item.label"
+              :value="item.id"
+          />
+        </el-select>
+      </div>
+
       <component v-if="store.当前拖拽组件数据 != undefined"
                  :is="store.当前组件名称2()"
                  @添加事件被选择="添加事件被选择"
@@ -109,6 +123,7 @@ function 拖拽开始(event, 组件名称) {
 
 const list = ref([
   {
+    "id": "1",
     "名称": "窗口",
     "组件名称": "窗口",
     "top": "0",

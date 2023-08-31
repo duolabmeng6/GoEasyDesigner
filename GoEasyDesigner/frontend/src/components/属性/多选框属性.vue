@@ -21,8 +21,8 @@
     <el-form-item label="带边框">
       <el-switch v-model="item.带边框"/>
     </el-form-item>
-    <el-form-item label="选中">
-      <el-input v-model="item.选中"/>
+    <el-form-item label="现行选中项">
+      <el-input v-model="item.现行选中项"/>
     </el-form-item>
 
     <el-form label-position="top">

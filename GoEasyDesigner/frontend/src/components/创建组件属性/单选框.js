@@ -8,7 +8,7 @@ export default {
     禁止: false,
     层级: 0,
     尺寸: "default",
-    选中: false,
+    现行选中项: "",
     选项:[
         {"label": "默认", "value": "default"},
         {"label": "大号", "value": "large"},

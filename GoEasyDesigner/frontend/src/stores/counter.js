@@ -144,6 +144,29 @@ export const useCounterStore = defineStore('counter', {
                 }
             }
             return null;
+        },
+        取组件列表() {
+            this.组件列表 = []
+            this.__取组件列表_递归(this.list);
+            console.log("取组件列表", this.组件列表)
+            return this.组件列表
+        },
+        __取组件列表_递归(源数据) {
+            for (const item of 源数据) {
+                const 组件数据 = {
+                    label: item.名称,
+                    id: item.id
+                }
+                if (item.名称 !== undefined && item.名称 !== null && item.名称 !== "") {
+                    this.组件列表.push(组件数据)
+                }
+
+                console.log("组件列表", this.组件列表)
+
+                if (item.子组件) {
+                    this.__取组件列表_递归(item.子组件);
+                }
+            }
         }
     },
 })

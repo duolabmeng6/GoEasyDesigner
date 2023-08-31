@@ -13,8 +13,8 @@
           <el-option
               v-for="(item, index) in 风格类型选项"
               :key="item"
-              :label="item"
-              :value="item"
+              :label="item.label"
+              :value="item.value"
           />
         </el-select>
       </el-form-item>
@@ -23,8 +23,8 @@
           <el-option
               v-for="(item, index) in 标签位置选项"
               :key="item"
-              :label="item"
-              :value="item"
+              :label="item.label"
+              :value="item.value"
           />
         </el-select>
       </el-form-item>
@@ -76,16 +76,16 @@ const store = useCounterStore()
 
 
 let 风格类型选项 = ref([
-  "card",
-  "border-card",
-]);
-let 标签位置选项 = ref([
-  "left",
-  "right",
-  "top",
-  "bottom",
+  {"label": "简洁", "value": "card"},
+  {"label": "卡片风格", "value": "border-card"},
 ]);
 
+let 标签位置选项 = ref([
+  {"label": "左侧", "value": "left"},
+  {"label": "右侧", "value": "right"},
+  {"label": "顶部", "value": "top"},
+  {"label": "底部", "value": "bottom"},
+]);
 
 let 事件索引 = ref(0)
 

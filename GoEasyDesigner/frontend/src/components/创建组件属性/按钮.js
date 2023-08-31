@@ -7,6 +7,6 @@ export default {
     按钮类型: "default",
     可视: true,
     禁止: false,
-    尺寸: "自定义",
+    尺寸: "custom",
     层级: 0,
 }

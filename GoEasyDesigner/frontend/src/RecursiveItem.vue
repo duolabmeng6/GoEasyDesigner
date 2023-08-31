@@ -8,16 +8,18 @@
       :item_data="item"
       :nowIndex="store.当前组件索引"
   >
-    <div class="子组件"
-         data-放置="1"
-         @dragstart.stop="拖拽开始($event,item)"
-         @dragover.prevent="拖拽进入($event,item)"
-         @dragleave.prevent="拖拽离开($event,item)"
-         @drop.stop="拖拽放下($event,item)"
-         draggable="true"
-         @click.stop="鼠标按下($event,item)"
-         v-show="item.可视"
-         :class="{ 'disabled': item.禁用 }"
+    <div
+        :id="item.名称"
+        class="子组件"
+        data-放置="1"
+        @dragstart.stop="拖拽开始($event,item)"
+        @dragover.prevent="拖拽进入($event,item)"
+        @dragleave.prevent="拖拽离开($event,item)"
+        @drop.stop="拖拽放下($event,item)"
+        draggable="true"
+        @click.stop="鼠标按下($event,item)"
+        v-show="item.可视"
+        :class="{ 'disabled': item.禁用 }"
     >
       <template v-if="item.组件名称=='按钮'">
         <component is="按钮" :item="item"/>
@@ -172,7 +174,9 @@ function 拖拽放下(event, v) {
 
 
   console.log(JSON.stringify(store.list, null, 2))
-
+  store.取组件列表()
+  store.当前组件索引 =store.当前拖拽组件数据.id
+  
 }
 
 function 递归添加(源数据, 插入数据, 放置的容器名称) {
