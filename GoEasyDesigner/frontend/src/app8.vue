@@ -1,12 +1,12 @@
 <template>
   <el-row>
     <el-col :span="24" style="margin-bottom: 20px">
+      <el-button :icon="Edit" @click="新建">新建</el-button>
       <el-button :icon="Edit" @click="打开">打开</el-button>
       <el-button :icon="Edit" @click="保存">保存</el-button>
       <el-button :icon="Edit" @click="运行">运行</el-button>
       <el-button :icon="Edit" @click="编译">编译</el-button>
       <el-button v-if="store.客户端模式" :icon="Edit" @click="e => store.显示项目配置对话框 = true">项目配置</el-button>
-
     </el-col>
   </el-row>
   <el-row style="overflow: hidden">
@@ -150,8 +150,8 @@ function 拖拽开始(event, 组件名称) {
   store.当前拖拽组件数据 = 新属性
 }
 
-const list = ref([
-  {
+function 创建窗口() {
+  return {
     "id": "1",
     "名称": "窗口",
     "组件名称": "窗口",
@@ -168,7 +168,9 @@ const list = ref([
     "层级": 0,
     "子组件": []
   }
-])
+}
+
+const list = ref([创建窗口()])
 store.list = list
 store.取组件列表()
 store.当前拖拽组件数据 = store.组件通过id查找结构("1")
@@ -179,6 +181,9 @@ function 初始化界面(txt) {
 
 }
 
+function 新建(txt) {
+  store.list = [创建窗口()]
+}
 
 function 打开() {
   if (store.客户端模式 == false) {
