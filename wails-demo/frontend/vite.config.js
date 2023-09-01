@@ -12,5 +12,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  optimizeDeps: {
+    include: [
+      './src/窗口/组件数据.json',
+        './src/窗口/窗口事件.js',
+        './src/窗口/辅助代码.js',
+        './src/窗口/窗口事件.js',
+
+    ]
   }
 })

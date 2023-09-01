@@ -53,11 +53,11 @@ function 生成辅助代码(obj) {
         code = code + "    " + codeLine + "\r\n"
     }
     let codeTpl = `
-function __代码辅助(list, 组件) {
+function __辅助代码(list, 组件) {
 ${code}
     return 组件
 }
-export default __代码辅助
+export default __辅助代码
     `
     return codeTpl
 }
@@ -66,5 +66,14 @@ export default __代码辅助
 // console.log(生成辅助代码(jsonData[0].子组件))
 
 
+function 取父目录(path) {
+    // 将所有的反斜杠 \ 替换为斜杠 /
+    var convertedPath = path.replace(/\\/g, '/');
 
-export {getItemStyle, 生成辅助代码};
+    // 使用正则表达式获取父目录
+    var parentDirectory = convertedPath.replace(/\/[^/]*$/, '');
+
+    return parentDirectory;
+}
+
+export {getItemStyle, 生成辅助代码, 取父目录};

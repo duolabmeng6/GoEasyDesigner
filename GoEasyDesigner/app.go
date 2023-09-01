@@ -53,6 +53,8 @@ func (a *App) E创建函数(窗口事件文件路径 string, 插入函数 string
 	}
 	//插件URL地址 := "http://127.0.0.1:13403"
 	跳转位置 := ecore.E寻找文本(新内容, 插入函数, 0, false)
+	println("新内容", 新内容)
+	println("插入函数", 插入函数)
 	println("跳转位置", 跳转位置)
 	myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
 	return "保存成功"

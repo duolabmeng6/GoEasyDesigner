@@ -1,12 +1,13 @@
 <template>
   <Shape2
       :style="getItemStyle(item)"
-      style="position: absolute"
+      style="position: absolute;"
       @update-style="updateStyle"
       @删除="id=>store.递归删除id(store.list,id)"
       :index="item.id"
       :item_data="item"
       :nowIndex="store.当前组件索引"
+      s
   >
     <div
         :id="item.名称"

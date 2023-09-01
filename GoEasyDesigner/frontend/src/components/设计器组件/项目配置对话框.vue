@@ -11,6 +11,9 @@
       <el-form-item label="窗口事件文件路径">
         <el-input v-model="store.项目信息.窗口事件文件路径"/>
       </el-form-item>
+      <el-form-item label="辅助代码文件路径">
+        <el-input v-model="store.项目信息.辅助代码文件路径"/>
+      </el-form-item>
       <el-form-item label="IDE插件地址">
         <el-input v-model="store.项目信息.IDE插件地址"/>
       </el-form-item>

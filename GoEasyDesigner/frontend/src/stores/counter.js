@@ -1,5 +1,6 @@
 import {ref, nextTick} from 'vue'
 import {defineStore} from 'pinia'
+import {WindowGetSize} from "../../wailsjs/runtime";
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -18,6 +19,7 @@ export const useCounterStore = defineStore('counter', {
             项目信息: ref({
                 设计文件路径: "",//"stores\\组件数据.json",
                 窗口事件文件路径: "",//"stores\\窗口事件.js",
+                辅助代码文件路径: "",//"stores\\辅助代码.js",
                 IDE插件地址: "http://127.0.0.1:10750",
             }),
             客户端模式: ref(false),
@@ -26,10 +28,23 @@ export const useCounterStore = defineStore('counter', {
             start_x: ref(0),
             start_y: ref(0),
             indexMap: ref({}),
+            显示项目配置对话框: ref(false)
+
         }
     },
 
     actions: {
+        初始化() {
+            let dthis = this
+            try {
+                WindowGetSize().then(function (size) {
+                })
+                dthis.客户端模式 = true
+            } catch (e) {
+                dthis.客户端模式 = false
+            }
+            console.log("当前客户端模式", this.客户端模式)
+        },
         取窗口样式() {
             const result = {}
             result['width'] = this.画布属性.width + "px"
@@ -47,7 +62,7 @@ export const useCounterStore = defineStore('counter', {
         当前组件名称2() {
             console.log("this.当前拖拽组件数据.组件名称", this.当前拖拽组件数据.组件名称)
             if (this.当前拖拽组件数据.组件名称 == "窗口") {
-                return "布局容器属性"
+                return "窗口属性"
             }
             return this.当前拖拽组件数据.组件名称 + "属性"
         },
@@ -83,6 +98,22 @@ export const useCounterStore = defineStore('counter', {
                     this.递归删除id(item.子组件, id)
                 }
             });
+        },
+
+        递归查找名称(源数据, 名称) {
+            let res = false
+            源数据.forEach((item, index) => {
+                if (item.名称 == 名称) {
+                    res = true
+                }
+                if (item.子组件 == undefined) {
+
+                } else {
+                    res = this.递归查找名称(item.子组件, 名称)
+                    return res
+                }
+            });
+            return res
         },
 
         新增子组件(id) {

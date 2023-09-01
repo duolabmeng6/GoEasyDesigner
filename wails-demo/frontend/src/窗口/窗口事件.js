@@ -21,6 +21,14 @@ export function 绑定窗口事件(c, 组件) {
     c.按钮2_鼠标左键被按下 = function () {
         console.log("按钮2_鼠标左键被按下")
     }
+
+    c.按钮1被单击 = function () {
+        console.log("按钮1被单击")
+    }
+
+    c.按钮1鼠标左键被按下 = function () {
+        console.log("按钮1鼠标左键被按下")
+    }
 //事件函数位置不要删除
 }
 

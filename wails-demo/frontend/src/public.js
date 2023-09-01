@@ -19,5 +19,14 @@ const getItemStyle = (item) => {
     return style;
 };
 
+function 取父目录(path) {
+    // 将所有的反斜杠 \ 替换为斜杠 /
+    var convertedPath = path.replace(/\\/g, '/');
+
+    // 使用正则表达式获取父目录
+    var parentDirectory = convertedPath.replace(/\/[^/]*$/, '');
+
+    return parentDirectory;
+}
 
 export {getItemStyle};
