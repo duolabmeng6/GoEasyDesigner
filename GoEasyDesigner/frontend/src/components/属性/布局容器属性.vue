@@ -54,9 +54,8 @@ let 事件名称 = ref([
 const handleSelectChange = function () {
   let a = 事件索引.value
   const Name = 事件名称.value[a];
-  console.log('Selected Event Name:', Name, a);
+  console.log('添加事件被选择', Name + props.item.名称);
   事件索引.value = 0
-  emits("添加事件被选择", Name);
-
+  emits("添加事件被选择", Name, props.item);
 }
 </script>

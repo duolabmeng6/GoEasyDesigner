@@ -95,6 +95,5 @@ const handleSelectChange = function () {
   console.log('添加事件被选择', Name + props.item.名称);
   事件索引.value = 0
   emits("添加事件被选择", Name, props.item);
-
 }
 </script>

@@ -15,6 +15,7 @@ const handleNodeClick = (data) => {
   E读入文件(data.path ).then((res) => {
     console.log(res)
     store.代码编辑器内容 = res
+    store.选择夹_中间现行选中项= "1"
   })
 }
 store.项目文件列表 = [

@@ -38,6 +38,7 @@ let 事件索引 = ref(0)
 
 let 事件名称 = ref([
   "在此处选择加入事件处理函数",
+  "创建完毕",
   '被单击',
   '鼠标左键被按下',
   '鼠标左键被放开',
@@ -56,9 +57,8 @@ let 事件名称 = ref([
 const handleSelectChange = function () {
   let a = 事件索引.value
   const Name = 事件名称.value[a];
-  console.log('Selected Event Name:', Name, a);
+  console.log('添加事件被选择', Name + props.item.名称);
   事件索引.value = 0
-  emits("添加事件被选择", Name);
-
+  emits("添加事件被选择", Name, props.item);
 }
 </script>

@@ -1,4 +1,6 @@
 <template>
+  <div class="属性表格">
+
   <el-form
       label-position="left"
       label-width="100px"
@@ -37,6 +39,10 @@
     </el-form-item>
 
   </el-form>
+  </div>
+  <div class="添加组件事件">
+  </div>
+
 </template>
 <script setup>
 import {ref, defineProps, defineEmits} from "vue";

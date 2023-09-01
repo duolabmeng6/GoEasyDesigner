@@ -34,6 +34,9 @@ export const useCounterStore = defineStore('counter', {
             项目文件列表: ref([]),
             代码编辑器内容:ref(""),
             当前代码编辑器路径 : ref(""),
+            选择夹_中间现行选中项:ref("0"),
+            支持库列表:ref([]),
+            帮助信息:ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
         }
     },
 

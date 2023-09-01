@@ -26,7 +26,9 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="支持库">支持库</el-tab-pane>
+        <el-tab-pane label="支持库">
+          <component is="支持库" />
+        </el-tab-pane>
         <el-tab-pane label="项目管理">
           <component is="项目管理" />
         </el-tab-pane>
@@ -34,7 +36,7 @@
     </div>
     <div class="设计区域">
       <el-col :span="24" style="height: 100%">
-        <el-tabs style="height: 100%" tab-position="top" type="border-card">
+        <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane label="界面设计">
             <div style="position: relative;    margin: 8px;">
               <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
@@ -80,7 +82,7 @@
     <div class="调试信息">
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <el-tab-pane label="帮助信息">
-          GoEasyDesigner 窗口设计师 轻松跨平台开发
+          {{store.帮助信息}}
         </el-tab-pane>
         <el-tab-pane label="调试信息"></el-tab-pane>
       </el-tabs>
@@ -332,6 +334,7 @@ function 添加事件被选择(事件名称, item) {
   if (事件名称 == "在此处选择加入事件处理函数") {
     return
   }
+
   console.log("添加事件被选择", 事件名称)
   console.log("添加事件被选择", item.名称 + "_" + 事件名称)
   let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
@@ -343,6 +346,14 @@ function 添加事件被选择(事件名称, item) {
     }
 `;
 
+  if (store.项目信息.窗口事件文件路径 == ""){
+    ElMessage({
+      message: "该功能需要先保存文件",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return;
+  }
   try {
     // 替换 {事件名称} 为 事件名称
     ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
