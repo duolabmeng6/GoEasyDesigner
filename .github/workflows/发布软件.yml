@@ -1,0 +1,118 @@
+name: 发布软件
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions: write-all # 给所有工作写权限
+
+
+jobs:
+  jobs_v:
+    name: 构建版本号和变更信息
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.create_version.outputs.tag_name }} # 版本号
+      body: ${{ steps.create_version.outputs.body }} # 版本变更内容
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        id: create_version
+        with:
+          config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
+          disable-autolabeler: false # 禁止自动标签
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 查看变量
+        run: |
+          echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
+
+  jobs_macos:
+    needs: [ jobs_v ]
+    name: 构建macos软件
+    runs-on: macos-12
+    env:
+      version: ${{ needs.jobs_v.outputs.version }}
+      body: ${{ needs.jobs_v.outputs.body }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: 查看文件
+        run: |
+          pwd
+          ls -la
+      - name: 安装 go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '^1.20.5'
+          cache-dependency-path: |
+            **/go.sum
+            **/go.mod
+          go-version-file: 'go.mod'
+      - run: go version
+      - name: 安装 wails 工具
+        run: |
+          cd wails/v3/cmd/wails
+          go install
+          wails
+          cd ../../../..
+      - name: 生成 Version.go 文件
+        run: |
+          echo -e "package mymodel\n\nvar Version = \"${version}\"" > mymodel/Version.go
+          cat mymodel/Version.go
+      - name: 编译
+        run: |
+          pwd
+          wails task package:darwin
+          ls -la
+      - name: 查看编译的文件保存
+        run: |
+          ls -la
+          mkdir -p /tmp/artifacts
+          cp -r bin/qoq.app /tmp/artifacts/qoq.app
+          cp -r build/dmg.sh /tmp/artifacts/dmg.sh
+          chmod +x /tmp/artifacts/qoq.app/Contents/MacOS/qoq
+      - name: 创建压缩包
+        run: |
+          cd /tmp/artifacts/
+          ./dmg.sh
+          zip -r ./qoq_MacOS.zip ./qoq.app
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: |
+            /tmp/artifacts/*.zip
+            /tmp/artifacts/*.dmg
+
+  jobs4:
+    needs: [ jobs_v,jobs_macos ]
+    name: 发布版本
+    runs-on: ubuntu-latest
+    env:
+      version: ${{ needs.jobs_v.outputs.version }}
+      body: ${{ needs.jobs_v.outputs.body }}
+    steps:
+      - name: 下载产物
+        id: download
+        uses: actions/download-artifact@v3
+        with:
+          path: ./
+      - name: 读入环境信息
+        run: |
+          echo ${{ format('version {0}', env.version ) }}
+          echo ${{steps.download.outputs.download-path}}
+          ls -R
+
+      - name: 发布文件
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true # 覆盖文件
+          #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
+          #prerelease: true # 预发布 别人可以看到 版本号会继续加
+          tag: ${{ env.version }} # 版本号 v0.1.0
+          body: ${{ env.body }} # 输出的内容
+          artifacts: "macos/*.zip,macos/*.dmg"
