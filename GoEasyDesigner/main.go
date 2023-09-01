@@ -1,6 +1,7 @@
 package main
 
 import (
+	"changeme/mymodel"
 	"embed"
 
 	"github.com/wailsapp/wails/v2"
@@ -14,10 +15,10 @@ var assets embed.FS
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
-
+	version := mymodel.Version
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "GoEasyDesigner 窗口设计师",
+		Title:  "GoEasyDesigner 窗口设计师 " + version,
 		Width:  1280,
 		Height: 768,
 		AssetServer: &assetserver.Options{

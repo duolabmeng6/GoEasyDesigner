@@ -1,0 +1,31 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: '🚀 新功能'
+    labels:
+      - '新功能'
+  - title: '🐛 Bug 修复'
+    labels:
+      - 'bug'
+  - title: '🧰 日常维护'
+    label: '日常维护'
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&'
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+  default: patch
+template: |
+  # GoEasyDesigner 窗口设计师
+  * 基于 go 语言 使用 wails框架, 支持 window macos linux 等系统.
+
+  $CHANGES
+no-changes-template: |
+  快下载体验~

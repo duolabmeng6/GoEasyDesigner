@@ -53,31 +53,30 @@ jobs:
       - run: go version
       - name: 安装 wails 工具
         run: |
-          cd wails/v3/cmd/wails
-          go install
+          go install github.com/wailsapp/wails/v2/cmd/wails@latest
           wails
-          cd ../../../..
       - name: 生成 Version.go 文件
         run: |
-          echo -e "package mymodel\n\nvar Version = \"${version}\"" > mymodel/Version.go
-          cat mymodel/Version.go
+          echo -e "package mymodel\n\nvar Version = \"${version}\"" > GoEasyDesigner/mymodel/Version.go
+          cat GoEasyDesigner/mymodel/Version.go
       - name: 编译
         run: |
           pwd
-          wails task package:darwin
+          cd GoEasyDesigner
+          wails build
           ls -la
       - name: 查看编译的文件保存
         run: |
           ls -la
           mkdir -p /tmp/artifacts
-          cp -r bin/qoq.app /tmp/artifacts/qoq.app
+          cp -r build/bin/GoEasyDesigner.app /tmp/artifacts/GoEasyDesigner.app
           cp -r build/dmg.sh /tmp/artifacts/dmg.sh
-          chmod +x /tmp/artifacts/qoq.app/Contents/MacOS/qoq
+          chmod +x /tmp/artifacts/GoEasyDesigner.app/Contents/MacOS/GoEasyDesigner
       - name: 创建压缩包
         run: |
           cd /tmp/artifacts/
           ./dmg.sh
-          zip -r ./qoq_MacOS.zip ./qoq.app
+          zip -r ./GoEasyDesigner_MacOS.zip ./GoEasyDesigner.app
 
       - name: 上传产物
         uses: actions/upload-artifact@v3
