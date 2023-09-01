@@ -5,6 +5,28 @@
 
 基于 go 语言 使用 wails框架, 支持 window macos linux 等系统.
 
+# 在线体验
+
+https://go-easy-designer.vercel.app/
+
+画好界面点保存,会下载2个文件 设计文件.json`,`辅助代码.js`
+
+注意你的浏览器允许下载多个文件的权限
+
+下载本项目的代码找到 wails-demo复制出来.
+
+`wails-demo/frontend/src/窗口/设计文件.json`
+`wails-demo/frontend/src/窗口/辅助代码.js`
+
+运行项目 就可以看到你设计好的界面了.
+
+```
+cd wails-demo
+wails dev
+```
+
+想要更好的无缝使用体验下载客户端程序.
+
 ### 项目进度
 - [x] 兼容 window  macos  linux 
 - [x] 完成整体界面布局以及整体功能流程，界面绘制，属性修改，组件拖拽、双击组件跳转到对应的事件函数
