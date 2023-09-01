@@ -126,7 +126,7 @@ jobs:
       - name: 上传产物
         uses: actions/upload-artifact@v3
         with:
-          name: macos
+          name: window
           path: |
             GoEasyDesigner/build/bin/*.exe
 
@@ -159,4 +159,4 @@ jobs:
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
-          artifacts: "macos/*.zip,macos/*.dmg"
+          artifacts: "macos/*.zip,macos/*.dmg,window/*.dmg"
