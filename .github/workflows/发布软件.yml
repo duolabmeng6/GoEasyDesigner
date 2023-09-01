@@ -159,4 +159,4 @@ jobs:
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
-          artifacts: "macos/*.zip,macos/*.dmg,window/*.dmg,window/*.zip"
+          artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
