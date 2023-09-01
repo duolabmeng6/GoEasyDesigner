@@ -32,7 +32,7 @@
     </el-col>
     <el-col :span="15">
       <div style="position: relative">
-        <RecursiveItem v-for="(item, index) in store.list" :key="index" :item="item"/>
+        <component is="渲染组件"  v-for="(item, index) in store.list" :key="index" :item="item"/>
 
       </div>
     </el-col>
@@ -71,10 +71,11 @@
 
 <script setup>
 import {ref, inject} from 'vue';
-import RecursiveItem from "@/RecursiveItem.vue";
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit} from "@element-plus/icons-vue";
+import {E创建函数} from "../wailsjs/go/main/App";
+import {生成辅助代码} from "@/public";
 
 const store = useCounterStore()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
@@ -160,6 +161,45 @@ function 保存(){
   link.href = URL.createObjectURL(blob)
   link.download = '组件数据.json'
   link.click()
+
+  let 辅助代码 = 生成辅助代码(store.list[0].子组件)
+  const blob2 = new Blob([辅助代码], {type: 'application/json'})
+  const link2 = document.createElement('a')
+  link2.href = URL.createObjectURL(blob2)
+  link2.download = '辅助代码.js'
+  link2.click()
+}
+function 添加事件被选择(事件名称,item) {
+  if (事件名称 == "在此处选择加入事件处理函数") {
+    return
+  }
+  console.log("添加事件被选择", 事件名称)
+  console.log("添加事件被选择", item.名称 + "_" + 事件名称)
+  let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
+  console.log(code)
+  eval(code)
+  let ncode = `
+    c.{事件名称} = function () {
+        console.log("{事件名称}")
+    }
+`;
+
+  try{
+    // 替换 {事件名称} 为 事件名称
+    ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
+    console.log(ncode)
+
+    console.log(store.项目信息.窗口事件文件路径)
+    E创建函数(store.项目信息.窗口事件文件路径, ncode, store.项目信息.IDE插件地址).then(
+        (res) => {
+          console.log(res)
+        }
+    )
+    // 保存()
+  } catch (e) {
+    console.log("需要客户端中运行")
+  }
+
 }
 </script>
 

@@ -23,7 +23,7 @@
     </el-col>
     <el-col :span="16">
       <div style="position: relative">
-        <RecursiveItem v-for="(item, index) in store.list" :key="index" :item="item"/>
+        <component is="渲染组件"  v-for="(item, index) in store.list" :key="index" :item="item"/>
 
       </div>
     </el-col>
@@ -58,7 +58,6 @@
 
 <script setup>
 import {ref} from 'vue';
-import RecursiveItem from "@/RecursiveItem.vue";
 import {useCounterStore} from '@/stores/counter'
 
 const store = useCounterStore()

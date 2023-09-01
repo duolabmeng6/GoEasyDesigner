@@ -1,13 +1,20 @@
 <template>
-  <div>
-    <el-button type="primary"  style="width: 100%;height: 100%;">{{ 属性.标题 }}</el-button>
-  </div>
+  <el-button
+      :style="item.尺寸=='custom' ? getItemStyle(item):''"
+      v-show="item.可视"
+      v-bind:disabled="item.禁用"
+      :type="item.按钮类型"
+      :size="item.尺寸"
+  >{{ item.标题 }}</el-button>
 </template>
 
 <script>
+import {getItemStyle} from "@/public";
+
 export default {
+  methods: {getItemStyle},
   props: {
-    属性: {
+    item: {
       type: Object,
       default: '',
     }

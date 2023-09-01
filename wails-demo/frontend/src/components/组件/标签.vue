@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <el-text class="mx-1" style="width: 100%;height: 100%;">{{ 属性.标题 }}</el-text>
-  </div>
+    <el-text
+        :getItemStyle="getItemStyle(item)"
+        :size="item.尺寸"
+        :truncated="item.省略号"
+        :tag="item.文字样式"
+    >{{ item.标题 }}</el-text>
 </template>
 
 <script>
+import {getItemStyle} from "@/public";
+
 export default {
+  methods: {getItemStyle},
   props: {
-    属性: {
+    item: {
       type: Object,
       default: '',
     }

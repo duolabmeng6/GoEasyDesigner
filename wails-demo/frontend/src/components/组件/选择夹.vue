@@ -10,7 +10,7 @@
         :key="tabItemIndex"
         :label="tabItem.标题"
     >
-      <component is="渲染组件"  v-for="(tabItem2, tabItemIndex2) in tabItem.子组件" :key="tabItemIndex2" :item="tabItem2"/>
+      <component is="渲染组件" v-for="(tabItem2, tabItemIndex2) in tabItem.子组件" :key="tabItemIndex2" :item="tabItem2"/>
     </el-tab-pane>
   </el-tabs>
 
@@ -18,6 +18,7 @@
 
 <script>
 import {getItemStyle} from '@/public.js';
+
 
 export default {
   methods: {getItemStyle},

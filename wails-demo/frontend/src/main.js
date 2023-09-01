@@ -13,6 +13,8 @@ for (const path in modules) {
     const name = path.match(/\.\/components\/组件\/(.*)\.vue$/)[1]
     app.component(name, modules[path].default)
 }
+import 渲染组件 from "./components/渲染组件.vue"
+app.component('渲染组件', 渲染组件)
 
 app.use(createPinia())
 app.use(ElementPlus)

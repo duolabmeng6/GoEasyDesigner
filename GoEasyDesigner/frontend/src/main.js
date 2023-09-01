@@ -20,6 +20,10 @@ const app = createApp(App)
 // app.component('开关', 开关)
 // 读取 components 的所有文件名，然后自动导入
 
+import 渲染组件 from "./components/渲染设计组件.vue"
+app.component('渲染组件', 渲染组件)
+
+
 let 组件名称列表 = []
 const modules = import.meta.globEager('./components/组件/*.vue')
 for (const path in modules) {

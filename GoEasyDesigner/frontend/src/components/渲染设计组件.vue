@@ -25,7 +25,7 @@
         <component is="按钮" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
-        <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="渲染组件"  v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
         <component is="选择夹" :item="item"/>
@@ -33,7 +33,7 @@
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
 
-        <RecursiveItem v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="渲染组件"  v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
     </div>
   </Shape2>
