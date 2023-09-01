@@ -29,8 +29,7 @@ jobs:
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
 
   jobs_macos:
-    # 暂停
-    if: false
+    # 暂停 if: false
     needs: [ jobs_v ]
     name: 构建macos软件
     runs-on: macos-12
@@ -132,7 +131,7 @@ jobs:
 
 
   jobs4:
-    needs: [ jobs_v,jobs_window ]
+    needs: [ jobs_v,jobs_macos,jobs_window ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
