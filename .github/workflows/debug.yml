@@ -57,6 +57,7 @@ jobs:
 
       - name: build
         run: |
+          npm config get cache
           cd GoEasyDesigner
           wails build -debug 
 
@@ -102,6 +103,7 @@ jobs:
 
       - name: build
         run: |
+          npm config get cache
           cd GoEasyDesigner
           wails build -debug 
 
@@ -143,6 +145,7 @@ jobs:
 
       - name: build
         run: |
+          npm config get cache
           cd GoEasyDesigner
           wails build -debug 
 
