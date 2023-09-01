@@ -119,11 +119,11 @@ jobs:
           wails
       - name: 编译exe
         run: |
-          ls -la
+          ls 
           
           cd GoEasyDesigner
           wails build
-          ls -la
+          ls
       - name: 查看编译的文件保存
         run: |
           ls -la
