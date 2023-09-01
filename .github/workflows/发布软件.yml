@@ -36,6 +36,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: 构建缓存
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\go-build
+            ~\go\pkg\mod
+            /Users/runner/.npm
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: 查看文件
         run: |
           pwd
@@ -97,6 +107,16 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: 构建缓存
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\go-build
+            ~\go\pkg\mod
+            C:\npm\cache
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: 读入环境信息
         run: |
           echo ${{ format('version {0}', env.version ) }} # 版本号
