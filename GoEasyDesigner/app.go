@@ -74,7 +74,7 @@ func (a *App) E保存件对话框() string {
 	println("E保存件对话框")
 	result, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
 		Title:           "保存文件",
-		DefaultFilename: "组件数据.json",
+		DefaultFilename: "设计文件.json",
 	})
 	if err != nil {
 		return ""
@@ -83,4 +83,10 @@ func (a *App) E保存件对话框() string {
 }
 func (a *App) E读入文件(文件路径 string) string {
 	return ecore.E读入文本(文件路径)
+}
+
+func (a *App) E文件枚举(目录 string) []string {
+	var files []string
+	_ = ecore.E文件枚举(目录, ".js|.json", &files, true, false)
+	return files
 }

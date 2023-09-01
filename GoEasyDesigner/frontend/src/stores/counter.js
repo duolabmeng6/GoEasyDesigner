@@ -1,6 +1,7 @@
 import {ref, nextTick} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
+import {E文件枚举} from "../../wailsjs/go/main/App";
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -17,9 +18,10 @@ export const useCounterStore = defineStore('counter', {
             当前组件索引: ref("1"),
             组件列表: ref([]),
             项目信息: ref({
-                设计文件路径: "",//"stores\\组件数据.json",
+                设计文件路径: "",//"stores\\设计文件.json",
                 窗口事件文件路径: "",//"stores\\窗口事件.js",
                 辅助代码文件路径: "",//"stores\\辅助代码.js",
+                项目管理目录: "",//"stores\\辅助代码.js",
                 IDE插件地址: "http://127.0.0.1:10750",
             }),
             客户端模式: ref(false),
@@ -28,8 +30,10 @@ export const useCounterStore = defineStore('counter', {
             start_x: ref(0),
             start_y: ref(0),
             indexMap: ref({}),
-            显示项目配置对话框: ref(false)
-
+            显示项目配置对话框: ref(false),
+            项目文件列表: ref([]),
+            代码编辑器内容:ref(""),
+            当前代码编辑器路径 : ref(""),
         }
     },
 
@@ -44,6 +48,27 @@ export const useCounterStore = defineStore('counter', {
                 dthis.客户端模式 = false
             }
             console.log("当前客户端模式", this.客户端模式)
+        },
+        项目管理刷新(){
+            if (this.项目信息.项目管理目录=="" && this.项目信息.项目管理目录==undefined){
+                return
+            }
+            let dthis;
+            dthis = this
+            E文件枚举(this.项目信息.项目管理目录).then((res) => {
+                console.log(res)
+                res.forEach((v, i) => {
+                    //获取文件名
+                    let 文件名 = v.split("/")
+                    文件名 = 文件名[文件名.length - 1]
+
+                    dthis.项目文件列表.push({
+                                                label: 文件名,
+                                                path: v,
+                                            })
+                })
+            })
+            console.log("项目文件列表", store.项目文件列表)
         },
         取窗口样式() {
             const result = {}

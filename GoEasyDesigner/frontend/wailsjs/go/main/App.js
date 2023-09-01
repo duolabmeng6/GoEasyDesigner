@@ -18,6 +18,10 @@ export function E打开文件对话框() {
   return window['go']['main']['App']['E打开文件对话框']();
 }
 
+export function E文件枚举(arg1) {
+  return window['go']['main']['App']['E文件枚举'](arg1);
+}
+
 export function E读入文件(arg1) {
   return window['go']['main']['App']['E读入文件'](arg1);
 }

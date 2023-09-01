@@ -1,53 +1,64 @@
 <template>
-  <el-row>
-    <el-col :span="24" style="margin-bottom: 20px">
-      <el-button :icon="Edit" @click="新建">新建</el-button>
-      <el-button :icon="Edit" @click="打开">打开</el-button>
-      <el-button :icon="Edit" @click="保存">保存</el-button>
-      <el-button :icon="Edit" @click="运行">运行</el-button>
-      <el-button :icon="Edit" @click="编译">编译</el-button>
-      <el-button v-if="store.客户端模式" :icon="Edit" @click="e => store.显示项目配置对话框 = true">项目配置</el-button>
-    </el-col>
-  </el-row>
-  <el-row style="overflow: hidden">
-    <el-col :span="5" style="padding: 10px" class="clear-select">
 
-      <div class="组件列表" v-if="store.当前拖拽组件数据 != undefined">
-        <el-select
-            v-model="store.当前组件索引" :dd="store.当前拖拽组件数据.id" class="m-2" placeholder="组件列表"
-            style="width: 100%;margin-bottom: 20px;"
-            @change="id=>console.log('id',store.当前拖拽组件数据 = store.组件通过id查找结构(id))">
-          <el-option
-              v-for="(item, index) in store.组件列表"
-              :key="index"
-              :label="item.label"
-              :value="item.id"
-          />
-        </el-select>
-      </div>
+  <div class="container" style="margin: 0px 4px">
+    <div class="头部 "></div>
+    <div class="属性框 clear-select">
+      <el-tabs style="height: 100%" type="border-card">
+        <el-tab-pane label="属性" style="height: 100%;">
+          <div class="container2" style="margin: 8px 4px">
+            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
+              <el-select
+                  v-model="store.当前组件索引" :dd="store.当前拖拽组件数据.id" class="m-2" placeholder="组件列表"
+                  style="width: 100%;"
+                  @change="id=>console.log('id',store.当前拖拽组件数据 = store.组件通过id查找结构(id))">
+                <el-option
+                    v-for="(item, index) in store.组件列表"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.id"
+                />
+              </el-select>
+            </div>
+            <component :is="store.当前组件名称2()"
+                       v-if="store.当前拖拽组件数据 != undefined"
+                       :item="store.当前拖拽组件数据"
+                       @添加事件被选择="添加事件被选择"
+            />
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="支持库">支持库</el-tab-pane>
+        <el-tab-pane label="项目管理">
+          <component is="项目管理" />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="设计区域">
+      <el-col :span="24" style="height: 100%">
+        <el-tabs style="height: 100%" tab-position="top" type="border-card">
+          <el-tab-pane label="界面设计">
+            <div style="position: relative;    margin: 8px;">
+              <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="编辑代码">
 
-      <component v-if="store.当前拖拽组件数据 != undefined"
-                 :is="store.当前组件名称2()"
-                 @添加事件被选择="添加事件被选择"
-                 :item="store.当前拖拽组件数据"
-      />
+            <component is="代码编辑器" v-model:value="store.代码编辑器内容"
+                       height="100%"
+            />
 
-    </el-col>
-    <el-col :span="15">
-      <div style="position: relative">
-        <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
-      </div>
-    </el-col>
-    <el-col :span="4" class="clear-select">
-
-      <el-tabs type="border-card" tab-position="top" style="height: 100%" class="demo-tabs">
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </div>
+    <div class="工具箱 clear-select">
+      <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <el-tab-pane label="组件">
-          <el-collapse model-value="1" accordion style="border: none;padding: 10px">
-            <el-collapse-item title="系统组件" name="1">
+          <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
+            <el-collapse-item name="1" title="系统组件">
               <el-row>
-                <el-col :span="24" style="margin-bottom: 8px" v-for="(item, index) in 组件名称列表">
-                  <el-button class="full-width-button" style="width: 100%;"
-                             draggable="true"
+                <el-col v-for="(item, index) in 组件名称列表" :span="24" style="margin-bottom: 8px">
+                  <el-button class="full-width-button" draggable="true"
+                             style="width: 100%;"
                              @dragstart="拖拽开始($event, item)"
                   >
                     {{ item }}
@@ -56,20 +67,44 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item title="数据展示组件" name="2">
+            <el-collapse-item name="2" title="数据展示组件">
 
             </el-collapse-item>
-            <el-collapse-item title="自定义组件" name="3">
+            <el-collapse-item name="3" title="自定义组件">
 
             </el-collapse-item>
           </el-collapse>
         </el-tab-pane>
       </el-tabs>
-
-
-    </el-col>
-  </el-row>
-
+    </div>
+    <div class="调试信息">
+      <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
+        <el-tab-pane label="帮助信息">
+          GoEasyDesigner 窗口设计师 轻松跨平台开发
+        </el-tab-pane>
+        <el-tab-pane label="调试信息"></el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="标题 clear-select">
+      <el-text size="large" style="">
+        <el-icon>
+          <Sunny/>
+        </el-icon>
+        窗口设计师
+      </el-text>
+    </div>
+    <div class="工具条 clear-select">
+      <el-button-group class="" style="margin-left: -7px;">
+        <el-button :icon="Edit" @click="新建">新建</el-button>
+        <el-button :icon="Open" @click="打开">打开</el-button>
+        <el-button :icon="Coin" @click="保存">保存</el-button>
+        <el-button :icon="Key" @click="运行">运行</el-button>
+        <el-button :icon="Bowl" @click="编译">编译</el-button>
+        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置</el-button>
+        <el-button :icon="Help" @click="帮助">帮助</el-button>
+      </el-button-group>
+    </div>
+  </div>
   <component is="项目配置对话框" v-model="store.显示项目配置对话框" @确定="store.显示项目配置对话框=false"
              @关闭="store.显示项目配置对话框=false"></component>
 </template>
@@ -78,9 +113,12 @@
 import {ref, inject} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
-import {Edit} from "@element-plus/icons-vue";
+import { Edit, Open,  Help ,Tools,Bowl,Key,Coin} from "@element-plus/icons-vue";
+
 import {E保存, E保存件对话框, E创建函数, E打开文件对话框, E读入文件} from "../wailsjs/go/main/App";
 import {取父目录, 生成辅助代码} from "@/public";
+import Shape from "@/components/Shape.vue";
+import {BrowserOpenURL} from "../wailsjs/runtime";
 
 const store = useCounterStore()
 store.初始化()
@@ -211,6 +249,7 @@ function 打开() {
     store.项目信息.设计文件路径 = res
     store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
     store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
+    store.项目信息.项目管理目录 = 取父目录(res)
     console.log("设计文件路径", store.项目信息.设计文件路径)
     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
     E读入文件(store.项目信息.设计文件路径).then((res) => {
@@ -221,10 +260,13 @@ function 打开() {
     //   console.log(res)
     //   code.value = res
     // })
-
+    store.项目管理刷新()
   })
 }
+function 帮助(){
+  BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
 
+}
 function 保存() {
   console.log("保存")
   let njson = JSON.stringify(store.list, null, 2)
@@ -271,6 +313,9 @@ function 保存() {
       store.项目信息.设计文件路径 = res
       store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
       store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
+      store.项目信息.项目管理目录 = 取父目录(res)
+      store.项目管理刷新()
+
       console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
       _保存(store.项目信息.设计文件路径, njson)
       _保存(store.项目信息.辅助代码文件路径, 辅助代码)

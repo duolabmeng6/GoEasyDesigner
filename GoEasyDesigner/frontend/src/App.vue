@@ -383,7 +383,7 @@ function 保存界面() {
   const blob = new Blob([json], {type: 'application/json'})
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
-  link.download = '组件数据.json'
+  link.download = '设计文件.json'
   link.click()
 }
 

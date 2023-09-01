@@ -62,7 +62,7 @@ export default __辅助代码
     return codeTpl
 }
 
-// const jsonData = require('./组件数据.json');
+// const jsonData = require('./设计文件.json');
 // console.log(生成辅助代码(jsonData[0].子组件))
 
 

@@ -144,115 +144,6 @@
 
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-
-}
-
-.clear-select{
-  user-select: none;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer / Edge */
-}
-
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 0fr 1fr 1fr 1fr 1fr;
-  gap: 6px 6px;
-  grid-auto-flow: row;
-  height: 100vh;
-  overflow: hidden;
-
-}
-
-.绘制的组件 * {
-  pointer-events: none;
-
-}
-
-.头部 {
-  grid-area: 1 / 1 / 2 / 6;
-}
-
-.属性框 {
-  grid-area: 2 / 1 / 5 / 2;
-}
-
-.设计区域 {
-  grid-area: 2 / 2 / 5 / 5;
-}
-
-.工具箱 {
-  grid-area: 2 / 5 / 5 / 6;
-}
-
-.调试信息 {
-  grid-area: 5 / 1 / 6 / 6;
-}
-
-.标题 {
-  grid-area: 1 / 1 / 2 / 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.工具条 {
-  grid-area: 1 / 2 / 2 / 6;
-  padding: 6px;
-}
-
-.属性框 .el-tabs__content {
-  height: 100%;
-  padding: 4px;
-}
-
-.工具箱 .el-tabs__content {
-  height: 80%;
-  overflow-y: auto;
-}
-
-.container2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.1fr 2.6fr 0.1fr;
-  gap: 20px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "组件列表"
-    "属性表格"
-    "添加组件事件";
-
-  justify-content: space-between;
-  height: 91%;
-}
-
-.组件列表 {
-  grid-area: 组件列表;
-}
-
-.属性表格 {
-  grid-area: 属性表格;
-  overflow-y: auto;
-}
-
-.添加组件事件 {
-  grid-area: 添加组件事件;
-}
-
-.el-form-item {
-  margin-bottom: 8px;
-}
-
-.画布 {
-  background: rgb(240, 240, 240);
-  position: relative;
-  overflow: hidden;
-}
-
 </style>
 <script setup>
 import {Edit} from "@element-plus/icons-vue";
@@ -506,7 +397,7 @@ function 保存界面() {
   const blob = new Blob([json], {type: 'application/json'})
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
-  link.download = '组件数据.json'
+  link.download = '设计文件.json'
   link.click()
 }
 

@@ -7,7 +7,7 @@
 
 <script setup>
 import {onMounted} from 'vue'
-import 组件数据 from '@/窗口/组件数据.json';
+import 组件数据 from '@/窗口/设计文件.json';
 import __辅助代码 from "@/窗口/辅助代码";
 
 import {引入窗口数据} from '@/窗口/窗口数据'
