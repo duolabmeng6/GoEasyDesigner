@@ -269,6 +269,13 @@ function 帮助(){
   BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
 
 }
+
+function 运行(){
+  store.帮助信息 = "等待开发 ..."
+}
+function 编译(){
+  store.帮助信息 = "等待开发 ..."
+}
 function 保存() {
   console.log("保存")
   let njson = JSON.stringify(store.list, null, 2)
