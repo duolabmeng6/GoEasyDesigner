@@ -40,7 +40,7 @@
 
       <el-tabs type="border-card" tab-position="top" style="height: 100%" class="demo-tabs">
         <el-tab-pane label="组件">
-          <el-collapse model-value="1" @change="handleChange" accordion style="border: none;padding: 10px">
+          <el-collapse model-value="1"  accordion style="border: none;padding: 10px">
             <el-collapse-item title="系统组件" name="1">
               <el-row>
                 <el-col :span="24" style="margin-bottom: 8px" v-for="(item, index) in 组件名称列表">
