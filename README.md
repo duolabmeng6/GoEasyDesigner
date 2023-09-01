@@ -1,9 +1,10 @@
 # GoEasyDesigner 窗口设计师
 ![image-20230828083413650](README.assets/image-20230828083413650.png)
 ![image-20230828084834120](README.assets/image-20230828084834120.png)
-项目处于积极开发阶段
 
-基于 go 语言 使用 wails框架, 支持 window macos linux 等系统.
+项目处于积极开发阶段 欢迎前端大佬pr
+
+基于 go 语言 使用 wails框架, 支持 window macos linux 等系统. 
 
 # 在线体验
 
@@ -16,6 +17,7 @@ https://go-easy-designer.vercel.app/
 下载本项目的代码找到 wails-demo复制出来.
 
 `wails-demo/frontend/src/窗口/设计文件.json`
+
 `wails-demo/frontend/src/窗口/辅助代码.js`
 
 运行项目 就可以看到你设计好的界面了.
@@ -34,7 +36,7 @@ wails dev
 - [ ] 绘制布局容器体验完善中
 - [ ] 集成go语言开发环境完善中
 
-欢迎前端大佬pr
+
 
 # 运行环境
 
