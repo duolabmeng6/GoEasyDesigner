@@ -118,9 +118,8 @@ jobs:
           wails
       - name: 编译exe
         run: |
-          ls 
           cd GoEasyDesigner
-          wails build
+          wails build -webview2 embed
           ls
       - name: 上传产物
         uses: actions/upload-artifact@v3
