@@ -120,21 +120,15 @@ jobs:
       - name: 编译exe
         run: |
           ls 
-          
           cd GoEasyDesigner
           wails build
           ls
-      - name: 查看编译的文件保存
-        run: |
-          ls -la
-          mkdir -p /tmp/artifacts
-          cp -r GoEasyDesigner/build/bin/GoEasyDesigner.exe /tmp/artifacts/GoEasyDesigner.exe
       - name: 上传产物
         uses: actions/upload-artifact@v3
         with:
           name: macos
           path: |
-            /tmp/artifacts/*.exe
+            GoEasyDesigner/build/bin/*.exe
 
 
   jobs4:
