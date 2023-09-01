@@ -29,6 +29,8 @@ jobs:
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
 
   jobs_macos:
+    # 暂停
+    if: false
     needs: [ jobs_v ]
     name: 构建macos软件
     runs-on: macos-12
@@ -86,8 +88,55 @@ jobs:
             /tmp/artifacts/*.zip
             /tmp/artifacts/*.dmg
 
+
+  jobs_window:
+    needs: jobs_v # 等待 jobs_v 任务完成才执行
+    name: 构建window软件
+    timeout-minutes: 5
+    runs-on: windows-2022
+    env:
+      version: ${{ needs.jobs_v.outputs.version }}
+      body: ${{ needs.jobs_v.outputs.body }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: 读入环境信息
+        run: |
+          echo ${{ format('version {0}', env.version ) }} # 版本号
+      - name: 安装 go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '^1.20.5'
+          cache-dependency-path: |
+            **/go.sum
+            **/go.mod
+          go-version-file: 'go.mod'
+      - run: go version
+      - name: 安装 wails 工具
+        run: |
+          go install github.com/wailsapp/wails/v2/cmd/wails@latest
+          wails
+      - name: 编译exe
+        run: |
+          cd GoEasyDesigner
+          wails build
+          ls -la
+      - name: 查看编译的文件保存
+        run: |
+          ls -la
+          mkdir -p /tmp/artifacts
+          cp -r GoEasyDesigner/build/bin/GoEasyDesigner.exe /tmp/artifacts/GoEasyDesigner.exe
+      - name: 上传产物
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: |
+            /tmp/artifacts/*.exe
+
+
   jobs4:
-    needs: [ jobs_v,jobs_macos ]
+    needs: [ jobs_v,jobs_window ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
