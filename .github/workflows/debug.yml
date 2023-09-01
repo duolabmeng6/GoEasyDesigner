@@ -29,8 +29,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-#            ~\AppData\Local\go-build
-#            ~\go\pkg\mod
+
             C:\npm\cache
           key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
@@ -81,8 +80,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-#            ~\AppData\Local\go-build
-#            ~\go\pkg\mod
+
             /home/runner/.npm
           key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
@@ -131,8 +129,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-#            ~\AppData\Local\go-build
-#            ~\go\pkg\mod
+
             /Users/runner/.npm
           key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
