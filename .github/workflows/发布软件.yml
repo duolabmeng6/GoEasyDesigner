@@ -108,9 +108,10 @@ jobs:
           submodules: recursive
       - name: 生成 Version.go 文件
         run: |
-          echo "package mymodel" >GoEasyDesigner/mymodel/Version.go
-          echo ${{ format('var Version = `{0}`', env.version ) }} >> GoEasyDesigner/mymodel/Version.go
+          echo "package mymodel" > GoEasyDesigner/mymodel/Version.go
+          echo "var Version = `${version}`" >> GoEasyDesigner/mymodel/Version.go
           type GoEasyDesigner/mymodel/Version.go
+        shell: bash
       - name: 构建缓存
         uses: actions/cache@v3
         with:
