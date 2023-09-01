@@ -26,7 +26,8 @@ jobs:
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
 
   jobs_macos:
-    # 暂停 if: false
+    # 暂停
+    if: false
     needs: [ jobs_v ]
     name: 构建macos软件
     runs-on: macos-12
@@ -107,8 +108,9 @@ jobs:
           submodules: recursive
       - name: 生成 Version.go 文件
         run: |
-          echo -e "package mymodel\n\nvar Version = \"${version}\"" > GoEasyDesigner/mymodel/Version.go
-          cat GoEasyDesigner/mymodel/Version.go
+          echo "package mymodel" >GoEasyDesigner/mymodel/Version.go
+          echo ${{ format('var Version = `{0}`', env.version ) }} >> GoEasyDesigner/mymodel/Version.go
+          type GoEasyDesigner/mymodel/Version.go
       - name: 构建缓存
         uses: actions/cache@v3
         with:
