@@ -22,6 +22,7 @@ on:
 jobs:
 
   build-windows:
+    timeout-minutes: 10
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -65,7 +66,6 @@ jobs:
           name: debug-${{ runner.os }}
           path: build/bin/
 
-      - run: rm GoEasyDesigner.exe
 
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -110,7 +110,6 @@ jobs:
           name: debug-${{ runner.os }}
           path: build/bin/
 
-      - run: rm GoEasyDesigner
 
   build-MacOS:
     runs-on: macos-latest

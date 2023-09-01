@@ -1,9 +1,6 @@
 name: 发布软件
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions: write-all # 给所有工作写权限
@@ -27,7 +24,6 @@ jobs:
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
-
   jobs_macos:
     # 暂停
     if: false
@@ -79,7 +75,6 @@ jobs:
           cd /tmp/artifacts/
           ./dmg.sh
           zip -r ./GoEasyDesigner_MacOS.zip ./GoEasyDesigner.app
-
       - name: 上传产物
         uses: actions/upload-artifact@v3
         with:
@@ -87,12 +82,10 @@ jobs:
           path: |
             /tmp/artifacts/*.zip
             /tmp/artifacts/*.dmg
-
-
   jobs_window:
     needs: jobs_v # 等待 jobs_v 任务完成才执行
     name: 构建window软件
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: windows-2022
     env:
       version: ${{ needs.jobs_v.outputs.version }}
@@ -119,22 +112,16 @@ jobs:
           wails
       - name: 编译exe
         run: |
+          ls 
           cd GoEasyDesigner
           wails build
-          ls -la
-      - name: 查看编译的文件保存
-        run: |
-          ls -la
-          mkdir -p /tmp/artifacts
-          cp -r GoEasyDesigner/build/bin/GoEasyDesigner.exe /tmp/artifacts/GoEasyDesigner.exe
+          ls
       - name: 上传产物
         uses: actions/upload-artifact@v3
         with:
-          name: macos
+          name: window
           path: |
-            /tmp/artifacts/*.exe
-
-
+            GoEasyDesigner/build/bin/*.exe
   jobs4:
     needs: [ jobs_v,jobs_window ]
     name: 发布版本
@@ -153,7 +140,6 @@ jobs:
           echo ${{ format('version {0}', env.version ) }}
           echo ${{steps.download.outputs.download-path}}
           ls -R
-
       - name: 发布文件
         uses: ncipollo/release-action@v1
         with:
@@ -163,4 +149,4 @@ jobs:
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
-          artifacts: "macos/*.zip,macos/*.dmg"
+          artifacts: "macos/*.zip,macos/*.dmg,window/*.dmg,window/*.zip"
