@@ -155,3 +155,4 @@ jobs:
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
+
