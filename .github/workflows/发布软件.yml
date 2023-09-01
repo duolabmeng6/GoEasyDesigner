@@ -36,6 +36,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: 生成 Version.go 文件
+        run: |
+          echo -e "package mymodel\n\nvar Version = \"${version}\"" > GoEasyDesigner/mymodel/Version.go
+          cat GoEasyDesigner/mymodel/Version.go
       - name: 构建缓存
         uses: actions/cache@v3
         with:
@@ -61,10 +65,7 @@ jobs:
         run: |
           go install github.com/wailsapp/wails/v2/cmd/wails@latest
           wails
-      - name: 生成 Version.go 文件
-        run: |
-          echo -e "package mymodel\n\nvar Version = \"${version}\"" > GoEasyDesigner/mymodel/Version.go
-          cat GoEasyDesigner/mymodel/Version.go
+
       - name: 编译
         run: |
           pwd
@@ -132,7 +133,6 @@ jobs:
       - name: 生成 Version.go 文件
         run: |
           echo package mymodel > GoEasyDesigner\mymodel\Version.go
-          echo. >> GoEasyDesigner\mymodel\Version.go
           echo var Version = "%version%" >> GoEasyDesigner\mymodel\Version.go
           type GoEasyDesigner\mymodel\Version.go
       - name: 编译exe
@@ -149,7 +149,7 @@ jobs:
 
 
   jobs4:
-    needs: [ jobs_v,jobs_macos,jobs_window ]
+    needs: [ jobs_v,jobs_window ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
