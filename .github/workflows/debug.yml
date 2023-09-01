@@ -29,12 +29,12 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-            ~\AppData\Local\go-build
-            ~\go\pkg\mod
+#            ~\AppData\Local\go-build
+#            ~\go\pkg\mod
             C:\npm\cache
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ runner.os }}-js-
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -81,12 +81,12 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-            ~\AppData\Local\go-build
-            ~\go\pkg\mod
+#            ~\AppData\Local\go-build
+#            ~\go\pkg\mod
             /home/runner/.npm
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ runner.os }}-js-
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -131,12 +131,12 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-            ~\AppData\Local\go-build
-            ~\go\pkg\mod
+#            ~\AppData\Local\go-build
+#            ~\go\pkg\mod
             /Users/runner/.npm
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ runner.os }}-js-
 
       - name: Set up Go
         uses: actions/setup-go@v4
