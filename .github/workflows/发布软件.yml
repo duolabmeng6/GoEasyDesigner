@@ -69,8 +69,8 @@ jobs:
         run: |
           ls -la
           mkdir -p /tmp/artifacts
-          cp -r build/bin/GoEasyDesigner.app /tmp/artifacts/GoEasyDesigner.app
-          cp -r build/dmg.sh /tmp/artifacts/dmg.sh
+          cp -r GoEasyDesigner/build/bin/GoEasyDesigner.app /tmp/artifacts/GoEasyDesigner.app
+          cp -r GoEasyDesigner/build/dmg.sh /tmp/artifacts/dmg.sh
           chmod +x /tmp/artifacts/GoEasyDesigner.app/Contents/MacOS/GoEasyDesigner
       - name: 创建压缩包
         run: |
