@@ -22,7 +22,7 @@ on:
 jobs:
 
   build-windows:
-    timeout-minutes: 10
+    timeout-minutes: 20
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +44,9 @@ jobs:
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
       - name: install webview2
-        run: choco install webview2-runtime
+        run: |
+          npm config get cache
+          choco install webview2-runtime
 
         #- name: garble
         #  run: go install mvdan.cc/garble@latest
@@ -57,7 +59,6 @@ jobs:
 
       - name: build
         run: |
-          npm config get cache
           cd GoEasyDesigner
           wails build -debug 
 
@@ -77,6 +78,7 @@ jobs:
           path: |
             ~\AppData\Local\go-build
             ~\go\pkg\mod
+            /home/runner/.npm
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
@@ -122,6 +124,7 @@ jobs:
           path: |
             ~\AppData\Local\go-build
             ~\go\pkg\mod
+            /Users/runner/.npm
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
