@@ -1,9 +1,6 @@
 name: 发布软件
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions: write-all # 给所有工作写权限
@@ -158,3 +155,4 @@ jobs:
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
+
