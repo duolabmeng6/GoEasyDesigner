@@ -31,6 +31,7 @@ jobs:
           path: |
             ~\AppData\Local\go-build
             ~\go\pkg\mod
+            C:\npm\cache
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
