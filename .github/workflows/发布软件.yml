@@ -24,9 +24,9 @@ jobs:
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
+
   jobs_macos:
-    # 暂停
-    if: false
+    # 暂停 if: false
     needs: [ jobs_v ]
     name: 构建macos软件
     runs-on: macos-12
@@ -75,6 +75,7 @@ jobs:
           cd /tmp/artifacts/
           ./dmg.sh
           zip -r ./GoEasyDesigner_MacOS.zip ./GoEasyDesigner.app
+
       - name: 上传产物
         uses: actions/upload-artifact@v3
         with:
@@ -82,6 +83,8 @@ jobs:
           path: |
             /tmp/artifacts/*.zip
             /tmp/artifacts/*.dmg
+
+
   jobs_window:
     needs: jobs_v # 等待 jobs_v 任务完成才执行
     name: 构建window软件
@@ -112,9 +115,8 @@ jobs:
           wails
       - name: 编译exe
         run: |
-          ls 
           cd GoEasyDesigner
-          wails build
+          wails build -webview2 embed
           ls
       - name: 上传产物
         uses: actions/upload-artifact@v3
@@ -122,8 +124,10 @@ jobs:
           name: window
           path: |
             GoEasyDesigner/build/bin/*.exe
+
+
   jobs4:
-    needs: [ jobs_v,jobs_window ]
+    needs: [ jobs_v,jobs_macos,jobs_window ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
@@ -140,6 +144,7 @@ jobs:
           echo ${{ format('version {0}', env.version ) }}
           echo ${{steps.download.outputs.download-path}}
           ls -R
+
       - name: 发布文件
         uses: ncipollo/release-action@v1
         with:
@@ -149,4 +154,4 @@ jobs:
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
-          artifacts: "macos/*.zip,macos/*.dmg,window/*.dmg,window/*.zip"
+          artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"

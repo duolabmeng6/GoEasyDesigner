@@ -64,7 +64,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: debug-${{ runner.os }}
-          path: build/bin/
+          path: GoEasyDesigner/build/bin/GoEasyDesigner.exe
 
 
   build-ubuntu:
@@ -108,7 +108,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: debug-${{ runner.os }}
-          path: build/bin/
+          path: GoEasyDesigner/build/bin/GoEasyDesigner
 
 
   build-MacOS:
@@ -149,5 +149,5 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: debug-${{ runner.os }}
-          path: build/bin/
+          path: GoEasyDesigner/build/bin/GoEasyDesigner.app
 
