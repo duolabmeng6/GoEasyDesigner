@@ -40,12 +40,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~\AppData\Local\go-build
-            ~\go\pkg\mod
             /Users/runner/.npm
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ runner.os }}-js-
       - name: 查看文件
         run: |
           pwd
@@ -111,12 +109,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~\AppData\Local\go-build
-            ~\go\pkg\mod
             C:\npm\cache
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-js-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ runner.os }}-js-
       - name: 读入环境信息
         run: |
           echo ${{ format('version {0}', env.version ) }} # 版本号
@@ -133,6 +129,12 @@ jobs:
         run: |
           go install github.com/wailsapp/wails/v2/cmd/wails@latest
           wails
+      - name: 生成 Version.go 文件
+        run: |
+          echo package mymodel > GoEasyDesigner\mymodel\Version.go
+          echo. >> GoEasyDesigner\mymodel\Version.go
+          echo var Version = "%version%" >> GoEasyDesigner\mymodel\Version.go
+          type GoEasyDesigner\mymodel\Version.go
       - name: 编译exe
         run: |
           cd GoEasyDesigner
