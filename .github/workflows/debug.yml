@@ -48,10 +48,10 @@ jobs:
       - name: install wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-      - name: install webview2
-        run: |
-          npm config get cache
-          choco install webview2-runtime
+      #- name: install webview2
+      #  run: |
+      #    npm config get cache
+      #    choco install webview2-runtime
 
         #- name: garble
         #  run: go install mvdan.cc/garble@latest
