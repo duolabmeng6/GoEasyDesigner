@@ -16,6 +16,8 @@
 
 # 运行环境
 
+请按顺序安装好
+
 ### 1.安装 go 语言
 
 https://golang.org/dl/
@@ -33,9 +35,50 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 
-### 目前没有编译版本，所以下载项目后自行玩耍
 
-# 运行 GoEasyDesigner
+### 4.下载本项目
+
+该目录为设计好的界面最终运行的环境你的代码也将在这里编写
+
+将这个目录复制出来 `GoEasyDesigner/wails-demo`
+
+wails 同时调试前端和后端
+
+```
+cd wails-demo
+wails dev
+```
+
+### 5.下载 GoEasyDesigner
+
+下载最新版本: https://github.com/duolabmeng6/GoEasyDesigner/releases
+
+直接运行即可
+
+设计好的界面数据保存在这里
+
+```
+wails-demo/frontend/src/窗口/设计文件.json
+```
+### 6. webstorm IDE代码跳转插件
+
+想体验双击按钮自动跳转到点击事件的函数
+
+需要配置ide插件 请安装 QtEasyDesigner 插件,在本项目的文件中，
+
+重启ide就可以看到端口号 , 然后在软件的项目配置填写插件的端口
+
+例如
+```
+http://127.0.0.1:13403
+```
+
+go代码使用 goland ide
+
+js代码使用 webstorm ide 绝大部分编写代码都应该在 js中编写,如果js无法实现的可以调用go代码
+
+### 开发请看
+#### 运行 GoEasyDesigner
 
 wails 同时调试前端和后端
 
@@ -51,12 +94,12 @@ cd GoEasyDesigner\frontend
 vite 
 ```
 
-# wails-demo 为模板项目
+#### wails-demo 为模板项目
 
 保存界面数据到这里
 
 ```
-wails-demo/frontend/src/stores/组件数据.json
+wails-demo/frontend/src/窗口/设计文件.json
 ```
 
 运行 就可以看到效果了
@@ -66,14 +109,4 @@ cd wails-demo
 wails dev
 ```
 
-# IDE代码跳转插件
-想体验双击按钮自动跳转到点击事件的函数
-
-需要配置ide插件 请安装 QtEasyDesigner 插件，重启ide就可以看到端口号
-
-然后在软件的项目配置填写插件的端口
-例如
-```
-http://127.0.0.1:13403
-```
 
