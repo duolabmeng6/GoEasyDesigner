@@ -3,5 +3,5 @@ services:
   goeasy:
     container_name: goeasy
     build: .
-    network_mode: host
-  
+    ports:
+      - "3005:3005"

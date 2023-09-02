@@ -1,21 +1,14 @@
-# 安装Node.js
-FROM node:alpine
-
-# 创建工作目录
+FROM node:18-alpine
 WORKDIR /app
-
-# 将node_modules添加到工作目录
-COPY ./frontend/package.json .
-RUN npm install 
-
-# 将所有文件复制到工作目录
 COPY ./frontend .
 
-# 编译前端项目
-RUN npm build
+RUN npm install 
+RUN npm run build
 
-# 产生静态文件
-FROM nginx:alpine
+# docker build -t my-node-app .
+# docker run -v ./frontend:/app -p 3000:3000 -it --rm --name my-running-app my-node-app /bin/sh
+
+FROM nginx:alpine-slim
 COPY --from=0 /app/dist /usr/share/nginx/html/
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 3005
