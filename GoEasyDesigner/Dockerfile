@@ -1,12 +1,21 @@
-# 使用 Node.js 官方的 Node 镜像作为基础
-FROM node:14-alpine
-# 设置工作目录
+# 安装Node.js
+FROM node:alpine
+
+# 创建工作目录
 WORKDIR /app
-# 将 package.json 和 package-lock.json 复制到容器中
-COPY ./frontend ./
-# 安装项目依赖
-RUN npm ci --only=production
-# 暴露端口
-EXPOSE 4173
-# 运行命令
-CMD ["npm", "run", "preview"]
+
+# 将node_modules添加到工作目录
+COPY ./frontend/package.json .
+RUN npm install 
+
+# 将所有文件复制到工作目录
+COPY ./frontend .
+
+# 编译前端项目
+RUN npm build
+
+# 产生静态文件
+FROM nginx:alpine
+COPY --from=0 /app/dist /usr/share/nginx/html/
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/
