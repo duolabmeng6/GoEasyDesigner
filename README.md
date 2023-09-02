@@ -8,7 +8,10 @@
 
 # 在线体验
 
+没钱买服务器所以都是白嫖 pages 国内打不开就换一个地址呗
+
 https://g.yx24.me
+https://goeasy.onrender.com
 
 画好界面点保存,会下载2个文件 设计文件.json`,`辅助代码.js`
 
