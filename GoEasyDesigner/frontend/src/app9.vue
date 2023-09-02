@@ -241,7 +241,7 @@ function 打开() {
       }
     }
     input.click()
-    return
+    returnzj
   }
 
   console.log("打开")
@@ -268,7 +268,13 @@ function 打开() {
 }
 
 function 帮助() {
-  BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
+  if (store.客户端模式){
+    BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
+
+  }else{
+    //浏览器打开新页面
+    window.open("https://github.com/duolabmeng6/GoEasyDesigner")
+  }
 
 }
 
