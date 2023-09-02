@@ -1,0 +1,26 @@
+edition: 1.0.0 
+name: framework
+access: "df1"
+
+vars: 
+  region: "cn-hangzhou"
+
+services:
+  framework: # 业务名称/模块名称
+    component: oss # 组件名称
+    actions:
+      # pre-deploy:
+        # - run: npm install
+          # path: ./frontend
+        # - run: npm run build
+          # path: ./frontend
+    props:
+      bucket: auto
+      codeUri: ./frontend/dist
+      region: ${vars.region}
+      website:
+        index: index.html
+        error: 404.html
+        subDirType: index
+      customDomains:
+        - domainName: auto
