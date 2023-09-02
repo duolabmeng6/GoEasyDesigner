@@ -27,10 +27,10 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="支持库">
-          <component is="支持库" />
+          <component is="支持库"/>
         </el-tab-pane>
         <el-tab-pane label="项目管理">
-          <component is="项目管理" />
+          <component is="项目管理"/>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -82,7 +82,7 @@
     <div class="调试信息">
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <el-tab-pane label="帮助信息">
-          {{store.帮助信息}}
+          {{ store.帮助信息 }}
         </el-tab-pane>
         <el-tab-pane label="调试信息"></el-tab-pane>
       </el-tabs>
@@ -102,7 +102,8 @@
         <el-button :icon="Coin" @click="保存">保存</el-button>
         <el-button :icon="Key" @click="运行">运行</el-button>
         <el-button :icon="Bowl" @click="编译">编译</el-button>
-        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置</el-button>
+        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
+        </el-button>
         <el-button :icon="Help" @click="帮助">帮助</el-button>
       </el-button-group>
     </div>
@@ -112,10 +113,10 @@
 </template>
 
 <script setup>
-import {ref, inject} from 'vue';
+import {ref, inject, onMounted} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
-import { Edit, Open,  Help ,Tools,Bowl,Key,Coin} from "@element-plus/icons-vue";
+import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
 
 import {E保存, E保存件对话框, E创建函数, E打开文件对话框, E读入文件} from "../wailsjs/go/main/App";
 import {取父目录, 生成辅助代码} from "@/public";
@@ -265,17 +266,20 @@ function 打开() {
     store.项目管理刷新()
   })
 }
-function 帮助(){
+
+function 帮助() {
   BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
 
 }
 
-function 运行(){
+function 运行() {
   store.帮助信息 = "等待开发 ..."
 }
-function 编译(){
+
+function 编译() {
   store.帮助信息 = "等待开发 ..."
 }
+
 function 保存() {
   console.log("保存")
   let njson = JSON.stringify(store.list, null, 2)
@@ -336,6 +340,50 @@ function 保存() {
   _保存(store.项目信息.辅助代码文件路径, 辅助代码)
 
 }
+
+onMounted(() => {
+  console.log("store.当前组件索引", store.当前组件索引)
+  document.addEventListener("keydown", handleKeyDown);
+})
+
+function 键盘按下(event, index) {
+  console.log("键盘按下", event.key, index)
+  if (event.key == 'Delete') {
+
+  }
+}
+
+function handleKeyDown(event) {
+  // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
+  console.log("按下某键盘", event.key)
+  键盘按下(event, store.当前组件索引)
+  if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了保存 Cmd/Ctrl + S");
+    if (store.客户端模式==false){
+      //弹出消息框 当前为浏览器模式 不能保存 请手动保存
+      ElMessage({
+        message: "当前为浏览器模式 不能保存 请手动保存. 如果需要保存请使用客户端",
+        type: 'success',
+        duration: 3000, // 设置显示时间为5秒，单位为毫秒
+      });
+      return
+    }
+
+    if (store.项目信息.窗口事件文件路径 != "") {
+      E保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容).then((res) => {
+        console.log(res)
+        ElMessage({
+          message: res,
+          type: 'success',
+          duration: 3000, // 设置显示时间为5秒，单位为毫秒
+        });
+      })
+    }
+  }
+}
+
 
 </script>
 
