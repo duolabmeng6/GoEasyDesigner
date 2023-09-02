@@ -22,7 +22,7 @@
             <component :is="store.当前组件名称2()"
                        v-if="store.当前拖拽组件数据 != undefined"
                        :item="store.当前拖拽组件数据"
-                       @添加事件被选择="添加事件被选择"
+                       @添加事件被选择="store.添加事件被选择"
             />
           </div>
         </el-tab-pane>
@@ -337,46 +337,6 @@ function 保存() {
 
 }
 
-function 添加事件被选择(事件名称, item) {
-  if (事件名称 == "在此处选择加入事件处理函数") {
-    return
-  }
-
-  console.log("添加事件被选择", 事件名称)
-  console.log("添加事件被选择", item.名称 + "_" + 事件名称)
-  let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
-  console.log(code)
-  eval(code)
-  let ncode = `
-    c.{事件名称} = function () {
-        console.log("{事件名称}")
-    }
-`;
-
-  if (store.项目信息.窗口事件文件路径 == ""){
-    ElMessage({
-      message: "该功能需要先保存文件",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return;
-  }
-  try {
-    // 替换 {事件名称} 为 事件名称
-    ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
-    console.log(ncode)
-    console.log(store.项目信息.窗口事件文件路径)
-    E创建函数(store.项目信息.窗口事件文件路径, ncode, store.项目信息.IDE插件地址).then(
-        (res) => {
-          console.log(res)
-        }
-    )
-    // 保存()
-  } catch (e) {
-    console.log("需要客户端中运行")
-  }
-
-}
 </script>
 
 <style>

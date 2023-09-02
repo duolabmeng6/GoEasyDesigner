@@ -13,6 +13,7 @@
         :id="item.名称"
         class="子组件"
         data-放置="1"
+        @dblclick.stop="store.组件双击事件(item)"
         @dragstart.stop="拖拽开始($event,item)"
         @dragover.prevent="拖拽进入($event,item)"
         @dragleave.prevent="拖拽离开($event,item)"

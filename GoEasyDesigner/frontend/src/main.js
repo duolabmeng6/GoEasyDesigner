@@ -4,12 +4,17 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import { ref } from 'vue'
 
 // import App from './components/设计器组件/代码编辑器.vue'
+// import App from './测试代码编辑器.vue'
 import App from './app9.vue'
 // import App from './components/设计器组件/项目管理.vue'
 
 const app = createApp(App)
+app.use(createPinia())
+import {useCounterStore} from '@/stores/counter'
+const store = useCounterStore()
 
 // import 按钮.json from '@/components/按钮.json.vue';
 // app.component('按钮.json', 按钮.json)
@@ -109,9 +114,47 @@ self.MonacoEnvironment = {
     }
 }
 
+function createCustomProposal(range, insertText, label) {
+    return {
+        label: label,
+        kind: monaco.languages.CompletionItemKind.Function,
+        documentation: "",
+        insertText: insertText,
+        range: range,
+    };
+}
+import 编辑器数据 from './编辑器/编辑器提示数据.js'
+// let keywordMappings = ref({})
+// keywordMappings.value = 编辑器数据
+store.keywordMappings = 编辑器数据
+// 将 keywordMappings 共享到全局课修改
+// app.provide('keywordMappings',keywordMappings);
+
+monaco.languages.registerCompletionItemProvider("javascript", {
+    provideCompletionItems: function (model, position) {
+        var word = model.getWordUntilPosition(position);
+        var range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn,
+        };
+        // 检查用户输入的关键词是否在映射中
+        var suggestions = [];
+        Object.keys(store.keywordMappings).forEach(function (keyword) {
+            var regex = new RegExp("^" + word.word, "i");
+            if (regex.test(keyword)) {
+                var { insertText, label } = store.keywordMappings[keyword];
+                suggestions.push(createCustomProposal(range, insertText, label));
+            }
+        });
+
+        return { suggestions: suggestions };
+    },
+});
+
 loader.config({ monaco })
 
-app.use(createPinia())
 app.use(ElementPlus)
 app.mount('#app')
 

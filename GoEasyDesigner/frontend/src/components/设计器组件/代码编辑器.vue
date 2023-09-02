@@ -1,6 +1,5 @@
 <template>
   <vue-monaco-editor
-      v-model:value="code"
       theme="vs"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
@@ -8,9 +7,6 @@
 
   />
 </template>
-<style scoped>
-
-</style>
 <script lang="ts" setup>
 import {ref, shallowRef} from 'vue'
 
@@ -32,6 +28,13 @@ const MONACO_EDITOR_OPTIONS = {
 // const code = ref('function hello() {\n\talert("Hello world!");\n}')
 const editorRef = shallowRef()
 const handleMount = editor => (editorRef.value = editor)
+
+
+
+
+
+
+
 
 // your action
 function formatCode() {

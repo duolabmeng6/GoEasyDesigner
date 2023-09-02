@@ -1,7 +1,11 @@
 import {ref, nextTick} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E文件枚举} from "../../wailsjs/go/main/App";
+import {E创建函数, E文件枚举} from "../../wailsjs/go/main/App";
+import {生成辅助代码} from "@/提示语法生成器.js";
+import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
+import {ElMessage} from "element-plus";
+import {InsertCode} from "@/public.js";
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -32,15 +36,67 @@ export const useCounterStore = defineStore('counter', {
             indexMap: ref({}),
             显示项目配置对话框: ref(false),
             项目文件列表: ref([]),
-            代码编辑器内容:ref(""),
-            当前代码编辑器路径 : ref(""),
-            选择夹_中间现行选中项:ref("0"),
-            支持库列表:ref([]),
-            帮助信息:ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
+            代码编辑器内容: ref(""),
+            当前代码编辑器路径: ref(""),
+            选择夹_中间现行选中项: ref("0"),
+            支持库列表: ref([]),
+            帮助信息: ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
+            keywordMappings: ref(""),
         }
     },
 
     actions: {
+        添加事件被选择(事件名称, item) {
+            if (事件名称 == "在此处选择加入事件处理函数") {
+                return
+            }
+            if (this.代码编辑器内容 == ""){
+                this.代码编辑器内容 = 窗口事件代码模板
+            }
+            let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
+            console.log("添加事件被选择", item.名称 + 事件名称)
+            eval(code)
+            let ncode = `
+    c.{事件名称} = function () {
+        console.log("{事件名称}")
+    }
+`;
+            ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
+            console.log(ncode)
+
+            if (this.项目信息.窗口事件文件路径 == "") {
+                ElMessage({
+                    message: "浏览器中运行无法保存请注意...",
+                    type: 'success',
+                    duration: 3000, // 设置显示时间为5秒，单位为毫秒
+                });
+                this.代码编辑器内容 = InsertCode(this.代码编辑器内容,ncode)
+                this.选择夹_中间现行选中项 = "1"
+                return;
+            }
+            try {
+                // 替换 {事件名称} 为 事件名称
+                console.log(this.项目信息.窗口事件文件路径)
+                E创建函数(this.项目信息.窗口事件文件路径, ncode, this.项目信息.IDE插件地址).then(
+                    (res) => {
+                        console.log(res)
+                    }
+                )
+                // 保存()
+            } catch (e) {
+                console.log("需要客户端中运行")
+            }
+
+        },
+        组件双击事件(组件数据) {
+            this.添加事件被选择("被单击", 组件数据)
+            let dthis;
+            dthis = this
+            生成辅助代码(this.list, function (res) {
+                dthis.keywordMappings = res
+            })
+
+        },
         初始化() {
             let dthis = this
             try {
@@ -52,8 +108,8 @@ export const useCounterStore = defineStore('counter', {
             }
             console.log("当前客户端模式", this.客户端模式)
         },
-        项目管理刷新(){
-            if (this.项目信息.项目管理目录=="" && this.项目信息.项目管理目录==undefined){
+        项目管理刷新() {
+            if (this.项目信息.项目管理目录 == "" && this.项目信息.项目管理目录 == undefined) {
                 return
             }
             let dthis;
@@ -66,12 +122,12 @@ export const useCounterStore = defineStore('counter', {
                     文件名 = 文件名[文件名.length - 1]
 
                     dthis.项目文件列表.push({
-                                                label: 文件名,
-                                                path: v,
-                                            })
+                        label: 文件名,
+                        path: v,
+                    })
                 })
             })
-            console.log("项目文件列表", store.项目文件列表)
+            console.log("项目文件列表", this.项目文件列表)
         },
         取窗口样式() {
             const result = {}

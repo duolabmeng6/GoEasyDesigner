@@ -76,4 +76,25 @@ function 取父目录(path) {
     return parentDirectory;
 }
 
-export {getItemStyle, 生成辅助代码, 取父目录};
+function InsertCode(jscode, insertionCode) {
+    // 获取函数名称 窗口.按钮3被点击 = function () { 截取 按钮3被点击
+    const 函数名称 = insertionCode.substring(insertionCode.indexOf(".") + 1, insertionCode.indexOf("=")).trim();
+
+    // 检查是否已经存在
+    if (jscode.includes(函数名称)) {
+        return jscode;
+    }
+
+    // Define the regular expression pattern
+    const pattern = `(\\/\\/事件函数位置不要删除[^\\n]*)`;
+
+    // Compile the regular expression
+    const re = new RegExp(pattern);
+
+    // Replace the matching pattern with the insertion code
+    const result = jscode.replace(re, `${insertionCode}$1`);
+
+    return result;
+}
+
+export {getItemStyle, 生成辅助代码, 取父目录,InsertCode};
