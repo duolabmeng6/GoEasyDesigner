@@ -2,7 +2,7 @@ FROM node:18-alpine
 WORKDIR /app
 COPY ./frontend .
 
-RUN npm install 
+RUN npm install --registry=http://registry.npmmirror.com
 RUN npm run build
 
 # docker build -t my-node-app .
