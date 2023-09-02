@@ -6,6 +6,10 @@
 
 基于 go 语言 使用 wails框架, 支持 window macos linux 等系统. 
 
+# 项目地址
+主仓库 https://github.com/duolabmeng6/GoEasyDesigner 
+镜像仓库 https://gitee.com/duolabmeng666/go-easy-designer 
+
 # 在线体验
 
 没钱买服务器所以都是白嫖 pages 国内打不开就换一个地址呗
