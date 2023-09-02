@@ -8,7 +8,7 @@
 
 # 在线体验
 
-https://go-easy-designer.vercel.app/
+https://g.yx24.me
 
 画好界面点保存,会下载2个文件 设计文件.json`,`辅助代码.js`
 
