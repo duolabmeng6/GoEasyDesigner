@@ -33,6 +33,7 @@ jobs:
       - name: install
         run: |
           cd GoEasyDesigner/frontend
+          npm i
           npm run build
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
