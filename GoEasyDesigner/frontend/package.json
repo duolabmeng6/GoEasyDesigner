@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@guolao/vue-monaco-editor": "1.1.4",
+    "@guolao/vue-monaco-editor": "1.2.1",
     "element-plus": "^2.3.9",
-    "monaco-editor": "0.35.0",
+    "monaco-editor": "0.38.0",
     "pinia": "^2.1.4",
     "pinyin": "^3.0.0-alpha.4",
     "pinyin-pro": "^3.16.3",

@@ -129,6 +129,12 @@ import 编辑器数据 from './编辑器/编辑器提示数据.js'
 store.keywordMappings = 编辑器数据
 // 将 keywordMappings 共享到全局课修改
 // app.provide('keywordMappings',keywordMappings);
+// 注册你的自定义语言
+monaco.languages.register({ id: 'javascript' });
+
+import ldf from './编辑器/编辑器语法文件.js'
+
+monaco.languages.setMonarchTokensProvider('javascript', ldf);
 
 monaco.languages.registerCompletionItemProvider("javascript", {
     provideCompletionItems: function (model, position) {
@@ -148,6 +154,11 @@ monaco.languages.registerCompletionItemProvider("javascript", {
                 suggestions.push(createCustomProposal(range, insertText, label));
             }
         });
+        //这里设置排序对输入提示没有影响
+        // suggestions.sort((a, b) => {
+        //     return a.label.localeCompare(b.label, undefined, { sensitivity: 'base' });
+        // });
+        // console.log(JSON.stringify(suggestions, null, 2))
 
         return { suggestions: suggestions };
     },
