@@ -1,5 +1,5 @@
 <template>
-  <Shape2
+  <Shape
       :style="getItemStyle(item)"
       style="position: absolute;"
       @update-style="updateStyle"
@@ -38,7 +38,7 @@
         <component is="渲染组件"  v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
     </div>
-  </Shape2>
+  </Shape>
 </template>
 
 <script setup>
@@ -46,7 +46,7 @@ import {defineProps} from 'vue';
 
 const {item} = defineProps(['item']);
 import {useCounterStore} from '@/stores/counter'
-import Shape2 from "@/components/Shape2.vue";
+import Shape from "@/components/Shape.vue";
 import {getItemStyle} from "@/public";
 
 const store = useCounterStore()
