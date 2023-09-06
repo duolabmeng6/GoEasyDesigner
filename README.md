@@ -117,6 +117,8 @@ window填写exe的路径
 C:\GoEasyDesigner\GoEasyDesigner.exe
 ```
 
+后续使用的话 打开 `设计文件.json` 在编辑器中右键  `打开 QtEasyDesigner ` 界面就出来了
+
 js代码使用 webstorm ide 绝大部分编写代码都应该在 js中编写,如果js无法实现的再调用go代码
 go代码使用 goland IDE 编写 一般情况下代码写在 app.go 中
 
