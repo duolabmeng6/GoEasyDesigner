@@ -58,3 +58,6 @@ func TestE运行命令(t *testing.T) {
 		println("回显内容", cleaned)
 	})
 }
+func TestE运行命令2(t *testing.T) {
+
+}

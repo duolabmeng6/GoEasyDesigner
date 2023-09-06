@@ -80,13 +80,18 @@
       </el-tabs>
     </div>
     <div class="调试信息">
-      <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
+      <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
+               type="border-card">
         <el-tab-pane label="帮助信息">
-          <div v-html="store.帮助信息" style="height: 100px;overflow-y: auto"
-               ref="scrollContainer"
+          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+               v-html="store.帮助信息"
           ></div>
         </el-tab-pane>
-        <el-tab-pane label="调试信息"></el-tab-pane>
+        <el-tab-pane label="调试信息">
+          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+               v-html="store.调试信息"
+          ></div>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <div class="标题 clear-select">
@@ -102,8 +107,8 @@
         <el-button :icon="Edit" @click="新建">新建</el-button>
         <el-button :icon="Open" @click="打开">打开</el-button>
         <el-button :icon="Coin" @click="store.保存设计文件">保存</el-button>
-        <el-button :icon="Key" @click="运行">运行</el-button>
-        <el-button :icon="Bowl" @click="编译">编译</el-button>
+        <el-button :icon="Key" @click="运行">{{ store.运行按钮文本 }}</el-button>
+        <el-button :icon="Key" @click="编译">{{ store.编译按钮文本 }}</el-button>
         <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
         </el-button>
         <el-button :icon="Help" @click="帮助">帮助</el-button>
@@ -123,7 +128,16 @@ import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
 
-import {E保存, E保存件对话框, E创建函数, E打开文件对话框, E读入文件, E运行命令} from "../wailsjs/go/main/App";
+import {
+  E保存,
+  E保存件对话框,
+  E创建函数,
+  E打开文件对话框,
+  E读入文件,
+  E运行命令,
+  E停止命令,
+  E取配置信息
+} from "../wailsjs/go/main/App";
 import {取父目录, 生成辅助代码} from "@/public";
 import Shape from "@/components/Shape.vue";
 import {BrowserOpenURL, EventsOn} from "../wailsjs/runtime";
@@ -247,7 +261,7 @@ function 打开() {
       }
     }
     input.click()
-    returnzj
+    return
   }
 
   console.log("打开")
@@ -292,16 +306,20 @@ const scrollContainer = ref(null);
 
 try {
   EventsOn("运行命令", function (data) {
-    console.log("运行命令",data)
-    store.帮助信息 = store.帮助信息 + "<br / >" + data
+    console.log("运行命令", data)
+    store.调试信息 = store.调试信息 + "<br / >" + data
     scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+    if (data == "命令已完成") {
+      store.运行按钮文本 = "运行"
+      store.编译按钮文本 = "编译"
+    }
   })
-}catch (e) {
+} catch (e) {
   console.log('非客户端模式')
 }
 
 function 运行() {
-  if (store.客户端模式==false){
+  if (store.客户端模式 == false) {
     //弹出提示
     ElMessage({
       message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails dev",
@@ -310,14 +328,30 @@ function 运行() {
     });
     return
   }
-  store.帮助信息 = "运行中 ..."
-  let 结果;
-  结果 = E运行命令(store.项目信息.项目根目录, "wails dev")
-  console.log("结果")
+  if(store.项目信息.项目根目录 == ""){
+    ElMessage({
+      message: "请先保存",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
+
+  if (store.运行按钮文本 == '运行') {
+    store.运行按钮文本 = '停止'
+    store.调试信息 = "运行中 ..."
+    store.选择夹_底部现行选中项 = "1"
+    E运行命令(store.项目信息.项目根目录, "wails dev")
+  } else {
+    store.调试信息 = "已停止 ..."
+    store.运行按钮文本 = '运行'
+    E停止命令()
+  }
+
 }
 
 function 编译() {
-  if (store.客户端模式==false){
+  if (store.客户端模式 == false) {
     //弹出提示
     ElMessage({
       message: "当前为浏览器模式 不能编译 请自行在项目根目录运行 wails build",
@@ -326,14 +360,29 @@ function 编译() {
     });
     return
   }
-  store.帮助信息 = "运行中 ..."
-  let 结果;
-  结果 = E运行命令(store.项目信息.项目根目录, "wails build")
-  console.log("结果")
+  if(store.项目信息.项目根目录 == ""){
+    ElMessage({
+      message: "请先保存",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
+  if (store.编译按钮文本 == '编译') {
+    store.编译按钮文本 = '停止'
+    store.调试信息 = "编译中 ..."
+    store.选择夹_底部现行选中项 = "1"
+    E运行命令(store.项目信息.项目根目录, "wails build")
+  } else {
+    store.调试信息 = "已停止 ..."
+    store.编译按钮文本 = '编译'
+    E停止命令()
+  }
+
 }
 
 function 运行环境检测() {
-  if (store.客户端模式==false){
+  if (store.客户端模式 == false) {
     //弹出提示
     ElMessage({
       message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails doctor",
@@ -350,6 +399,15 @@ function 运行环境检测() {
 
 
 onMounted(() => {
+  E取配置信息().then((res) => {
+    res = JSON.parse(res)
+    console.log("取配置信息", res)
+
+    store.项目信息.设计文件路径 = res.设计文件路径
+    store.项目信息.IDE插件地址 = "http://127.0.0.1:"+res.IDE插件端口号
+
+  })
+
   console.log("store.当前组件索引", store.当前组件索引)
   document.addEventListener("keydown", handleKeyDown);
 })

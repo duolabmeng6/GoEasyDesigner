@@ -5,9 +5,13 @@ export function E保存(arg1:string,arg2:string):Promise<string>;
 
 export function E保存件对话框():Promise<string>;
 
+export function E停止命令():Promise<string>;
+
 export function E创建函数(arg1:string,arg2:string,arg3:string):Promise<string>;
 
 export function E发送跳转代码到ide(arg1:string,arg2:string,arg3:number):Promise<string>;
+
+export function E取配置信息(arg1:string):Promise<string>;
 
 export function E打开文件对话框():Promise<string>;
 

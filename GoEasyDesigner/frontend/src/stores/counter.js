@@ -5,7 +5,7 @@ import {E创建函数, E文件枚举, E读入文件, E发送跳转代码到ide, 
 import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
-import {InsertCode, 取父目录,生成辅助代码} from "@/public.js";
+import {InsertCode, 取父目录, 生成辅助代码} from "@/public.js";
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -22,7 +22,7 @@ export const useCounterStore = defineStore('counter', {
             当前组件索引: ref("1"),
             组件列表: ref([]),
             项目信息: ref({
-                项目根目录:"",
+                项目根目录: "",
                 设计文件路径: "",//"stores\\设计文件.json",
                 窗口事件文件路径: "",//"stores\\窗口事件.js",
                 辅助代码文件路径: "",//"stores\\辅助代码.js",
@@ -45,6 +45,10 @@ export const useCounterStore = defineStore('counter', {
             keywordMappings: ref(""),
             全局_事件名称列表: ref([]),
             代码编写模式: ref(1),//1:网页内代码编辑器 2:代码跳转至IDE
+            运行按钮文本: ref("运行"),
+            编译按钮文本: ref("编译"),
+            调试信息: ref(""),
+            选择夹_底部现行选中项: ref("0"),
         }
     },
 

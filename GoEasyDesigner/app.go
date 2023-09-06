@@ -1,18 +1,23 @@
 package main
 
 import (
+	"changeme/Terminal"
 	"changeme/myfunc"
 	"context"
 	"fmt"
 	"github.com/duolabmeng6/goefun/ecore"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+	"log"
 	"os"
 	"regexp"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx      context.Context
+	terminal *Terminal.Terminal
+	IDE插件端口号 string
+	S设计文件路径  string
 }
 
 // NewApp creates a new App application struct
@@ -24,12 +29,21 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+
 }
 
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
+func (a *App) E取配置信息(name string) string {
+	data := map[string]string{
+		"IDE插件端口号": a.IDE插件端口号,
+		"设计文件路径":  a.S设计文件路径,
+	}
+	return ecore.E到文本(data)
+}
+
 func (a *App) E保存(设计文件路径 string, 保存内容 string) string {
 	// 	println("保存", 设计文件路径, 保存内容)
 	// 把文件保存到指定路径
@@ -99,13 +113,38 @@ func (a *App) E文件枚举(目录 string) []string {
 func (a *App) E运行命令(项目根目录 string, 执行命令 string) string {
 	//项目根目录 := "/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo"
 	//执行命令 := "wails dev"
+	// 	命令 := "cd " + 项目根目录 + " && " + 执行命令
+	// 	runtime.EventsEmit(a.ctx, "运行命令", "开始运行 "+命令)
+	// 	result := myfunc.E运行命令(项目根目录, 执行命令, func(回显内容 string) {
+	// 		println("回显内容", 回显内容)
+	// 		regex := regexp.MustCompile("\x1b\\[[0-9;]*m")
+	// 		cleaned := regex.ReplaceAllString(回显内容, "")
+	// 		runtime.EventsEmit(a.ctx, "运行命令", cleaned)
+	// 	})
+
+	a.terminal = Terminal.NewTerminal()
 	命令 := "cd " + 项目根目录 + " && " + 执行命令
 	runtime.EventsEmit(a.ctx, "运行命令", "开始运行 "+命令)
-	result := myfunc.E运行命令(项目根目录, 执行命令, func(回显内容 string) {
-		println("回显内容", 回显内容)
-		regex := regexp.MustCompile("\x1b\\[[0-9;]*m")
-		cleaned := regex.ReplaceAllString(回显内容, "")
-		runtime.EventsEmit(a.ctx, "运行命令", cleaned)
+	a.terminal.StartCommand(命令, func(output string, err error) {
+		if err != nil {
+			log.Println("命令执行错误:", err)
+			if err.Error() == "命令已完成" {
+				runtime.EventsEmit(a.ctx, "运行命令", err.Error())
+			} else {
+				runtime.EventsEmit(a.ctx, "运行命令", "报错:"+err.Error())
+			}
+		} else {
+			println("回显内容", output)
+			regex := regexp.MustCompile("\x1b\\[[0-9;]*m")
+			cleaned := regex.ReplaceAllString(output, "")
+			runtime.EventsEmit(a.ctx, "运行命令", cleaned)
+		}
 	})
-	return result
+
+	return "运行命令成功"
+}
+
+func (a *App) E停止命令() string {
+	a.terminal.StopCommand()
+	return "停止命令成功"
 }
