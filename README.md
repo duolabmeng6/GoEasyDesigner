@@ -103,20 +103,22 @@ wails-demo/frontend/src/窗口/设计文件.json
 ```
 ### 6. webstorm IDE代码跳转插件
 
-想体验双击按钮自动跳转到点击事件的函数
+想体验双击组件自动跳转到对应函数 请在webstorm中安装 QtEasyDesigner 插件,在本项目的文件中，
 
-需要配置ide插件 请安装 QtEasyDesigner 插件,在本项目的文件中，
+安装后在IDE编辑器中右键看到 `配置 QtEasyDesigner ` 
 
-重启ide就可以看到端口号 , 然后在软件的项目配置填写插件的端口
-
-例如
+macos填写路径
 ```
-http://127.0.0.1:13403
+/Applications/GoEasyDesigner.app/Contents/MacOS/GoEasyDesigner
 ```
 
-go代码使用 goland ide
+window填写exe的路径
+```
+C:\GoEasyDesigner\GoEasyDesigner.exe
+```
 
-js代码使用 webstorm ide 绝大部分编写代码都应该在 js中编写,如果js无法实现的可以调用go代码
+js代码使用 webstorm ide 绝大部分编写代码都应该在 js中编写,如果js无法实现的再调用go代码
+go代码使用 goland IDE 编写 一般情况下代码写在 app.go 中
 
 ### 开发请看
 #### 运行 GoEasyDesigner
