@@ -289,12 +289,26 @@ function 帮助() {
 // 使用 $refs 来引用滚动容器
 const scrollContainer = ref(null);
 
-EventsOn("运行命令", function (data) {
-  console.log("运行命令",data)
-  store.帮助信息 = store.帮助信息 + "<br / >" + data
-  scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-})
+try {
+  EventsOn("运行命令", function (data) {
+    console.log("运行命令",data)
+    store.帮助信息 = store.帮助信息 + "<br / >" + data
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+  })
+}catch (e) {
+  console.log('非客户端模式')
+}
+
 function 运行() {
+  if (store.客户端模式==false){
+    //弹出提示
+    ElMessage({
+      message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails dev",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
   store.帮助信息 = "运行中 ..."
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails dev")
@@ -302,6 +316,15 @@ function 运行() {
 }
 
 function 编译() {
+  if (store.客户端模式==false){
+    //弹出提示
+    ElMessage({
+      message: "当前为浏览器模式 不能编译 请自行在项目根目录运行 wails build",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
   store.帮助信息 = "运行中 ..."
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails build")
@@ -309,6 +332,15 @@ function 编译() {
 }
 
 function 运行环境检测() {
+  if (store.客户端模式==false){
+    //弹出提示
+    ElMessage({
+      message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails doctor",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
   store.帮助信息 = "运行环境检测 ..."
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
