@@ -107,6 +107,7 @@
         <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
         </el-button>
         <el-button :icon="Help" @click="帮助">帮助</el-button>
+        <el-button :icon="Help" @click="运行环境检测">运行环境检测</el-button>
 
 
       </el-button-group>
@@ -289,19 +290,29 @@ function 帮助() {
 const scrollContainer = ref(null);
 
 EventsOn("运行命令", function (data) {
-  console.log("窗口事件", data,scrollContainer)
+  console.log("运行命令",data)
   store.帮助信息 = store.帮助信息 + "<br / >" + data
-
   scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
 })
 function 运行() {
   store.帮助信息 = "运行中 ..."
-  E运行命令(store.项目信息.项目根目录, "wails dev")
+  let 结果;
+  结果 = E运行命令(store.项目信息.项目根目录, "wails dev")
+  console.log("结果")
 }
 
 function 编译() {
   store.帮助信息 = "运行中 ..."
-  E运行命令(store.项目信息.项目根目录, "wails build")
+  let 结果;
+  结果 = E运行命令(store.项目信息.项目根目录, "wails build")
+  console.log("结果")
+}
+
+function 运行环境检测() {
+  store.帮助信息 = "运行环境检测 ..."
+  let 结果;
+  结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
+  console.log("结果")
 }
 
 

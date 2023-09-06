@@ -37,10 +37,10 @@ func E发送跳转代码到ide(插件URL地址 string, 文件路径 string, 跳�
 
 }
 
-func E运行命令(执行目录 string, 执行命令 string, 回调函数 func(回显内容 string)) {
+func E运行命令(执行目录 string, 执行命令 string, 回调函数 func(回显内容 string)) string {
 	命令 := "cd " + 执行目录 + " && " + 执行命令
 	println("执行命令", 命令)
-	ecore.E运行_mac(命令, true, func(line string) {
+	return ecore.E运行_mac(命令, true, func(line string) {
 		//println(line)
 		回调函数(line)
 	})
