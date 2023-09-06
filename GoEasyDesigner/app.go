@@ -1,7 +1,7 @@
 package main
 
 import (
-	"changeme/TerminalWin"
+	"changeme/Terminal"
 	"changeme/myfunc"
 	"context"
 	"fmt"
@@ -14,8 +14,10 @@ import (
 
 // App struct
 type App struct {
-	ctx      context.Context
-	terminal *TerminalWin.TerminalWin
+	ctx context.Context
+	//terminal *TerminalWin.TerminalWin
+
+	terminal *Terminal.Terminal
 	IDE插件端口号 string
 	S设计文件路径  string
 }
@@ -122,7 +124,9 @@ func (a *App) E运行命令(项目根目录 string, 执行命令 string) string 
 	// 		runtime.EventsEmit(a.ctx, "运行命令", cleaned)
 	// 	})
 
-	a.terminal = TerminalWin.NewTerminalWin()
+	//a.terminal = TerminalWin.NewTerminalWin()
+	a.terminal = Terminal.NewTerminal()
+
 	命令 := "cd " + 项目根目录 + " && " + 执行命令
 	runtime.EventsEmit(a.ctx, "运行命令", "开始运行 "+命令)
 	a.terminal.StartCommand(命令, func(output string, err error) {
