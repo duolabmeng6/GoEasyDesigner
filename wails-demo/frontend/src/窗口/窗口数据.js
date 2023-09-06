@@ -24,13 +24,36 @@ export const 引入窗口数据 = defineStore('窗口数据', {
 
 
             try {
-                // console.log(window.navigator)
+                console.log(window.navigator)
                 if (window.navigator && window.navigator.appVersion && window.navigator.appVersion.indexOf("Mac") !== -1) {
                     console.log("macOS system.");
                     WindowSetSize(parseInt(this.组件.窗口.width), parseInt(this.组件.窗口.height) + 28)
                 } else {
                     console.log("window");
-                    WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                    //win10
+                    //win11
+                    navigator.userAgentData.getHighEntropyValues(["platformVersion"])
+                        .then(ua => {
+                            if (navigator.userAgentData.platform === "Windows") {
+                                const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0]);
+                                if (majorPlatformVersion >= 13) {
+                                    console.log("Windows 11");
+                                    WindowSetSize(parseInt(this.组件.窗口.width) + 16, parseInt(this.组件.窗口.height) + 39)
+                                }
+                                else if (majorPlatformVersion > 0) {
+                                    console.log("Windows 10");
+                                    WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                                }
+                                else {
+                                    console.log("Windows 10");
+                                    WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                                }
+                            }
+                            else {
+                                console.log("Not running on Windows");
+                                WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                            }
+                        });
                 }
                 WindowSetTitle(this.组件.窗口.标题)
             } catch (e) {

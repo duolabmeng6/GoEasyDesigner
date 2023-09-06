@@ -1,4 +1,4 @@
-package Terminal
+package TerminalMac
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 	"syscall"
 )
 
-type Terminal struct {
+type TerminalMac struct {
 	cmd       *exec.Cmd
 	stdout    *bufio.Scanner
 	isRunning bool
@@ -17,11 +17,11 @@ type Terminal struct {
 	lock      sync.Mutex
 }
 
-func NewTerminal() *Terminal {
-	return &Terminal{}
+func NewTerminalMac() *TerminalMac {
+	return &TerminalMac{}
 }
 
-func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
+func (t *TerminalMac) StartCommand(command string, fn func(string, error)) bool {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 
@@ -77,7 +77,7 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	return true
 }
 
-func (t *Terminal) StopCommand() {
+func (t *TerminalMac) StopCommand() {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 
@@ -86,7 +86,7 @@ func (t *Terminal) StopCommand() {
 	}
 }
 
-func (t *Terminal) IsCommandDone() bool {
+func (t *TerminalMac) IsCommandDone() bool {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 	return t.isDone

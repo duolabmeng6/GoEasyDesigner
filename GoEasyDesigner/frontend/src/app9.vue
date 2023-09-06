@@ -404,16 +404,21 @@ function 运行环境检测() {
 
 
 onMounted(() => {
-  E取配置信息().then((res) => {
-    res = JSON.parse(res)
-    console.log("取配置信息", res)
-    store.项目信息.IDE插件地址 = "http://127.0.0.1:"+res.IDE插件端口号
-    store.项目信息.设计文件路径 = res.设计文件路径
-    if (store.项目信息.设计文件路径 !=""){
-      _打开文件加载界面(store.项目信息.设计文件路径)
-    }
+  try{
+    E取配置信息().then((res) => {
+      res = JSON.parse(res)
+      console.log("取配置信息", res)
+      store.项目信息.IDE插件地址 = "http://127.0.0.1:"+res.IDE插件端口号
+      store.项目信息.设计文件路径 = res.设计文件路径
+      if (store.项目信息.设计文件路径 !=""){
+        _打开文件加载界面(store.项目信息.设计文件路径)
+      }
 
-  })
+    })
+  }catch (e) {
+
+  }
+
 
   console.log("store.当前组件索引", store.当前组件索引)
   document.addEventListener("keydown", handleKeyDown);
