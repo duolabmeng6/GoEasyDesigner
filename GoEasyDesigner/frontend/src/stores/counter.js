@@ -158,15 +158,19 @@ export const useCounterStore = defineStore('counter', {
                     store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
                     store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
                     store.项目信息.项目管理目录 = 取父目录(res)
+                    store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(res))))
+
                     store.项目管理刷新()
 
                     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
+                    _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
                     _保存(store.项目信息.设计文件路径, njson)
                     _保存(store.项目信息.辅助代码文件路径, 辅助代码)
                 })
                 return
             }
 
+            _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
             _保存(store.项目信息.设计文件路径, njson)
             _保存(store.项目信息.辅助代码文件路径, 辅助代码)
 

@@ -228,6 +228,7 @@ function 初始化界面(txt) {
 
 function 新建(txt) {
   store.list = [创建窗口()]
+  store.indexMap = {}
 }
 
 function 打开() {
