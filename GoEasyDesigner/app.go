@@ -7,6 +7,7 @@ import (
 	"github.com/duolabmeng6/goefun/ecore"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"os"
+	"regexp"
 )
 
 // App struct
@@ -30,7 +31,7 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 func (a *App) E保存(设计文件路径 string, 保存内容 string) string {
-	println("保存", 设计文件路径, 保存内容)
+	// 	println("保存", 设计文件路径, 保存内容)
 	// 把文件保存到指定路径
 	os.WriteFile(设计文件路径, []byte(保存内容), 0644)
 
@@ -58,6 +59,10 @@ func (a *App) E创建函数(窗口事件文件路径 string, 插入函数 string
 	println("跳转位置", 跳转位置)
 	myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
 	return "保存成功"
+}
+func (a *App) E发送跳转代码到ide(插件URL地址 string, 窗口事件文件路径 string, 跳转位置 int) string {
+	myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
+	return "发送跳转代码"
 }
 
 func (a *App) E打开文件对话框() string {
@@ -89,4 +94,19 @@ func (a *App) E文件枚举(目录 string) []string {
 	var files []string
 	_ = ecore.E文件枚举(目录, ".js|.json", &files, true, false)
 	return files
+}
+
+func (a *App) E运行命令(项目根目录 string, 执行命令 string) string {
+	//项目根目录 := "/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo"
+	//执行命令 := "wails dev"
+	命令 := "cd " + 项目根目录 + " && " + 执行命令
+
+	runtime.EventsEmit(a.ctx, "运行命令", "开始运行"+命令)
+	myfunc.E运行命令(项目根目录, 执行命令, func(回显内容 string) {
+		println("回显内容", 回显内容)
+		regex := regexp.MustCompile("\x1b\\[[0-9;]*m")
+		cleaned := regex.ReplaceAllString(回显内容, "")
+		runtime.EventsEmit(a.ctx, "运行命令", cleaned)
+	})
+	return "运行成功"
 }

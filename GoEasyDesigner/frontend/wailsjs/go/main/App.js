@@ -14,6 +14,10 @@ export function E创建函数(arg1, arg2, arg3) {
   return window['go']['main']['App']['E创建函数'](arg1, arg2, arg3);
 }
 
+export function E发送跳转代码到ide(arg1, arg2, arg3) {
+  return window['go']['main']['App']['E发送跳转代码到ide'](arg1, arg2, arg3);
+}
+
 export function E打开文件对话框() {
   return window['go']['main']['App']['E打开文件对话框']();
 }
@@ -24,6 +28,10 @@ export function E文件枚举(arg1) {
 
 export function E读入文件(arg1) {
   return window['go']['main']['App']['E读入文件'](arg1);
+}
+
+export function E运行命令(arg1, arg2) {
+  return window['go']['main']['App']['E运行命令'](arg1, arg2);
 }
 
 export function Greet(arg1) {

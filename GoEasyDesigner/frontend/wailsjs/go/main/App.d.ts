@@ -7,10 +7,14 @@ export function E保存件对话框():Promise<string>;
 
 export function E创建函数(arg1:string,arg2:string,arg3:string):Promise<string>;
 
+export function E发送跳转代码到ide(arg1:string,arg2:string,arg3:number):Promise<string>;
+
 export function E打开文件对话框():Promise<string>;
 
 export function E文件枚举(arg1:string):Promise<Array<string>>;
 
 export function E读入文件(arg1:string):Promise<string>;
+
+export function E运行命令(arg1:string,arg2:string):Promise<string>;
 
 export function Greet(arg1:string):Promise<string>;

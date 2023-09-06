@@ -19,7 +19,6 @@ export default defineConfig({
         './src/窗口/窗口事件.js',
         './src/窗口/辅助代码.js',
         './src/窗口/窗口事件.js',
-
     ]
   }
 })

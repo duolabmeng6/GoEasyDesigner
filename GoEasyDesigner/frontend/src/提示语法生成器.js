@@ -65,19 +65,17 @@ const 生成提示词 = async (keys, fn) => {
     }
 }
 
-const 生成辅助代码 = async (obj, fn) => {
+const 生成提示辅助代码 = async (obj, fn) => {
     let kyes = 提取key(obj);
     let 额外keys = ["组件"]
     kyes = [...kyes, ...额外keys]
     //过滤重复的值
     kyes = [...new Set(kyes)]
-
-
     kyes = await 生成提示词(kyes, fn)
-    console.log(JSON.stringify(kyes, null, 4))
-    return kyes;
+    // console.log(JSON.stringify(kyes, null, 4))
+    return JSON.stringify(kyes, null, 4);
 }
 // const jsonData = require('/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo/frontend/src/窗口/设计文件.json');
 //
 // 生成辅助代码(jsonData)
-export {生成辅助代码}
+export {生成提示辅助代码}

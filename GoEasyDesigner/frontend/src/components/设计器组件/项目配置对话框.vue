@@ -5,6 +5,9 @@
   >
     <el-form label-position="top"
              label-width="200px">
+      <el-form-item label="项目根目录">
+        <el-input v-model="store.项目信息.项目根目录"/>
+      </el-form-item>
       <el-form-item label="设计文件路径">
         <el-input v-model="store.项目信息.设计文件路径"/>
       </el-form-item>

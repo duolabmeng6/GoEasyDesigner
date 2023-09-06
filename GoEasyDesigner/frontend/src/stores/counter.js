@@ -1,11 +1,11 @@
 import {ref, nextTick} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E创建函数, E文件枚举} from "../../wailsjs/go/main/App";
-import {生成辅助代码} from "@/提示语法生成器.js";
+import {E创建函数, E文件枚举, E读入文件, E发送跳转代码到ide, E保存, E保存件对话框} from "../../wailsjs/go/main/App";
+import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
-import {InsertCode} from "@/public.js";
+import {InsertCode, 取父目录,生成辅助代码} from "@/public.js";
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -22,11 +22,12 @@ export const useCounterStore = defineStore('counter', {
             当前组件索引: ref("1"),
             组件列表: ref([]),
             项目信息: ref({
+                项目根目录:"",
                 设计文件路径: "",//"stores\\设计文件.json",
                 窗口事件文件路径: "",//"stores\\窗口事件.js",
                 辅助代码文件路径: "",//"stores\\辅助代码.js",
                 项目管理目录: "",//"stores\\辅助代码.js",
-                IDE插件地址: "http://127.0.0.1:10750",
+                IDE插件地址: "http://127.0.0.1:17810",
             }),
             客户端模式: ref(false),
             list: ref(null),
@@ -43,15 +44,17 @@ export const useCounterStore = defineStore('counter', {
             帮助信息: ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
             keywordMappings: ref(""),
             全局_事件名称列表: ref([]),
+            代码编写模式: ref(1),//1:网页内代码编辑器 2:代码跳转至IDE
         }
     },
 
     actions: {
         添加事件被选择(事件名称, item) {
+            let dthis = this;
             if (事件名称 == "在此处选择加入事件处理函数") {
                 return
             }
-            if (this.代码编辑器内容 == ""){
+            if (this.代码编辑器内容 == "") {
                 this.代码编辑器内容 = 窗口事件代码模板
             }
             let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
@@ -71,22 +74,101 @@ export const useCounterStore = defineStore('counter', {
                     type: 'success',
                     duration: 3000, // 设置显示时间为5秒，单位为毫秒
                 });
-                this.代码编辑器内容 = InsertCode(this.代码编辑器内容,ncode)
+                this.代码编辑器内容 = InsertCode(this.代码编辑器内容, ncode)
                 this.选择夹_中间现行选中项 = "1"
                 return;
+            } else {
+                //读入 窗口事件 文件内容
+                this.保存设计文件()
+
+                E读入文件(this.项目信息.窗口事件文件路径).then((res) => {
+                    this.代码编辑器内容 = InsertCode(res, ncode)
+                    this.选择夹_中间现行选中项 = "1"
+                    E保存(this.项目信息.窗口事件文件路径, this.代码编辑器内容).then((res) => {
+                        let 跳转位置 = this.代码编辑器内容.indexOf(ncode)
+                        if (跳转位置 != -1) {
+                            console.log("跳转位置", 跳转位置)
+                            E发送跳转代码到ide(
+                                dthis.项目信息.IDE插件地址,
+                                dthis.项目信息.窗口事件文件路径,
+                                跳转位置
+                            )
+                        }
+                    })
+                })
+
             }
-            try {
-                // 替换 {事件名称} 为 事件名称
-                console.log(this.项目信息.窗口事件文件路径)
-                E创建函数(this.项目信息.窗口事件文件路径, ncode, this.项目信息.IDE插件地址).then(
-                    (res) => {
-                        console.log(res)
+
+
+            // try {
+            //     // 替换 {事件名称} 为 事件名称
+            //     console.log(this.项目信息.窗口事件文件路径)
+            //     E创建函数(this.项目信息.窗口事件文件路径, ncode, this.项目信息.IDE插件地址).then(
+            //         (res) => {
+            //             console.log(res)
+            //         }
+            //     )
+            //     // 保存()
+            // } catch (e) {
+            //     console.log("需要客户端中运行")
+            // }
+
+        },
+        保存设计文件() {
+            let store = this;
+            let njson = JSON.stringify(store.list, null, 2)
+            let 辅助代码 = 生成辅助代码(store.list[0].子组件)
+
+
+            if (store.客户端模式 == false) {
+                //浏览器打开就发起保存
+                const blob = new Blob([njson], {type: 'application/json'})
+                const link = document.createElement('a')
+                link.href = URL.createObjectURL(blob)
+                link.download = '设计文件.json'
+                link.click()
+
+                const blob2 = new Blob([辅助代码], {type: 'application/json'})
+                const link2 = document.createElement('a')
+                link2.href = URL.createObjectURL(blob2)
+                link2.download = '辅助代码.js'
+                link2.click()
+                return;
+            }
+
+            // 客户端直接保存
+            function _保存(p, d) {
+                d = String(d)
+                p = String(p)
+                E保存(p, d)
+            }
+
+            if (store.项目信息.设计文件路径 == "") {
+                E保存件对话框().then((res) => {
+                    if (res == "") {
+                        ElMessage({
+                            message: "未选择文件",
+                            type: 'success',
+                            duration: 3000, // 设置显示时间为5秒，单位为毫秒
+                        });
+                        return
                     }
-                )
-                // 保存()
-            } catch (e) {
-                console.log("需要客户端中运行")
+
+                    store.项目信息.设计文件路径 = res
+                    store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
+                    store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
+                    store.项目信息.项目管理目录 = 取父目录(res)
+                    store.项目管理刷新()
+
+                    console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
+                    _保存(store.项目信息.设计文件路径, njson)
+                    _保存(store.项目信息.辅助代码文件路径, 辅助代码)
+                })
+                return
             }
+
+            _保存(store.项目信息.设计文件路径, njson)
+            _保存(store.项目信息.辅助代码文件路径, 辅助代码)
 
         },
         组件双击事件(组件数据) {
@@ -94,7 +176,7 @@ export const useCounterStore = defineStore('counter', {
             this.添加事件被选择(this.全局_事件名称列表[1].value, 组件数据)
             let dthis;
             dthis = this
-            生成辅助代码(this.list, function (res) {
+            生成提示辅助代码(this.list, function (res) {
                 dthis.keywordMappings = res
             })
 
