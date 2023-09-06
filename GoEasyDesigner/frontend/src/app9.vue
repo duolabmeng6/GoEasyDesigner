@@ -245,6 +245,27 @@ function 新建(txt) {
   store.indexMap = {}
 }
 
+function _打开文件加载界面(filepath ){
+  store.项目信息.设计文件路径 = filepath
+  store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
+  store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
+  store.项目信息.项目管理目录 = 取父目录(filepath)
+  store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
+
+
+  console.log("设计文件路径", store.项目信息.设计文件路径)
+  console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
+  E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
+    console.log(文件内容)
+    初始化界面(文件内容)
+  })
+  // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
+  //   console.log(res)
+  //   code.value = res
+  // })
+  store.项目管理刷新()
+}
+
 function 打开() {
   if (store.客户端模式 == false) {
     const input = document.createElement('input')
@@ -265,28 +286,12 @@ function 打开() {
   }
 
   console.log("打开")
-  E打开文件对话框().then((res) => {
-    if (res == "") {
+
+  E打开文件对话框().then((文件路径) => {
+    if (文件路径 == "") {
       return
     }
-    store.项目信息.设计文件路径 = res
-    store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
-    store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
-    store.项目信息.项目管理目录 = 取父目录(res)
-    store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(res))))
-
-
-    console.log("设计文件路径", store.项目信息.设计文件路径)
-    console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-    E读入文件(store.项目信息.设计文件路径).then((res) => {
-      console.log(res)
-      初始化界面(res)
-    })
-    // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
-    //   console.log(res)
-    //   code.value = res
-    // })
-    store.项目管理刷新()
+    _打开文件加载界面(文件路径)
   })
 }
 
@@ -402,9 +407,11 @@ onMounted(() => {
   E取配置信息().then((res) => {
     res = JSON.parse(res)
     console.log("取配置信息", res)
-
-    store.项目信息.设计文件路径 = res.设计文件路径
     store.项目信息.IDE插件地址 = "http://127.0.0.1:"+res.IDE插件端口号
+    store.项目信息.设计文件路径 = res.设计文件路径
+    if (store.项目信息.设计文件路径 !=""){
+      _打开文件加载界面(store.项目信息.设计文件路径)
+    }
 
   })
 
