@@ -42,6 +42,7 @@ export const useCounterStore = defineStore('counter', {
             支持库列表: ref([]),
             帮助信息: ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
             keywordMappings: ref(""),
+            全局_事件名称列表: ref([]),
         }
     },
 
@@ -89,7 +90,8 @@ export const useCounterStore = defineStore('counter', {
 
         },
         组件双击事件(组件数据) {
-            this.添加事件被选择("被单击", 组件数据)
+            // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
+            this.添加事件被选择(this.全局_事件名称列表[1].value, 组件数据)
             let dthis;
             dthis = this
             生成辅助代码(this.list, function (res) {

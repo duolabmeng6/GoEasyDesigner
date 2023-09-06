@@ -22,7 +22,7 @@
             <component :is="store.当前组件名称2()"
                        v-if="store.当前拖拽组件数据 != undefined"
                        :item="store.当前拖拽组件数据"
-                       @添加事件被选择="store.添加事件被选择"
+
             />
           </div>
         </el-tab-pane>

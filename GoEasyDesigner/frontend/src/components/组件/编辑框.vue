@@ -7,7 +7,7 @@
         :type="item.输入框类型"
         :placeholder="item.提示文本"
         :maxlength="item.最大长度"
-        :size="item.尺寸"
+        :size="item.尺寸=='custom' ?'':item.尺寸"
         v-model="item.内容"/>
   </div>
 </template>
