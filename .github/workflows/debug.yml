@@ -5,6 +5,7 @@ on:
   push:
     paths-ignore:
       - '**/*.md'
+      - '**/*.yml'
       - .gitignore
       - .editorconfig
       - appveyor.yml
