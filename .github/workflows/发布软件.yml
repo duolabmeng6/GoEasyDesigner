@@ -2,7 +2,12 @@ name: 发布软件
 
 on:
   workflow_dispatch:
-
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
+      - .gitignore
+      - .editorconfig
 
 permissions: write-all # 给所有工作写权限
 
@@ -15,6 +20,18 @@ jobs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
     steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: 检查是否 "发布"
+        run: |
+          latest_commit_message=$(git log -1 --pretty=%B)
+          if [[ $latest_commit_message == *"发布"* ]]; then
+            echo "找到发布关键字继续工作流"
+          else
+            echo "没有找到发布关键字停止工作流"
+            exit 1  # 停止工作流程
+          fi
       - uses: release-drafter/release-drafter@v5
         id: create_version
         with:
