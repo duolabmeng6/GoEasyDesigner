@@ -32,6 +32,7 @@ jobs:
             echo "没有找到发布关键字停止工作流"
             exit 1  # 停止工作流程
           fi
+          
       - uses: release-drafter/release-drafter@v5
         id: create_version
         with:
