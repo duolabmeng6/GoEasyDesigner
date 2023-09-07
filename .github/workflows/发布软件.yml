@@ -138,6 +138,7 @@ jobs:
           cat GoEasyDesigner/mymodel/Version.go
       - name: 编译exe
         run: |
+          wails doctor
           cd GoEasyDesigner
           wails build -webview2 embed -upx
           ls
