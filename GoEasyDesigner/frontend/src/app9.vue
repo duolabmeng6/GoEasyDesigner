@@ -399,7 +399,8 @@ function 运行环境检测() {
     });
     return
   }
-  store.帮助信息 = "运行环境检测 ..."
+  store.选择夹_底部现行选中项 = "1"
+  store.调试信息 = "运行环境检测 ..."
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
   console.log("结果")

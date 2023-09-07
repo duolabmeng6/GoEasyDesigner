@@ -517,8 +517,10 @@ func E检查更新() {
 func E检查更新_window() {
 	下载文件夹路径 := E取用户下载文件夹路径()
 	info := E获取Github仓库Releases版本和更新内容()
-	println(info.WinDownloadURL)
-	println(下载文件夹路径)
+	if info == nil {
+		zenity.Info("网络原因无法获取更新信息")
+		return
+	}
 	if info.Version == Version {
 		err := zenity.Info("当前已经是最新版本")
 		if err != nil {
