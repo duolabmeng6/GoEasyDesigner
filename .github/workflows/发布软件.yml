@@ -139,7 +139,7 @@ jobs:
       - name: 编译exe
         run: |
           cd GoEasyDesigner
-          wails build -webview2 embed
+          wails build -webview2 embed -upx
           ls
       - name: 上传产物
         uses: actions/upload-artifact@v3
