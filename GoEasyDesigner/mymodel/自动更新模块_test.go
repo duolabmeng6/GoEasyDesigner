@@ -38,14 +38,14 @@ func Test解压缩(t *testing.T) {
 	//info := E获取Github仓库Releases版本和更新内容()
 
 	//os.Setenv("DEBUG", "1")
-	压缩包的路径 := "/Users/chensuilong/Desktop/goproject/v3fanyi/mymodel/mactest.zip"
-	//解压目录 := "/Users/chensuilong/Desktop/goproject/v3fanyi/mymodel/testzip/"
+	压缩包的路径 := "/Users/ll/Desktop/goproject/v3fanyi/mymodel/mactest.zip"
+	//解压目录 := "/Users/ll/Desktop/goproject/v3fanyi/mymodel/testzip/"
 	//允许解压路径前缀 := []string{"qoq.app/Contents/"}
 	//
 	//println(zip解压2(压缩包的路径, 解压目录, 允许解压路径前缀))
 	E更新自己MacOS应用(压缩包的路径, "qoq.app")
 }
-func Test更新流畅(t *testing.T) {
+func Test更新流程MacOS(t *testing.T) {
 
 	usr, err := user.Current()
 	if err != nil {

@@ -34,6 +34,10 @@ export function E文件枚举(arg1) {
   return window['go']['main']['App']['E文件枚举'](arg1);
 }
 
+export function E检查更新() {
+  return window['go']['main']['App']['E检查更新']();
+}
+
 export function E读入文件(arg1) {
   return window['go']['main']['App']['E读入文件'](arg1);
 }

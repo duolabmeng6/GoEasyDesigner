@@ -1,6 +1,7 @@
 package myfunc
 
 import (
+	"changeme/mymodel"
 	"fmt"
 	"regexp"
 	"testing"
@@ -59,5 +60,5 @@ func TestE运行命令(t *testing.T) {
 	})
 }
 func TestE运行命令2(t *testing.T) {
-
+	mymodel.E检查更新()
 }

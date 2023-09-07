@@ -113,6 +113,7 @@
         </el-button>
         <el-button :icon="Help" @click="帮助">帮助</el-button>
         <el-button :icon="Help" @click="运行环境检测">运行环境检测</el-button>
+        <el-button :icon="Help" @click="检查更新">检查更新</el-button>
 
 
       </el-button-group>
@@ -136,7 +137,9 @@ import {
   E读入文件,
   E运行命令,
   E停止命令,
-  E取配置信息
+  E取配置信息,
+  E检查更新
+
 } from "../wailsjs/go/main/App";
 import {取父目录, 生成辅助代码} from "@/public";
 import Shape from "@/components/Shape.vue";
@@ -402,6 +405,19 @@ function 运行环境检测() {
   console.log("结果")
 }
 
+function 检查更新(){
+  if (store.客户端模式 == false) {
+    //弹出提示
+    ElMessage({
+      message: "当前为浏览器模式不能运行 请下载客户端",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    return
+  }
+  E检查更新()
+
+}
 
 onMounted(() => {
   try{

@@ -152,3 +152,8 @@ func (a *App) E停止命令() string {
 	a.terminal.StopCommand()
 	return "停止命令成功"
 }
+
+func (a *App) E检查更新() string {
+	myfunc.E检查更新()
+	return "检查更新"
+}
