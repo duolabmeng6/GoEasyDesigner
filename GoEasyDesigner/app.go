@@ -3,6 +3,7 @@ package main
 import (
 	"changeme/Terminal"
 	"changeme/myfunc"
+	"changeme/mymodel"
 	"context"
 	"fmt"
 	"github.com/duolabmeng6/goefun/ecore"
@@ -154,6 +155,11 @@ func (a *App) E停止命令() string {
 }
 
 func (a *App) E检查更新() string {
-	myfunc.E检查更新()
+	if myfunc.E是否为macOS系统() {
+		mymodel.E检查更新()
+	}
+	if myfunc.E是否为window系统() {
+		mymodel.E检查更新_window()
+	}
 	return "检查更新"
 }

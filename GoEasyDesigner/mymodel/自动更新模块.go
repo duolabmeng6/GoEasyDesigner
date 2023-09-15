@@ -304,6 +304,7 @@ func E更新自己MacOS应用(资源压缩包 string, 应用名称 string) (bool
 	fmt.Println("应用路径为空")
 	return false, "应用路径为空"
 }
+
 func zip解压2(压缩包的路径 string, 解压目录 string, 允许解压路径前缀 []string) bool {
 	// 保持权限和软连接解压
 	// 允许解压路径前缀 例如 ["my_app.app/Contents/"] 不填则全部解压
@@ -427,6 +428,38 @@ func E取用户下载文件夹路径() string {
 	return 下载文件夹路径
 }
 
+func 取自身路径Window() (string, error) {
+	exe, err := os.Executable()
+	if err != nil {
+		return "", err
+	}
+	return exe, nil
+}
+
+func E更新自己Window应用(exe资源文件路径 string) (bool, string) {
+	// window更新方法
+	自身路径Window, _ := 取自身路径Window()
+
+	//文件名 := filepath.Base(自身路径Window)
+	// 检查文件是否存在
+	旧的文件名 := 自身路径Window + ".old.bak"
+	if _, err := os.Stat(旧的文件名); err == nil {
+		// 删除文件
+		os.Remove(旧的文件名)
+	}
+
+	os.Rename(自身路径Window, 旧的文件名)
+	os.Rename(exe资源文件路径, 自身路径Window)
+
+	// 结束自身运行然后重启自己
+	cmd := exec.Command(自身路径Window)
+	cmd.Args = append(cmd.Args, os.Args[1:]...)
+	cmd.Start()
+
+	os.Exit(0) // 此处退出当前进程
+	return true, ""
+}
+
 func E检查更新() {
 
 	下载文件夹路径 := E取用户下载文件夹路径()
@@ -478,5 +511,60 @@ func E检查更新() {
 	}
 	fmt.Println("下载完成了")
 	flag, s := E更新自己MacOS应用(下载文件夹路径+"/GoEasyDesigner_MacOS.zip", "qoq.app")
+	println(flag, s)
+}
+
+func E检查更新_window() {
+	下载文件夹路径 := E取用户下载文件夹路径()
+	info := E获取Github仓库Releases版本和更新内容()
+	if info == nil {
+		zenity.Info("网络原因无法获取更新信息")
+		return
+	}
+	if info.Version == Version {
+		err := zenity.Info("当前已经是最新版本")
+		if err != nil {
+			return
+		}
+		return
+	}
+
+	err := zenity.Question("软件有新版本可用，是否更新？\n当前版本:"+
+		Version+
+		"\n最新版本:"+info.Version,
+		zenity.Title("更新提示"),
+		zenity.Icon(zenity.QuestionIcon),
+		zenity.OKLabel("更新"),
+		zenity.CancelLabel("取消"))
+	ecore.E调试输出(err)
+	println("更新", err)
+	if err != nil {
+		return
+	}
+	progress, _ := zenity.Progress(
+		zenity.Title("软件更新"),
+		zenity.MaxValue(100), // 设置最大进度值为100
+	)
+
+	progress.Text("正在下载...")
+
+	err = E下载带进度回调(info.WinDownloadURL, 下载文件夹路径+"/GoEasyDesigner.exe", func(进度 float64) {
+		fmt.Println("正在下载...", 进度)
+		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
+		progress.Value(int(进度))
+	})
+	if err != nil {
+		fmt.Println("下载出错:", err)
+		zenity.Info("下载错误,检查你的网络")
+		progress.Close()
+		return
+	}
+	progress.Text("下载完成 即将完成更新")
+	if progress.Close() != nil {
+		fmt.Println("点击了取消")
+		return
+	}
+	fmt.Println("下载完成了")
+	flag, s := E更新自己Window应用(下载文件夹路径 + "/GoEasyDesigner.exe")
 	println(flag, s)
 }

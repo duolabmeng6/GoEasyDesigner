@@ -2,15 +2,15 @@ name: WailsBuild
 
 on:
   workflow_dispatch:
-  push:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.yml'
-      - .gitignore
-      - .editorconfig
-      - appveyor.yml
-      - 'azure-pipelines*.yml'
-      - 'ci/azure-pipelines/template*.yml'
+#  push:
+#    paths-ignore:
+#      - '**/*.md'
+#      - '**/*.yml'
+#      - .gitignore
+#      - .editorconfig
+#      - appveyor.yml
+#      - 'azure-pipelines*.yml'
+#      - 'ci/azure-pipelines/template*.yml'
   pull_request:
     paths-ignore:
       - '**/*.md'

@@ -1,11 +1,8 @@
 package myfunc
 
 import (
-	"changeme/mymodel"
-	"fmt"
 	"github.com/duolabmeng6/goefun/ecore"
 	. "github.com/duolabmeng6/goefun/ehttp"
-	"github.com/ncruces/zenity"
 	"regexp"
 	"runtime"
 	"strings"
@@ -60,61 +57,4 @@ func E是否为macOS系统() bool {
 
 func E是否为UbuntuLinux系统() bool {
 	return runtime.GOOS == "linux"
-}
-
-func E检查更新() {
-	if E是否为macOS系统() == false {
-		zenity.Info("目前仅支持macos自动更新 其他系统需要适配")
-		return
-	}
-	下载文件夹路径 := mymodel.E取用户下载文件夹路径()
-	info := mymodel.E获取Github仓库Releases版本和更新内容()
-	println(info.MacDownloadURL)
-	println(下载文件夹路径)
-	if info.Version == mymodel.Version {
-		err := zenity.Info("当前已经是最新版本")
-		if err != nil {
-			return
-		}
-		return
-	}
-
-	err := zenity.Question("软件有新版本可用，是否更新？\n当前版本:"+
-		mymodel.Version+
-		"\n最新版本:"+info.Version,
-		zenity.Title("更新提示"),
-		zenity.Icon(zenity.QuestionIcon),
-		zenity.OKLabel("更新"),
-		zenity.CancelLabel("取消"))
-	ecore.E调试输出(err)
-	println("更新", err)
-	if err != nil {
-		return
-	}
-	progress, _ := zenity.Progress(
-		zenity.Title("软件更新"),
-		zenity.MaxValue(100), // 设置最大进度值为100
-	)
-
-	progress.Text("正在下载...")
-
-	err = mymodel.E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/qoq_MacOS.zip", func(进度 float64) {
-		fmt.Println("正在下载...", 进度)
-		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
-		progress.Value(int(进度))
-	})
-	if err != nil {
-		fmt.Println("下载出错:", err)
-		zenity.Info("下载错误,检查你的网络")
-		progress.Close()
-		return
-	}
-	progress.Text("下载完成 即将完成更新")
-	if progress.Close() != nil {
-		fmt.Println("点击了取消")
-		return
-	}
-	fmt.Println("下载完成了")
-	flag, s := mymodel.E更新自己MacOS应用(下载文件夹路径+"/qoq_MacOS.zip", "qoq.app")
-	println(flag, s)
 }

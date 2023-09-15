@@ -399,7 +399,8 @@ function 运行环境检测() {
     });
     return
   }
-  store.帮助信息 = "运行环境检测 ..."
+  store.选择夹_底部现行选中项 = "1"
+  store.调试信息 = "运行环境检测 ..."
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
   console.log("结果")
@@ -409,12 +410,7 @@ function 运行环境检测() {
 
 function 检查更新() {
   if (store.客户端模式 == false) {
-    //弹出提示
-    ElMessage({
-      message: "当前为浏览器模式不能运行 请下载客户端",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
+    window.open("https://github.com/duolabmeng6/GoEasyDesigner")
     return
   }
   E检查更新()

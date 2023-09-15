@@ -69,3 +69,28 @@ func Test更新流程MacOS(t *testing.T) {
 	println(flag, s)
 
 }
+
+func Test更新流程Window(t *testing.T) {
+	//
+	usr, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
+	下载文件夹路径 := filepath.Join(usr.HomeDir, "Downloads")
+
+	//println(下载文件夹路径)
+	//info := E获取Github仓库Releases版本和更新内容()
+	//
+	//err = E下载带进度回调(info.WinDownloadURL, 下载文件夹路径+"/GoEasyDesigner.exe", func(进度 float64) {
+	//	// 进度回调函数
+	//	fmt.Println("正在下载...", 进度)
+	//})
+	//if err != nil {
+	//	fmt.Println("下载出错:", err)
+	//	return
+	//}
+
+	flag, s := E更新自己Window应用(下载文件夹路径 + "/GoEasyDesigner.exe")
+	println(flag, s)
+
+}

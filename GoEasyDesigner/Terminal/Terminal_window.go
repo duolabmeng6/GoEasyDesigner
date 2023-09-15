@@ -7,6 +7,8 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"golang.org/x/text/encoding/simplifiedchinese"
+	"golang.org/x/text/transform"
 	"os/exec"
 	"sync"
 )
@@ -32,8 +34,14 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 		return false
 	}
 
-	cmd := exec.Command("cmd", "/C", command) // 使用 "cmd" 来执行命令
+	cmd := exec.Command("cmd", "/C", command)
 	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		fn("", err)
+		return false
+	}
+
+	stderr, err := cmd.StderrPipe()
 	if err != nil {
 		fn("", err)
 		return false
@@ -46,6 +54,7 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	t.cmd = cmd
 	t.stdout = bufio.NewScanner(stdout)
 	t.isRunning = true
+	gbkDecoder := simplifiedchinese.GBK.NewDecoder()
 
 	go func() {
 		for t.stdout.Scan() {
@@ -64,6 +73,15 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	}()
 
 	go func() {
+		// 读取命令的错误输出并传递给回调函数
+		errScanner := bufio.NewScanner(stderr)
+		for errScanner.Scan() {
+			errOutput := errScanner.Text()
+			errOutput, _, _ = transform.String(gbkDecoder, errOutput)
+
+			fn("", errors.New(errOutput))
+		}
+
 		cmd.Wait()
 		t.lock.Lock()
 		t.isRunning = false
