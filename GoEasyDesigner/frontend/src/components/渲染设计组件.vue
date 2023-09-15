@@ -1,33 +1,36 @@
 <template>
-  <Shape
-      :style="getItemStyle(item)"
-      style="position: absolute;"
-      @update-style="updateStyle"
-      @删除="id=>store.递归删除id(store.list,id)"
+  <shape
+      v-if="store.当前组件索引 == item.id"
       :index="item.id"
       :item_data="item"
       :nowIndex="store.当前组件索引"
-      s
+      :style="getItemStyle(item)"
+      style="position: relative;z-index: 9999;pointer-events: none;"
+      @update-style="updateStyle"
+      @删除="id=>store.递归删除id(store.list,id)"/>
+  <div
+      :style="getItemStyle(item)"
+      style="position: absolute;"
   >
     <div
+        v-show="item.可视"
         :id="item.名称"
+        :class="{ 'disabled': item.禁用 }"
         class="子组件"
         data-放置="1"
+        draggable="true"
         @dblclick.stop="store.组件双击事件(item)"
         @dragstart.stop="拖拽开始($event,item)"
         @dragover.prevent="拖拽进入($event,item)"
         @dragleave.prevent="拖拽离开($event,item)"
         @drop.stop="拖拽放下($event,item)"
-        draggable="true"
         @click.stop="鼠标按下($event,item)"
-        v-show="item.可视"
-        :class="{ 'disabled': item.禁用 }"
     >
       <template v-if="item.组件名称=='按钮'">
         <component is="按钮" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
-        <component is="渲染组件"  v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
         <component is="选择夹" :item="item"/>
@@ -35,10 +38,10 @@
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
 
-        <component is="渲染组件"  v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
       </template>
     </div>
-  </Shape>
+  </div>
 </template>
 
 <script setup>
@@ -177,7 +180,7 @@ function 拖拽放下(event, v) {
 
   console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
-  store.当前组件索引 =store.当前拖拽组件数据.id
+  store.当前组件索引 = store.当前拖拽组件数据.id
 
 }
 

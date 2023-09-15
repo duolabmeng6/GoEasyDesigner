@@ -1,28 +1,24 @@
 <template>
-  <div class="Shape" ref="shapeRef">
-    <slot></slot>
+  <div ref="shapeRef" class="Shape">
     <div
-        v-if="nowIndex == index"
         v-for="(direction, index) in directions"
         :key="index"
         :class="['dot', direction]"
         :style="direction"
         @mousedown="mousedown(direction, $event)"
         @click.stop
-
     ></div>
 
-    <div class="调整整体位置" v-if="nowIndex!=='1'">
+    <div v-if="nowIndex!=='1'" class="调整整体位置">
       <el-button-group
-          v-if="nowIndex == index"
       >
-        <el-button type="primary" :icon="Aim" size="small"
+        <el-button :icon="Aim" size="small" title="调整组件位置"
+                   type="primary"
                    @mousedown="mousedown('all', $event)"
                    @click.stop
-                   title="调整组件位置"
         ></el-button>
-        <el-button type="danger" @click.stop="删除" :icon="Delete" size="small"
-                   title="删除组件"
+        <el-button :icon="Delete" size="small" title="删除组件" type="danger"
+                   @click.stop="删除"
         ></el-button>
       </el-button-group>
     </div>
@@ -265,5 +261,12 @@ export default {
   left: 0;
 }
 
+.Shape div {
+  pointer-events: auto;
+}
+
+.Shape {
+  background: none !important;
+}
 
 </style>

@@ -38,7 +38,7 @@
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane label="界面设计">
-            <div style="position: relative;    margin: 8px;">
+            <div id="designer" style="position: relative;    margin: 8px;">
               <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
             </div>
           </el-tab-pane>
@@ -248,7 +248,7 @@ function 新建(txt) {
   store.indexMap = {}
 }
 
-function _打开文件加载界面(filepath ){
+function _打开文件加载界面(filepath) {
   store.项目信息.设计文件路径 = filepath
   store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
   store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
@@ -336,7 +336,7 @@ function 运行() {
     });
     return
   }
-  if(store.项目信息.项目根目录 == ""){
+  if (store.项目信息.项目根目录 == "") {
     ElMessage({
       message: "请先保存",
       type: 'success',
@@ -368,7 +368,7 @@ function 编译() {
     });
     return
   }
-  if(store.项目信息.项目根目录 == ""){
+  if (store.项目信息.项目根目录 == "") {
     ElMessage({
       message: "请先保存",
       type: 'success',
@@ -403,9 +403,11 @@ function 运行环境检测() {
   let 结果;
   结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
   console.log("结果")
+  // 检查node是否安装
+
 }
 
-function 检查更新(){
+function 检查更新() {
   if (store.客户端模式 == false) {
     //弹出提示
     ElMessage({
@@ -420,18 +422,18 @@ function 检查更新(){
 }
 
 onMounted(() => {
-  try{
+  try {
     E取配置信息().then((res) => {
       res = JSON.parse(res)
       console.log("取配置信息", res)
-      store.项目信息.IDE插件地址 = "http://127.0.0.1:"+res.IDE插件端口号
+      store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
       store.项目信息.设计文件路径 = res.设计文件路径
-      if (store.项目信息.设计文件路径 !=""){
+      if (store.项目信息.设计文件路径 != "") {
         _打开文件加载界面(store.项目信息.设计文件路径)
       }
 
     })
-  }catch (e) {
+  } catch (e) {
 
   }
 
