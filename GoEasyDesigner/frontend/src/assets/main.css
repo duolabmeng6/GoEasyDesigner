@@ -14,7 +14,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr 1fr auto;
     grid-template-rows: 0fr 1fr 1fr 1fr 1fr;
     gap: 6px 6px;
     grid-auto-flow: row;
@@ -34,6 +34,7 @@
 
 .属性框 {
     grid-area: 2 / 1 / 5 / 2;
+    width: 280px;
 }
 
 .设计区域 {
@@ -42,6 +43,7 @@
 
 .工具箱 {
     grid-area: 2 / 5 / 5 / 6;
+    width: 160px;
 }
 
 .调试信息 {
