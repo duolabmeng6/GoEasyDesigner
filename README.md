@@ -139,6 +139,20 @@ cd GoEasyDesigner\frontend
 vite 
 ```
 
+在ide中调试需要以下配置
+
+构建软件包 `changeme` 
+
+工作目录 `/Users/ll/Documents/GitHub/GoEasyDesigner/GoEasyDesigner` 改成你的路径
+
+环境变量 `CGO_LDFLAGS=-framework UniformTypeIdentifiers` 这个macos需要 window不需要
+
+go工具实惨 `-tags dev -gcflags "all=-N -l"`
+
+程序实参(可选) `文件路径=/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo/frontend/src/窗口/设计文件.json port=8080` 这是配合ide插件的port是插件的端口 
+
+现在可以在 app.go 中下断点调试了.
+
 #### wails-demo 为模板项目
 
 保存界面数据到这里
