@@ -67,6 +67,8 @@ https://golang.org/dl/
 
 https://nodejs.org/zh-cn/download/
 
+安装vite `npm create vite@latest`
+
 ### 3.安装 wails
 https://wails.io/zh-Hans/docs/gettingstarted/installation/
 
