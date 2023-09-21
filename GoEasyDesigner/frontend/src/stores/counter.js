@@ -1,7 +1,7 @@
-import {ref, nextTick} from 'vue'
+import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E创建函数, E文件枚举, E读入文件, E发送跳转代码到ide, E保存, E保存件对话框} from "../../wailsjs/go/main/App";
+import {E保存, E保存件对话框, E发送跳转代码到ide, E文件枚举, E读入文件} from "../../wailsjs/go/main/App";
 import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
@@ -167,16 +167,19 @@ export const useCounterStore = defineStore('counter', {
                     store.项目管理刷新()
 
                     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-                    _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
+                    if (store.代码编辑器内容 !== "") {
+                        _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
+                        _保存(store.项目信息.辅助代码文件路径, 辅助代码)
+                    }
                     _保存(store.项目信息.设计文件路径, njson)
-                    _保存(store.项目信息.辅助代码文件路径, 辅助代码)
                 })
                 return
             }
-
-            _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
+            if (store.代码编辑器内容 !== "") {
+                _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
+                _保存(store.项目信息.辅助代码文件路径, 辅助代码)
+            }
             _保存(store.项目信息.设计文件路径, njson)
-            _保存(store.项目信息.辅助代码文件路径, 辅助代码)
 
         },
         组件双击事件(组件数据) {
