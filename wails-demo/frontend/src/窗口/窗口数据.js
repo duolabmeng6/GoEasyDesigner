@@ -1,8 +1,7 @@
-import {ref, computed} from 'vue'
+import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowSetSize, WindowSetTitle} from "../../wailsjs/runtime"; // 根据实际文件路径进行修改
 import {绑定窗口事件} from '@/窗口/窗口事件'
-import __辅助代码 from "@/窗口/辅助代码";
 
 export const 引入窗口数据 = defineStore('窗口数据', {
     state: () => {
@@ -18,44 +17,58 @@ export const 引入窗口数据 = defineStore('窗口数据', {
                 if (this.组件.窗口.hasOwnProperty("事件创建完毕")) {
                     this.窗口创建完毕()
                 }
-            }catch (e){
+            } catch (e) {
                 console.log("窗口创建完毕事件未定义")
             }
 
+            const dthis = this
 
             try {
-                console.log(window.navigator)
-                if (window.navigator && window.navigator.appVersion && window.navigator.appVersion.indexOf("Mac") !== -1) {
-                    console.log("macOS system.");
-                    WindowSetSize(parseInt(this.组件.窗口.width), parseInt(this.组件.窗口.height) + 28)
-                } else {
-                    console.log("window");
-                    //win10
-                    //win11
-                    navigator.userAgentData.getHighEntropyValues(["platformVersion"])
-                        .then(ua => {
-                            if (navigator.userAgentData.platform === "Windows") {
-                                const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0]);
-                                if (majorPlatformVersion >= 13) {
-                                    console.log("Windows 11");
-                                    WindowSetSize(parseInt(this.组件.窗口.width) + 16, parseInt(this.组件.窗口.height) + 39)
-                                }
-                                else if (majorPlatformVersion > 0) {
-                                    console.log("Windows 10");
-                                    WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
-                                }
-                                else {
-                                    console.log("Windows 10");
-                                    WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
-                                }
-                            }
-                            else {
-                                console.log("Not running on Windows");
-                                WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
-                            }
-                        });
-                }
-                WindowSetTitle(this.组件.窗口.标题)
+                //使用一种自适应方法兼容window和macos的窗口大小
+                WindowSetSize(parseInt(dthis.组件.窗口.width), parseInt(dthis.组件.窗口.height))
+                //重新计算客户区宽度高度
+                setTimeout(function () {
+                    var WidthFix = parseInt(dthis.组件.窗口.width) - window.innerWidth
+                    var HeightFix = parseInt(dthis.组件.窗口.height) - window.innerHeight
+                    // console.log("WidthFix", WidthFix)
+                    // console.log("HeightFix", HeightFix)
+                    // console.log("window.innerHeight", window.innerHeight)
+                    // console.log("window.innerWidth", window.innerWidth)
+                    WindowSetSize(parseInt(dthis.组件.窗口.width) + WidthFix, parseInt(dthis.组件.窗口.height) + HeightFix)
+                    document.body.style.overflow = 'auto'
+                }, 1)
+                WindowSetTitle(dthis.组件.窗口.标题)
+
+                return
+                // console.log(window.navigator)
+                // if (window.navigator && window.navigator.appVersion && window.navigator.appVersion.indexOf("Mac") !== -1) {
+                //     console.log("macOS system.");
+                //     WindowSetSize(parseInt(this.组件.窗口.width), parseInt(this.组件.窗口.height) + 28)
+                // } else {
+                //     console.log("window");
+                //     //win10
+                //     //win11
+                //     navigator.userAgentData.getHighEntropyValues(["platformVersion"])
+                //         .then(ua => {
+                //             if (navigator.userAgentData.platform === "Windows") {
+                //                 const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0]);
+                //                 if (majorPlatformVersion >= 13) {
+                //                     console.log("Windows 11");
+                //                     WindowSetSize(parseInt(this.组件.窗口.width) + 16, parseInt(this.组件.窗口.height) + 39)
+                //                 } else if (majorPlatformVersion > 0) {
+                //                     console.log("Windows 10");
+                //                     WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                //                 } else {
+                //                     console.log("Windows 10");
+                //                     WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                //                 }
+                //             } else {
+                //                 console.log("Not running on Windows");
+                //                 WindowSetSize(parseInt(this.组件.窗口.width) + 13, parseInt(this.组件.窗口.height) + 35)
+                //             }
+                //         });
+                // }
+                // WindowSetTitle(this.组件.窗口.标题)
             } catch (e) {
 
             }
