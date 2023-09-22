@@ -104,7 +104,7 @@
     </div>
     <div class="工具条 clear-select">
       <el-button-group class="" style="margin-left: -7px;">
-        <el-button :icon="Edit" @click="新建">新建</el-button>
+        <el-button :icon="Edit" @click="paoge.新建()">新建</el-button>
         <el-button :icon="Open" @click="打开">打开</el-button>
         <el-button :icon="Coin" @click="store.保存设计文件">保存</el-button>
         <el-button :icon="Key" @click="运行">{{ store.运行按钮文本 }}</el-button>
@@ -128,6 +128,7 @@ import {ref, inject, onMounted} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
+import utils from '@/utils/app9.js';
 
 import {
   E保存,
@@ -242,11 +243,7 @@ function 初始化界面(txt) {
   store.list = obj
 
 }
-
-function 新建(txt) {
-  store.list = [创建窗口()]
-  store.indexMap = {}
-}
+const paoge = util.init(store)
 
 function _打开文件加载界面(filepath) {
   store.项目信息.设计文件路径 = filepath
