@@ -128,7 +128,7 @@ import {ref, inject, onMounted} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
-import utils from '@/utils/app9.js';
+import util from '@/utils/app9.js';
 
 import {
   E保存,
