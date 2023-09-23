@@ -210,3 +210,7 @@ wails dev
 # 许可证
 
 本项目采用 [GNU Lesser General Public License (LGPL) 版本 3](LICENSE) 进行许可。详细信息请参阅许可证文件。
+
+`# 学习交流
+
+QQ群: 927427009`
