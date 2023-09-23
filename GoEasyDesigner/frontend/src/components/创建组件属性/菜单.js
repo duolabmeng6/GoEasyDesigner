@@ -3,12 +3,11 @@ export default {
     left: "440",
     width: "600",
     height: "100",
-    现行选中项: "0",
     禁止放置: true,
     可视: true,
     禁止: false,
     层级: 0,
-    菜单展示模式: "horizontal",
+    展示模式: "horizontal",
     菜单项目:[
         {
             id: 1,

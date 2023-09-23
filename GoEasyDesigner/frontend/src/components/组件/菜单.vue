@@ -1,8 +1,7 @@
 <template>
   <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
+      class=""
+      :mode="item.展示模式"
       @select="handleSelect"
   >
     <template v-for="menu in item.菜单项目" :key="menu.id">

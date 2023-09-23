@@ -18,10 +18,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="标签位置">
-        <el-select v-model="props.item.标签位置" style="width: 100%">
+      <el-form-item label="展示模式">
+        <el-select v-model="props.item.展示模式" style="width: 100%">
           <el-option
-              v-for="(item, index) in 标签位置选项"
+              v-for="(item, index) in 展示模式选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -29,6 +29,8 @@
         </el-select>
       </el-form-item>
     </el-form>
+
+
     <el-form label-position="top">
 
       <el-form-item label="菜单项目"
@@ -87,11 +89,9 @@ let 风格类型选项 = ref([
   {"label": "卡片风格", "value": "border-card"},
 ]);
 
-let 标签位置选项 = ref([
-  {"label": "左侧", "value": "left"},
-  {"label": "右侧", "value": "right"},
-  {"label": "顶部", "value": "top"},
-  {"label": "底部", "value": "bottom"},
+let 展示模式选项 = ref([
+  {"label": "水平", "value": "horizontal"},
+  {"label": "垂直", "value": "vertical"},
 ]);
 
 let 事件名称 = ref([
