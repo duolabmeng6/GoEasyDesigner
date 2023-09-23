@@ -88,6 +88,8 @@ wails dev
 
 [node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
 
+国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
+
 安装vite `npm create vite@latest`
 
 ### 3.安装 wails
