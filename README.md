@@ -3,12 +3,39 @@
 ![image-20230828083413650](README.assets/image-20230828083413650.png)
 ![image-20230828084834120](README.assets/image-20230828084834120.png)
 
-项目处于积极开发阶段 欢迎前端大佬pr
-
 基于 go 语言 使用 wails框架 支持 Window Macos Linux 等系统.
 
 主仓库 https://github.com/duolabmeng6/GoEasyDesigner 
 镜像仓库 https://gitee.com/duolabmeng666/go-easy-designer 
+
+**项目进度：**
+
+项目处于积极开发阶段 欢迎前端大佬pr
+
+
+已完成任务：
+- [x] 跨平台兼容性：在Windows、macOS和Linux上进行了测试，确保软件能够顺利运行。
+
+- [x] 界面设计和功能开发：完成了整体界面布局、功能流程设计、界面绘制、属性修改、组件拖拽、双击组件跳转到对应事件函数等核心功能的开发。
+
+- [x] 智能代码编辑器：实现了代码编辑框的汉字首字母输入提醒功能，提高了编码效率。
+
+- [x] goefun库支持：[goefun库](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles)，允许在Golang中使用中文函数进行开发。
+
+待完成任务：
+- [ ] jsefun库支持：计划中，等待开发中。
+
+- [ ] 组件库完善：正在进行中，包括element-plus等组件的进一步完善。
+
+- [ ] 布局容器改进：包括网格布局、流体布局等，正在进行中。
+
+- [ ] 集成开发环境：计划中，将实现无需繁琐配置，直接开发的环境。
+
+- [ ] 多语言支持：计划中，将支持中文和英文等多种语言。
+
+- [ ] 支持ElectronJS：计划中，将支持ElectronJS作为后端技术。
+
+我们将继续努力，确保项目按计划进行，并提供更多强大的功能和支持。请继续关注我们的进展！
 
 # 在线体验
 
@@ -42,18 +69,7 @@ wails dev
 ```
 
 想要更好的无缝使用体验下载客户端程序.
-
-### 项目进度
-
-- [x] 兼容 Window  Macos  Linux 
-- [x] 完成整体界面布局以及整体功能流程，界面绘制，属性修改，组件拖拽、双击组件跳转到对应的事件函数,运行,编译等
-- [x] 代码编辑框支持汉字首字母输入提醒功能
-- [x] 支持库 [goefun](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles) 支持在golang中使用中文函数开发
-- [ ] 支持库 jsefun 等待开发
-- [ ] 组件库完善中 element-plus 
-- [ ] 布局容器完善中 网格布局 流体布局等
-- [ ] 等待开发,集成go语言开发环境 node开发环境 实现无需配置环境直接开发
-- [ ] 等待开发,多语言环境支持中文,英文
+重新呈现项目进度，突出已完成和待完成的任务：
 
 # 快速上手
 
