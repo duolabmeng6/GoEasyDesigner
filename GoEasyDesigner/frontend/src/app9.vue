@@ -235,7 +235,7 @@ function 拖拽开始(event, 组件名称) {
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
-  键盘按下(event, store.当前组件索引)
+  // 键盘按下(event, store.当前组件索引)
   if ((event.metaKey || event.ctrlKey) && event.key === "s") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法

@@ -26,7 +26,7 @@
 待完成任务：
 - [ ] jsefun库支持：计划中，等待开发中。
 
-- [ ] 组件库完善：正在进行中，包括element-plus等组件的进一步完善。
+- [ ] 组件库完善：正在进行中， [element-plus](https://element-plus.org/zh-CN/component/button.html) 组件的进一步完善。
 
 - [ ] 布局容器改进：包括网格布局、流体布局等，正在进行中。
 
