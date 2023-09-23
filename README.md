@@ -1,15 +1,13 @@
 # GoEasyDesigner 窗口设计师
+![666](https://github.com/duolabmeng6/GoEasyDesigner/assets/59047063/a89d2ab9-9ba3-4efc-b0fa-0a7dcc3bcfc1)
 ![image-20230828083413650](README.assets/image-20230828083413650.png)
 ![image-20230828084834120](README.assets/image-20230828084834120.png)
 
 项目处于积极开发阶段 欢迎前端大佬pr
 
-基于 go 语言 使用 wails框架 支持 Window Macos Linux 等系统. 
-
-# 项目地址
+基于 go 语言 使用 wails框架 支持 Window Macos Linux 等系统.
 
 主仓库 https://github.com/duolabmeng6/GoEasyDesigner 
-
 镜像仓库 https://gitee.com/duolabmeng666/go-easy-designer 
 
 # 在线体验
@@ -25,7 +23,6 @@ https://ggg.yx24.me
 https://goeasy.onrender.com
 
 https://go-easy-designer.vercel.app
-
 
 画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js`
 
@@ -58,9 +55,12 @@ wails dev
 - [ ] 等待开发,集成go语言开发环境 node开发环境 实现无需配置环境直接开发
 - [ ] 等待开发,多语言环境支持中文,英文
 
-# 运行环境
+# 快速上手
 
 请按顺序安装好
+
+[视频教程10分钟了入门](https://www.bilibili.com/video/BV1ou4y1r7WS)
+
 
 ### 1.安装 go 语言
 
