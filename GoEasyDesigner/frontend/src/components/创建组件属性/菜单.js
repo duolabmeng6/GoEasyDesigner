@@ -8,6 +8,8 @@ export default {
     禁止: false,
     层级: 0,
     展示模式: "horizontal",
+    是否折叠 : false,
+
     菜单项目:[
         {
             id: 1,

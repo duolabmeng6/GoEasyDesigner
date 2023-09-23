@@ -5,19 +5,7 @@
         style="max-width: 460px"
     >
       <component is="公用属性" :item="item"/>
-      <el-form-item label="现行选中项">
-        <el-input v-model="props.item.现行选中项"/>
-      </el-form-item>
-      <el-form-item label="风格类型">
-        <el-select v-model="props.item.风格类型" style="width: 100%">
-          <el-option
-              v-for="(item, index) in 风格类型选项"
-              :key="item"
-              :label="item.label"
-              :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
+
       <el-form-item label="展示模式">
         <el-select v-model="props.item.展示模式" style="width: 100%">
           <el-option
@@ -27,6 +15,10 @@
               :value="item.value"
           />
         </el-select>
+      </el-form-item>
+
+      <el-form-item label="是否折叠(垂直时可用)">
+        <el-switch v-model="item.是否折叠"/>
       </el-form-item>
     </el-form>
 

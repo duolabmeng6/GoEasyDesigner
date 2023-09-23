@@ -2,6 +2,7 @@
   <el-menu
       class=""
       :mode="item.展示模式"
+      :collapse="item.是否折叠"
       @select="handleSelect"
   >
     <template v-for="menu in item.菜单项目" :key="menu.id">
