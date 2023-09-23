@@ -61,16 +61,20 @@ wails dev
 
 ### 1.安装 go 语言
 
-https://golang.org/dl/
+[go语言下载页面](https://golang.org/dl/) 版本任意
+
 
 ### 2.安装 node 环境
 
-https://nodejs.org/zh-cn/download/
+[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
 
 安装vite `npm create vite@latest`
 
 ### 3.安装 wails
-https://wails.io/zh-Hans/docs/gettingstarted/installation/
+
+[wails框架文档](https://wails.io/zh-Hans/docs/gettingstarted/installation/) 版本18以上
+
+国内镜像执行 `go env -w GOPROXY=https://goproxy.cn,direct`
 
 ```
 go install github.com/wailsapp/wails/v2/cmd/wails@latest
@@ -78,18 +82,22 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 
-
 ### 4.下载本项目
 
-该目录为设计好的界面最终运行的环境你的代码也将在这里编写
-
-将这个目录复制出来 `GoEasyDesigner/wails-demo`
+`GoEasyDesigner/wails-demo` 该目录为设计好的界面最终运行的环境你的代码也将在这里编写
 
 wails 同时调试前端和后端
 
 ```
 cd wails-demo
 wails dev
+```
+
+仅调试前端
+
+```
+cd wails-demo/frontend
+npm run dev
 ```
 
 ### 5.下载 GoEasyDesigner
@@ -103,9 +111,10 @@ wails dev
 ```
 wails-demo/frontend/src/窗口/设计文件.json
 ```
+
 ### 6. webstorm IDE代码跳转插件
 
-想体验双击组件自动跳转到对应函数 请在webstorm中安装 QtEasyDesigner 插件,在本项目的文件中，
+想体验双击组件在ide中自动跳转到对应函数 请在webstorm中安装 QtEasyDesigner 插件,在本项目的文件中，
 
 安装后在IDE编辑器中右键看到 `配置 QtEasyDesigner ` 
 
@@ -124,7 +133,8 @@ C:\GoEasyDesigner\GoEasyDesigner.exe
 js代码使用 webstorm ide 绝大部分编写代码都应该在 js中编写,如果js无法实现的再调用go代码
 go代码使用 goland IDE 编写 一般情况下代码写在 app.go 中
 
-### 开发请看
+### 开发组件请看
+
 #### 运行 GoEasyDesigner
 
 wails 同时调试前端和后端
@@ -149,7 +159,7 @@ vite
 
 环境变量 `CGO_LDFLAGS=-framework UniformTypeIdentifiers` 这个macos需要 window不需要
 
-go工具实惨 `-tags dev -gcflags "all=-N -l"`
+go工具实参 `-tags dev -gcflags "all=-N -l"`
 
 程序实参(可选) `文件路径=/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo/frontend/src/窗口/设计文件.json port=8080` 这是配合ide插件的port是插件的端口 
 
@@ -171,5 +181,12 @@ wails dev
 ```
 
 
-# 发展历程
-2023年9月23日 00:01:08 感谢泡哥,提供了代码混乱的思路 泡哥:wx:xiaohui-wz QQ:16715060
+# 贡献
+
+贡献者列表对于自述文件来说太大了！ 所有为这个项目做出贡献的杰出人士在这里 [贡献列表](https://github.com/duolabmeng6/GoEasyDesigner/graphs/contributors)
+后面我们会制作页面
+
+
+# 许可证
+
+本项目采用 [GNU Lesser General Public License (LGPL) 版本 3](LICENSE) 进行许可。详细信息请参阅许可证文件。

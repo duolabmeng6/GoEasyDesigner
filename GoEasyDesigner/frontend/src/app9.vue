@@ -104,18 +104,16 @@
     </div>
     <div class="工具条 clear-select">
       <el-button-group class="" style="margin-left: -7px;">
-        <el-button :icon="Edit" @click="paoge.新建()">新建</el-button>
-        <el-button :icon="Open" @click="打开">打开</el-button>
-        <el-button :icon="Coin" @click="store.保存设计文件">保存</el-button>
-        <el-button :icon="Key" @click="运行">{{ store.运行按钮文本 }}</el-button>
-        <el-button :icon="Key" @click="编译">{{ store.编译按钮文本 }}</el-button>
+        <el-button :icon="Edit" @click="appAction.新建()">新建</el-button>
+        <el-button :icon="Open" @click="appAction.打开">打开</el-button>
+        <el-button :icon="Coin" @click="appAction.保存设计文件()">保存</el-button>
+        <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
+        <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
         <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
         </el-button>
-        <el-button :icon="Help" @click="帮助">帮助</el-button>
-        <el-button :icon="Help" @click="运行环境检测">运行环境检测</el-button>
-        <el-button :icon="Help" @click="检查更新">检查更新</el-button>
-
-
+        <el-button :icon="Help" @click="appAction.帮助()">帮助</el-button>
+        <el-button :icon="Help" @click="appAction.运行环境检测()">运行环境检测</el-button>
+        <el-button :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
       </el-button-group>
     </div>
   </div>
@@ -128,7 +126,7 @@ import {ref, inject, onMounted} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
-import util from '@/utils/app9.js';
+import {appAction} from '@/action/app9.js';
 
 import {
   E保存,
@@ -145,10 +143,32 @@ import {
 import {取父目录, 生成辅助代码} from "@/public";
 import Shape from "@/components/Shape.vue";
 import {BrowserOpenURL, EventsOn} from "../wailsjs/runtime";
-
 const store = useCounterStore()
 store.初始化()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
+onMounted(() => {
+  appAction.init()
+  appAction.新建()
+  store.取组件列表()
+  store.当前拖拽组件数据 = store.组件通过id查找结构("1")
+  try {
+    E取配置信息().then((res) => {
+      res = JSON.parse(res)
+      console.log("取配置信息", res)
+      store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
+      store.项目信息.设计文件路径 = res.设计文件路径
+      if (store.项目信息.设计文件路径 != "") {
+        _打开文件加载界面(store.项目信息.设计文件路径)
+      }
+
+    })
+  } catch (e) {
+
+  }
+  console.log("store.当前组件索引", store.当前组件索引)
+  document.addEventListener("keydown", handleKeyDown);
+})
+
 
 function 拖拽开始(event, 组件名称) {
   let 新属性 = ""
@@ -213,37 +233,6 @@ function 拖拽开始(event, 组件名称) {
   store.当前拖拽组件数据 = 新属性
 }
 
-function 创建窗口() {
-  return {
-    "id": "1",
-    "名称": "窗口",
-    "组件名称": "窗口",
-    "标题": "窗口",
-    "top": "0",
-    "left": "0",
-    "width": "500",
-    "height": "400",
-    "background": "rgba(0, 0, 0, 0.05)",
-    "禁止放置": false,
-    "禁止拖动": true,
-    "禁止": false,
-    "可视": true,
-    "层级": 0,
-    "子组件": []
-  }
-}
-
-const list = ref([创建窗口()])
-store.list = list
-store.取组件列表()
-store.当前拖拽组件数据 = store.组件通过id查找结构("1")
-
-function 初始化界面(txt) {
-  const obj = JSON.parse(txt)
-  store.list = obj
-
-}
-const paoge = util.init(store)
 
 function _打开文件加载界面(filepath) {
   store.项目信息.设计文件路径 = filepath
@@ -257,53 +246,14 @@ function _打开文件加载界面(filepath) {
   console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
   E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
     console.log(文件内容)
-    初始化界面(文件内容)
+    // 初始化界面(文件内容)
+    store.list = JSON.parse(文件内容)
   })
   // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
   //   console.log(res)
   //   code.value = res
   // })
   store.项目管理刷新()
-}
-
-function 打开() {
-  if (store.客户端模式 == false) {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = '.json'
-    input.onchange = e => {
-      const file = e.target.files[0]
-      const reader = new FileReader()
-      reader.readAsText(file)
-      reader.onload = () => {
-        const data = reader.result
-        console.log(data)
-        初始化界面(data)
-      }
-    }
-    input.click()
-    return
-  }
-
-  console.log("打开")
-
-  E打开文件对话框().then((文件路径) => {
-    if (文件路径 == "") {
-      return
-    }
-    _打开文件加载界面(文件路径)
-  })
-}
-
-function 帮助() {
-  if (store.客户端模式) {
-    BrowserOpenURL("https://github.com/duolabmeng6/GoEasyDesigner")
-
-  } else {
-    //浏览器打开新页面
-    window.open("https://github.com/duolabmeng6/GoEasyDesigner")
-  }
-
 }
 
 // 使用 $refs 来引用滚动容器
@@ -322,118 +272,6 @@ try {
 } catch (e) {
   console.log('非客户端模式')
 }
-
-function 运行() {
-  if (store.客户端模式 == false) {
-    //弹出提示
-    ElMessage({
-      message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails dev",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return
-  }
-  if (store.项目信息.项目根目录 == "") {
-    ElMessage({
-      message: "请先保存",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return
-  }
-
-  if (store.运行按钮文本 == '运行') {
-    store.运行按钮文本 = '停止'
-    store.调试信息 = "运行中 ..."
-    store.选择夹_底部现行选中项 = "1"
-    E运行命令(store.项目信息.项目根目录, "wails dev")
-  } else {
-    store.调试信息 = "已停止 ..."
-    store.运行按钮文本 = '运行'
-    E停止命令()
-  }
-
-}
-
-function 编译() {
-  if (store.客户端模式 == false) {
-    //弹出提示
-    ElMessage({
-      message: "当前为浏览器模式 不能编译 请自行在项目根目录运行 wails build",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return
-  }
-  if (store.项目信息.项目根目录 == "") {
-    ElMessage({
-      message: "请先保存",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return
-  }
-  if (store.编译按钮文本 == '编译') {
-    store.编译按钮文本 = '停止'
-    store.调试信息 = "编译中 ..."
-    store.选择夹_底部现行选中项 = "1"
-    E运行命令(store.项目信息.项目根目录, "wails build")
-  } else {
-    store.调试信息 = "已停止 ..."
-    store.编译按钮文本 = '编译'
-    E停止命令()
-  }
-
-}
-
-function 运行环境检测() {
-  if (store.客户端模式 == false) {
-    //弹出提示
-    ElMessage({
-      message: "当前为浏览器模式 不能运行 请自行在项目根目录运行 wails doctor",
-      type: 'success',
-      duration: 3000, // 设置显示时间为5秒，单位为毫秒
-    });
-    return
-  }
-  store.选择夹_底部现行选中项 = "1"
-  store.调试信息 = "运行环境检测 ..."
-  let 结果;
-  结果 = E运行命令(store.项目信息.项目根目录, "wails doctor")
-  console.log("结果")
-  // 检查node是否安装
-
-}
-
-function 检查更新() {
-  if (store.客户端模式 == false) {
-    window.open("https://github.com/duolabmeng6/GoEasyDesigner")
-    return
-  }
-  E检查更新()
-
-}
-
-onMounted(() => {
-  try {
-    E取配置信息().then((res) => {
-      res = JSON.parse(res)
-      console.log("取配置信息", res)
-      store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
-      store.项目信息.设计文件路径 = res.设计文件路径
-      if (store.项目信息.设计文件路径 != "") {
-        _打开文件加载界面(store.项目信息.设计文件路径)
-      }
-
-    })
-  } catch (e) {
-
-  }
-
-
-  console.log("store.当前组件索引", store.当前组件索引)
-  document.addEventListener("keydown", handleKeyDown);
-})
 
 function 键盘按下(event, index) {
   console.log("键盘按下", event.key, index)

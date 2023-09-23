@@ -6,6 +6,7 @@ import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
 import {InsertCode, 取父目录, 生成辅助代码} from "@/public.js";
+import {appAction} from '@/action/app9.js';
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -81,15 +82,15 @@ export const useCounterStore = defineStore('counter', {
                 this.代码编辑器内容 = InsertCode(this.代码编辑器内容, ncode)
                 this.选择夹_中间现行选中项 = "1"
                 return;
-            } else {
-                //读入 窗口事件 文件内容
-                this.保存设计文件()
-
-                E读入文件(this.项目信息.窗口事件文件路径).then((res) => {
-                    this.代码编辑器内容 = InsertCode(res, ncode)
-                    this.选择夹_中间现行选中项 = "1"
-                    E保存(this.项目信息.窗口事件文件路径, this.代码编辑器内容).then((res) => {
-                        let 跳转位置 = this.代码编辑器内容.indexOf(ncode)
+            }
+            //读入 窗口事件 文件内容
+            appAction.保存设计文件()
+            setTimeout(function (){
+                E读入文件(dthis.项目信息.窗口事件文件路径).then((res) => {
+                    dthis.代码编辑器内容 = InsertCode(res, ncode)
+                    dthis.选择夹_中间现行选中项 = "1"
+                    E保存(dthis.项目信息.窗口事件文件路径, dthis.代码编辑器内容).then((res) => {
+                        let 跳转位置 = dthis.代码编辑器内容.indexOf(ncode)
                         if (跳转位置 != -1) {
                             console.log("跳转位置", 跳转位置)
                             E发送跳转代码到ide(
@@ -100,8 +101,8 @@ export const useCounterStore = defineStore('counter', {
                         }
                     })
                 })
+            },100)
 
-            }
 
 
             // try {
@@ -118,70 +119,7 @@ export const useCounterStore = defineStore('counter', {
             // }
 
         },
-        保存设计文件() {
-            let store = this;
-            let njson = JSON.stringify(store.list, null, 2)
-            let 辅助代码 = 生成辅助代码(store.list[0].子组件)
 
-
-            if (store.客户端模式 == false) {
-                //浏览器打开就发起保存
-                const blob = new Blob([njson], {type: 'application/json'})
-                const link = document.createElement('a')
-                link.href = URL.createObjectURL(blob)
-                link.download = '设计文件.json'
-                link.click()
-
-                const blob2 = new Blob([辅助代码], {type: 'application/json'})
-                const link2 = document.createElement('a')
-                link2.href = URL.createObjectURL(blob2)
-                link2.download = '辅助代码.js'
-                link2.click()
-                return;
-            }
-
-            // 客户端直接保存
-            function _保存(p, d) {
-                d = String(d)
-                p = String(p)
-                E保存(p, d)
-            }
-
-            if (store.项目信息.设计文件路径 == "") {
-                E保存件对话框().then((res) => {
-                    if (res == "") {
-                        ElMessage({
-                            message: "未选择文件",
-                            type: 'success',
-                            duration: 3000, // 设置显示时间为5秒，单位为毫秒
-                        });
-                        return
-                    }
-
-                    store.项目信息.设计文件路径 = res
-                    store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
-                    store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
-                    store.项目信息.项目管理目录 = 取父目录(res)
-                    store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(res))))
-
-                    store.项目管理刷新()
-
-                    console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-                    if (store.代码编辑器内容 !== "") {
-                        _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
-                        _保存(store.项目信息.辅助代码文件路径, 辅助代码)
-                    }
-                    _保存(store.项目信息.设计文件路径, njson)
-                })
-                return
-            }
-            if (store.代码编辑器内容 !== "") {
-                _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
-                _保存(store.项目信息.辅助代码文件路径, 辅助代码)
-            }
-            _保存(store.项目信息.设计文件路径, njson)
-
-        },
         组件双击事件(组件数据) {
             // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
             this.添加事件被选择(this.全局_事件名称列表[1].value, 组件数据)
