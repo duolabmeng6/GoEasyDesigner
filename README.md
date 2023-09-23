@@ -4,7 +4,7 @@
 
 项目处于积极开发阶段 欢迎前端大佬pr
 
-基于 go 语言 使用 wails框架, 支持 window macos linux 等系统. 
+基于 go 语言 使用 wails框架 支持 Window Macos Linux 等系统. 
 
 # 项目地址
 
@@ -14,7 +14,7 @@
 
 # 在线体验
 
-没钱买服务器所以都是白嫖 pages 国内打不开就换一个地址呗
+没钱买服务器所以都是白嫖 pages 国内打不开就换一个地址
 
 https://g.yx24.me
 
@@ -27,7 +27,7 @@ https://goeasy.onrender.com
 https://go-easy-designer.vercel.app
 
 
-画好界面点保存,会下载2个文件 设计文件.json`,`辅助代码.js`
+画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js`
 
 注意你的浏览器允许下载多个文件的权限
 
@@ -47,13 +47,16 @@ wails dev
 想要更好的无缝使用体验下载客户端程序.
 
 ### 项目进度
-- [x] 兼容 window  macos  linux 
-- [x] 完成整体界面布局以及整体功能流程，界面绘制，属性修改，组件拖拽、双击组件跳转到对应的事件函数
-- [ ] 组件库完善中
-- [ ] 绘制布局容器体验完善中
-- [ ] 集成go语言开发环境完善中
 
-
+- [x] 兼容 Window  Macos  Linux 
+- [x] 完成整体界面布局以及整体功能流程，界面绘制，属性修改，组件拖拽、双击组件跳转到对应的事件函数,运行,编译等
+- [x] 代码编辑框支持汉字首字母输入提醒功能
+- [x] 支持库 [goefun](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles) 支持在golang中使用中文函数开发
+- [ ] 支持库 jsefun 等待开发
+- [ ] 组件库完善中 element-plus 
+- [ ] 布局容器完善中 网格布局 流体布局等
+- [ ] 等待开发,集成go语言开发环境 node开发环境 实现无需配置环境直接开发
+- [ ] 等待开发,多语言环境支持中文,英文
 
 # 运行环境
 
