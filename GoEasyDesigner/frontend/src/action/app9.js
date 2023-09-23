@@ -1,9 +1,17 @@
 import {useCounterStore} from '@/stores/counter'
-import {onMounted} from "vue";
-import {E保存, E保存件对话框, E停止命令, E打开文件对话框, E检查更新, E运行命令} from "../../wailsjs/go/main/App";
+import {onMounted, ref} from "vue";
+import {
+    E保存,
+    E保存件对话框,
+    E停止命令,
+    E打开文件对话框,
+    E检查更新,
+    E读入文件,
+    E运行命令
+} from "../../wailsjs/go/main/App";
 import {取父目录, 生成辅助代码} from "@/public";
 import {ElMessage} from "element-plus";
-import {BrowserOpenURL} from "../../wailsjs/runtime";
+import {BrowserOpenURL, EventsOn} from "../../wailsjs/runtime";
 
 export const appAction = {};
 let store = {}; // 我想在这里作类型标注 useCounterStore()怎么处理怎么写
@@ -61,9 +69,56 @@ appAction.打开 = function () {
         if (文件路径 == "") {
             return
         }
-        _打开文件加载界面(文件路径)
+        appAction._打开文件加载界面(文件路径)
     })
 }
+
+appAction._打开文件加载界面 = function(filepath) {
+    store.项目信息.设计文件路径 = filepath
+    store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
+    store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
+    store.项目信息.项目管理目录 = 取父目录(filepath)
+    store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
+
+
+    console.log("设计文件路径", store.项目信息.设计文件路径)
+    console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
+    E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
+        console.log(文件内容)
+        // 初始化界面(文件内容)
+        store.list = JSON.parse(文件内容)
+    })
+    // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
+    //   console.log(res)
+    //   code.value = res
+    // })
+    store.项目管理刷新()
+}
+
+// 使用 $refs 来引用滚动容器
+const scrollContainer = ref(null);
+
+try {
+    EventsOn("运行命令", function (data) {
+        console.log("运行命令", data)
+        store.调试信息 = store.调试信息 + "<br / >" + data
+        scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        if (data == "命令已完成") {
+            store.运行按钮文本 = "运行"
+            store.编译按钮文本 = "编译"
+        }
+    })
+} catch (e) {
+    console.log('非客户端模式')
+}
+
+function 键盘按下(event, index) {
+    console.log("键盘按下", event.key, index)
+    if (event.key == 'Delete') {
+
+    }
+}
+
 
 appAction.保存设计文件 = function () {
     let njson = JSON.stringify(store.list, null, 2)

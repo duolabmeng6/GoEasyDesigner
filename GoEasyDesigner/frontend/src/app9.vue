@@ -158,7 +158,7 @@ onMounted(() => {
       store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
       store.项目信息.设计文件路径 = res.设计文件路径
       if (store.项目信息.设计文件路径 != "") {
-        _打开文件加载界面(store.项目信息.设计文件路径)
+        appAction._打开文件加载界面(store.项目信息.设计文件路径)
       }
 
     })
@@ -232,54 +232,6 @@ function 拖拽开始(event, 组件名称) {
 
   store.当前拖拽组件数据 = 新属性
 }
-
-
-function _打开文件加载界面(filepath) {
-  store.项目信息.设计文件路径 = filepath
-  store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
-  store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
-  store.项目信息.项目管理目录 = 取父目录(filepath)
-  store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
-
-
-  console.log("设计文件路径", store.项目信息.设计文件路径)
-  console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-  E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
-    console.log(文件内容)
-    // 初始化界面(文件内容)
-    store.list = JSON.parse(文件内容)
-  })
-  // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
-  //   console.log(res)
-  //   code.value = res
-  // })
-  store.项目管理刷新()
-}
-
-// 使用 $refs 来引用滚动容器
-const scrollContainer = ref(null);
-
-try {
-  EventsOn("运行命令", function (data) {
-    console.log("运行命令", data)
-    store.调试信息 = store.调试信息 + "<br / >" + data
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-    if (data == "命令已完成") {
-      store.运行按钮文本 = "运行"
-      store.编译按钮文本 = "编译"
-    }
-  })
-} catch (e) {
-  console.log('非客户端模式')
-}
-
-function 键盘按下(event, index) {
-  console.log("键盘按下", event.key, index)
-  if (event.key == 'Delete') {
-
-  }
-}
-
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
