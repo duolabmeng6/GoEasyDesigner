@@ -78,6 +78,8 @@ wails dev
 
 [视频教程10分钟了入门](https://www.bilibili.com/video/BV1ou4y1r7WS)
 
+[视频教程3分钟学会自定义组件封装](https://www.bilibili.com/video/BV1ar4y1f7Rq)
+
 
 ### 1.安装 go 语言
 
