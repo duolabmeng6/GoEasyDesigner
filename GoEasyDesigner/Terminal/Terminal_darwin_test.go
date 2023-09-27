@@ -24,9 +24,9 @@ npm run dev
 	})
 
 	time.Sleep(3 * time.Second)
-	terminal.StopCommand2()
-	println("停止命令2")
-	time.Sleep(10 * time.Second)
+	//terminal.StopCommand2()
+	//	//println("停止命令2")
+	//	//time.Sleep(10 * time.Second)
 	terminal.StopCommand()
 	println("停止命令1")
 

@@ -92,10 +92,6 @@ func (t *Terminal) StopCommand() {
 	}
 }
 
-func (t *Terminal) StopCommand2() {
-	//t.cmd.Process.Signal(os.Interrupt)
-	t.cmd.Process.Signal(syscall.SIGTERM)
-}
 func (t *Terminal) IsCommandDone() bool {
 	t.lock.Lock()
 	defer t.lock.Unlock()
