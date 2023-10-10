@@ -38,8 +38,8 @@
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane label="界面设计">
-            <div id="designer" style="position: relative;    margin: 8px;">
-              <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
+            <div id="designer" style="position: relative;    margin: 8px;" >
+              <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="编辑代码">
@@ -122,7 +122,7 @@
 </template>
 
 <script setup>
-import {ref, inject, onMounted} from 'vue';
+import {ref, inject, onMounted,nextTick} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
@@ -167,7 +167,12 @@ onMounted(() => {
   }
   console.log("store.当前组件索引", store.当前组件索引)
   document.addEventListener("keydown", handleKeyDown);
+
+  setTimeout(()=>{
+    store.bodyLoaded = true
+  },200)
 })
+
 
 
 function 拖拽开始(event, 组件名称) {

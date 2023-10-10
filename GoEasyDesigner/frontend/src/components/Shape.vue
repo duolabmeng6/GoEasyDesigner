@@ -85,8 +85,15 @@ export default {
       let isFirst = true;
       let dthis = this;
 
-      let newLeft2 = dthis.$refs.shapeRef.offsetLeft;
-      let newTop2 = dthis.$refs.shapeRef.offsetTop;
+      console.log("鼠标按下", this.startX + " " + this.startY)
+      // let newLeft2 = dthis.$refs.shapeRef.offsetLeft;
+      // let newTop2 = dthis.$refs.shapeRef.offsetTop;
+      // let newWidth2 = dthis.$refs.shapeRef.offsetWidth;
+      // let newHeight2 = dthis.$refs.shapeRef.offsetHeight;
+      let newLeft2 = parseInt(dthis.item_data.left);
+      let newTop2 = parseInt(dthis.item_data.top);
+      // let newWidth2 = parseInt(dthis.item_data.width);
+      // let newHeight2 = parseInt(dthis.item_data.height);
       let newWidth2 = dthis.$refs.shapeRef.offsetWidth;
       let newHeight2 = dthis.$refs.shapeRef.offsetHeight;
 
@@ -95,6 +102,7 @@ export default {
 
         dthis.clientX = event.clientX;
         dthis.clientY = event.clientY;
+
         if (isFirst) {
           isFirst = false
           return
@@ -116,6 +124,8 @@ export default {
           //调整左边顶边
           newLeft += moveX;
           newTop += moveY;
+
+          // console.log("移动后的位置",  dthis.index,newLeft, newTop);
           newWidth = dthis.$refs.shapeRef.width;
           newHeight = dthis.$refs.shapeRef.height;
           dthis.$emit('update-style', dthis.item_data, {
@@ -158,6 +168,13 @@ export default {
           return
         }
         // console.log("移动后的位置",  dthis.index,newLeft, newTop, newWidth, newHeight);
+        // if (dthis.item_data.width.toString().indexOf("%") > -1) {
+        //   newWidth = dthis.item_data.width
+        // }
+        // if (dthis.item_data.height.toString().indexOf("%") > -1) {
+        //   newHeight = dthis.item_data.height
+        // }
+
         dthis.$emit('update-style', dthis.item_data, {
           left: newLeft,
           top: newTop,
@@ -183,8 +200,8 @@ export default {
 <style scoped>
 .Shape {
   position: absolute;
-
 }
+
 
 .dot {
   width: 6px;

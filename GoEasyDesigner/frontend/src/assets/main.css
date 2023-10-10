@@ -141,3 +141,6 @@
 ::-webkit-scrollbar-thumb:hover {
     background-color: #555; /* 设置滑块的悬停颜色 */
 }
+* {
+    box-sizing: border-box;
+}

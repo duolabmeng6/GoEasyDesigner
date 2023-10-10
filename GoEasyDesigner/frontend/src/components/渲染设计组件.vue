@@ -1,14 +1,19 @@
 <template>
-  <shape
-      v-if="store.当前组件索引 == item.id"
-      :index="item.id"
-      :item_data="item"
-      :nowIndex="store.当前组件索引"
-      :style="getItemStyle(item)"
-      style="position: relative;z-index: 9999;pointer-events: none;"
-      @update-style="updateStyle"
-      @删除="id=>store.递归删除id(store.list,id)"
-  />
+  <teleport to="#designer">
+    <shape
+        v-if="store.bodyLoaded && store.当前组件索引 == item.id"
+        :index="item.id"
+        :item_data="item"
+        :nowIndex="store.当前组件索引"
+        :style="{ ...shapeRect, ...getItemStyle2(item) }"
+        class="shape"
+        style="position: absolute;z-index: 9999;pointer-events: none;"
+        @update-style="updateStyle"
+        @删除="id=>store.递归删除id(store.list,id)"
+        :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
+
+    />
+  </teleport>
   <div
       :style="getItemStyleShape(item)"
       class="border-transparent"
@@ -67,12 +72,12 @@
 </template>
 
 <script setup>
-import {defineProps} from 'vue';
+import {defineProps, nextTick, watch, onUnmounted, onMounted,onUpdated,onBeforeUpdate} from 'vue';
 
 const {item} = defineProps(['item']);
 import {useCounterStore} from '@/stores/counter'
 import Shape from "@/components/Shape.vue";
-import {getItemStyle, getItemStyleShape} from "@/public";
+import {getItemStyle, getItemStyle2, getItemStyleShape} from "@/public";
 
 const store = useCounterStore()
 
@@ -93,7 +98,14 @@ tempCtx.strokeRect(0, 0, tempCanvas.width, tempCanvas.height);
 tempCtx.fillText("松开放置", 10, 20);
 
 
-function updateStyle(item, newStyle) {
+const shapeRect = ref({
+  width: 0,
+  height: 0,
+  top: 0,
+  left: 0,
+});
+
+async function updateStyle(item, newStyle) {
   const properties = ['width', 'height', 'top', 'left'];
 
   for (const property of properties) {
@@ -101,9 +113,23 @@ function updateStyle(item, newStyle) {
       item[property] = `${newStyle[property]}`;
     }
   }
+  upShapeRect(item);
   return item
 }
 
+let timerId;
+
+watch(item, (newValue, oldValue) => {
+  clearTimeout(timerId);
+  timerId = setTimeout(() => {
+    upShapeRect(item);
+  }, 100);
+});
+
+
+async function upShapeRect(item) {
+  shapeRect.value = getItemStyle2(item)
+}
 
 store.start_x = 0;
 store.start_y = 0;
@@ -151,7 +177,7 @@ function 拖拽离开(event, v) {
 }
 
 
-function 拖拽放下(event, v) {
+async function 拖拽放下(event, v) {
   console.log("拖拽放下", v)
   if (v.禁止放置) {
     return
@@ -199,12 +225,16 @@ function 拖拽放下(event, v) {
   store.当前拖拽组件数据.top = y
 
   递归删除(store.list, store.当前拖拽组件数据.id)
+  await nextTick()
   递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.id)
+  await nextTick()
 
 
   console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
   store.当前组件索引 = store.当前拖拽组件数据.id
+  await nextTick()
+
 
 }
 
@@ -300,15 +330,14 @@ function generateUniqueId() {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+
 
 .子组件 {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+
 }
 
 .border-transparent {

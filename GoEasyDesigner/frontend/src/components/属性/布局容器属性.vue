@@ -6,6 +6,9 @@
     >
       <component is="公用属性" :item="item"/>
 
+      <el-form-item label="占比" v-if="props.item.占比>=0">
+        <el-input-number v-model="props.item.占比" max="24" min="0"/>
+      </el-form-item>
     </el-form>
   </div>
   <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>

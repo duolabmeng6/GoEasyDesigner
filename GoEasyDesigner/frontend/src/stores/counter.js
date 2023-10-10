@@ -20,6 +20,7 @@ export const useCounterStore = defineStore('counter', {
                 名称: ref("窗口"),
                 标题: ref("窗口"),
             },
+            bodyLoaded: ref(false),
             hoveredDiv: ref(null),
             当前组件索引: ref("1"),
             组件列表: ref([]),
@@ -327,7 +328,7 @@ export const useCounterStore = defineStore('counter', {
         取组件列表() {
             this.组件列表 = []
             this.__取组件列表_递归(this.list);
-            console.log("取组件列表", this.组件列表)
+            // console.log("取组件列表", this.组件列表)
             return this.组件列表
         },
         __取组件列表_递归(源数据) {
@@ -340,7 +341,7 @@ export const useCounterStore = defineStore('counter', {
                     this.组件列表.push(组件数据)
                 }
 
-                console.log("组件列表", this.组件列表)
+                // console.log("组件列表", this.组件列表)
 
                 if (item.子组件) {
                     this.__取组件列表_递归(item.子组件);

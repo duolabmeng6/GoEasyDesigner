@@ -18,6 +18,44 @@ const getItemStyle = (item) => {
 
     return style;
 };
+
+const getItemStyle2 = (item) => {
+    // console.log("??");
+    let style = {
+        top: parseDimension(item.top),
+        left: parseDimension(item.left),
+        width: parseDimension(item.width),
+        height: parseDimension(item.height),
+    };
+    // const element窗口 = document.getElementById("窗口");
+    // if (element窗口) {
+    //     const rect = element窗口.getBoundingClientRect();
+    //     // style.top = parseInt(style.top) + rect.top + "px";
+    //     // style.left = parseInt(style.left) + rect.left + "px";
+    // }
+
+    const designer = document.getElementById("designer");
+    let rect_designer = designer.getBoundingClientRect();
+    if (designer) {
+        rect_designer = designer.getBoundingClientRect();
+        // style.top = parseInt(style.top) + rect_designer.top + "px";
+        // style.left = parseInt(style.left) + rect_designer.left + "px";
+    }
+    const element = document.querySelector(`[data-id="${item.data_id}"]`);
+    if (element) {
+        //获取元素在浏览器中的绝对位置
+        const rect = element.getBoundingClientRect();
+        style.top = `${rect.top - rect_designer.top}px`;
+        style.left = `${rect.left - rect_designer.left}px`;
+        style.width = `${rect.width}px`;
+        style.height = `${rect.height}px`;
+    } else {
+        style.display = "none"
+        return style;
+    }
+
+    return style;
+};
 const getItemStyleShape = (item) => {
     const style = {
         top: parseDimension(item.top),
@@ -29,7 +67,7 @@ const getItemStyleShape = (item) => {
         zIndex: item.层级,
         position: 'absolute',
     };
-    if(item.position !== undefined){
+    if (item.position !== undefined) {
         style.position = item.position;
     }
 
@@ -114,4 +152,4 @@ function InsertCode(jscode, insertionCode) {
     return result;
 }
 
-export {getItemStyle,getItemStyleShape, 生成辅助代码, 取父目录,InsertCode};
+export {getItemStyle, getItemStyle2, getItemStyleShape, 生成辅助代码, 取父目录, InsertCode};
