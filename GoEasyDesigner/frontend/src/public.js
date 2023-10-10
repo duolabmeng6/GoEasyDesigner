@@ -53,6 +53,11 @@ const getItemStyle2 = (item) => {
         style.display = "none"
         return style;
     }
+    if (style.top == "0px" && style.left == "0px" && style.width == "0px" && style.height == "0px") {
+        style.display = "none"
+        return style;
+    }
+    style.display = "block"
 
     return style;
 };
