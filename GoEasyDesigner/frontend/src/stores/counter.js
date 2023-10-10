@@ -11,15 +11,6 @@ import {appAction} from '@/action/app9.js';
 export const useCounterStore = defineStore('counter', {
     state: () => {
         return {
-            画布属性: {
-                width: ref(600),
-                height: ref(400),
-                left: ref(0),
-                top: ref(0),
-                可视化: ref(true),
-                名称: ref("窗口"),
-                标题: ref("窗口"),
-            },
             bodyLoaded: ref(false),
             hoveredDiv: ref(null),
             当前组件索引: ref("1"),
@@ -164,12 +155,7 @@ export const useCounterStore = defineStore('counter', {
             })
             console.log("项目文件列表", this.项目文件列表)
         },
-        取窗口样式() {
-            const result = {}
-            result['width'] = this.画布属性.width + "px"
-            result['height'] = this.画布属性.height + "px"
-            return result
-        },
+
         当前组件名称() {
             console.log("当前组件索引", this.当前组件索引)
             if (this.当前组件索引 == -1) {
