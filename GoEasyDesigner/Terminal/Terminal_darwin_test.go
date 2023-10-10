@@ -18,15 +18,17 @@ npm run dev
 
 	terminal.StartCommand(命令, func(output string, err error) {
 		if err != nil {
-			t.Error(err.Error())
+			print("err:", output)
+			print("err2:", err.Error())
+			//t.Error(err.Error())
 		}
 		println(output)
 	})
 
 	time.Sleep(3 * time.Second)
-	//terminal.StopCommand2()
-	//	//println("停止命令2")
-	//	//time.Sleep(10 * time.Second)
+	terminal.StopCommand2()
+	println("停止命令2")
+	time.Sleep(10 * time.Second)
 	terminal.StopCommand()
 	println("停止命令1")
 

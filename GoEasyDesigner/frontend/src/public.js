@@ -18,6 +18,23 @@ const getItemStyle = (item) => {
 
     return style;
 };
+const getItemStyleShape = (item) => {
+    const style = {
+        top: parseDimension(item.top),
+        left: parseDimension(item.left),
+        width: parseDimension(item.width),
+        height: parseDimension(item.height),
+        border: item.border,
+        background: item.background,
+        zIndex: item.层级,
+        position: 'absolute',
+    };
+    if(item.position !== undefined){
+        style.position = item.position;
+    }
+
+    return style;
+};
 
 
 /* 生成组件对应关系方便ide 提示 */
@@ -97,4 +114,4 @@ function InsertCode(jscode, insertionCode) {
     return result;
 }
 
-export {getItemStyle, 生成辅助代码, 取父目录,InsertCode};
+export {getItemStyle,getItemStyleShape, 生成辅助代码, 取父目录,InsertCode};

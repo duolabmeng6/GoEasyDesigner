@@ -7,30 +7,52 @@
       :style="getItemStyle(item)"
       style="position: relative;z-index: 9999;pointer-events: none;"
       @update-style="updateStyle"
-      @删除="id=>store.递归删除id(store.list,id)"/>
+      @删除="id=>store.递归删除id(store.list,id)"
+  />
   <div
-      :style="getItemStyle(item)"
-      style="position: absolute;"
+      :style="getItemStyleShape(item)"
+      class="border-transparent"
   >
     <div
         v-show="item.可视"
         :id="item.名称"
-        :class="{ 'disabled': item.禁用 }"
-        class="子组件"
+        :class="{ 'disabled': item.禁用 ,'custom-input': isHovered(item.data_id) }"
+        :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
+        class="子组件 border-transparent"
         data-放置="1"
         draggable="true"
+        @mouseout="clearHoveredDiv"
+        @mouseover.stop="setHoveredDiv(item.data_id)"
         @dblclick.stop="store.组件双击事件(item)"
         @dragstart.stop="拖拽开始($event,item)"
         @dragover.prevent="拖拽进入($event,item)"
         @dragleave.prevent="拖拽离开($event,item)"
         @drop.stop="拖拽放下($event,item)"
         @click.stop="鼠标按下($event,item)"
+
     >
       <template v-if="item.组件名称=='按钮'">
         <component is="按钮" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
+
+        <template v-if="item.子组件.length === 0">
+          <div style="width: 100%;
+                       background: rgba(10,19,37,.05);
+                      border: 1px dashed #ced0d3;
+                      color: rgb(184, 186, 191);
+                      height: 100%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      pointer-events: none;
+">
+            内容区域
+          </div>
+        </template>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+
+
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
         <component is="选择夹" :item="item"/>
@@ -50,9 +72,11 @@ import {defineProps} from 'vue';
 const {item} = defineProps(['item']);
 import {useCounterStore} from '@/stores/counter'
 import Shape from "@/components/Shape.vue";
-import {getItemStyle} from "@/public";
+import {getItemStyle, getItemStyleShape} from "@/public";
 
 const store = useCounterStore()
+
+import {v4 as uuidv4} from 'uuid';
 
 // 动态创建临时的canvas元素
 var tempCanvas = document.createElement("canvas");
@@ -246,23 +270,53 @@ function 鼠标按下(event, v) {
 
   if (v.父容器id != undefined) {
     store.当前组件索引 = v.父容器id
-    store.当前拖拽组件数据 = store.组件通过id查找结构(v.父容器id)
-    console.log("当前拖拽组件数据", store.当前拖拽组件数据)
-    console.log("v.父容器id", v.父容器id)
+    // store.当前拖拽组件数据 = store.组件通过id查找结构(v.父容器id)
+    // console.log("当前拖拽组件数据", store.当前拖拽组件数据)
+    // console.log("v.父容器id", v.父容器id)
 
 
   }
 
 }
 
+function setHoveredDiv(index) {
+  store.hoveredDiv = index;
+}
+
+function clearHoveredDiv() {
+  store.hoveredDiv = "";
+}
+
+function isHovered(index) {
+  return store.hoveredDiv === index;
+}
+
+function generateUniqueId() {
+  let id = uuidv4();
+  // 截取前面6位
+  return id.substring(0, 6);
+}
+
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 .子组件 {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.border-transparent {
+  border: 1px solid transparent;
+}
+
+.custom-input {
+  border: 1px dashed #409EFF;
 }
 
 .el-tabs {

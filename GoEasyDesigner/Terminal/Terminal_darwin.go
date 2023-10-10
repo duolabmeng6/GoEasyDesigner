@@ -92,6 +92,22 @@ func (t *Terminal) StopCommand() {
 	}
 }
 
+func (t *Terminal) StopCommand2() {
+	t.lock.Lock()
+	defer t.lock.Unlock()
+	//发送 ctrl + c 的信号 让程序平稳的退出
+
+	// 向进程发送Ctrl+C信号
+	process := t.cmd.Process
+	if process != nil {
+		//err := process.Signal(syscall.SIGHUP)
+		err := syscall.Kill(-t.cmd.Process.Pid, syscall.SIGTERM)
+
+		if err != nil {
+			// 处理错误
+		}
+	}
+}
 func (t *Terminal) IsCommandDone() bool {
 	t.lock.Lock()
 	defer t.lock.Unlock()

@@ -20,6 +20,7 @@ export const useCounterStore = defineStore('counter', {
                 名称: ref("窗口"),
                 标题: ref("窗口"),
             },
+            hoveredDiv: ref(null),
             当前组件索引: ref("1"),
             组件列表: ref([]),
             项目信息: ref({
@@ -257,8 +258,38 @@ export const useCounterStore = defineStore('counter', {
                 ]
             }
             this.递归添加(this.list, 插入数据, id)
-
         },
+
+        新增子组件2(id) {
+            let 插入数据 = {
+                标题: "内容区域" + this.获取索引(id + "内容区域"),
+                id: this.获取随机id(),
+                子组件: [
+                    {
+                        id: this.获取随机id(),
+                        组件名称: "布局容器",
+                        名称: "内容区域",
+                        top: "0",
+                        left: "0",
+                        width: "100%",
+                        height: "100%",
+                        // background: "#fff",
+                        position: "relative",
+                        禁止放置: false,
+                        禁止拖动: true,
+                        可视: true,
+                        禁止: false,
+                        父容器id: id,
+                        层级: 0,
+                        占比: 8,
+                        子组件: []
+                    },
+
+                ]
+            }
+            this.递归添加(this.list, 插入数据, id)
+        },
+
         递归添加(源数据, 插入数据, id) {
             // console.log("递归添加", 源数据, 插入数据, id)
             源数据.forEach((item, index) => {
