@@ -193,6 +193,10 @@ export const useCounterStore = defineStore('counter', {
 
 
         递归删除id(源数据, id) {
+            if (id == 1) {
+                console.log("不能把自己窗口删除了")
+                return
+            }
             // console.log("递归删除", 源数据, id)
             源数据.forEach((item, index) => {
                 if (item.id == id) {
@@ -317,7 +321,7 @@ export const useCounterStore = defineStore('counter', {
             function transform(item) {
                 let 名称;
                 名称 = item.名称
-                if(名称 == undefined || 名称 == null || 名称 == ""){
+                if (名称 == undefined || 名称 == null || 名称 == "") {
                     名称 = item.标题
                 }
                 const newItem = {
@@ -331,7 +335,7 @@ export const useCounterStore = defineStore('counter', {
                     item.子组件.forEach(child => {
                         let 名称;
                         名称 = child.名称
-                        if(名称 == undefined || 名称 == null || 名称 == ""){
+                        if (名称 == undefined || 名称 == null || 名称 == "") {
                             名称 = child.标题
                         }
                         if (名称) {
@@ -357,7 +361,7 @@ export const useCounterStore = defineStore('counter', {
             const testlist = this.transformData(this.list);
             console.log("取组件列表", JSON.stringify(testlist, null, 2))
             this.组件列表tree = testlist
-            console.log("组件列表tree现行选中项",this.组件列表tree现行选中项)
+            console.log("组件列表tree现行选中项", this.组件列表tree现行选中项)
             return this.组件列表
         },
         __取组件列表_递归(源数据) {

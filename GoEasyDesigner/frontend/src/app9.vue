@@ -9,11 +9,11 @@
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
 
               <el-tree-select
-                  style="width: 100%;"
-
-                  default-expand-all
                   v-model="store.当前组件索引"
+
                   :data="store.组件列表tree"
+                  default-expand-all
+                  style="width: 100%;"
                   @node-click="data=>console.log('data',store.当前拖拽组件数据 = store.组件通过id查找结构(data.id))"
               />
 
@@ -38,8 +38,8 @@
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane label="界面设计">
-            <div id="designer" style="position: relative;    margin: 8px;" >
-              <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item" />
+            <div id="designer" style="position: relative;    margin: 8px;">
+              <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
             </div>
           </el-tab-pane>
           <el-tab-pane label="编辑代码">
@@ -122,7 +122,7 @@
 </template>
 
 <script setup>
-import {ref, inject, onMounted,nextTick} from 'vue';
+import {ref, inject, onMounted, nextTick} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
 import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
@@ -143,6 +143,7 @@ import {
 import {取父目录, 生成辅助代码} from "@/public";
 import Shape from "@/components/Shape.vue";
 import {BrowserOpenURL, EventsOn} from "../wailsjs/runtime";
+
 const store = useCounterStore()
 store.初始化()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
@@ -168,11 +169,10 @@ onMounted(() => {
   console.log("store.当前组件索引", store.当前组件索引)
   document.addEventListener("keydown", handleKeyDown);
 
-  setTimeout(()=>{
+  setTimeout(() => {
     store.bodyLoaded = true
-  },200)
+  }, 200)
 })
-
 
 
 function 拖拽开始(event, 组件名称) {
@@ -273,10 +273,23 @@ function 拖拽开始(event, 组件名称) {
 
   store.当前拖拽组件数据 = 新属性
 }
+
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
   // 键盘按下(event, store.当前组件索引)
+  if (event.key === "Delete") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了删除 Delete", store.当前拖拽组件数据);
+
+    store.递归删除id(store.list,store.当前组件索引)
+
+    store.当前组件索引 = "1"
+    store.当前拖拽组件数据 = store.组件通过id查找结构("1")
+    store.取组件列表()
+  }
+
   if ((event.metaKey || event.ctrlKey) && event.key === "s") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法
