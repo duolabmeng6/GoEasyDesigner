@@ -7,17 +7,17 @@
         <el-tab-pane label="属性" style="height: 100%;">
           <div class="container2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
-              <el-select
-                  v-model="store.当前组件索引" :dd="store.当前拖拽组件数据.id" class="m-2" placeholder="组件列表"
+
+              <el-tree-select
                   style="width: 100%;"
-                  @change="id=>console.log('id',store.当前拖拽组件数据 = store.组件通过id查找结构(id))">
-                <el-option
-                    v-for="(item, index) in store.组件列表"
-                    :key="index"
-                    :label="item.label"
-                    :value="item.id"
-                />
-              </el-select>
+
+                  default-expand-all
+                  v-model="store.当前组件索引"
+                  :data="store.组件列表tree"
+                  @node-click="data=>console.log('data',store.当前拖拽组件数据 = store.组件通过id查找结构(data.id))"
+              />
+
+
             </div>
             <component :is="store.当前组件名称2()"
                        v-if="store.当前拖拽组件数据 != undefined"
@@ -235,7 +235,7 @@ function 拖拽开始(event, 组件名称) {
     新属性.内容 = 新属性.标题
   }
 
-  if (组件名称 == "布局") {
+  if (组件名称 == "弹性布局") {
     let id = 新属性.id
     新属性.子组件[0].id = store.获取随机id()
     新属性.子组件[0].标题 = "内容区域" + store.获取索引(id + "内容区域")

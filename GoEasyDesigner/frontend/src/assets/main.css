@@ -144,3 +144,7 @@
 * {
     box-sizing: border-box;
 }
+
+.el-tree-node__children{
+    width: 500px !important;
+}

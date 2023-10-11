@@ -43,6 +43,9 @@ export const useCounterStore = defineStore('counter', {
             编译按钮文本: ref("编译"),
             调试信息: ref(""),
             选择夹_底部现行选中项: ref("0"),
+
+            组件列表tree现行选中项: ref(""),
+            组件列表tree: ref([]),
         }
     },
 
@@ -78,7 +81,7 @@ export const useCounterStore = defineStore('counter', {
             }
             //读入 窗口事件 文件内容
             appAction.保存设计文件()
-            setTimeout(function (){
+            setTimeout(function () {
                 E读入文件(dthis.项目信息.窗口事件文件路径).then((res) => {
                     dthis.代码编辑器内容 = InsertCode(res, ncode)
                     dthis.选择夹_中间现行选中项 = "1"
@@ -94,8 +97,7 @@ export const useCounterStore = defineStore('counter', {
                         }
                     })
                 })
-            },100)
-
+            }, 100)
 
 
             // try {
@@ -311,10 +313,51 @@ export const useCounterStore = defineStore('counter', {
             }
             return null;
         },
+        transformData(jsonData) {
+            function transform(item) {
+                let 名称;
+                名称 = item.名称
+                if(名称 == undefined || 名称 == null || 名称 == ""){
+                    名称 = item.标题
+                }
+                const newItem = {
+                    id: item.id,
+                    value: item.id,
+                    label: 名称,
+                    children: []
+                };
+
+                if (item.子组件) {
+                    item.子组件.forEach(child => {
+                        let 名称;
+                        名称 = child.名称
+                        if(名称 == undefined || 名称 == null || 名称 == ""){
+                            名称 = child.标题
+                        }
+                        if (名称) {
+                            const childItem = transform(child);
+                            newItem.children.push(childItem);
+                        }
+                    });
+                }
+
+                return newItem;
+            }
+
+            const result = jsonData.map(item => transform(item));
+            return result;
+        },
         取组件列表() {
-            this.组件列表 = []
+            this.组件列表 = [];
+            this.组件列表tree = [];
+
             this.__取组件列表_递归(this.list);
             // console.log("取组件列表", this.组件列表)
+
+            const testlist = this.transformData(this.list);
+            console.log("取组件列表", JSON.stringify(testlist, null, 2))
+            this.组件列表tree = testlist
+            console.log("组件列表tree现行选中项",this.组件列表tree现行选中项)
             return this.组件列表
         },
         __取组件列表_递归(源数据) {
@@ -326,9 +369,7 @@ export const useCounterStore = defineStore('counter', {
                 if (item.名称 !== undefined && item.名称 !== null && item.名称 !== "") {
                     this.组件列表.push(组件数据)
                 }
-
                 // console.log("组件列表", this.组件列表)
-
                 if (item.子组件) {
                     this.__取组件列表_递归(item.子组件);
                 }
