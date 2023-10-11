@@ -1,9 +1,10 @@
 <template>
   <div class="属性表格">
-    <el-form
-        label-position="left"
-        style="max-width: 460px"
-    >
+  <el-form
+      label-position="left"
+      label-width="100px"
+      style="max-width: 460px"
+  >
       <component is="公用属性" :item="item"/>
       <el-form-item label="现行选中项">
         <el-input v-model="props.item.现行选中项"/>

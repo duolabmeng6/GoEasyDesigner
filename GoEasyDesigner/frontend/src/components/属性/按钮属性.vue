@@ -2,6 +2,7 @@
   <div class="属性表格">
     <el-form
         label-position="left"
+        label-width="100px"
         style="max-width: 460px"
     >
       <component is="公用属性" :item="item"/>
