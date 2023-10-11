@@ -52,7 +52,7 @@
                       align-items: center;
                       pointer-events: none;
 ">
-            内容区域
+            {{ item.名称 ? item.名称 : '内容区域' }}
           </div>
         </template>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
