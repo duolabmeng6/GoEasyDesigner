@@ -234,8 +234,8 @@ export const useCounterStore = defineStore('counter', {
         新增子组件(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                名称: "内容区域" + this.获取索引(id + "内容区域"),
-                标题: "选项卡" + this.获取索引(id + "选项卡"),
+                名称: "内容区域" + this.获取索引("内容区域"),
+                标题: "选项卡" + this.获取索引("选项卡"),
                 组件名称: "布局容器",
                 top: "0",
                 left: "0",
@@ -255,7 +255,7 @@ export const useCounterStore = defineStore('counter', {
             let 插入数据 = {
                 id: this.获取随机id(),
                 组件名称: "布局容器",
-                名称: "内容区域" + this.获取索引(id + "内容区域"),
+                名称: "内容区域" + this.获取索引("内容区域"),
                 top: "0",
                 left: "0",
                 width: "100%",

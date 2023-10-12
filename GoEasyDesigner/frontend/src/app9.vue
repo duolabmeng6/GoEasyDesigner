@@ -82,9 +82,12 @@
                type="border-card">
         <el-tab-pane label="帮助信息">
           <p v-if="!store.客户端模式">
-            在浏览器中仅可保存设计界面,项目需要手动创建,<el-link href="https://github.com/duolabmeng6/GoEasyDesigner">前往查看项目创建教程 Github GoEasyDesigner</el-link>
+            在浏览器中仅可保存设计界面,项目需要手动创建,
+            <el-link href="https://github.com/duolabmeng6/GoEasyDesigner">前往查看项目创建教程 Github GoEasyDesigner
+            </el-link>
             <br>
-            建议下载客户端体验更佳 <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases </el-link>
+            建议下载客户端体验更佳
+            <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases</el-link>
           </p>
 
           <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
@@ -229,8 +232,8 @@ function 拖拽开始(event, 组件名称) {
     let id = 新属性.id
     for (var i = 0; i < 2; i++) {
       新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = "内容区域" + store.获取索引(id + "内容区域")
-      新属性.子组件[i].标题 = "选项卡" + store.获取索引(id + "选项卡")
+      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
+      新属性.子组件[i].标题 = "选项卡" + store.获取索引("选项卡")
       新属性.子组件[i].父容器id = id
     }
   }
@@ -244,7 +247,7 @@ function 拖拽开始(event, 组件名称) {
     let id = 新属性.id
     for (var i = 0; i < 3; i++) {
       新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = "内容区域" + store.获取索引(id + "内容区域")
+      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
       新属性.子组件[i].父容器id = id
     }
   }
@@ -253,19 +256,19 @@ function 拖拽开始(event, 组件名称) {
     let id = 新属性.id
     var i = 0;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域header" + store.获取索引(id + "内容区域header")
+    新属性.子组件[i].名称 = "内容区域header" + store.获取索引("内容区域header")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域main" + store.获取索引(id + "内容区域main")
+    新属性.子组件[i].名称 = "内容区域main" + store.获取索引("内容区域main")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域footer" + store.获取索引(id + "内容区域footer")
+    新属性.子组件[i].名称 = "内容区域footer" + store.获取索引("内容区域footer")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域aside" + store.获取索引(id + "内容区域aside")
+    新属性.子组件[i].名称 = "内容区域aside" + store.获取索引("内容区域aside")
     新属性.子组件[i].父容器id = id
     i++;
   }
