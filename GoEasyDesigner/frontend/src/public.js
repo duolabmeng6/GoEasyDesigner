@@ -13,7 +13,8 @@ const getItemStyle = (item) => {
         height: parseDimension(item.height),
         border: item.border,
         background: item.background,
-        zIndex: item.层级
+        zIndex: item.层级,
+        color: item.文字颜色,
     };
 
     return style;

@@ -55,6 +55,7 @@
     <el-color-picker v-model="props.item.background" show-alpha
                      @active-change="val => props.item.background = val"/>
   </el-form-item>
+
   <el-form-item label="边框">
     <el-input v-model="props.item.border"/>
   </el-form-item>
