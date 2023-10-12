@@ -251,21 +251,17 @@ function 拖拽开始(event, 组件名称) {
   if (组件名称 == "常用布局") {
     let id = 新属性.id
     新属性.子组件[0].id = store.获取随机id()
-    新属性.子组件[0].标题 = "内容区域header" + store.获取索引(id + "内容区域header")
-    新属性.子组件[0].子组件[0].id = store.获取随机id()
-    新属性.子组件[0].子组件[0].父容器id = id
+    新属性.子组件[0].名称 = "内容区域header" + store.获取索引(id + "内容区域header")
+    新属性.子组件[0].父容器id = id
     新属性.子组件[1].id = store.获取随机id()
-    新属性.子组件[1].标题 = "内容区域main" + store.获取索引(id + "内容区域main")
-    新属性.子组件[1].子组件[0].id = store.获取随机id()
-    新属性.子组件[1].子组件[0].父容器id = id
+    新属性.子组件[1].名称 = "内容区域main" + store.获取索引(id + "内容区域main")
+    新属性.子组件[1].父容器id = id
     新属性.子组件[2].id = store.获取随机id()
-    新属性.子组件[2].标题 = "内容区域footer" + store.获取索引(id + "内容区域footer")
-    新属性.子组件[2].子组件[0].id = store.获取随机id()
-    新属性.子组件[2].子组件[0].父容器id = id
+    新属性.子组件[2].名称 = "内容区域footer" + store.获取索引(id + "内容区域footer")
+    新属性.子组件[2].父容器id = id
     新属性.子组件[3].id = store.获取随机id()
-    新属性.子组件[3].标题 = "内容区域aside" + store.获取索引(id + "内容区域aside")
-    新属性.子组件[3].子组件[0].id = store.获取随机id()
-    新属性.子组件[3].子组件[0].父容器id = id
+    新属性.子组件[3].名称 = "内容区域aside" + store.获取索引(id + "内容区域aside")
+    新属性.子组件[3].父容器id = id
   }
 
   store.当前拖拽组件数据 = 新属性
@@ -280,11 +276,9 @@ function handleKeyDown(event) {
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法
     console.log("按下了删除 Delete", store.当前拖拽组件数据);
 
-    store.递归删除id(store.list,store.当前组件索引)
+    store.递归删除id(store.list, store.当前组件索引)
 
-    store.当前组件索引 = "1"
-    store.当前拖拽组件数据 = store.组件通过id查找结构("1")
-    store.取组件列表()
+
   }
 
   if ((event.metaKey || event.ctrlKey) && event.key === "s") {
@@ -313,9 +307,10 @@ function handleKeyDown(event) {
     }
   }
 }
-function 组件树选中(data){
+
+function 组件树选中(data) {
   store.当前拖拽组件数据 = store.组件通过id查找结构(data.id)
-  console.log('组件树选中',store.当前拖拽组件数据)
+  console.log('组件树选中', store.当前拖拽组件数据)
   store.当前组件索引 = store.当前拖拽组件数据.id
 }
 

@@ -209,6 +209,10 @@ export const useCounterStore = defineStore('counter', {
                     this.递归删除id(item.子组件, id)
                 }
             });
+
+            this.当前组件索引 = "1"
+            this.当前拖拽组件数据 = this.组件通过id查找结构("1")
+            this.取组件列表()
         },
 
         递归查找名称(源数据, 名称) {
