@@ -25,14 +25,14 @@
     <el-row v-for="(item, index) in props.item.子组件" style="margin-bottom: 10px">
       <el-col :span="8">
         <el-input
-            v-model="item.标题"
+            v-model="item.名称"
             placeholder=""
         />
 
       </el-col>
       <el-col :span="8">
         <el-input
-            v-model.number="item.子组件[0].占比"
+            v-model.number="item.占比"
             placeholder=""
         />
       </el-col>
