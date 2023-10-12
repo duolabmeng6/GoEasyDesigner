@@ -97,7 +97,7 @@ wails dev
 
 ### 3.安装 wails
 
-[wails框架文档](https://wails.io/zh-Hans/docs/gettingstarted/installation/) 版本18以上
+[wails框架文档](https://wails.io/zh-Hans/docs/gettingstarted/installation/) 
 
 国内镜像执行 `go env -w GOPROXY=https://goproxy.cn,direct`
 
