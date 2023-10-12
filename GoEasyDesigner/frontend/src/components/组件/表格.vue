@@ -6,7 +6,9 @@
         :stripe="item.斑马纹表格"
         style="width: 99%;height: 99%"
         :table-layout="item.表格布局"
-        @selection-change="handleSelectionChange">
+        @selection-change="handleSelectionChange"
+        row-key="id"
+    >
       <el-table-column v-if="item.可选" type="selection" width="55"/>
       <el-table-column
           v-for="(item, index) in item.表头"
