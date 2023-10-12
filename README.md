@@ -24,7 +24,7 @@
 - [x] goefun库支持：[goefun库](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles)，允许在Golang中使用中文函数进行开发。
 
 - [x] 布局容器改进：包括常用布局，弹性布局
-- 
+
 - [x] 已完成组件库：按钮 编辑框 标签 开关 单选框 多选框 常用布局 弹性布局 树形框 菜单 表格 进度条 选择夹
 
 待完成任务：
@@ -71,8 +71,7 @@ cd wails-demo
 wails dev
 ```
 
-想要更好的无缝使用体验下载客户端程序.
-重新呈现项目进度，突出已完成和待完成的任务：
+想要更好的无缝使用体验需要下载客户端程序.
 
 # 快速上手
 
