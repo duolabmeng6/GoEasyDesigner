@@ -13,17 +13,22 @@
         @删除="id=>store.递归删除id(store.list,id)"
 
     />
+    <div
+        class="highlight_border"
+        :class="{ 'custom-input': isHovered(item.data_id) }"
+        :style="{ ...shapeRect, ...getItemStyle2(item) }"
+        style="position: absolute;pointer-events: none;"
+    ></div>
   </teleport>
   <div
       :style="getItemStyleShape(item)"
-      class="border-transparent"
   >
     <div
         v-show="item.可视"
         :id="item.名称"
-        :class="{ 'disabled': item.禁用 ,'custom-input': isHovered(item.data_id) }"
+        :class="{ 'disabled': item.禁用 }"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
-        class="子组件 border-transparent"
+        class="子组件"
         data-放置="1"
         draggable="true"
         @mouseout="clearHoveredDiv"
@@ -340,13 +345,10 @@ function generateUniqueId() {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+//overflow: hidden;
 
 }
 
-.border-transparent {
-  border: 1px solid transparent;
-}
 
 .custom-input {
   border: 1px dashed #409EFF;
