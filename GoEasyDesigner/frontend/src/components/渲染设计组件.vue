@@ -74,7 +74,6 @@
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
-
       </template>
     </div>
   </div>

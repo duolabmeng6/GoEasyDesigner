@@ -18,6 +18,9 @@ app.component('渲染组件', 渲染组件)
 
 app.use(createPinia())
 app.use(ElementPlus)
+app.config.warnHandler = function (msg, vm, trace) {
+    // 自定义处理警告的逻辑，或者什么都不做以屏蔽
+};
 app.mount('#app')
 
 

@@ -1,7 +1,6 @@
 <template>
   <div
-      :style="getItemStyle(item)"
-      style="position: absolute"
+      :style="getItemStyleShape(item)"
   >
     <div
         v-show="item.可视"
@@ -10,9 +9,25 @@
         :class="{ 'disabled': item.禁用 }"
         class="子组件"
     >
-
-      <component :is="item.组件名称" :item="item"/>
-      <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+      <template v-if="item.组件名称=='按钮'">
+        <component is="按钮" :item="item"/>
+      </template>
+      <template v-else-if="item.组件名称=='布局容器'">
+        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+      </template>
+      <template v-else-if="item.组件名称=='选择夹'">
+        <component is="选择夹" :item="item"/>
+      </template>
+      <template v-else-if="item.组件名称=='常用布局'">
+        <component is="常用布局" :item="item"/>
+      </template>
+      <template v-else-if="item.组件名称=='弹性布局'">
+        <component is="弹性布局" :item="item"/>
+      </template>
+      <template v-else>
+        <component :is="item.组件名称" :item="item"/>
+        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+      </template>
     </div>
   </div>
 </template>
@@ -22,7 +37,7 @@ import {defineProps} from 'vue';
 
 const {item} = defineProps(['item']);
 import {引入窗口数据} from '@/窗口/窗口数据'
-import {getItemStyle} from "@/public";
+import {getItemStyleShape} from "@/public";
 
 const store = 引入窗口数据()
 const vDemo = {

@@ -5,6 +5,7 @@
       v-bind:disabled="item.禁用"
       :type="item.按钮类型"
       :size="item.尺寸=='custom' ?'':item.尺寸"
+
   >{{ item.标题 }}</el-button>
 </template>
 
