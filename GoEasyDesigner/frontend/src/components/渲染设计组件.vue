@@ -2,6 +2,7 @@
   <teleport to="#designer">
     <shape
         v-if="store.bodyLoaded && store.当前组件索引 == item.id"
+        :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
         :index="item.id"
         :item_data="item"
         :nowIndex="store.当前组件索引"
@@ -10,7 +11,6 @@
         style="position: absolute;pointer-events: none;"
         @update-style="updateStyle"
         @删除="id=>store.递归删除id(store.list,id)"
-        :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
 
     />
   </teleport>
@@ -40,7 +40,6 @@
         <component is="按钮" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='布局容器'">
-
         <template v-if="item.子组件.length === 0">
           <div style="width: 100%;
                        background: rgba(10,19,37,.05);
@@ -57,22 +56,27 @@
         </template>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
 
-
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
         <component is="选择夹" :item="item"/>
       </template>
+      <template v-else-if="item.组件名称=='常用布局'">
+        <component is="常用布局" :item="item"/>
+      </template>
+      <template v-else-if="item.组件名称=='弹性布局'">
+        <component is="弹性布局" :item="item"/>
+      </template>
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
-
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+
       </template>
     </div>
   </div>
 </template>
 
 <script setup>
-import {defineProps, nextTick, watch, onUnmounted, onMounted,onUpdated,onBeforeUpdate} from 'vue';
+import {defineProps, nextTick, watch, onUnmounted, onMounted, onUpdated, onBeforeUpdate} from 'vue';
 
 const {item} = defineProps(['item']);
 import {useCounterStore} from '@/stores/counter'

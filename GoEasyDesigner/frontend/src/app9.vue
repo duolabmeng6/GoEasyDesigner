@@ -35,7 +35,8 @@
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane label="界面设计">
-            <div id="designer" style="position: relative;    margin: 8px;">
+            <div id="designer" style="position: relative;    margin: 8px;"
+            >
               <component is="渲染组件" v-for="(item, index) in store.list" :key="index" :item="item"/>
             </div>
           </el-tab-pane>
@@ -241,18 +242,23 @@ function 拖拽开始(event, 组件名称) {
 
   if (组件名称 == "常用布局") {
     let id = 新属性.id
-    新属性.子组件[0].id = store.获取随机id()
-    新属性.子组件[0].名称 = "内容区域header" + store.获取索引(id + "内容区域header")
-    新属性.子组件[0].父容器id = id
-    新属性.子组件[1].id = store.获取随机id()
-    新属性.子组件[1].名称 = "内容区域main" + store.获取索引(id + "内容区域main")
-    新属性.子组件[1].父容器id = id
-    新属性.子组件[2].id = store.获取随机id()
-    新属性.子组件[2].名称 = "内容区域footer" + store.获取索引(id + "内容区域footer")
-    新属性.子组件[2].父容器id = id
-    新属性.子组件[3].id = store.获取随机id()
-    新属性.子组件[3].名称 = "内容区域aside" + store.获取索引(id + "内容区域aside")
-    新属性.子组件[3].父容器id = id
+    var i = 0;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域header" + store.获取索引(id + "内容区域header")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域main" + store.获取索引(id + "内容区域main")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域footer" + store.获取索引(id + "内容区域footer")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域aside" + store.获取索引(id + "内容区域aside")
+    新属性.子组件[i].父容器id = id
+    i++;
   }
 
   store.当前拖拽组件数据 = 新属性

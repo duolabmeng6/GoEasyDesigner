@@ -27,7 +27,6 @@
       </el-footer>
     </el-container>
   </template>
-
   <template v-if="item.布局方式 == 'aside-main'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
@@ -41,8 +40,6 @@
       </el-main>
     </el-container>
   </template>
-
-
   <template v-if="item.布局方式 == 'header-aside-main'">
     <el-container :style="getItemStyle(item)">
       <el-header>
@@ -61,8 +58,6 @@
       </el-container>
     </el-container>
   </template>
-
-
   <template v-if="item.布局方式 == 'header-aside-main-footer'">
     <el-container :style="getItemStyle(item)">
       <el-header>
@@ -89,8 +84,6 @@
       </el-container>
     </el-container>
   </template>
-
-
   <template v-if="item.布局方式 == 'aside-header-main'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
@@ -111,7 +104,6 @@
       </el-container>
     </el-container>
   </template>
-
   <template v-if="item.布局方式 == 'aside-header-main-footer'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
