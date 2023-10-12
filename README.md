@@ -23,12 +23,14 @@
 
 - [x] goefun库支持：[goefun库](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles)，允许在Golang中使用中文函数进行开发。
 
+- [x] 布局容器改进：包括常用布局，弹性布局
+- 
+- [x] 已完成组件库：按钮 编辑框 标签 开关 单选框 多选框 常用布局 弹性布局 树形框 菜单 表格 进度条 选择夹
+
 待完成任务：
 - [ ] jsefun库支持：计划中，等待开发中。
 
 - [ ] 组件库完善：正在进行中， [element-plus](https://element-plus.org/zh-CN/component/button.html) 组件的进一步完善。
-
-- [ ] 布局容器改进：包括网格布局、流体布局等，正在进行中。
 
 - [ ] 集成开发环境：计划中，将实现无需繁琐配置，直接开发的环境。
 
