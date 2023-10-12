@@ -29,5 +29,5 @@ coverage
 .vscode
 *.lockb
 GoEasyDesigner/frontend/package.json.md5
-package-lock.json
-package.json.md5
+package-lock.json*
+package.json.md5*
