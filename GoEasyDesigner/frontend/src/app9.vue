@@ -7,16 +7,13 @@
         <el-tab-pane label="属性" style="height: 100%;">
           <div class="container2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
-
               <el-tree-select
                   v-model="store.当前组件索引"
-
                   :data="store.组件列表tree"
                   default-expand-all
                   style="width: 100%;"
-                  @node-click="data=>console.log('data',store.当前拖拽组件数据 = store.组件通过id查找结构(data.id))"
+                  @node-click="data=>组件树选中(data)"
               />
-
 
             </div>
             <component :is="store.当前组件名称2()"
@@ -316,7 +313,11 @@ function handleKeyDown(event) {
     }
   }
 }
-
+function 组件树选中(data){
+  store.当前拖拽组件数据 = store.组件通过id查找结构(data.id)
+  console.log('组件树选中',store.当前拖拽组件数据)
+  store.当前组件索引 = store.当前拖拽组件数据.id
+}
 
 </script>
 

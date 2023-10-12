@@ -7,7 +7,7 @@
         :nowIndex="store.当前组件索引"
         :style="{ ...shapeRect, ...getItemStyle2(item) }"
         class="shape"
-        style="position: absolute;z-index: 9999;pointer-events: none;"
+        style="position: absolute;pointer-events: none;"
         @update-style="updateStyle"
         @删除="id=>store.递归删除id(store.list,id)"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"

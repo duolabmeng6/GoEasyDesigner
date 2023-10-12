@@ -209,7 +209,7 @@ export default {
   background-color: #057aff;
   position: absolute;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 666;
 
 }
 
@@ -270,7 +270,7 @@ export default {
   width: 100px;
   height: 24px;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 666;
   margin-top: -40px;
   margin-left: 50%;
   position: absolute;
