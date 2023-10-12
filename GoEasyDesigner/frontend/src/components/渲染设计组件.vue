@@ -14,9 +14,9 @@
 
     />
     <div
-        class="highlight_border"
         :class="{ 'custom-input': isHovered(item.data_id) }"
         :style="{ ...shapeRect, ...getItemStyle2(item) }"
+        class="highlight_border"
         style="position: absolute;pointer-events: none;"
     ></div>
   </teleport>
@@ -345,7 +345,7 @@ function generateUniqueId() {
   position: relative;
   width: 100%;
   height: 100%;
-//overflow: hidden;
+  overflow: hidden;
 
 }
 
