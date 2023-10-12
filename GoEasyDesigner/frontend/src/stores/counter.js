@@ -233,26 +233,20 @@ export const useCounterStore = defineStore('counter', {
 
         新增子组件(id) {
             let 插入数据 = {
-                标题: "选项卡" + this.获取索引(id + "选项卡"),
                 id: this.获取随机id(),
-                子组件: [
-                    {
-                        id: this.获取随机id(),
-                        名称: '选择夹',
-                        组件名称: "布局容器",
-                        top: "0",
-                        left: "0",
-                        width: "100%",
-                        height: "100%",
-                        禁止放置: false,
-                        禁止拖动: true,
-                        可视: true,
-                        禁止: false,
-                        父容器id: id,
-                        子组件: []
-                    },
-
-                ]
+                名称: "内容区域" + this.获取索引(id + "内容区域"),
+                标题: "选项卡" + this.获取索引(id + "选项卡"),
+                组件名称: "布局容器",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                禁止放置: false,
+                禁止拖动: true,
+                可视: true,
+                禁止: false,
+                父容器id: id,
+                子组件: []
             }
             this.递归添加(this.list, 插入数据, id)
         },
