@@ -81,9 +81,16 @@
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
                type="border-card">
         <el-tab-pane label="帮助信息">
+          <p v-if="!store.客户端模式">
+            在浏览器中仅可保存设计界面,项目需要手动创建,<el-link href="https://github.com/duolabmeng6/GoEasyDesigner">前往查看项目创建教程 Github GoEasyDesigner</el-link>
+            <br>
+            建议下载客户端体验更佳 <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases </el-link>
+          </p>
+
           <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
                v-html="store.帮助信息"
           ></div>
+
         </el-tab-pane>
         <el-tab-pane label="调试信息">
           <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
@@ -111,7 +118,9 @@
         </el-button>
         <el-button :icon="Help" @click="appAction.帮助()">帮助</el-button>
         <el-button :icon="Help" @click="appAction.运行环境检测()">运行环境检测</el-button>
-        <el-button :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
+        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
+        <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">下载客户端
+        </el-button>
       </el-button-group>
     </div>
   </div>

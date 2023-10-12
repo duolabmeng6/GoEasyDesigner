@@ -73,7 +73,7 @@ appAction.打开 = function () {
     })
 }
 
-appAction._打开文件加载界面 = function(filepath) {
+appAction._打开文件加载界面 = function (filepath) {
     store.项目信息.设计文件路径 = filepath
     store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
     store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
@@ -122,7 +122,7 @@ function 键盘按下(event, index) {
 
 appAction.保存设计文件 = function () {
     let njson = JSON.stringify(store.list, null, 2)
-    console.log("???",store)
+    console.log("???", store)
     let 辅助代码 = 生成辅助代码(store.list[0].子组件)
 
 
@@ -256,6 +256,11 @@ appAction.帮助 = function () {
     }
 }
 
+appAction.下载客户端 = function () {
+    window.open("https://github.com/duolabmeng6/GoEasyDesigner/releases")
+}
+
+
 appAction.运行环境检测 = function () {
     if (store.客户端模式 == false) {
         //弹出提示
@@ -276,10 +281,6 @@ appAction.运行环境检测 = function () {
 }
 
 appAction.检查更新 = function () {
-    if (store.客户端模式 == false) {
-        window.open("https://github.com/duolabmeng6/GoEasyDesigner")
-        return
-    }
     E检查更新()
 }
 
