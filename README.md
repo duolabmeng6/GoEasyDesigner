@@ -82,22 +82,11 @@ wails dev
 [视频教程3分钟学会自定义组件封装](https://www.bilibili.com/video/BV1ar4y1f7Rq)
 
 
-### 1.安装 go 语言
+### 1.安装 go 语言开发环境
 
 [go语言下载页面](https://golang.org/dl/) 版本任意
 
-
-### 2.安装 node 环境
-
-[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
-
-国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
-
-安装vite `npm create vite@latest`
-
-### 3.安装 wails
-
-[wails框架文档](https://wails.io/zh-Hans/docs/gettingstarted/installation/) 
+安装 wails [wails框架文档](https://wails.io/zh-Hans/docs/gettingstarted/installation/)
 
 国内镜像执行 `go env -w GOPROXY=https://goproxy.cn,direct`
 
@@ -107,7 +96,16 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 
-### 4.下载本项目
+### 2.安装 node js语言开发环境
+
+[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
+
+国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
+
+安装vite `npm create vite@latest`
+
+
+### 3.下载本项目
 
 `GoEasyDesigner/wails-demo` 该目录为设计好的界面最终运行的环境你的代码也将在这里编写
 
@@ -125,7 +123,7 @@ cd wails-demo/frontend
 npm run dev
 ```
 
-### 5.下载 GoEasyDesigner
+### 4.下载 GoEasyDesigner
 
 下载最新版本: https://github.com/duolabmeng6/GoEasyDesigner/releases
 
@@ -137,7 +135,7 @@ npm run dev
 wails-demo/frontend/src/窗口/设计文件.json
 ```
 
-### 6. webstorm IDE代码跳转插件
+### 5. webstorm IDE代码跳转插件
 
 想体验双击组件在ide中自动跳转到对应函数 请在webstorm中安装 QtEasyDesigner 插件,在本项目的文件中，
 
