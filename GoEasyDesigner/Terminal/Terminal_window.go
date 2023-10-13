@@ -7,8 +7,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"golang.org/x/text/encoding/simplifiedchinese"
-	"golang.org/x/text/transform"
+	"github.com/duolabmeng6/goefun/ecore"
 	"os/exec"
 	"sync"
 )
@@ -35,13 +34,8 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	}
 
 	cmd := exec.Command("cmd", "/C", command)
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		fn("", err)
-		return false
-	}
 
-	stderr, err := cmd.StderrPipe()
+	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		fn("", err)
 		return false
@@ -54,11 +48,11 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	t.cmd = cmd
 	t.stdout = bufio.NewScanner(stdout)
 	t.isRunning = true
-	gbkDecoder := simplifiedchinese.GBK.NewDecoder()
 
 	go func() {
 		for t.stdout.Scan() {
 			output := t.stdout.Text()
+			output = ecore.E文本编码转换(output, "", "utf8")
 			fn(output, nil)
 		}
 
@@ -73,23 +67,16 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 	}()
 
 	go func() {
-		// 读取命令的错误输出并传递给回调函数
-		errScanner := bufio.NewScanner(stderr)
-		for errScanner.Scan() {
-			errOutput := errScanner.Text()
-			errOutput, _, _ = transform.String(gbkDecoder, errOutput)
-
-			fn("", errors.New(errOutput))
-		}
-
 		cmd.Wait()
 		t.lock.Lock()
 		t.isRunning = false
 		t.lock.Unlock()
-		fmt.Println("命令已完成")
+		println("命令已完成")
 		fn("", errors.New("命令已完成"))
+
 	}()
 	return true
+
 }
 
 func (t *Terminal) StopCommand() {

@@ -90,7 +90,7 @@
             <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases</el-link>
           </p>
 
-          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+          <div ref="" style="height: 100px;overflow-y: auto"
                v-html="store.帮助信息"
           ></div>
 
@@ -157,7 +157,10 @@ import {BrowserOpenURL, EventsOn} from "../wailsjs/runtime";
 const store = useCounterStore()
 store.初始化()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
+const scrollContainer = ref(null);
+
 onMounted(() => {
+  store.scrollContainer = scrollContainer.value;
   appAction.init()
   appAction.新建()
   store.取组件列表()

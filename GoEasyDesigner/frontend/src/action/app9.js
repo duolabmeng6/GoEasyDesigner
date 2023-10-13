@@ -99,13 +99,12 @@ appAction._打开文件加载界面 = function (filepath) {
 }
 
 // 使用 $refs 来引用滚动容器
-const scrollContainer = ref(null);
 
 try {
     EventsOn("运行命令", function (data) {
         console.log("运行命令", data)
         store.调试信息 = store.调试信息 + "<br / >" + data
-        scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        store.scrollContainer.scrollTop = store.scrollContainer.scrollHeight;
         if (data == "命令已完成") {
             store.运行按钮文本 = "运行"
             store.编译按钮文本 = "编译"
@@ -211,7 +210,7 @@ appAction.运行 = function () {
         store.运行按钮文本 = '停止'
         store.调试信息 = "运行中 ..."
         store.选择夹_底部现行选中项 = "1"
-        E运行命令(store.项目信息.项目根目录, "wails dev")
+        E运行命令(store.项目信息.项目根目录, "wails dev -nocolour")
     } else {
         store.调试信息 = "已停止 ..."
         store.运行按钮文本 = '运行'
