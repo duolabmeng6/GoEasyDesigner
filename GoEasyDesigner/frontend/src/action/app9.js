@@ -44,6 +44,7 @@ appAction.新建 = function () {
 
     appAction.store.list = [创建窗口()]
     appAction.store.indexMap = {}
+    appAction.store.代码编辑器内容 = ""
 }
 appAction.打开 = function () {
     if (appAction.store.客户端模式 == false) {
@@ -84,14 +85,16 @@ appAction._打开文件加载界面 = function (filepath) {
     console.log("设计文件路径", store.项目信息.设计文件路径)
     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
     E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
-        console.log(文件内容)
+        // console.log(文件内容)
         // 初始化界面(文件内容)
         store.list = JSON.parse(文件内容)
+        store.取组件列表()
+
     })
-    // E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
-    //   console.log(res)
-    //   code.value = res
-    // })
+    E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
+        // console.log(res)
+        store.代码编辑器内容 = res
+    })
     store.项目管理刷新()
 }
 

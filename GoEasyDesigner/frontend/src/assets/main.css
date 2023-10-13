@@ -68,7 +68,7 @@
 }
 
 .工具箱 .el-tabs__content {
-    height: 80%;
+    height: 90% !important;
     overflow-y: auto;
 }
 
@@ -109,9 +109,7 @@
     position: relative;
     overflow: hidden;
 }
-.工具箱 .el-tabs__content{
-    height: 100% !important;
-}
+
 .container2 .el-form-item {
      margin-bottom: 8px;
 }
