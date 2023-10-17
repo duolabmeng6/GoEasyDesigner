@@ -10,7 +10,7 @@
 #!/bin/bash
 
 JSON_FILE="releases_latest.json"
-URL="https://api.github.com/repos/duolabmeng6/GoEasyDesigner/releases/latest"
+URL="https://api.github.com/repos/duolabmeng6/GoEasyDesigner/releases"
 
 # 检查文件是否存在并且修改时间是否超过1天
 if [ -e "$JSON_FILE" ]; then

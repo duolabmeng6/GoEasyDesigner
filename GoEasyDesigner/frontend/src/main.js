@@ -35,7 +35,7 @@ const store = useCounterStore()
 
 // console.log(releases_latest)
 //检索releases_latest 中 assets
-for (const asset of releases_latest.assets) {
+for (const asset of releases_latest[0].assets) {
     // console.log(asset.name)
     // console.log(asset.browser_download_url)
     if (asset.name.includes(".exe")) {
@@ -46,7 +46,7 @@ for (const asset of releases_latest.assets) {
     }
 
 }
-store.版本号 = releases_latest.tag_name
+store.版本号 = releases_latest[0].tag_name
 store.releases_latest = releases_latest
 
 store.是否为window系统 = navigator.platform.includes("Win")
