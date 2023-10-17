@@ -32,7 +32,7 @@ if [ -e "$JSON_FILE" ]; then
         echo "文件超过1天未更新，重新下载..."
         curl -o "$JSON_FILE" "$URL"
     else
-        echo "文件未超过1天，无需重新下载."
+        echo "文件未超过1天，无需重新下载 经过多少秒后检查" $TIME_DIFF
     fi
 else
     # 文件不存在，直接下载
