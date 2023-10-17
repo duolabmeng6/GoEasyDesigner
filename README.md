@@ -15,7 +15,7 @@
 
 
 已完成任务：
-- [x] 跨平台兼容性：在Windows、macOS和Linux上进行了测试，确保软件能够顺利运行。
+- [x] 跨平台兼容性：Windows MacOS Linux
 
 - [x] 界面设计和功能开发：完成了整体界面布局、功能流程设计、界面绘制、属性修改、组件拖拽、双击组件跳转到对应事件函数等核心功能的开发。
 
@@ -42,23 +42,14 @@
 
 # 在线体验
 
-没钱买服务器所以都是白嫖 pages 国内打不开就换一个地址
+感谢朋友提供的服务器,可以愉快的在线体验了
 
-https://g.yx24.me
+国内地址: https://go.kenhong.com/
+国外地址: https://g.yx24.me 
 
-https://gg.yx24.me
+画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js` 注意你的浏览器允许下载多个文件的权限
 
-https://ggg.yx24.me
-
-https://goeasy.onrender.com
-
-https://go-easy-designer.vercel.app
-
-画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js`
-
-注意你的浏览器允许下载多个文件的权限
-
-下载本项目的代码找到 wails-demo复制出来.
+下载本项目的代码 复制 `wails-demo` 文件夹作为开发项目
 
 `wails-demo/frontend/src/窗口/设计文件.json`
 
@@ -216,4 +207,4 @@ wails dev
 
 # 学习交流
 
-QQ群: 927427009`
+QQ群: 927427009
