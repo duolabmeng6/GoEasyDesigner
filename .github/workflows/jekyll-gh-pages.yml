@@ -47,9 +47,18 @@ jobs:
         with:
           source: ./GoEasyDesigner/frontend/dist
           destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-
+      - name: FTP Interact
+        uses: priradev/ftp-interactions@v0.2.9-beta
+        with:
+          # required
+          host: go.kenhong.com
+          username: admin
+          password: admin
+          ftpAction: Copy
+          # optional
+          port: 21
+          localDir: ./GoEasyDesigner/frontend/dist
+          ignoreCertificateErrors: false
   # Deployment job
   deploy:
     environment:
