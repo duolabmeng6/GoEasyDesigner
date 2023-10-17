@@ -39,7 +39,9 @@ jobs:
             ${{ runner.os }}-js-
       - name: install
         run: |
-          cd GoEasyDesigner/frontend
+          cd GoEasyDesigner/frontend/src
+          ./update_github_latest_releases.sh
+          cd ../
           npm i
           npm run build
       - name: Build with Jekyll
