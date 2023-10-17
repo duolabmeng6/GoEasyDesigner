@@ -105,8 +105,10 @@
 
 
     </div>
-    <div class="备案信息" v-if="!store.客户端模式">
-      <p>黔ICP备19002063号-4 贵公网安备 52230102000312号</p>
+    <div class="备案信息" v-if="!store.客户端模式" style="    position: absolute;
+    bottom: 0;
+    left: 30%;">
+      <el-text>黔ICP备19002063号-4 贵公网安备 52230102000312号</el-text>
     </div>
     <div class="标题 clear-select">
       <el-text size="large" style="">
