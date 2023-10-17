@@ -53,7 +53,7 @@ jobs:
           server: 121.37.20.242
           username: admin
           password: admin
-          local-dir: ./GoEasyDesigner/frontend/dist
+          local-dir: ./GoEasyDesigner/frontend/dist/
           server-dir: ./
   # Deployment job
   deploy:
