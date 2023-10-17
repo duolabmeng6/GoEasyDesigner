@@ -46,6 +46,7 @@ export const useCounterStore = defineStore('counter', {
 
             组件列表tree现行选中项: ref(""),
             组件列表tree: ref([]),
+            scrollContainer: ref(null),
         }
     },
 

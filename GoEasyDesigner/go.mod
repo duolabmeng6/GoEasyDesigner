@@ -6,7 +6,6 @@ require (
 	github.com/duolabmeng6/goefun v1.3.6
 	github.com/ncruces/zenity v0.10.10
 	github.com/wailsapp/wails/v2 v2.6.0
-	golang.org/x/text v0.11.0
 )
 
 require (
@@ -48,4 +47,5 @@ require (
 	golang.org/x/image v0.10.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )
