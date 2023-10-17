@@ -52,13 +52,14 @@ jobs:
       - name: Deploy file
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          username: dd
-          server: 121.37.20.242
-          port: 2222
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           local_path: './GoEasyDesigner/frontend/dist/*'
           remote_path: '/config/www'
           sftp_only: true
-          password: '6666666666'
+
   # Deployment job
   deploy:
     environment:
