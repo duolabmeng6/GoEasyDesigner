@@ -55,7 +55,7 @@ jobs:
           username: dd
           server: 121.37.20.242
           port: 2222
-          local_path: '../GoEasyDesigner/frontend/dist/*'
+          local_path: './GoEasyDesigner/frontend/dist/*'
           remote_path: '/config/www'
           sftp_only: true
           password: '6666666666'
