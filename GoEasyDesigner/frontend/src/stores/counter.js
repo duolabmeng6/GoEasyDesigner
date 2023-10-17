@@ -47,6 +47,11 @@ export const useCounterStore = defineStore('counter', {
             组件列表tree现行选中项: ref(""),
             组件列表tree: ref([]),
             scrollContainer: ref(null),
+            releases_latest:{},//github的文件信息
+            window下载地址:"",//github的文件信息
+            mac下载地址:"",//github的文件信息
+            版本号:"",//github的文件信息
+            是否为window系统:true,//github的文件信息
         }
     },
 

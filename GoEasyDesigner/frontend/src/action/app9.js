@@ -1,5 +1,4 @@
 import {useCounterStore} from '@/stores/counter'
-import {onMounted, ref} from "vue";
 import {
     E保存,
     E保存件对话框,
@@ -259,7 +258,12 @@ appAction.帮助 = function () {
 }
 
 appAction.下载客户端 = function () {
-    window.open("https://github.com/duolabmeng6/GoEasyDesigner/releases")
+    if (store.是否为window系统) {
+        window.open(store.window下载地址)
+    } else {
+        window.open(store.mac下载地址)
+    }
+
 }
 
 

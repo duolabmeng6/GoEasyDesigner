@@ -1,20 +1,56 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import {createApp} from 'vue'
+import {createPinia} from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import { ref } from 'vue'
 
 // import App from './components/设计器组件/代码编辑器.vue'
 // import App from './测试代码编辑器.vue'
 import App from './app9.vue'
+import {useCounterStore} from '@/stores/counter'
+import releases_latest from './releases_latest.json'
+import 渲染组件 from "./components/渲染设计组件.vue"
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import {install as VueMonacoEditorPlugin, loader} from '@guolao/vue-monaco-editor'
+
+import * as monaco from "monaco-editor"
+import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
+import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker"
+import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker"
+import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
+import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
+import 编辑器数据 from './编辑器/编辑器提示数据.js'
+import ldf from './编辑器/编辑器语法文件.js'
 // import App from './components/设计器组件/项目管理.vue'
+
+//读入 releases_latest.json
+
 
 const app = createApp(App)
 app.use(createPinia())
-import {useCounterStore} from '@/stores/counter'
+
 const store = useCounterStore()
+
+
+// console.log(releases_latest)
+//检索releases_latest 中 assets
+for (const asset of releases_latest.assets) {
+    // console.log(asset.name)
+    // console.log(asset.browser_download_url)
+    if (asset.name.includes(".exe")) {
+        store.window下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+    }
+    if (asset.name.includes(".dmg")) {
+        store.mac下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+    }
+
+}
+store.版本号 = releases_latest.tag_name
+store.releases_latest = releases_latest
+
+store.是否为window系统 = navigator.platform.includes("Win")
+
 
 // import 按钮.json from '@/components/按钮.json.vue';
 // app.component('按钮.json', 按钮.json)
@@ -26,7 +62,6 @@ const store = useCounterStore()
 // app.component('开关', 开关)
 // 读取 components 的所有文件名，然后自动导入
 
-import 渲染组件 from "./components/渲染设计组件.vue"
 app.component('渲染组件', 渲染组件)
 
 
@@ -76,12 +111,10 @@ for (const path in modules3) {
 }
 
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 app.use(VueMonacoEditorPlugin, {
     paths: {
         // The default CDN config
@@ -89,14 +122,6 @@ app.use(VueMonacoEditorPlugin, {
         vs: ''
     },
 })
-import { loader } from "@guolao/vue-monaco-editor"
-
-import * as monaco from "monaco-editor"
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker"
-import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker"
-import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 
 self.MonacoEnvironment = {
     getWorker(_, label) {
@@ -125,16 +150,14 @@ function createCustomProposal(range, insertText, label) {
         range: range,
     };
 }
-import 编辑器数据 from './编辑器/编辑器提示数据.js'
+
 // let keywordMappings = ref({})
 // keywordMappings.value = 编辑器数据
 store.keywordMappings = 编辑器数据
 // 将 keywordMappings 共享到全局课修改
 // app.provide('keywordMappings',keywordMappings);
 // 注册你的自定义语言
-monaco.languages.register({ id: 'javascript' });
-
-import ldf from './编辑器/编辑器语法文件.js'
+monaco.languages.register({id: 'javascript'});
 
 monaco.languages.setMonarchTokensProvider('javascript', ldf);
 
@@ -152,7 +175,7 @@ monaco.languages.registerCompletionItemProvider("javascript", {
         Object.keys(store.keywordMappings).forEach(function (keyword) {
             var regex = new RegExp("^" + word.word, "i");
             if (regex.test(keyword)) {
-                var { insertText, label } = store.keywordMappings[keyword];
+                var {insertText, label} = store.keywordMappings[keyword];
                 suggestions.push(createCustomProposal(range, insertText, label));
             }
         });
@@ -162,11 +185,11 @@ monaco.languages.registerCompletionItemProvider("javascript", {
         // });
         // console.log(JSON.stringify(suggestions, null, 2))
 
-        return { suggestions: suggestions };
+        return {suggestions: suggestions};
     },
 });
 
-loader.config({ monaco })
+loader.config({monaco})
 app.config.warnHandler = function (msg, vm, trace) {
     // 自定义处理警告的逻辑，或者什么都不做以屏蔽
 };

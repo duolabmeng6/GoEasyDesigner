@@ -82,12 +82,15 @@
                type="border-card">
         <el-tab-pane label="帮助信息">
           <p v-if="!store.客户端模式">
-            在浏览器中仅可保存设计界面,项目需要手动创建,
-            <el-link href="https://github.com/duolabmeng6/GoEasyDesigner">前往查看项目创建教程 Github GoEasyDesigner
-            </el-link>
+
+            窗口项目需要手动创建
+            <el-link href="https://gitee.com/duolabmeng666/go-easy-designer">前往查看运行窗口项目的创建教程 Github GoEasyDesigner</el-link>
             <br>
-            建议下载客户端体验更佳
-            <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases</el-link>
+            在浏览器中仅可保存设计界面
+            <br>
+            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境
+
+            <el-link  @click="appAction.下载客户端()">点击下载客户端</el-link>
 
           </p>
 
@@ -115,7 +118,7 @@
         <el-icon>
           <Sunny/>
         </el-icon>
-        窗口设计师
+        窗口设计师 <el-text size="small">{{store.版本号}}</el-text>
       </el-text>
     </div>
     <div class="工具条 clear-select">
