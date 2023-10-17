@@ -41,7 +41,7 @@ jobs:
         run: |
           cd GoEasyDesigner/frontend/src
           ./update_github_latest_releases.sh
-          copy releases_latest.json ../dist/releases_latest.json
+          cp releases_latest.json ../dist/releases_latest.json
           cd ../
           npm i
           npm run build
