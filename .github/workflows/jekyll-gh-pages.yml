@@ -51,14 +51,13 @@ jobs:
         uses: priradev/ftp-interactions@v0.2.9-beta
         with:
           # required
-          host: go.kenhong.com
+          host: 121.37.20.242
           username: admin
           password: admin
           ftpAction: Copy
-          # optional
           port: 21
           localDir: ./GoEasyDesigner/frontend/dist
-          ignoreCertificateErrors: false
+          ignoreCertificateErrors: true
   # Deployment job
   deploy:
     environment:
