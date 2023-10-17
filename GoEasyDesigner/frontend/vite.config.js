@@ -12,6 +12,13 @@ import IconsResolver from 'unplugin-icons/resolver'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    server: {
+        host: "0.0.0.0",
+    },
+    preview: {
+        host: "0.0.0.0",
+        port: 3000,
+    },
     plugins: [
         vue(),
         // ...
