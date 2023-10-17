@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+  openssh-server:
+    image: linuxserver/openssh-server:latest
+    container_name: openssh-server
+    hostname: openssh-server #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+#      - PUBLIC_KEY=yourpublickey #optional
+#      - PUBLIC_KEY_FILE=/path/to/file #optional
+#      - PUBLIC_KEY_DIR=/path/to/directory/containing/_only_/pubkeys #optional
+#      - PUBLIC_KEY_URL=https://github.com/username.keys #optional
+      - SUDO_ACCESS=false #optional
+      - PASSWORD_ACCESS=true #optional
+      - USER_PASSWORD=${USER_PASSWORD}
+#      - USER_PASSWORD_FILE=/path/to/file #optional
+      - USER_NAME=${USER_NAME} #optional
+    volumes:
+      - ./config:/config
+      - ./www:/config/www
+    ports:
+      - ${SSH_PORT}:2222
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./www:/usr/share/nginx/html
+      - /root/.acme.sh/go.kenhong.com:/etc/nginx/certs
+      - ./default.conf:/etc/nginx/conf.d/default.conf
