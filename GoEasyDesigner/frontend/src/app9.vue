@@ -88,6 +88,7 @@
             <br>
             建议下载客户端体验更佳
             <el-link href="https://github.com/duolabmeng6/GoEasyDesigner/releases">前往下载 Github Releases</el-link>
+
           </p>
 
           <div ref="" style="height: 100px;overflow-y: auto"
@@ -101,6 +102,11 @@
           ></div>
         </el-tab-pane>
       </el-tabs>
+
+
+    </div>
+    <div class="备案信息" v-if="!store.客户端模式">
+      <p>黔ICP备19002063号-4 贵公网安备 52230102000312号</p>
     </div>
     <div class="标题 clear-select">
       <el-text size="large" style="">
