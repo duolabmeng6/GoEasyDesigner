@@ -54,7 +54,7 @@ jobs:
           port: 21
           username: admin
           password: admin
-          local_dir: ./_site
+          local_dir: ./GoEasyDesigner/frontend/dist
           remote_dir: ./
   # Deployment job
   deploy:
