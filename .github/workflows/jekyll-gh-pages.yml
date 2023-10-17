@@ -49,7 +49,16 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
-
+      - name: Deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: dd
+          server: 121.37.20.242
+          port: 2222
+          local_path: '../GoEasyDesigner/frontend/dist/*'
+          remote_path: '/config/www'
+          sftp_only: true
+          password: '6666666666'
   # Deployment job
   deploy:
     environment:
