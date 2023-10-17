@@ -48,7 +48,7 @@ jobs:
           source: ./GoEasyDesigner/frontend/dist
           destination: ./_site
       - name: Fast FTP Action
-        uses: anvil-solutions/Fast-FTP-Action@2.1.0
+        uses: anvil-solutions/Fast-FTP-Action@4.1.0
         with:
           server: 121.37.20.242
           port: 21
