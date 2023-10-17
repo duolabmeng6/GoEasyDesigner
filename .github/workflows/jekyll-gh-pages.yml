@@ -4,7 +4,7 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,22 +42,14 @@ jobs:
           cd GoEasyDesigner/frontend
           npm i
           npm run build
-
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: 121.37.20.242
-          port: 21
-          username: admin
-          password: admin
-          local-dir: ./GoEasyDesigner/frontend/dist/
-          server-dir: ./
-
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./GoEasyDesigner/frontend/dist
           destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+
   # Deployment job
   deploy:
     environment:
