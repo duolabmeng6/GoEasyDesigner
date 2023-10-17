@@ -48,7 +48,7 @@ jobs:
           source: ./GoEasyDesigner/frontend/dist
           destination: ./_site
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: Sanvil-solutions/Fast-FTP-Action@4.1.0
         with:
           server: 121.37.20.242
           username: admin
