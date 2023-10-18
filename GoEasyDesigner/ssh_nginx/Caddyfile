@@ -1,0 +1,9 @@
+go.kenhong.com {
+	root * /srv
+    encode {
+        zstd
+        gzip 9
+    }
+	file_server
+}
+
