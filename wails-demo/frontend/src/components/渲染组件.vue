@@ -33,13 +33,14 @@
 </template>
 
 <script setup>
-import {defineProps} from 'vue';
+import {defineProps,onMounted} from 'vue';
 
 const {item} = defineProps(['item']);
 import {引入窗口数据} from '@/窗口/窗口数据'
 import {getItemStyleShape} from "@/public";
 
 const store = 引入窗口数据()
+
 const vDemo = {
   mounted: (el, binding) => {
     // console.log(binding.value) // => "hello!"

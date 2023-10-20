@@ -89,14 +89,13 @@ export const 引入窗口数据 = defineStore('窗口数据', {
                 "mousewheel": "滚轮被滚动"
             }
             let 最终事件名称 = item.名称 + 事件列表[event.type]
-            let 动态函数 = undefined
-            eval(`动态函数 = this.${最终事件名称}`)
-            if (动态函数 != undefined) {
-                // console.log("动态函数",动态函数)
-                // console.log('触发了事件:', 最终事件名称, item,);
+
+            try{
+                var 动态函数 = undefined
+                eval(`动态函数 = this.${最终事件名称}`)
                 动态函数(e, item)
-            } else {
-                console.log("函数未定义", 最终事件名称)
+            } catch (e) {
+                console.log("函数调用出错", 最终事件名称,"动态函数",动态函数,"e",e)
             }
         },
 
