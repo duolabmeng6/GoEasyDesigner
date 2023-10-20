@@ -3,4 +3,6 @@
 
 export function E按钮1被点击():Promise<string>;
 
+export function E获取系统时间():Promise<string>;
+
 export function Greet(arg1:string):Promise<string>;
