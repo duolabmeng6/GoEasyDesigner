@@ -9,7 +9,6 @@ import 'element-plus/dist/index.css'
 // import App from './测试代码编辑器.vue'
 import App from './app9.vue'
 import {useCounterStore} from '@/stores/counter'
-// import releases_latest from '../public/releases_latest.json'
 import 渲染组件 from "./components/渲染设计组件.vue"
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import {install as VueMonacoEditorPlugin, loader} from '@guolao/vue-monaco-editor'
@@ -22,34 +21,11 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import 编辑器数据 from './编辑器/编辑器提示数据.js'
 import ldf from './编辑器/编辑器语法文件.js'
-// import App from './components/设计器组件/项目管理.vue'
-
-//读入 releases_latest.json
 
 const app = createApp(App)
 app.use(createPinia())
 
 const store = useCounterStore()
-
-
-// console.log(releases_latest)
-//检索releases_latest 中 assets
-// function 版本信息(releases_latest){
-//     for (const asset of releases_latest[0].assets) {
-//         // console.log(asset.name)
-//         // console.log(asset.browser_download_url)
-//         if (asset.name.includes(".exe")) {
-//             store.window下载地址 = "https://ghproxy.com/" + asset.browser_download_url
-//         }
-//         if (asset.name.includes(".dmg")) {
-//             store.mac下载地址 = "https://ghproxy.com/" + asset.browser_download_url
-//         }
-//
-//     }
-//     store.版本号 = releases_latest[0].tag_name
-//     store.releases_latest = releases_latest
-// }
-// 版本信息(releases_latest)
 
 store.是否为window系统 = navigator.platform.includes("Win")
 
