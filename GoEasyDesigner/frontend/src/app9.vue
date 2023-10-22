@@ -153,12 +153,47 @@ import {Coin, Edit, Help, Key, Open, Tools} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app9.js';
 
 import {E保存, E取配置信息} from "../wailsjs/go/main/App";
+import releases_latest from '../public/releases_latest.json'
+
 
 const store = useCounterStore()
 store.初始化()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
 
+
+function 版本号自动检测(){
+  function 版本信息(releases_latest){
+    for (const asset of releases_latest[0].assets) {
+      // console.log(asset.name)
+      // console.log(asset.browser_download_url)
+      if (asset.name.includes(".exe")) {
+        store.window下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+      }
+      if (asset.name.includes(".dmg")) {
+        store.mac下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+      }
+
+    }
+    store.版本号 = releases_latest[0].tag_name
+    store.releases_latest = releases_latest
+  }
+  版本信息(releases_latest)
+  //网络读取最新的
+  if(!store.客户端模式){
+    fetch('./releases_latest.json')
+        .then(response => response.json())
+        .then(data => {
+          // 在这里处理获取到的数据
+          // console.log(data);
+          版本信息(data)
+        })
+        .catch(error => {
+          // 处理错误
+          console.error('Error fetching data:', error);
+        });
+  }
+}
 
 
 onMounted(() => {
@@ -187,6 +222,7 @@ onMounted(() => {
   setTimeout(() => {
     store.bodyLoaded = true
   }, 200)
+  版本号自动检测()
 })
 
 

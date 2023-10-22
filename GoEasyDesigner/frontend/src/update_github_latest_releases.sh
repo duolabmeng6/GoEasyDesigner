@@ -9,7 +9,7 @@
 #!/bin/bash
 #!/bin/bash
 
-JSON_FILE="releases_latest.json"
+JSON_FILE="../public/releases_latest.json"
 URL="https://api.github.com/repos/duolabmeng6/GoEasyDesigner/releases"
 
 echo "正在下载最新的releases..."
