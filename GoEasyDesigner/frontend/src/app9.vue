@@ -84,13 +84,15 @@
           <p v-if="!store.客户端模式">
 
             窗口项目需要手动创建
-            <el-link href="https://gitee.com/duolabmeng666/go-easy-designer">前往查看运行窗口项目的创建教程 Github GoEasyDesigner</el-link>
+            <el-link href="https://gitee.com/duolabmeng666/go-easy-designer">前往查看运行窗口项目的创建教程 Github
+              GoEasyDesigner
+            </el-link>
             <br>
             在浏览器中仅可保存设计界面
             <br>
             建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境
 
-            <el-link  @click="appAction.下载客户端()">点击下载客户端</el-link>
+            <el-link @click="appAction.下载客户端()">点击下载客户端</el-link>
 
           </p>
 
@@ -118,7 +120,8 @@
         <el-icon>
           <Sunny/>
         </el-icon>
-        窗口设计师 <el-text size="small">{{store.版本号}}</el-text>
+        窗口设计师
+        <el-text size="small">{{ store.版本号 }}</el-text>
       </el-text>
     </div>
     <div class="工具条 clear-select">
@@ -143,32 +146,20 @@
 </template>
 
 <script setup>
-import {ref, inject, onMounted, nextTick} from 'vue';
+import {inject, onMounted, ref} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import {ElMessage} from "element-plus";
-import {Edit, Open, Help, Tools, Bowl, Key, Coin} from "@element-plus/icons-vue";
+import {Coin, Edit, Help, Key, Open, Tools} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app9.js';
 
-import {
-  E保存,
-  E保存件对话框,
-  E创建函数,
-  E打开文件对话框,
-  E读入文件,
-  E运行命令,
-  E停止命令,
-  E取配置信息,
-  E检查更新
-
-} from "../wailsjs/go/main/App";
-import {取父目录, 生成辅助代码} from "@/public";
-import Shape from "@/components/Shape.vue";
-import {BrowserOpenURL, EventsOn} from "../wailsjs/runtime";
+import {E保存, E取配置信息} from "../wailsjs/go/main/App";
 
 const store = useCounterStore()
 store.初始化()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
+
+
 
 onMounted(() => {
   store.scrollContainer = scrollContainer.value;
@@ -303,7 +294,36 @@ function handleKeyDown(event) {
 
 
   }
+  if ((event.metaKey || event.ctrlKey) && event.key === "z") {
+    //撤销
+    console.log("撤销");
+    //屏蔽浏览器默认行为
+    event.preventDefault();
 
+    // console.log("store.历史记录管理器实例.查看当前历史所有记录()", store.历史记录管理器实例.查看当前历史所有记录())
+    // console.log("store.历史记录管理器实例.当前位置()", store.历史记录管理器实例.当前位置)
+
+
+    let 旧的数据 = store.历史记录管理器实例.撤销(JSON.stringify(store.list))
+    // console.log("旧的数据", 旧的数据)
+    if (旧的数据 == null || 旧的数据 == undefined) {
+      return
+    }
+
+    store.list = JSON.parse(旧的数据)
+
+  }
+  if ((event.metaKey || event.ctrlKey) && event.key === "y") {
+    //恢复
+    console.log("恢复");
+    event.preventDefault();
+    let 旧的数据 = store.历史记录管理器实例.恢复(JSON.stringify(store.list))
+    // console.log("旧的数据", 旧的数据)
+    if (旧的数据 == null || 旧的数据 == undefined) {
+      return
+    }
+    store.list = JSON.parse(旧的数据)
+  }
   if ((event.metaKey || event.ctrlKey) && event.key === "s") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法

@@ -205,8 +205,8 @@ async function 拖拽放下(event, v) {
   let x = event.offsetX;
   let y = event.offsetY;
 
-  console.log("start_x", store.start_x, "start_y", store.start_y)
-  console.log("x", x, "y", y)
+  // console.log("start_x", store.start_x, "start_y", store.start_y)
+  // console.log("x", x, "y", y)
 
 
   if (放置目标组件数据.id == store.当前拖拽组件数据.id) {
@@ -220,7 +220,7 @@ async function 拖拽放下(event, v) {
     const newLeft = initialLeft - offsetX; // 计算新的左偏移量
     const newTop = initialTop - offsetY;   // 计算新的上偏移量
 
-    console.log("重新计算", "newLeft:", newLeft, "newTop:", newTop, "offsetX:", offsetX, "offsetY:", offsetY);
+    // console.log("重新计算", "newLeft:", newLeft, "newTop:", newTop, "offsetX:", offsetX, "offsetY:", offsetY);
 
     store.当前拖拽组件数据.left = newLeft;
     store.当前拖拽组件数据.top = newTop;
@@ -228,17 +228,21 @@ async function 拖拽放下(event, v) {
   }
   x = x - store.start_x
   y = y - store.start_y
-  console.log("重新计算", "x", x, "y", y)
+  // console.log("重新计算", "x", x, "y", y)
   store.当前拖拽组件数据.left = x
   store.当前拖拽组件数据.top = y
+
+  store.历史记录管理器实例.记录( JSON.stringify(store.list))
 
   递归删除(store.list, store.当前拖拽组件数据.id)
   await nextTick()
   递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.id)
   await nextTick()
 
+  store.历史记录管理器实例.记录(JSON.stringify(store.list))
 
-  console.log(JSON.stringify(store.list, null, 2))
+
+  // console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
   store.当前组件索引 = store.当前拖拽组件数据.id
   await nextTick()

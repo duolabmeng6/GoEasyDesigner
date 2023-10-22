@@ -7,6 +7,7 @@ import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js"
 import {ElMessage} from "element-plus";
 import {InsertCode, 取父目录, 生成辅助代码} from "@/public.js";
 import {appAction} from '@/action/app9.js';
+import {历史记录管理器实例} from '@/stores/历史记录管理器.js';
 
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -52,10 +53,13 @@ export const useCounterStore = defineStore('counter', {
             mac下载地址:"",//github的文件信息
             版本号:"",//github的文件信息
             是否为window系统:true,//github的文件信息
+            历史记录管理器实例: 历史记录管理器实例
+
         }
     },
 
     actions: {
+
         添加事件被选择(事件名称, item) {
             let dthis = this;
             if (事件名称 == "在此处选择加入事件处理函数") {
@@ -198,7 +202,16 @@ export const useCounterStore = defineStore('counter', {
         },
 
 
-        递归删除id(源数据, id) {
+        递归删除id(源数据,id){
+            // this.历史记录管理器实例.记录(JSON.stringify(this.list))
+            this.历史记录管理器实例.记录(JSON.stringify(this.list))
+
+            this.__递归删除id(源数据,id)
+            this.当前组件索引 = "1"
+            this.当前拖拽组件数据 = this.组件通过id查找结构("1")
+            this.取组件列表()
+        },
+        __递归删除id(源数据, id) {
             if (id == 1) {
                 console.log("不能把自己窗口删除了")
                 return
@@ -215,10 +228,6 @@ export const useCounterStore = defineStore('counter', {
                     this.递归删除id(item.子组件, id)
                 }
             });
-
-            this.当前组件索引 = "1"
-            this.当前拖拽组件数据 = this.组件通过id查找结构("1")
-            this.取组件列表()
         },
 
         递归查找名称(源数据, 名称) {
@@ -356,9 +365,9 @@ export const useCounterStore = defineStore('counter', {
             // console.log("取组件列表", this.组件列表)
 
             const testlist = this.transformData(this.list);
-            console.log("取组件列表", JSON.stringify(testlist, null, 2))
+            // console.log("取组件列表", JSON.stringify(testlist, null, 2))
             this.组件列表tree = testlist
-            console.log("组件列表tree现行选中项", this.组件列表tree现行选中项)
+            // console.log("组件列表tree现行选中项", this.组件列表tree现行选中项)
             return this.组件列表
         },
         __取组件列表_递归(源数据) {
