@@ -1,6 +1,4 @@
-import {
-    E获取系统时间
-} from "../../wailsjs/go/main/App";
+import * as goFc from "../../wailsjs/go/main/App";
 
 export function 绑定窗口事件(c, 组件) {
     const 程序集变量 = {
@@ -16,11 +14,11 @@ export function 绑定窗口事件(c, 组件) {
         //js
         //组件.编辑框_时间.内容 = new Date().toLocaleString()
         //go
-        组件.编辑框_时间.内容 = await E获取系统时间()
+        组件.编辑框_时间.内容 = await goFc.E获取系统时间()
 
         clearInterval(程序集变量.time)
         程序集变量.time = setInterval(async () => { (
-            组件.编辑框_时间.内容 = await E获取系统时间()
+            组件.编辑框_时间.内容 = await goFc.E获取系统时间()
         ) }, 1000)
 
     }
