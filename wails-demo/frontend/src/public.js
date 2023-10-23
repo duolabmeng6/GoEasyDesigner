@@ -33,9 +33,28 @@ const getItemStyleShape = (item) => {
     if (item.position !== undefined) {
         style.position = item.position;
     }
-
+    if (item.图片 !== undefined) {
+        if (item.backgroundSize !== undefined) {
+            style.backgroundSize = '100% 100%';
+        }
+        if (item.backgroundRepeat !== undefined) {
+            style.backgroundRepeat = 'no-repeat';
+        }
+        if (item.backgroundPosition !== undefined) {
+            style.backgroundPosition = 'center';
+        }
+        if (item.backgroundAttachment !== undefined) {
+            style.backgroundAttachment = 'scroll';
+        }
+        style.backgroundImage = `url(${item.图片})`;
+        style.backgroundSize = item.backgroundSize
+        style.backgroundRepeat = item.backgroundRepeat
+        style.backgroundPosition = item.backgroundPosition
+        style.backgroundAttachment = item.backgroundAttachment
+    }
     return style;
 };
+
 
 
 function 取父目录(path) {
