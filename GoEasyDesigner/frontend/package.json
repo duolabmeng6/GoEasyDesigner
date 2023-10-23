@@ -15,11 +15,15 @@
     "pinyin": "^3.0.0-alpha.5",
     "pinyin-pro": "^3.16.3",
     "uuid": "^9.0.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue3-sfc-loader": "^0.8.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "autoprefixer": "^10.4.16",
     "monaco-editor-webpack-plugin": "^7.1.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-icons": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",

@@ -1,8 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
+html, body{
     margin: 0;
-    padding: 0;
-
+    padding: 4px;
+    overflow: hidden;
 }
 
 .clear-select{
@@ -12,7 +15,8 @@
     -ms-user-select: none; /* Internet Explorer / Edge */
 }
 
-.container {
+.app {
+    width: 100% !important;
     display: grid;
     grid-template-columns: auto 1fr 1fr 1fr auto;
     grid-template-rows: 0fr 1fr 1fr 1fr 1fr;
@@ -72,7 +76,7 @@
     overflow-y: auto;
 }
 
-.container2 {
+.app2 {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 2.6fr 0.1fr;
@@ -110,7 +114,7 @@
     overflow: hidden;
 }
 
-.container2 .el-form-item {
+.app2 .el-form-item {
      margin-bottom: 8px;
 }
 #pane-1{

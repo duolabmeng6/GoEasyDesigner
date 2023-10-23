@@ -1,11 +1,11 @@
 <template>
 
-  <div class="container" style="margin: 0px 4px">
+  <div class="app" style="margin: 0px 4px">
     <div class="头部 "></div>
     <div class="属性框 clear-select">
       <el-tabs style="height: 100%" type="border-card">
         <el-tab-pane label="属性" style="height: 100%;">
-          <div class="container2" style="margin: 8px 4px">
+          <div class="app2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
               <el-tree-select
                   v-model="store.当前组件索引"
