@@ -28,30 +28,32 @@ export function 绑定窗口事件(c, 组件) {
 
     c.自定义组件1自定义事件 = function (name, data) {
         console.log("自定义组件1自定义事件", "事件名称", name, "数据", data)
-        if(name==='click_login'){
+        if (name === 'click_login') {
             let u = 组件.自定义组件1.data.username
             let p = 组件.自定义组件1.data.password
             // u = data.username // 也可以这样子 取决于自定义组件返回的data
             // p = data.password
-            console.log("u",u)
-            console.log("p",p)
+            console.log("u", u)
+            console.log("p", p)
 
-            ElMessageBox.alert('登录成功', 'Title', {
-                // if you want to disable its autofocus
-                // autofocus: false,
-                confirmButtonText: '确定',
-                callback: (action) => {
-                    ElMessage({
-                        type: 'info',
-                        title:"提示",
-                        message: `点击了确定: ${action}`,
-                    })
-                    ElMessage({
-                        message: '登录成功',
-                        type: 'success',
-                    })
-                },
-            })
+            ElMessageBox.alert(
+                `登录成功 你输入的账号密码为${u} ${p}`,
+                '提示',
+                {
+                    confirmButtonText: '确定',
+                    callback: (action) => {
+                        ElMessage({
+                            type: 'info',
+                            title: "提示",
+                            message: `点击了确定: ${action}`,
+                        });
+
+                        ElMessage({
+                            message: '登录成功',
+                            type: 'success',
+                        });
+                    }
+                })
 
         }
     }
