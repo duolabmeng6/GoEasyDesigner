@@ -162,8 +162,8 @@ const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
 
 
-function 版本号自动检测(){
-  function 版本信息(releases_latest){
+function 版本号自动检测() {
+  function 版本信息(releases_latest) {
     for (const asset of releases_latest[0].assets) {
       // console.log(asset.name)
       // console.log(asset.browser_download_url)
@@ -178,9 +178,10 @@ function 版本号自动检测(){
     store.版本号 = releases_latest[0].tag_name
     store.releases_latest = releases_latest
   }
+
   版本信息(releases_latest)
   //网络读取最新的
-  if(!store.客户端模式){
+  if (!store.客户端模式) {
     fetch('./releases_latest.json')
         .then(response => response.json())
         .then(data => {
@@ -223,6 +224,27 @@ onMounted(() => {
     store.bodyLoaded = true
   }, 200)
   版本号自动检测()
+
+
+  const script = document.createElement('script')
+  script.src = '/cdn.tailwindcss.com_3.3.3.js'
+  document.body.appendChild(script)
+  script.onload = () => {
+    console.log('tailwindcss.com_3.3.3.js 加载完成')
+    tailwind.config = {
+      plugins: [
+        function ({ addBase }) {
+          addBase({
+            ".el-button": {
+              "background-color": "var(--el-button-bg-color,var(--el-color-white))"
+            }
+          });
+        }
+      ]
+    }
+  }
+
+
 })
 
 
