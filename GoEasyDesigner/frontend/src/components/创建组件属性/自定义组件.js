@@ -55,7 +55,7 @@ const emits = defineEmits(["CustomEvent"]);
 console.log("自定义组件事件", emits);
 function onSubmit() {
     console.log("触发登录","发送数据", item.data);
-    emits("CustomEvent","click",item.data); 
+    emits("CustomEvent","click_login",item.data); 
 }
 
 </script>

@@ -12,6 +12,7 @@ export default defineConfig({
             protocol: 'ws',
         }
     },
+    publicDir: "public",
     plugins: [
         vue(),
     ],

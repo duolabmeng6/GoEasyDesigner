@@ -24,6 +24,9 @@
       <template v-else-if="item.组件名称=='弹性布局'">
         <component is="弹性布局" :item="item"/>
       </template>
+      <template v-else-if="item.组件名称=='自定义组件'">
+        <component is="自定义组件" :item="item" @CustomEvent="(n,v)=>{onCustomEvent(n,v,item)}"/>
+      </template>
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
@@ -33,11 +36,12 @@
 </template>
 
 <script setup>
-import {defineProps,onMounted} from 'vue';
-
-const {item} = defineProps(['item']);
+import {defineProps} from 'vue';
 import {引入窗口数据} from '@/窗口/窗口数据'
 import {getItemStyleShape} from "@/public";
+
+const {item} = defineProps(['item']);
+const emits = defineEmits(["CustomEvent"]);
 
 const store = 引入窗口数据()
 
@@ -60,7 +64,7 @@ const vDemo = {
     }
     for (let 事件 in 事件列表) {
       if (item.hasOwnProperty("事件" + 事件列表[事件])) {
-        console.log("存在", "事件" + 事件列表[事件])
+        console.log("存在", 事件, "事件", 事件列表[事件], item)
         el.addEventListener(事件, function (e) {
           store.handleAllEvents(el, e, binding.value)
         });
@@ -74,6 +78,21 @@ const vDemo = {
     // }
   }
 }
+const onCustomEvent = (name, data, item) => {
+  console.log("??????收到自定义事件", "事件名称", name, "数据", data);
+
+  let 最终事件名称 = item.名称 + "自定义事件"
+  var 动态函数 = undefined
+  try{
+    eval(`动态函数 = store.${最终事件名称}`)
+
+    动态函数(name, data)
+  } catch (e) {
+    console.log("函数调用出错", 最终事件名称,"动态函数",动态函数,"e",e)
+  }
+
+}
+
 </script>
 
 <style>
