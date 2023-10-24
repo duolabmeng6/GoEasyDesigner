@@ -34,11 +34,14 @@ export default {
       </div>
       <div class="flex items-center justify-between">
         <button 
-        @click="onSubmit"
+        @click="onSendEvent('login',item.data)"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
           登录
         </button>
-        <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+        <a 
+        @click="onSendEvent('forgotPassword',item.data)"
+        
+        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
           忘记密码?
         </a>
       </div>
@@ -48,14 +51,13 @@ export default {
 
 <script setup>
 import {defineEmits, defineProps} from "vue";
-
 const { item } = defineProps(['item'])
 console.log("自定义组件数据", item);
 const emits = defineEmits(["CustomEvent"]); 
 console.log("自定义组件事件", emits);
-function onSubmit() {
-    console.log("触发登录","发送数据", item.data);
-    emits("CustomEvent","click_login",item.data); 
+function onSendEvent(name,data) {
+    console.log("自定义组件",name,"发送数据", item.data);
+    emits("CustomEvent",name,data); 
 }
 
 </script>
