@@ -1,5 +1,5 @@
 <template>
-  <component :is="remote" :item="item"/>
+  <component :is="remote" :item="item" @CustomEvent="onCustomEvent"/>
 </template>
 
 <script setup>
@@ -60,5 +60,10 @@ async function loadComponent() {
   // You might need to adjust this based on your component structure
   remote.value = loadedModule.default || loadedModule;
   currentComponent = remote.value;
+}
+
+function onCustomEvent(name, data) {
+
+  console.log("收到自定义事件", "事件名称", name, "数据", data);
 }
 </script>
