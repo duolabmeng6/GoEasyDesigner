@@ -14,6 +14,8 @@ import IconsResolver from 'unplugin-icons/resolver'
 export default defineConfig({
     server: {
         host: "0.0.0.0",
+        port:5173,
+        hmr:true
     },
     preview: {
         host: "0.0.0.0",
