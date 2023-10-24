@@ -1,4 +1,5 @@
 import * as goFc from "../../wailsjs/go/main/App";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 export function 绑定窗口事件(c, 组件) {
     const 程序集变量 = {
@@ -34,6 +35,23 @@ export function 绑定窗口事件(c, 组件) {
             // p = data.password
             console.log("u",u)
             console.log("p",p)
+
+            ElMessageBox.alert('登录成功', 'Title', {
+                // if you want to disable its autofocus
+                // autofocus: false,
+                confirmButtonText: '确定',
+                callback: (action) => {
+                    ElMessage({
+                        type: 'info',
+                        title:"提示",
+                        message: `点击了确定: ${action}`,
+                    })
+                    ElMessage({
+                        message: '登录成功',
+                        type: 'success',
+                    })
+                },
+            })
 
         }
     }
