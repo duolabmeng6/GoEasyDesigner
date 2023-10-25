@@ -265,7 +265,30 @@ function 拖拽开始_自定义组件(event, item) {
       .then(response => response.text())
       .then(data => {
         console.log("自定义组件数据",data);
+        创建自定义组件json(组件名称, data)
       })
+
+  function 创建自定义组件json(组件名称,组件html){
+    let 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
+    let k = store.获取索引(组件名称)
+    新属性.id = store.获取随机id()
+    //避免名称重复导致后续代码出问题
+    for (let i = 0; i < 100; i++) {
+      let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
+      console.log("名称是否存在", 名称是否存在)
+      if (名称是否存在) {
+        k = store.获取索引(组件名称)
+      } else {
+        break
+      }
+    }
+    新属性.组件名称 = '自定义组件'
+    新属性.名称 = 组件名称 + k
+    新属性.标题 = 组件名称 + k
+    新属性.HTML = 组件html
+    store.当前拖拽组件数据 = 新属性
+
+  }
 
 }
 
