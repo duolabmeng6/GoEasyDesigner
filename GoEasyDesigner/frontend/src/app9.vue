@@ -284,21 +284,28 @@ async function 拖拽开始_自定义组件(event, item) {
     // console.log("自定义组件创建=============", JSON.stringify(新属性))
   }
 
-  const responseDefaultAttributes = await fetch(组件默认属性);
-  const dataDefaultAttributes = await responseDefaultAttributes.text();
+  try {
+    const responseDefaultAttributes = await fetch(组件默认属性);
+    const dataDefaultAttributes = await responseDefaultAttributes.text();
+    const blob = new Blob([dataDefaultAttributes], {type: 'application/javascript'});
+    const url = URL.createObjectURL(blob);
+    const module = await import(url);
+    const 新属性 = module.default;
+    // console.log("自定义组件默认属性", 新属性);
+    const responseHtml = await fetch(组件路径);
+    const 组件html = await responseHtml.text();
+    // console.log("自定义组件的html", 组件html);
+    创建自定义组件json(组件名称, 组件html, 新属性);
+  }catch (e){
+    //弹出饿了么的提示框
+    console.error(e)
+    ElMessage({
+      message: "自定义组件加载失败",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+  }
 
-  const blob = new Blob([dataDefaultAttributes], {type: 'application/javascript'});
-  const url = URL.createObjectURL(blob);
-
-  const module = await import(url);
-  const 新属性 = module.default;
-  // console.log("自定义组件默认属性", 新属性);
-
-  const responseHtml = await fetch(组件路径);
-  const 组件html = await responseHtml.text();
-  // console.log("自定义组件的html", 组件html);
-
-  创建自定义组件json(组件名称, 组件html, 新属性);
 
 }
 
