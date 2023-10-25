@@ -95,6 +95,10 @@ const getItemStyleShape = (item) => {
         style.backgroundPosition = item.backgroundPosition
         style.backgroundAttachment = item.backgroundAttachment
     }
+    if (item.fontSize !== undefined) {
+        item.fontSize = item.fontSize || 12;
+    }
+
     return style;
 };
 

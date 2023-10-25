@@ -105,6 +105,9 @@
   <el-form-item label="边框">
     <el-input v-model="props.item.border"/>
   </el-form-item>
+  <el-form-item label="字体大小">
+    <el-input v-model="props.item.fontSize"/>
+  </el-form-item>
 
 </template>
 <script setup>

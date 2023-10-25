@@ -67,12 +67,22 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item name="2" title="数据展示组件">
+            <el-collapse-item name="2" title="自定义组件">
+              <el-row>
+                <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
+                  <el-button class="full-width-button" draggable="true"
+                             style="width: 100%;"
+                             @dragstart="拖拽开始_自定义组件($event, item)"
+                  >
+                    {{ item.组件名称 }}
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+            <el-collapse-item name="3" title="数据展示组件">
 
             </el-collapse-item>
-            <el-collapse-item name="3" title="自定义组件">
 
-            </el-collapse-item>
           </el-collapse>
         </el-tab-pane>
       </el-tabs>
@@ -233,7 +243,7 @@ onMounted(() => {
     console.log('tailwindcss.com_3.3.3.js 加载完成')
     tailwind.config = {
       plugins: [
-        function ({ addBase }) {
+        function ({addBase}) {
           addBase({
             ".el-button": {
               "background-color": "var(--el-button-bg-color,var(--el-color-white))"
@@ -247,6 +257,17 @@ onMounted(() => {
 
 })
 
+function 拖拽开始_自定义组件(event, item) {
+  let 组件名称 = item.组件名称
+  let 组件路径 = item.组件路径
+  //读取 组件路径 如 ./自定义组件/流光边框/流光边框.vue的内容
+  fetch(组件路径)
+      .then(response => response.text())
+      .then(data => {
+        console.log("自定义组件数据",data);
+      })
+
+}
 
 function 拖拽开始(event, 组件名称) {
   let 新属性 = ""

@@ -93,6 +93,16 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+// 检索 ./自定义组件/流光边框/* 所有文件夹名称
+let 自定义组件名称列表 = []
+自定义组件名称列表.push({
+    组件名称 : "流光边框",
+    组件路径 : "./自定义组件/流光边框/流光边框.vue",
+})
+console.log("自定义组件名称列表",自定义组件名称列表)
+app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
+
+
 app.use(VueMonacoEditorPlugin, {
     paths: {
         // The default CDN config
