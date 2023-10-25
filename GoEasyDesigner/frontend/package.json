@@ -12,7 +12,6 @@
     "element-plus": "^2.3.14",
     "monaco-editor": "0.38.0",
     "pinia": "^2.1.6",
-    "pinyin": "^3.0.0-alpha.5",
     "pinyin-pro": "^3.16.3",
     "uuid": "^9.0.1",
     "vue": "^3.3.4",
