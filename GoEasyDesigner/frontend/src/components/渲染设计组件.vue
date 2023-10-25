@@ -71,6 +71,10 @@
       <template v-else-if="item.组件名称=='弹性布局'">
         <component is="弹性布局" :item="item"/>
       </template>
+      <template v-else-if="item.组件名称=='自定义组件'">
+        <component is="自定义组件" :item="item"/>
+
+      </template>
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
         <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
@@ -200,7 +204,6 @@ async function 拖拽放下(event, v) {
     return;
   }
 
-
   // 获取当前鼠标相对于当前元素的相对位置
   let x = event.offsetX;
   let y = event.offsetY;
@@ -241,12 +244,9 @@ async function 拖拽放下(event, v) {
 
   store.历史记录管理器实例.记录(JSON.stringify(store.list))
 
-
   // console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
   store.当前组件索引 = store.当前拖拽组件数据.id
-  await nextTick()
-
 
 }
 
@@ -259,7 +259,7 @@ function 递归添加(源数据, 插入数据, 放置的容器名称) {
       if (item.id == 放置的容器名称) {
         // console.log("找到了", item.子组件)
         // 递归添加(item.子组件, 插入数据, "abc")
-        item.子组件 = [插入数据, ...item.子组件]
+        item.子组件 = [...item.子组件,插入数据 ]
 
       } else {
         递归添加(item.子组件, 插入数据, 放置的容器名称)

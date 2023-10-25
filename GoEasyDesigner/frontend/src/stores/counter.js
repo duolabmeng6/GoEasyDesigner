@@ -177,7 +177,7 @@ export const useCounterStore = defineStore('counter', {
         },
 
         当前组件名称2() {
-            console.log("this.当前拖拽组件数据.组件名称", this.当前拖拽组件数据.组件名称)
+            // console.log("this.当前拖拽组件数据.组件名称", this.当前拖拽组件数据.组件名称)
             if (this.当前拖拽组件数据.组件名称 == "窗口") {
                 return "窗口属性"
             }
@@ -185,13 +185,13 @@ export const useCounterStore = defineStore('counter', {
         },
 
         获取索引(名称) {
-            console.log(this.indexMap[名称])
+            // console.log(this.indexMap[名称])
             if (this.indexMap[名称] === undefined) {
                 this.indexMap[名称] = 1;
             } else {
                 this.indexMap[名称]++;
             }
-            console.log("获取索引", 名称, this.indexMap[名称], this.indexMap)
+            // console.log("获取索引", 名称, this.indexMap[名称], this.indexMap)
             return this.indexMap[名称];
         },
         获取随机id() {

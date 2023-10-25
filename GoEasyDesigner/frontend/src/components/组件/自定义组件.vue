@@ -3,77 +3,33 @@
 </template>
 
 <script setup>
+import {ref,nextTick} from 'vue';
 import {loadModule} from 'vue3-sfc-loader/dist/vue3-sfc-loader.js';
-import {onMounted, ref, watch} from 'vue';
 
 const remote = ref(null);
 const {item} = defineProps(['item']);
 const emits = defineEmits(["CustomEvent"]);
-let currentComponent = null;
-onMounted(() => {
-  loadComponent();
-});
 
-// Watch for changes in item.HTML
-watch(() => item.HTML, () => {
-  unloadComponent();
-  loadComponent();
-});
-
-async function unloadComponent() {
-  if (currentComponent) {
-    currentComponent = null;
-  }
-}
+loadComponent();
 
 async function loadComponent() {
-  const sfcContent = item.HTML
-  //从 item.HTML 提取 <style scoped></style> 的内容 如果不存在就给一个空的
-  const style = sfcContent.match(/<style scoped>([\s\S]*)<\/style>/)?.[1] || "";
-
-
-  const tailwindCSS = `
-    @import 'tailwindcss/base';
-    @import 'tailwindcss/components';
-    @import 'tailwindcss/utilities';
-    /* Add additional Tailwind CSS customization here */
-  ` + style;
-  console.log("tailwindCSS", tailwindCSS)
+  const style = item.HTML.match(/<style scoped>([\s\S]*)<\/style>/)?.[1] || "";
+  const 自定义css = style;
   const Vue = await import('vue');
 
-  // const options = {
-  //
-  //   moduleCache: {
-  //     vue: Vue,
-  //   },
-  //   getFile(url) {
-  //     if (url === '/myPugComponent.vue') {
-  //       console.log("url", url)
-  //       if (url.endsWith('.css')) {
-  //         // Return the Tailwind CSS content
-  //         return Promise.resolve(tailwindCSS);
-  //       } else {
-  //         // Return the Vue component content
-  //         return Promise.resolve(sfcContent);
-  //       }
-  //     }
-  //   },
-  //   addStyle: () => {
-  //   },
-  // };
-
-  const config = {
-    files: {
-      '/style.css': tailwindCSS,
-      '/myPugComponent.vue': sfcContent
-    }
-  };
+  let ComponentName = "/" + item.名称 + "Component.vue";
   const options = {
-    moduleCache: { vue: Vue },
-    getFile: url => config.files[url],
+    moduleCache: {vue: Vue},
+    async getFile(url) {
+      if (url === ComponentName) {
+        return Promise.resolve(item.HTML);
+      }
+      if (url === '/style.css') {
+        return Promise.resolve(自定义css);
+      }
+    },
     addStyle(textContent) {
-
-      const style = Object.assign(document.createElement('style'), { textContent });
+      const style = Object.assign(document.createElement('style'), {textContent});
       const ref = document.head.getElementsByTagName('style')[0] || null;
       document.head.insertBefore(style, ref);
     },
@@ -85,14 +41,9 @@ async function loadComponent() {
       }
     },
   }
-
-  const loadedModule = await loadModule('/myPugComponent.vue', options);
-
-  // Assuming the loaded module contains a default export that is a Vue component
-  // You might need to adjust this based on your component structure
-  remote.value = loadedModule.default || loadedModule;
-  currentComponent = remote.value;
+  remote.value = await loadModule(ComponentName, options);
 }
+
 
 function onCustomEvent(name, data) {
   console.log("收到自定义事件", "事件名称", name, "数据", data);

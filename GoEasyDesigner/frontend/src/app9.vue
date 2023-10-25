@@ -257,25 +257,18 @@ onMounted(() => {
 
 })
 
-function 拖拽开始_自定义组件(event, item) {
+async function 拖拽开始_自定义组件(event, item) {
   let 组件名称 = item.组件名称
   let 组件路径 = item.组件路径
-  //读取 组件路径 如 ./自定义组件/流光边框/流光边框.vue的内容
-  fetch(组件路径)
-      .then(response => response.text())
-      .then(data => {
-        console.log("自定义组件数据",data);
-        创建自定义组件json(组件名称, data)
-      })
-
-  function 创建自定义组件json(组件名称,组件html){
-    let 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
+  let 组件默认属性 = item.组件默认属性
+  function 创建自定义组件json(组件名称, 组件html, 新属性) {
+    // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
     let k = store.获取索引(组件名称)
     新属性.id = store.获取随机id()
     //避免名称重复导致后续代码出问题
     for (let i = 0; i < 100; i++) {
       let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
-      console.log("名称是否存在", 名称是否存在)
+      // console.log("名称是否存在", 名称是否存在)
       if (名称是否存在) {
         k = store.获取索引(组件名称)
       } else {
@@ -287,8 +280,24 @@ function 拖拽开始_自定义组件(event, item) {
     新属性.标题 = 组件名称 + k
     新属性.HTML = 组件html
     store.当前拖拽组件数据 = 新属性
-
+    // console.log("自定义组件创建=============", JSON.stringify(新属性))
   }
+
+  const responseDefaultAttributes = await fetch(组件默认属性);
+  const dataDefaultAttributes = await responseDefaultAttributes.text();
+
+  const blob = new Blob([dataDefaultAttributes], {type: 'application/javascript'});
+  const url = URL.createObjectURL(blob);
+
+  const module = await import(url);
+  const 新属性 = module.default;
+  // console.log("自定义组件默认属性", 新属性);
+
+  const responseHtml = await fetch(组件路径);
+  const 组件html = await responseHtml.text();
+  // console.log("自定义组件的html", 组件html);
+
+  创建自定义组件json(组件名称, 组件html, 新属性);
 
 }
 
@@ -318,7 +327,7 @@ function 拖拽开始(event, 组件名称) {
   //避免名称重复导致后续代码出问题
   for (let i = 0; i < 100; i++) {
     let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
-    console.log("名称是否存在", 名称是否存在)
+    // console.log("名称是否存在", 名称是否存在)
     if (名称是否存在) {
       k = store.获取索引(组件名称)
     } else {
