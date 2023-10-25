@@ -36,12 +36,13 @@ const getItemStyle2 = (item) => {
     // }
 
     const designer = document.getElementById("designer");
-    let rect_designer = designer.getBoundingClientRect();
+    let rect_designer = {}
     if (designer) {
         rect_designer = designer.getBoundingClientRect();
-        // style.top = parseInt(style.top) + rect_designer.top + "px";
-        // style.left = parseInt(style.left) + rect_designer.left + "px";
+    }else{
+        return style
     }
+
     const element = document.querySelector(`[data-id="${item.data_id}"]`);
     if (element) {
         //获取元素在浏览器中的绝对位置

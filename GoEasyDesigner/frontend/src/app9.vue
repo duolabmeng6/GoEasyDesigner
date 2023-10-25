@@ -264,6 +264,7 @@ async function 拖拽开始_自定义组件(event, item) {
   function 创建自定义组件json(组件名称, 组件html, 新属性) {
     // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
     let k = store.获取索引(组件名称)
+
     新属性.id = store.获取随机id()
     //避免名称重复导致后续代码出问题
     for (let i = 0; i < 100; i++) {

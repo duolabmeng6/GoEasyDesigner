@@ -15,7 +15,6 @@ import {BrowserOpenURL, EventsOn} from "../../wailsjs/runtime";
 export const appAction = {};
 let store = {}; // 我想在这里作类型标注 useCounterStore()怎么处理怎么写
 appAction.init = function () {
-    console.log("abc")
     appAction.store = useCounterStore()
     store = useCounterStore()
 }
