@@ -7,9 +7,11 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
+    HTML: "",
     data: {
         username: 'admin',
         password: 'admin',
+        password_error_msg: '',
+        username_error_msg: '',
     },
-    HTML: ""
 }

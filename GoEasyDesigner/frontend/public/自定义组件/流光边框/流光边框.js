@@ -11,6 +11,7 @@ export default {
     fontSize: "24px",
     data:{
         background: '#000000',
+        title: "流光边框",
     },
     html:""
 }

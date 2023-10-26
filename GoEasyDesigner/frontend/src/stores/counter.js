@@ -1,11 +1,11 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E保存, E保存件对话框, E发送跳转代码到ide, E文件枚举, E读入文件} from "../../wailsjs/go/main/App";
+import {E保存, E发送跳转代码到ide, E文件枚举, E读入文件} from "../../wailsjs/go/main/App";
 import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
-import {InsertCode, 取父目录, 生成辅助代码} from "@/public.js";
+import {InsertCode} from "@/public.js";
 import {appAction} from '@/action/app9.js';
 import {历史记录管理器实例} from '@/stores/历史记录管理器.js';
 
@@ -48,11 +48,11 @@ export const useCounterStore = defineStore('counter', {
             组件列表tree现行选中项: ref(""),
             组件列表tree: ref([]),
             scrollContainer: ref(null),
-            releases_latest:{},//github的文件信息
-            window下载地址:"",//github的文件信息
-            mac下载地址:"",//github的文件信息
-            版本号:"",//github的文件信息
-            是否为window系统:true,//github的文件信息
+            releases_latest: {},//github的文件信息
+            window下载地址: "",//github的文件信息
+            mac下载地址: "",//github的文件信息
+            版本号: "",//github的文件信息
+            是否为window系统: true,//github的文件信息
             历史记录管理器实例: 历史记录管理器实例
 
         }
@@ -60,7 +60,7 @@ export const useCounterStore = defineStore('counter', {
 
     actions: {
 
-        添加事件被选择(事件名称, item) {
+        添加事件被选择(事件名称, item, extData) {
             let dthis = this;
             if (事件名称 == "在此处选择加入事件处理函数") {
                 return
@@ -69,13 +69,23 @@ export const useCounterStore = defineStore('counter', {
                 this.代码编辑器内容 = 窗口事件代码模板
             }
             let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
-            console.log("添加事件被选择", item.名称 + 事件名称)
+            console.log("添加事件被选择", item.名称 + 事件名称, item,extData)
             eval(code)
-            let ncode = `
+            let ncode = '';
+            if (extData == undefined) {
+                ncode = `
     c.{事件名称} = function () {
         console.log("{事件名称}")
     }
 `;
+            } else {
+                ncode = `
+    c.{事件名称} = ` + extData + ` {
+        console.log("{事件名称}")
+    }
+`;
+            }
+
             ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
             console.log(ncode)
 
@@ -127,7 +137,10 @@ export const useCounterStore = defineStore('counter', {
 
         组件双击事件(组件数据) {
             // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
-            this.添加事件被选择(this.全局_事件名称列表[1].value, 组件数据)
+            let 事件名称 = this.全局_事件名称列表[1].value
+            let ext_data = this.全局_事件名称列表[1].ext_data
+
+            this.添加事件被选择(事件名称, 组件数据,ext_data)
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
@@ -202,11 +215,11 @@ export const useCounterStore = defineStore('counter', {
         },
 
 
-        递归删除id(源数据,id){
+        递归删除id(源数据, id) {
             // this.历史记录管理器实例.记录(JSON.stringify(this.list))
             this.历史记录管理器实例.记录(JSON.stringify(this.list))
 
-            this.__递归删除id(源数据,id)
+            this.__递归删除id(源数据, id)
             this.当前组件索引 = "1"
             this.当前拖拽组件数据 = this.组件通过id查找结构("1")
             this.取组件列表()

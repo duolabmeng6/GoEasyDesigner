@@ -8,7 +8,8 @@
     background: item.data.background
         }">
       <p class="z-20 animate-textclip bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-[200%_auto] bg-clip-text text-center font-black text-transparent">
-        流光边框</p>
+        {{item.data.title}}
+      </p>
     </div>
     <div
         class="absolute left-[-250%] top-[-250%] h-[600%] w-[600%] animate-spin bg-[conic-gradient(teal,purple,orange)]"></div>
@@ -39,13 +40,10 @@ console.log("自定义组件数据", item);
 const emits = defineEmits(["CustomEvent"]);
 console.log("自定义组件事件", emits);
 
-if (item.data.background == undefined) {
-  item.data.background = "#000000"
-}
-
 function onSendEvent(name, data) {
   console.log("自定义组件", name, "发送数据", item.data);
   emits("CustomEvent", name, data);
 }
+
 
 </script>

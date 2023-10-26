@@ -19,7 +19,6 @@
             <component :is="store.当前组件名称2()"
                        v-if="store.当前拖拽组件数据 != undefined"
                        :item="store.当前拖拽组件数据"
-
             />
           </div>
         </el-tab-pane>
@@ -277,6 +276,7 @@ async function 拖拽开始_自定义组件(event, item) {
       }
     }
     新属性.组件名称 = '自定义组件'
+    新属性.自定义组件名称 = 组件名称
     新属性.名称 = 组件名称 + k
     新属性.标题 = 组件名称 + k
     新属性.HTML = 组件html

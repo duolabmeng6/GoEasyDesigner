@@ -7,21 +7,23 @@
     >
       <component is="公用属性" :item="item"/>
       <el-form-item label="HTML模板">
-
         <el-button @click="打开修改数据对话框(props.item.HTML,'HTML')">编辑</el-button>
-
       </el-form-item>
-      <el-form-item label="data">
+      <el-form-item label="data 数据格式">
         <el-input :autosize="{ minRows: 2, maxRows: 4 }"
                   :value="objectToJson(item.data)"
                   type="textarea"
         />
       </el-form-item>
     </el-form>
-  </div>
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
 
-  <!-- Define an edit dialog -->
+    <component :is="remote" :item="props.item"/>
+
+  </div>
+  <div id="事件选择器">
+    <component v-if="!remote" is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  </div>
+
   <teleport to="body">
     <el-dialog v-model="显示修改数据对话框状态" title="编辑HTML数据"
     >
@@ -33,11 +35,13 @@
     </el-dialog>
   </teleport>
 
+
 </template>
 <script setup>
 import {defineEmits, defineProps, ref} from "vue";
 
 import {useCounterStore} from '@/stores/counter'
+import {loadModule} from "vue3-sfc-loader";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
@@ -46,21 +50,9 @@ const store = useCounterStore()
 const 显示修改数据对话框状态 = ref(false);
 const editedJSON = ref(JSON.stringify(props.item.表头, null, 2));
 
-let 表格布局选项 = ref([
-  {"label": "固定", "value": "fixed"},
-  {"label": "自动", "value": "auto"},
-]);
-
-let 标签位置选项 = ref([
-  {"label": "左侧", "value": "left"},
-  {"label": "右侧", "value": "right"},
-  {"label": "顶部", "value": "top"},
-  {"label": "底部", "value": "bottom"},
-]);
-
 let 事件名称 = ref([
   {"label": "在此处选择加入事件处理函数", "value": "在此处选择加入事件处理函数"},
-  {"label": "自定义事件", "value": "自定义事件"},
+  {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   {"label": "被单击", "value": "被单击"},
   {"label": "鼠标左键被按下", "value": "鼠标左键被按下"},
   {"label": "鼠标左键被放开", "value": "鼠标左键被放开"},
@@ -74,7 +66,6 @@ let 事件名称 = ref([
   {"label": "放开某键", "value": "放开某键"},
   {"label": "滚轮被滚动", "value": "滚轮被滚动"}
 ])
-
 
 let valueName = ""
 
@@ -91,6 +82,7 @@ function 保存编辑的HTML数据() {
   显示修改数据对话框状态.value = false;
 
 }
+
 function objectToJson(object) {
   try {
     return JSON.stringify(object, null, 2)
@@ -99,4 +91,57 @@ function objectToJson(object) {
     return object
   }
 }
+
+//动态加载自定义组件的属性框
+const remote = ref(null);
+
+
+loadComponent();
+
+async function loadComponent() {
+  let 属性框html = ""
+  try {
+    const responseHtml = await fetch("./自定义组件/" + props.item.自定义组件名称 + "/" + props.item.自定义组件名称 + "属性.vue");
+    属性框html = await responseHtml.text();
+    console.log("属性框html", 属性框html)
+    if (属性框html == "") {
+      console.log("加载自定义组件属性框失败")
+      return
+    }
+  } catch (e) {
+    console.log("加载自定义组件属性框失败", e)
+    return
+  }
+
+  const Vue = await import('vue');
+
+
+  let ComponentName = "/" + props.item.自定义组件名称 + "Component.vue";
+  const options = {
+    moduleCache: {vue: Vue},
+    async getFile(url) {
+      if (url === ComponentName) {
+        return Promise.resolve(属性框html);
+      }
+      if (url === '/style.css') {
+        return Promise.resolve(自定义css);
+      }
+    },
+    addStyle(textContent) {
+      const style = Object.assign(document.createElement('style'), {textContent});
+      const ref = document.head.getElementsByTagName('style')[0] || null;
+      document.head.insertBefore(style, ref);
+    },
+    handleModule: async function (type, getContentData, path, options) {
+      switch (type) {
+        case '.css':
+          options.addStyle(await getContentData(false));
+          return null;
+      }
+    },
+  }
+  remote.value = await loadModule(ComponentName, options);
+}
+
+
 </script>

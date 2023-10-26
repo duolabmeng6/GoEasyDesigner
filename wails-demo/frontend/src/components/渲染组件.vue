@@ -81,7 +81,9 @@ const vDemo = {
 const onCustomEvent = (name, data, item) => {
   console.log("收到自定义事件", "事件名称", name, "数据", data);
 
-  let 最终事件名称 = item.名称 + "自定义事件"
+  // let 最终事件名称 = item.名称 + "自定义事件"
+  let 最终事件名称 = item.名称 + name
+  console.log("最终事件名称", 最终事件名称)
   var 动态函数 = undefined
   try{
     eval(`动态函数 = store.${最终事件名称}`)

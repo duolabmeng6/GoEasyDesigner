@@ -30,11 +30,17 @@ import {useCounterStore} from '@/stores/counter'
 const store = useCounterStore()
 let 当前选择的事件名称 = ref('在此处选择加入事件处理函数')
 const 组件事件被选择 = function () {
+  // 这里需要帮助 我需要获取到 当前选择的 ext_data   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
+  // 获取当前选择事件的 ext_data
   const Name = 当前选择的事件名称.value;
   console.log('添加事件被选择', Name + props.item.名称);
+  const selectedEvent = props.事件名称.find(item => item.value === Name);
+  const extData = selectedEvent ? selectedEvent.ext_data : null;
+  console.log('当前选择的 ext_data', extData);
+
   当前选择的事件名称.value = '在此处选择加入事件处理函数'
-  // emits("添加事件被选择", Name, props.item);
-  store.添加事件被选择(Name, props.item)
+  emits("添加事件被选择", Name, props.item);
+  store.添加事件被选择(Name, props.item, extData)
 }
 store.全局_事件名称列表 = props.事件名称
 
