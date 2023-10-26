@@ -69,6 +69,9 @@
       <template v-else-if="item.组件名称=='选择夹'">
         <component is="选择夹" :item="item"/>
       </template>
+      <template v-else-if="item.组件名称=='选择夹tw'">
+        <component is="选择夹tw" :item="item"/>
+      </template>
       <template v-else-if="item.组件名称=='常用布局'">
         <component is="常用布局" :item="item"/>
       </template>
