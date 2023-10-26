@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import {ref,nextTick} from 'vue';
+import {ref, watch} from 'vue';
 import {loadModule} from 'vue3-sfc-loader/dist/vue3-sfc-loader.js';
 
 const remote = ref(null);
@@ -11,11 +11,25 @@ const {item} = defineProps(['item']);
 const emits = defineEmits(["CustomEvent"]);
 
 loadComponent();
+//创建监听 item.HTML 重新渲染
+watch(() => item.HTML, () => {
+  loadComponent();
+});
 
 async function loadComponent() {
-  const style = item.HTML.match(/<style scoped>([\s\S]*)<\/style>/)?.[1] || "";
+  let style = item.HTML.match(/<style scoped>([\s\S]*)<\/style>/)?.[1] || "";
+  if (style === "") {
+    style = item.HTML.match(/<style>([\s\S]*)<\/style>/)?.[1] || "";
+  }
   const 自定义css = style;
+  //如果 item.HTML 没有 <template> 标签，就添加一个
+  if (item.HTML.indexOf("<template>") === -1) {
+    //将 <template> 欻人到开头 将 </template>插入到 <style>前面
+    item.HTML = item.HTML.replace(/([\s\S]*)<style>/, "<template>\n$1\n</template>\n\n<style>");
+  }
+
   const Vue = await import('vue');
+
 
   let ComponentName = "/" + item.名称 + "Component.vue";
   const options = {
