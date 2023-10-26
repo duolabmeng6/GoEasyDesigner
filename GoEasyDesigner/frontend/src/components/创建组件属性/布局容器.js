@@ -8,5 +8,7 @@ export default {
     height: "200",
     background: "#fff",
     层级: 0,
+    y轴滚动模式选项: "visible",
+    x轴滚动模式选项: "visible",
     子组件:[]
 }

@@ -24,6 +24,10 @@
       :style="getItemStyleShape(item)"
   >
     <div
+        :style="{
+              overflowY: item.y轴滚动模式选项 || 'visible',
+              overflowX: item.x轴滚动模式选项 || 'visible'
+        }"
         v-show="item.可视"
         :id="item.名称"
         :class="{ 'disabled': item.禁用 }"
@@ -84,16 +88,15 @@
 </template>
 
 <script setup>
-import {defineProps, nextTick, watch, onUnmounted, onMounted, onUpdated, onBeforeUpdate} from 'vue';
-
-const {item} = defineProps(['item']);
+import {defineProps, nextTick, watch} from 'vue';
 import {useCounterStore} from '@/stores/counter'
 import Shape from "@/components/Shape.vue";
-import {getItemStyle, getItemStyle2, getItemStyleShape} from "@/public";
+import {getItemStyle2, getItemStyleShape} from "@/public";
+import {v4 as uuidv4} from 'uuid';
+
+const {item} = defineProps(['item']);
 
 const store = useCounterStore()
-
-import {v4 as uuidv4} from 'uuid';
 
 // 动态创建临时的canvas元素
 var tempCanvas = document.createElement("canvas");
@@ -235,7 +238,7 @@ async function 拖拽放下(event, v) {
   store.当前拖拽组件数据.left = x
   store.当前拖拽组件数据.top = y
 
-  store.历史记录管理器实例.记录( JSON.stringify(store.list))
+  store.历史记录管理器实例.记录(JSON.stringify(store.list))
 
   递归删除(store.list, store.当前拖拽组件数据.id)
   await nextTick()
@@ -259,7 +262,7 @@ function 递归添加(源数据, 插入数据, 放置的容器名称) {
       if (item.id == 放置的容器名称) {
         // console.log("找到了", item.子组件)
         // 递归添加(item.子组件, 插入数据, "abc")
-        item.子组件 = [...item.子组件,插入数据 ]
+        item.子组件 = [...item.子组件, 插入数据]
 
       } else {
         递归添加(item.子组件, 插入数据, 放置的容器名称)
@@ -348,7 +351,7 @@ function generateUniqueId() {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+//overflow: hidden;
 
 }
 

@@ -4,6 +4,7 @@
            v-show="item.可视"
            v-bind:disabled="item.禁用"
            :tab-position="item.标签位置"
+           stretch="true"
   >
     <el-tab-pane
         v-for="(tabItem, tabItemIndex) in item.子组件"
@@ -31,8 +32,8 @@ export default {
 </script>
 <style>
 .el-tabs__content {
-  height: 100%;
   padding: 0 !important;
+  overflow: hidden;
 }
 .el-tabs__header.is-bottom{
   position: relative;

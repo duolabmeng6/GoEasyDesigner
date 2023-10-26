@@ -9,7 +9,7 @@
       <el-form-item label="HTML模板">
         <el-button @click="打开修改数据对话框(props.item.HTML,'HTML')">编辑</el-button>
       </el-form-item>
-      <el-form-item label="data 数据格式">
+      <el-form-item label="data 格式">
         <el-input :autosize="{ minRows: 2, maxRows: 4 }"
                   :value="objectToJson(item.data)"
                   type="textarea"

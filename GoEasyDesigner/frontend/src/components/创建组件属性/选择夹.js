@@ -8,6 +8,8 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
+    y轴滚动模式选项: "hidden",
+    x轴滚动模式选项: "hidden",
     风格类型: "border-card",
     标签位置: "top",
     子组件: [

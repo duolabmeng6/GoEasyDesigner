@@ -8,6 +8,10 @@
         v-demo="item"
         :class="{ 'disabled': item.禁用 }"
         class="子组件"
+        :style="{
+              overflowY: item.y轴滚动模式选项 || 'visible',
+              overflowX: item.x轴滚动模式选项 || 'visible'
+        }"
     >
       <template v-if="item.组件名称=='按钮'">
         <component is="按钮" :item="item"/>
@@ -102,7 +106,7 @@ const onCustomEvent = (name, data, item) => {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 .el-tabs {

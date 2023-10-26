@@ -7,12 +7,11 @@
         :style="{
     background: item.data.background
         }">
-      <p class="z-20 animate-textclip bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-[200%_auto] bg-clip-text text-center font-black text-transparent">
-        {{item.data.title}}
+      <p v-html="item.data.title" class="z-20 animate-textclip bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-[200%_auto] bg-clip-text text-center font-black text-transparent">
       </p>
     </div>
     <div
-        class="absolute left-[-250%] top-[-250%] h-[600%] w-[600%] animate-spin bg-[conic-gradient(teal,purple,orange)]"></div>
+        class="absolute left-[-450%] top-[-450%] h-[1000%] w-[1000%] animate-spin bg-[conic-gradient(teal,purple,orange)]"></div>
   </div>
 </template>
 <style scoped>

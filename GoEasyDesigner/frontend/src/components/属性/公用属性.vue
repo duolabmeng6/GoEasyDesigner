@@ -57,7 +57,7 @@
   </el-form-item>
   <el-form-item label="背景图片">
     <input ref="fileInput" type="file" style="display: none" @change="handleFileChange"/>
-<!--    <el-input v-model="props.item.图片"/>-->
+    <!--    <el-input v-model="props.item.图片"/>-->
     <el-button @click="triggerFileInput">选择图片</el-button>
     <el-button @click="clearImage">清除</el-button>
   </el-form-item>
@@ -107,6 +107,27 @@
   </el-form-item>
   <el-form-item label="字体大小">
     <el-input v-model="props.item.fontSize"/>
+  </el-form-item>
+
+  <el-form-item label="y轴滚动模式">
+    <el-select v-model="props.item.y轴滚动模式选项" style="width: 100%">
+      <el-option
+          v-for="(item, index) in y轴滚动模式选项"
+          :key="item"
+          :label="item.label"
+          :value="item.value"
+      />
+    </el-select>
+  </el-form-item>
+  <el-form-item label="x轴滚动模式" >
+    <el-select v-model="props.item.x轴滚动模式选项" style="width: 100%">
+      <el-option
+          v-for="(item, index) in x轴滚动模式选项"
+          :key="item"
+          :label="item.label"
+          :value="item.value"
+      />
+    </el-select>
   </el-form-item>
 
 </template>
@@ -176,6 +197,18 @@ let 图片固定选项 = ref([
   {"label": "本地", "value": "local"},
 ]);
 
+let y轴滚动模式选项 = ref([
+  {"label": "超出显示", "value": "visible"},
+  {"label": "超出隐藏", "value": "hidden"},
+  {"label": "滚动显示", "value": "scroll"},
+  {"label": "自动适配", "value": "auto"},
+]);
+let x轴滚动模式选项 = ref([
+  {"label": "超出显示", "value": "visible"},
+  {"label": "超出隐藏", "value": "hidden"},
+  {"label": "滚动显示", "value": "scroll"},
+  {"label": "自动适配", "value": "auto"},
+]);
 const handleFileChange = (event) => {
   const file = event.target.files[0];
 

@@ -39,7 +39,7 @@ const getItemStyle2 = (item) => {
     let rect_designer = {}
     if (designer) {
         rect_designer = designer.getBoundingClientRect();
-    }else{
+    } else {
         return style
     }
 
