@@ -49,16 +49,16 @@
 
 画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js` 注意你的浏览器允许下载多个文件的权限
 
-下载本项目的代码 复制 `wails-demo` 文件夹作为开发项目
+下载本项目的代码 复制 `go-easy-demo` 文件夹作为开发项目
 
-`wails-demo/frontend/src/窗口/设计文件.json`
+`go-easy-demo/frontend/src/窗口/设计文件.json`
 
-`wails-demo/frontend/src/窗口/辅助代码.js`
+`go-easy-demo/frontend/src/窗口/辅助代码.js`
 
 运行项目 就可以看到你设计好的界面了.
 
 ```
-cd wails-demo
+cd go-easy-demo
 wails dev
 ```
 
@@ -73,7 +73,16 @@ wails dev
 [视频教程3分钟学会自定义组件封装](https://www.bilibili.com/video/BV1ar4y1f7Rq)
 
 
-### 1.安装 go 语言开发环境
+### 1.安装 node js语言开发环境
+
+[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
+
+国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
+
+安装vite `npm create vite@latest`
+
+
+### 2.安装 go 语言开发环境
 
 [go语言下载页面](https://golang.org/dl/) 版本任意
 
@@ -87,46 +96,46 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 
-### 2.安装 node js语言开发环境
+#### 创建窗口运行项目
+该项目为窗口运行的环境你的代码也将在这里编写
 
-[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
-
-国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
-
-安装vite `npm create vite@latest`
-
-
-### 3.下载本项目
-
-`GoEasyDesigner/wails-demo` 该目录为设计好的界面最终运行的环境你的代码也将在这里编写
-
-wails 同时调试前端和后端
-
+创建项目
 ```
-cd wails-demo
+wails init -n "go-easy-demo" -t https://github.com/duolabmeng6/wails-template-vue-go-easy
+```
+
+运行窗口
+```
+cd go-easy-demo
 wails dev
+```
+
+编译为可执行文件
+```
+cd go-easy-demo
+wails build
 ```
 
 仅调试前端
 
 ```
-cd wails-demo/frontend
+cd go-easy-demo/frontend
 npm run dev
 ```
 
-### 4.下载 GoEasyDesigner
+### 3.下载 GoEasyDesigner
 
 下载最新版本: https://github.com/duolabmeng6/GoEasyDesigner/releases
 
 直接运行即可
 
-设计好的界面数据保存在这里
+界面设计文件在这里
 
 ```
-wails-demo/frontend/src/窗口/设计文件.json
+go-easy-demo/frontend/src/窗口/设计文件.json
 ```
 
-### 5. webstorm IDE代码跳转插件
+### 4. webstorm IDE代码跳转插件
 
 想体验双击组件在ide中自动跳转到对应函数 请在webstorm中安装 QtEasyDesigner 插件,在本项目的文件中，
 
@@ -175,22 +184,22 @@ vite
 
 go工具实参 `-tags dev -gcflags "all=-N -l"`
 
-程序实参(可选) `文件路径=/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo/frontend/src/窗口/设计文件.json port=8080` 这是配合ide插件的port是插件的端口 
+程序实参(可选) `文件路径=/Users/ll/Documents/GitHub/GoEasyDesigner/go-easy-demo/frontend/src/窗口/设计文件.json port=8080` 这是配合ide插件的port是插件的端口 
 
 现在可以在 app.go 中下断点调试了.
 
-#### wails-demo 为模板项目
+#### go-easy-demo 为模板项目
 
 保存界面数据到这里
 
 ```
-wails-demo/frontend/src/窗口/设计文件.json
+go-easy-demo/frontend/src/窗口/设计文件.json
 ```
 
 运行 就可以看到效果了
 
 ```
-cd wails-demo
+cd go-easy-demo
 wails dev
 ```
 
