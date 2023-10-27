@@ -21,11 +21,13 @@
 
 - [x] 智能代码编辑器：实现了代码编辑框的汉字首字母输入提醒功能，提高了编码效率。
 
-- [x] goefun库支持：[goefun库](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles)，允许在Golang中使用中文函数进行开发。
+- [x] goefun库中文函数库支持：[goefun库](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles)，允许在Golang中使用中文函数进行开发。
 
-- [x] 布局容器改进：包括常用布局，弹性布局
+- [x] 布局容器：包括常用布局，弹性布局
 
 - [x] 已完成组件库：按钮 编辑框 标签 开关 单选框 多选框 常用布局 弹性布局 树形框 菜单 表格 进度条 选择夹
+- 
+- [x] 自定义动态组件 支持 登录框 之类的模板 快速应用开发
 
 待完成任务：
 - [ ] jsefun库支持：计划中，等待开发中。
@@ -38,6 +40,8 @@
 
 - [ ] 支持ElectronJS：计划中，将支持ElectronJS作为后端技术。
 
+- [ ] 自定义云组件 用户可以自己上传模板供其他用户使用
+- 
 我们将继续努力，确保项目按计划进行，并提供更多强大的功能和支持。请继续关注我们的进展！
 
 # 在线体验
@@ -47,22 +51,7 @@
 国内地址: https://go.kenhong.com/
 国外地址: https://g.yx24.me 
 
-画好界面点保存,会下载2个文件 `设计文件.json`,`辅助代码.js` 注意你的浏览器允许下载多个文件的权限
-
-下载本项目的代码 复制 `go-easy-demo` 文件夹作为开发项目
-
-`go-easy-demo/frontend/src/窗口/设计文件.json`
-
-`go-easy-demo/frontend/src/窗口/辅助代码.js`
-
-运行项目 就可以看到你设计好的界面了.
-
-```
-cd go-easy-demo
-wails dev
-```
-
-想要更好的无缝使用体验需要下载客户端程序.
+[下载窗口运行项目](https://github.com/duolabmeng6/wails-template-vue-go-easy),在线体验时在浏览器中画好界面保存,会下载2个文件 `设计文件.json`,`辅助代码.js` 注意你的浏览器允许下载多个文件的权限,将设计文件放到指定位置即可.
 
 # 快速上手
 
@@ -100,17 +89,20 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 该项目为窗口运行的环境你的代码也将在这里编写
 
 创建项目
+
 ```
 wails init -n "go-easy-demo" -t https://github.com/duolabmeng6/wails-template-vue-go-easy
 ```
 
 运行窗口
+
 ```
 cd go-easy-demo
 wails dev
 ```
 
 编译为可执行文件
+
 ```
 cd go-easy-demo
 wails build
@@ -158,22 +150,6 @@ go代码使用 goland IDE 编写 一般情况下代码写在 app.go 中
 
 ### 开发组件请看
 
-#### 运行 GoEasyDesigner
-
-wails 同时调试前端和后端
-
-```
-cd GoEasyDesigner
-wails dev
-```
-
-如果调试前端可以这样
-
-```
-cd GoEasyDesigner\frontend
-vite 
-```
-
 在ide中调试需要以下配置
 
 构建软件包 `changeme` 
@@ -190,7 +166,7 @@ go工具实参 `-tags dev -gcflags "all=-N -l"`
 
 #### go-easy-demo 为模板项目
 
-保存界面数据到这里
+界面数据在这里
 
 ```
 go-easy-demo/frontend/src/窗口/设计文件.json
