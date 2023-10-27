@@ -160,21 +160,28 @@ export default {
 
 
 </script>
-<style>
+<style scoped>
 .el-header {
-  --el-header-padding: 0px !important;
+  --el-header-padding: 0px;
+  height: auto;
 }
 
 .el-main {
-  --el-main-padding: 0px !important;
+  --el-main-padding: 0px;
+  height: auto;
+
 }
 
 .el-footer {
-  --el-footer-padding: 0px !important;
+  --el-footer-padding: 0px;
+  height: auto;
+
 }
 
 .el-aside {
-  --el-aside-padding: 0px !important;
+  --el-aside-padding: 0px;
+  height: auto;
+
 }
 
 </style>
