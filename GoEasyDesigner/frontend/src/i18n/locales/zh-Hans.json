@@ -11,6 +11,7 @@
     "edit_code": "编辑代码",
     "environmentCheck": "运行环境检测",
     "help": "帮助",
+    "helpDesc": "            窗口项目需要手动创建\n            <br>\n            在浏览器中仅可保存设计界面\n            <br>\n            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境",
     "help_info": "帮助信息",
     "inOperation": "运行中...",
     "language": "语言",
@@ -26,11 +27,10 @@
     "stopped": "已停止...",
     "support_library": "支持库",
     "system_components": "系统组件",
-    "updateCheck": "检查更新",
-    "helpDesc": "            窗口项目需要手动创建\n            <br>\n            在浏览器中仅可保存设计界面\n            <br>\n            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境"
-
+    "updateCheck": "检查更新"
   },
   "attr": {
+    "addEvent": "在此处选择加入事件处理函数",
     "backgroundColor": "背景颜色",
     "backgroundImage": "背景图片",
     "border": "边框",

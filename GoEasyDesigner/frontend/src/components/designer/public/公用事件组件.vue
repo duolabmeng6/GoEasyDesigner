@@ -23,6 +23,8 @@
 </template>
 <script setup>
 import {ref, defineProps, defineEmits,onMounted,onBeforeUnmount} from "vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
@@ -31,6 +33,8 @@ import {useAppStore} from '@/stores/appStore'
 
 const store = useAppStore()
 let 当前选择的事件名称 = ref('在此处选择加入事件处理函数')
+当前选择的事件名称.value = t('attr.addEvent')
+
 const 组件事件被选择 = function () {
   // 这里需要帮助 我需要获取到 当前选择的 ext_data   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   // 获取当前选择事件的 ext_data
