@@ -135,7 +135,7 @@
     </div>
     <div class="工具条 clear-select">
       <el-button-group class="" style="margin-left: -7px;">
-        <el-button :icon="Edit" @click="appAction.新建()">新建</el-button>
+        <el-button :icon="Edit" @click="appAction.新建()">{{ $t('app.new') }}</el-button>
         <el-button :icon="Open" @click="appAction.打开">打开</el-button>
         <el-button :icon="Coin" @click="appAction.保存设计文件()">保存</el-button>
         <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
@@ -147,7 +147,28 @@
         <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
         <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">下载客户端
         </el-button>
+
+        <el-dropdown>
+          <el-button type="">
+            语言 {{locale}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                  v-for="item in languages"
+                  :key="item"
+                  :class="{ 'is-active': item === locale }"
+                  @click="onclickLanguageHandle(item)"
+                  class="lang-item"
+              >{{ item }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
       </el-button-group>
+
+
+
     </div>
   </div>
   <component is="项目配置对话框" v-model="store.显示项目配置对话框" @确定="store.显示项目配置对话框=false"
@@ -169,6 +190,14 @@ const store = useAppStore()
 store.init()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
+
+import { useI18n } from "vue-i18n";
+
+const { t, availableLocales: languages, locale } = useI18n();
+
+const onclickLanguageHandle = (item) => {
+  item !== locale.value ? (locale.value = item) : false;
+};
 
 
 function 版本号自动检测() {

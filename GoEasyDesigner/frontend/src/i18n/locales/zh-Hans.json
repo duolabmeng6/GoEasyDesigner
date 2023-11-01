@@ -1,0 +1,14 @@
+{
+  "app": {
+    "new": "新建",
+    "open": "打开",
+    "save": "保存",
+    "run": "运行",
+    "compile": "编译",
+    "projectConfig": "项目配置",
+    "help": "帮助",
+    "environmentCheck": "运行环境检测",
+    "updateCheck": "检查更新",
+    "downloadClient": "下载客户端"
+  }
+}

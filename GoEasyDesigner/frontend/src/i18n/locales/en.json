@@ -1,0 +1,14 @@
+{
+  "app": {
+    "new": "New",
+    "open": "Open",
+    "save": "Save",
+    "run": "Run",
+    "compile": "Compile",
+    "projectConfig": "Project Config",
+    "help": "Help",
+    "environmentCheck": "Environment Check",
+    "updateCheck": "Update Check",
+    "downloadClient": "Download Client"
+  }
+}

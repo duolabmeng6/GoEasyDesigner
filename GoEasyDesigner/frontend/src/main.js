@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // import TDesign from 'tdesign-vue-next'
 // import 'tdesign-vue-next/es/style/index.css'
-
+import i18n from './i18n/index.js'
 
 // import App from './components/设计器组件/代码编辑器.vue'
 // import App from './测试代码编辑器.vue'
@@ -251,7 +251,7 @@ app.provide('BoxComponentDefaultValue_el', BoxComponentDefaultValue_el)
 await getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue'))
 
 
-// app.use(i18n)
+app.use(i18n)
 // app.use(TDesign)
 app.use(ElementPlus)
 app.mount('#app')
