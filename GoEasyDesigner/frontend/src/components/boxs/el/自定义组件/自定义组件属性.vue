@@ -40,13 +40,13 @@
 <script setup>
 import {defineEmits, defineProps, ref} from "vue";
 
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 import {loadModule} from "vue3-sfc-loader";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
 
-const store = useCounterStore()
+const store = useAppStore()
 const 显示修改数据对话框状态 = ref(false);
 const editedJSON = ref(JSON.stringify(props.item.表头, null, 2));
 

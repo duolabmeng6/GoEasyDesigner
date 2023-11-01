@@ -58,9 +58,9 @@ const props = defineProps(['item']);
 
 import {Delete} from "@element-plus/icons-vue";
 
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 
-const store = useCounterStore()
+const store = useAppStore()
 
 
 let 风格类型选项 = ref([

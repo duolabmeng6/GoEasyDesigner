@@ -56,9 +56,9 @@ import {Delete} from "@element-plus/icons-vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 
-const store = useCounterStore()
+const store = useAppStore()
 
 
 let 事件索引 = ref(0)

@@ -6,7 +6,7 @@ import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
 import {InsertCode} from "@/public.js";
-import {appAction} from '@/action/app9.js';
+import {appAction} from '@/action/app.js';
 import {历史记录管理器实例} from '@/stores/历史记录管理器.js';
 import {useI18n} from "vue-i18n";
 

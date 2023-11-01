@@ -199,44 +199,44 @@ app.config.warnHandler = function (msg, vm, trace) {
 
 //加载组件
 
-async function getBoxComponentNames(uiName, meta) {
+function getBoxComponentNames(uiName, meta) {
     let ComponentNames = []
     const componentsContext = meta;
 
-    const keys = await Promise.all(Object.keys(componentsContext).map(async (path) => {
+    const keys = Object.keys(componentsContext).map((path) => {
         const name = path.split('/').pop().replace(/\.\w+$/, '');
-        const module = await componentsContext[path]();
+        const module = componentsContext[path];
         //如果名称后面是 属性 或者是 Attr 就不要加入
         if (!(name.endsWith("属性") || name.endsWith("Attr"))) {
             ComponentNames.push(name)
         }
 
         // app.component(uiName +  name, module.default);
-        app.component( name, module.default);
-        console.log("注册组件",  name)
+        app.component(name, module.default);
+        console.log("注册组件", name)
         return name;
-    }));
+    });
 
     return ComponentNames;
 
 }
 
-async function getBoxComponentDefaultValue(uiName, meta) {
+function getBoxComponentDefaultValue(uiName, meta) {
     let ComponentDefaultValue = {}
     const componentsContext = meta;
 
-    const keys = await Promise.all(Object.keys(componentsContext).map(async (path) => {
+    const keys = Object.keys(componentsContext).map((path) => {
         const name = path.split('/').pop().replace(/\.\w+$/, '');
-        const module = await componentsContext[path]();
+        const module = componentsContext[path];
         ComponentDefaultValue[name] = module.default;
         return name;
-    }));
+    });
 
     return ComponentDefaultValue;
 }
 
 
-const BoxComponentNames_el = await getBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue'))
+const BoxComponentNames_el = getBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue',{ eager: true }))
 console.log("BoxComponentNames_el", BoxComponentNames_el)
 let ComponentNameOrder = ['按钮', '编辑框', '标签', '开关']
 ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el])]
@@ -244,11 +244,11 @@ ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el
 ComponentNameOrder = ComponentNameOrder.filter(item => item !== "布局容器")
 app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
 
-const BoxComponentDefaultValue_el = await getBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js'))
+const BoxComponentDefaultValue_el = getBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js',{ eager: true }))
 app.provide('BoxComponentDefaultValue_el', BoxComponentDefaultValue_el)
 
 //注册公用组件
-await getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue'))
+getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue',{ eager: true }))
 
 
 app.use(i18n)

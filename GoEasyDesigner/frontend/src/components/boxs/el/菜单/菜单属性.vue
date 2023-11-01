@@ -71,9 +71,9 @@ const props = defineProps(['item']);
 
 import {Delete, Plus, Edit} from "@element-plus/icons-vue";
 
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 
-const store = useCounterStore()
+const store = useAppStore()
 const filterText =  ref("");
 
 

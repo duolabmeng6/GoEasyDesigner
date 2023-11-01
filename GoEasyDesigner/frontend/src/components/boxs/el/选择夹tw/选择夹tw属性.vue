@@ -60,12 +60,12 @@
 import {defineEmits, defineProps, ref} from "vue";
 import {Delete} from "@element-plus/icons-vue";
 
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
 
-const store = useCounterStore()
+const store = useAppStore()
 
 
 let 风格类型选项 = ref([
