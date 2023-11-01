@@ -9,6 +9,7 @@ import {InsertCode} from "@/public.js";
 import {appAction} from '@/action/app.js';
 import {HistoryManagerLiving} from '@/stores/HistoryManager.js';
 import {useI18n} from "vue-i18n";
+import i18n from "../i18n";
 
 export const useAppStore = defineStore('AppStore', {
     state: () => {
@@ -54,18 +55,21 @@ export const useAppStore = defineStore('AppStore', {
             mac下载地址: "",//github的文件信息
             版本号: "",//github的文件信息
             是否为window系统: true,//github的文件信息
-            HistoryManager: HistoryManagerLiving
-
+            HistoryManager: HistoryManagerLiving,
         }
     },
 
     actions: {
-
         添加事件被选择(事件名称, item, extData) {
             let dthis = this;
-            if (事件名称 == "在此处选择加入事件处理函数") {
+            if (事件名称 == i18n.global.t('attr.addEvent')) {
                 return
             }
+            if(事件名称 == '在此处选择加入事件处理函数'){
+                return
+            }
+
+
             if (this.代码编辑器内容 == "") {
                 this.代码编辑器内容 = 窗口事件代码模板
             }

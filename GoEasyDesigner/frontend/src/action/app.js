@@ -14,16 +14,19 @@ import {BrowserOpenURL, EventsOn} from "../../wailsjs/runtime";
 
 export const appAction = {};
 let store = {}; // 我想在这里作类型标注 useAppStore()怎么处理怎么写
+let t = {}
 appAction.init = function () {
     appAction.store = useAppStore()
     store = useAppStore()
+    t = useI18n().t
+
 }
 
 appAction.新建 = function () {
     function 创建窗口() {
         return {
             "id": "1",
-            "名称": "窗口",
+            "名称": t('componentName.窗口'),
             "组件名称": "窗口",
             "标题": "窗口",
             "top": "0",
@@ -105,8 +108,8 @@ try {
         store.调试信息 = store.调试信息 + "<br / >" + data
         store.scrollContainer.scrollTop = store.scrollContainer.scrollHeight;
         if (data == "命令已完成") {
-            store.运行按钮文本 =t("app.run");
-            store.编译按钮文本 =t("app.compile");
+            store.运行按钮文本 = t("app.run");
+            store.编译按钮文本 = t("app.compile");
 
         }
     })
@@ -207,14 +210,14 @@ appAction.运行 = function () {
     }
 
 
-    if (store.运行按钮文本 ==t("app.run")) {
+    if (store.运行按钮文本 == t("app.run")) {
         store.运行按钮文本 = t("app.stop")
         store.调试信息 = t("app.inOperation")
         store.选择夹_底部现行选中项 = "1"
         E运行命令(store.项目信息.项目根目录, "wails dev -nocolour")
     } else {
         store.调试信息 = t('app.stopped')
-        store.运行按钮文本 =t("app.run")
+        store.运行按钮文本 = t("app.run")
         E停止命令()
     }
 

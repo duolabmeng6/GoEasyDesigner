@@ -181,6 +181,10 @@ app.provide('BoxComponentDefaultValue_el', BoxComponentDefaultValue_el)
 //注册公用组件
 getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue',{ eager: true }))
 
+// 把i18n挂在到全局
+
+app.config.globalProperties.t = i18n.global.t
+
 
 app.use(i18n)
 // app.use(TDesign)

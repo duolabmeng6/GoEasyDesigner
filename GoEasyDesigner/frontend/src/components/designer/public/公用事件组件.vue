@@ -1,30 +1,37 @@
 <template>
-    <el-select ref="select" v-model="当前选择的事件名称"
-               class=""
-               placeholder="在此处选择加入事件处理函数"
-               size="large"
-               style="width: 100%"
-               @change="组件事件被选择">
-      <el-option
-          v-for="(item, index) in props.事件名称"
-          :key="index"
-          :label="item.label"
-          :value="item.value"
-      >
-        <span style="float: left">{{ item.label }}</span>
-        <el-button
-            v-if="props.item.hasOwnProperty(`事件${item.label}`)" size="small" style="float: right; margin-top: 4px"
-            @click.stop="delete props.item[`事件${item.label}`]"
-        >删除事件
-        </el-button>
-      </el-option>
-    </el-select>
+  <el-select ref="select" v-model="当前选择的事件名称"
+             class=""
+             size="large"
+             style="width: 100%"
+             @change="组件事件被选择">
+
+    <el-option
+        :label="t('attr.addEvent')"
+        :value="t('attr.addEvent')"
+    >
+      {{ $t('attr.addEvent') }}
+    </el-option>
+    <el-option
+        v-for="(item, index) in props.事件名称"
+        :key="index"
+        :label="$te('eventName.' + item.label) ? $t('eventName.' + item.label) : item.label"
+        :value="item.value"
+    >
+      <span style="float: left">{{ $te('eventName.' + item.label) ? $t('eventName.' + item.label) : item.label }}</span>
+      <el-button
+          v-if="props.item.hasOwnProperty(`事件${item.label}`)" size="small" style="float: right; margin-top: 4px"
+          @click.stop="delete props.item[`事件${item.label}`]"
+      >删除事件
+      </el-button>
+    </el-option>
+  </el-select>
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits,onMounted,onBeforeUnmount} from "vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+import {ref, defineProps, defineEmits, onMounted, onBeforeUnmount} from "vue";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
 
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
@@ -44,7 +51,7 @@ const 组件事件被选择 = function () {
   const extData = selectedEvent ? selectedEvent.ext_data : null;
   console.log('当前选择的 ext_data', extData);
 
-  当前选择的事件名称.value = '在此处选择加入事件处理函数'
+  当前选择的事件名称.value = t('attr.addEvent')
   emits("添加事件被选择", Name, props.item);
   store.添加事件被选择(Name, props.item, extData)
 }

@@ -48,6 +48,7 @@
     "zIndex": "zIndex"
   },
   "componentName": {
+    "窗口": "Window",
     "按钮": "Button",
     "编辑框": "Input",
     "单选框": "Radio",
@@ -64,5 +65,20 @@
     "进度条": "ProgressBar",
     "选择夹": "Tabs",
     "选择夹tw": "TabsTW"
+  },
+  "eventName": {
+    "创建完毕": "created",
+    "被单击": "click",
+    "鼠标左键被按下": "mousedown",
+    "鼠标左键被放开": "mouseup",
+    "被双击": "dblclick",
+    "鼠标右键被按下": "contextmenu",
+    "鼠标右键被放开": "contextmenu",
+    "鼠标位置被移动": "mousemove",
+    "获得焦点": "focus",
+    "失去焦点": "blur",
+    "按下某键": "keydown",
+    "放开某键": "keyup",
+    "滚轮被滚动": "mousewheel"
   }
 }

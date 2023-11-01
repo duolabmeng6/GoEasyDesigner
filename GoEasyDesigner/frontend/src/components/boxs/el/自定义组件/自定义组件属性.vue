@@ -51,7 +51,7 @@ const 显示修改数据对话框状态 = ref(false);
 const editedJSON = ref(JSON.stringify(props.item.表头, null, 2));
 
 let 事件名称 = ref([
-  {"label": "在此处选择加入事件处理函数", "value": "在此处选择加入事件处理函数"},
+
   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   {"label": "被单击", "value": "被单击"},
   {"label": "鼠标左键被按下", "value": "鼠标左键被按下"},
