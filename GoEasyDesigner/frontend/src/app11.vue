@@ -1,0 +1,496 @@
+<template>
+
+  <div class="app" style="margin: 0px 4px">
+    <div class="头部 "></div>
+    <div class="属性框 clear-select">
+      <el-tabs style="height: 100%" type="border-card">
+        <el-tab-pane label="属性" style="height: 100%;">
+          <div class="app2" style="margin: 8px 4px">
+            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
+              <el-tree-select
+                  v-model="store.当前组件索引"
+                  :data="store.组件列表tree"
+                  default-expand-all
+                  style="width: 100%;"
+                  @node-click="data=>组件树选中(data)"
+              />
+
+            </div>
+            <component :is="store.当前组件名称2()"
+                       v-if="store.当前拖拽组件数据 != undefined"
+                       :item="store.当前拖拽组件数据"
+            />
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="支持库">
+          <component is="支持库"/>
+        </el-tab-pane>
+        <el-tab-pane label="项目管理">
+          <component is="项目管理"/>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="设计区域">
+      <el-col :span="24" style="height: 100%">
+        <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
+          <el-tab-pane label="界面设计">
+            <div id="designer" style="position: relative;    margin: 8px;"
+            >
+              <component is="RenderDesignComponent" v-for="(item, index) in store.list" :key="index" :item="item"/>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="编辑代码">
+
+            <component is="代码编辑器" v-model:value="store.代码编辑器内容"
+                       height="100%"
+            />
+
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </div>
+    <div class="工具箱 clear-select">
+      <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
+        <el-tab-pane label="组件">
+          <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
+            <el-collapse-item name="1" title="系统组件">
+              <el-row>
+                <el-col v-for="(item, index) in BoxComponentNames_el" :span="24" style="margin-bottom: 8px">
+                  <el-button class="full-width-button" draggable="true"
+                             style="width: 100%;"
+                             @dragstart="拖拽开始($event, item,'el')"
+                  >
+                    {{ item }}
+                  </el-button>
+
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+            <el-collapse-item name="2" title="自定义组件">
+              <el-row>
+                <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
+                  <el-button class="full-width-button" draggable="true"
+                             style="width: 100%;"
+                             @dragstart="拖拽开始_自定义组件($event, item)"
+                  >
+                    {{ item.组件名称 }}
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+            <el-collapse-item name="3" title="数据展示组件">
+
+            </el-collapse-item>
+
+          </el-collapse>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="调试信息">
+      <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
+               type="border-card">
+        <el-tab-pane label="帮助信息">
+          <p v-if="!store.客户端模式">
+
+            窗口项目需要手动创建
+            <el-link href="https://gitee.com/duolabmeng666/go-easy-designer">前往查看运行窗口项目的创建教程 Github
+              GoEasyDesigner
+            </el-link>
+            <br>
+            在浏览器中仅可保存设计界面
+            <br>
+            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境
+
+            <el-link @click="appAction.下载客户端()">点击下载客户端</el-link>
+
+          </p>
+
+          <div ref="" style="height: 100px;overflow-y: auto"
+               v-html="store.帮助信息"
+          ></div>
+
+        </el-tab-pane>
+        <el-tab-pane label="调试信息">
+          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+               v-html="store.调试信息"
+          ></div>
+        </el-tab-pane>
+      </el-tabs>
+
+
+    </div>
+    <div class="备案信息" v-if="!store.客户端模式" style="    position: absolute;
+    bottom: 0;
+    left: 30%;">
+      <el-text>黔ICP备19002063号-4 贵公网安备 52230102000312号</el-text>
+    </div>
+    <div class="标题 clear-select">
+      <el-text size="large" style="">
+        <el-icon>
+          <Sunny/>
+        </el-icon>
+        窗口设计师
+        <el-text size="small">{{ store.版本号 }}</el-text>
+      </el-text>
+    </div>
+    <div class="工具条 clear-select">
+      <el-button-group class="" style="margin-left: -7px;">
+        <el-button :icon="Edit" @click="appAction.新建()">新建</el-button>
+        <el-button :icon="Open" @click="appAction.打开">打开</el-button>
+        <el-button :icon="Coin" @click="appAction.保存设计文件()">保存</el-button>
+        <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
+        <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
+        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
+        </el-button>
+        <el-button :icon="Help" @click="appAction.帮助()">帮助</el-button>
+        <el-button :icon="Help" @click="appAction.运行环境检测()">运行环境检测</el-button>
+        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
+        <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">下载客户端
+        </el-button>
+      </el-button-group>
+    </div>
+  </div>
+  <component is="项目配置对话框" v-model="store.显示项目配置对话框" @确定="store.显示项目配置对话框=false"
+             @关闭="store.显示项目配置对话框=false"></component>
+</template>
+
+<script setup>
+import {inject, onMounted, ref} from 'vue';
+import {useAppStore} from '@/stores/appStore'
+import {ElMessage} from "element-plus";
+import {Coin, Edit, Help, Key, Open, Tools} from "@element-plus/icons-vue";
+import {appAction} from '@/action/app.js';
+
+import {E保存, E取配置信息} from "../wailsjs/go/main/App";
+import releases_latest from '../public/releases_latest.json'
+
+
+const store = useAppStore()
+store.init()
+const 创建组件属性默认值 = inject("创建组件属性默认值")
+const scrollContainer = ref(null);
+
+
+function 版本号自动检测() {
+  function 版本信息(releases_latest) {
+    for (const asset of releases_latest[0].assets) {
+      // console.log(asset.name)
+      // console.log(asset.browser_download_url)
+      if (asset.name.includes(".exe")) {
+        store.window下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+      }
+      if (asset.name.includes(".dmg")) {
+        store.mac下载地址 = "https://ghproxy.com/" + asset.browser_download_url
+      }
+
+    }
+    store.版本号 = releases_latest[0].tag_name
+    store.releases_latest = releases_latest
+  }
+
+  版本信息(releases_latest)
+  //网络读取最新的
+  if (!store.客户端模式) {
+    fetch('./releases_latest.json')
+        .then(response => response.json())
+        .then(data => {
+          // 在这里处理获取到的数据
+          // console.log(data);
+          版本信息(data)
+        })
+        .catch(error => {
+          // 处理错误
+          console.error('Error fetching data:', error);
+        });
+  }
+}
+
+
+onMounted(() => {
+  store.scrollContainer = scrollContainer.value;
+  appAction.init()
+  appAction.新建()
+  store.取组件列表()
+  store.当前拖拽组件数据 = store.组件通过id查找结构("1")
+  try {
+    E取配置信息().then((res) => {
+      res = JSON.parse(res)
+      console.log("取配置信息", res)
+      store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
+      store.项目信息.设计文件路径 = res.设计文件路径
+      if (store.项目信息.设计文件路径 != "") {
+        appAction._打开文件加载界面(store.项目信息.设计文件路径)
+      }
+
+    })
+  } catch (e) {
+
+  }
+  console.log("store.当前组件索引", store.当前组件索引)
+  document.addEventListener("keydown", handleKeyDown);
+
+  setTimeout(() => {
+    store.bodyLoaded = true
+  }, 200)
+  版本号自动检测()
+
+
+  const script = document.createElement('script')
+  script.src = '/cdn.tailwindcss.com_3.3.3.js'
+  document.body.appendChild(script)
+  script.onload = () => {
+    console.log('tailwindcss.com_3.3.3.js 加载完成')
+    tailwind.config = {
+      plugins: [
+        function ({addBase}) {
+          addBase({
+            ".el-button": {
+              "background-color": "var(--el-button-bg-color,var(--el-color-white))"
+            }
+          });
+        }
+      ]
+    }
+  }
+
+
+})
+
+async function 拖拽开始_自定义组件(event, item) {
+  let 组件名称 = item.组件名称
+  let 组件路径 = item.组件路径
+  let 组件默认属性 = item.组件默认属性
+  function 创建自定义组件json(组件名称, 组件html, 新属性) {
+    // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
+    let k = store.获取索引(组件名称)
+
+    新属性.id = store.获取随机id()
+    //避免名称重复导致后续代码出问题
+    for (let i = 0; i < 100; i++) {
+      let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
+      // console.log("名称是否存在", 名称是否存在)
+      if (名称是否存在) {
+        k = store.获取索引(组件名称)
+      } else {
+        break
+      }
+    }
+    新属性.组件名称 = '自定义组件'
+    新属性.自定义组件名称 = 组件名称
+    新属性.名称 = 组件名称 + k
+    新属性.标题 = 组件名称 + k
+    新属性.HTML = 组件html
+    store.当前拖拽组件数据 = 新属性
+    // console.log("自定义组件创建=============", JSON.stringify(新属性))
+  }
+
+  try {
+    const responseDefaultAttributes = await fetch(组件默认属性);
+    const dataDefaultAttributes = await responseDefaultAttributes.text();
+    const blob = new Blob([dataDefaultAttributes], {type: 'application/javascript'});
+    const url = URL.createObjectURL(blob);
+    const module = await import(url);
+    const 新属性 = module.default;
+    // console.log("自定义组件默认属性", 新属性);
+    const responseHtml = await fetch(组件路径);
+    const 组件html = await responseHtml.text();
+    // console.log("自定义组件的html", 组件html);
+    创建自定义组件json(组件名称, 组件html, 新属性);
+  }catch (e){
+    //弹出饿了么的提示框
+    console.error(e)
+    ElMessage({
+      message: "自定义组件加载失败",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+  }
+
+
+}
+const BoxComponentDefaultValue_el = inject("BoxComponentDefaultValue_el")
+
+function 拖拽开始(event, 组件名称,uiName) {
+  let 新属性 = ""
+  try {
+    新属性 = JSON.parse(JSON.stringify(BoxComponentDefaultValue_el[组件名称]))
+    // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值[组件名称]))
+  } catch (e) {
+  }
+  if (新属性 == "") {
+    console.log("未配置默认属性")
+    //弹出提示
+    ElMessage({
+      message: "组件未配置默认属性",
+      type: 'success',
+      duration: 3000, // 设置显示时间为5秒，单位为毫秒
+    });
+    //阻止默认行为和停止事件
+    event.preventDefault()
+    event.stopPropagation()
+    return
+  }
+  let k = store.获取索引(组件名称)
+
+  新属性.id = store.获取随机id()
+
+  //避免名称重复导致后续代码出问题
+  for (let i = 0; i < 100; i++) {
+    let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
+    // console.log("名称是否存在", 名称是否存在)
+    if (名称是否存在) {
+      k = store.获取索引(组件名称)
+    } else {
+      break
+    }
+  }
+
+  新属性.组件名称 = 组件名称
+  新属性.名称 = 组件名称 + k
+  新属性.标题 = 组件名称 + k
+
+
+  if (组件名称 == "按钮") {
+  }
+  if (组件名称 == "布局容器") {
+    新属性.border = "1px solid black"
+  }
+  if (组件名称 == "选择夹") {
+    let id = 新属性.id
+    for (var i = 0; i < 2; i++) {
+      新属性.子组件[i].id = store.获取随机id()
+      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
+      新属性.子组件[i].标题 = "选项卡" + store.获取索引("选项卡")
+      新属性.子组件[i].父容器id = id
+    }
+  }
+  if (组件名称 == "开关") {
+  }
+  if (组件名称 == "编辑框") {
+    新属性.内容 = 新属性.标题
+  }
+
+  if (组件名称 == "弹性布局") {
+    let id = 新属性.id
+    for (var i = 0; i < 3; i++) {
+      新属性.子组件[i].id = store.获取随机id()
+      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
+      新属性.子组件[i].父容器id = id
+    }
+  }
+
+  if (组件名称 == "常用布局") {
+    let id = 新属性.id
+    var i = 0;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域header" + store.获取索引("内容区域header")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域main" + store.获取索引("内容区域main")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域footer" + store.获取索引("内容区域footer")
+    新属性.子组件[i].父容器id = id
+    i++;
+    新属性.子组件[i].id = store.获取随机id()
+    新属性.子组件[i].名称 = "内容区域aside" + store.获取索引("内容区域aside")
+    新属性.子组件[i].父容器id = id
+    i++;
+  }
+
+  store.当前拖拽组件数据 = 新属性
+}
+
+function handleKeyDown(event) {
+  // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
+  console.log("按下某键盘", event.key)
+  // 键盘按下(event, store.当前组件索引)
+  if (event.key === "Delete") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了删除 Delete", store.当前拖拽组件数据);
+
+    store.递归删除id(store.list, store.当前组件索引)
+
+
+  }
+  if ((event.metaKey || event.ctrlKey) && event.key === "z") {
+    //撤销
+    console.log("撤销");
+    //屏蔽浏览器默认行为
+    event.preventDefault();
+
+    // console.log("store.历史记录管理器实例.查看当前历史所有记录()", store.历史记录管理器实例.查看当前历史所有记录())
+    // console.log("store.历史记录管理器实例.当前位置()", store.历史记录管理器实例.当前位置)
+
+
+    let 旧的数据 = store.历史记录管理器实例.撤销(JSON.stringify(store.list))
+    // console.log("旧的数据", 旧的数据)
+    if (旧的数据 == null || 旧的数据 == undefined) {
+      return
+    }
+
+    store.list = JSON.parse(旧的数据)
+
+  }
+  if ((event.metaKey || event.ctrlKey) && event.key === "y") {
+    //恢复
+    console.log("恢复");
+    event.preventDefault();
+    let 旧的数据 = store.历史记录管理器实例.恢复(JSON.stringify(store.list))
+    // console.log("旧的数据", 旧的数据)
+    if (旧的数据 == null || 旧的数据 == undefined) {
+      return
+    }
+    store.list = JSON.parse(旧的数据)
+  }
+  if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了保存 Cmd/Ctrl + S");
+    if (store.客户端模式 == false) {
+      //弹出消息框 当前为浏览器模式 不能保存 请手动保存
+      ElMessage({
+        message: "当前为浏览器模式 不能保存 请手动保存. 如果需要保存请使用客户端",
+        type: 'success',
+        duration: 3000, // 设置显示时间为5秒，单位为毫秒
+      });
+      return
+    }
+
+    if (store.项目信息.窗口事件文件路径 != "") {
+      E保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容).then((res) => {
+        console.log(res)
+        ElMessage({
+          message: res,
+          type: 'success',
+          duration: 3000, // 设置显示时间为5秒，单位为毫秒
+        });
+      })
+    }
+  }
+}
+
+function 组件树选中(data) {
+  store.当前拖拽组件数据 = store.组件通过id查找结构(data.id)
+  console.log('组件树选中', store.当前拖拽组件数据)
+  store.当前组件索引 = store.当前拖拽组件数据.id
+}
+
+</script>
+
+<style>
+.子组件.高亮 {
+  background-color: rgba(0, 166, 255, 0.3);
+}
+
+.clear-select {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer / Edge */
+}
+
+</style>

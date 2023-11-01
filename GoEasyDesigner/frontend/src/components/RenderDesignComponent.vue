@@ -24,14 +24,14 @@
       :style="getItemStyleShape(item)"
   >
     <div
-        :style="{
-              overflowY: item.y轴滚动模式选项 || 'visible',
-              overflowX: item.x轴滚动模式选项 || 'visible'
-        }"
         v-show="item.可视"
         :id="item.名称"
         :class="{ 'disabled': item.禁用 }"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
+        :style="{
+              overflowY: item.y轴滚动模式选项 || 'visible',
+              overflowX: item.x轴滚动模式选项 || 'visible'
+        }"
         class="子组件"
         data-放置="1"
         draggable="true"
@@ -63,7 +63,8 @@
             {{ item.名称 ? item.名称 : '内容区域' }}
           </div>
         </template>
-        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+                   :item="subItem"/>
 
       </template>
       <template v-else-if="item.组件名称=='选择夹'">
@@ -72,19 +73,16 @@
       <template v-else-if="item.组件名称=='选择夹tw'">
         <component is="选择夹tw" :item="item"/>
       </template>
-      <template v-else-if="item.组件名称=='常用布局'">
-        <component is="常用布局" :item="item"/>
-      </template>
-      <template v-else-if="item.组件名称=='弹性布局'">
-        <component is="弹性布局" :item="item"/>
+      <template v-else-if="item.组件名称.endsWith('布局')">
+        <component :is="item.组件名称" :item="item"/>
       </template>
       <template v-else-if="item.组件名称=='自定义组件'">
         <component is="自定义组件" :item="item"/>
-
       </template>
       <template v-else>
         <component :is="item.组件名称" :item="item"/>
-        <component is="渲染组件" v-for="(subItem, subIndex) in item.子组件" :key="subIndex" :item="subItem"/>
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+                   :item="subItem"/>
       </template>
     </div>
   </div>
@@ -92,14 +90,14 @@
 
 <script setup>
 import {defineProps, nextTick, watch} from 'vue';
-import {useCounterStore} from '@/stores/counter'
+import {useAppStore} from '@/stores/appStore'
 import Shape from "@/components/Shape.vue";
 import {getItemStyle2, getItemStyleShape} from "@/public";
 import {v4 as uuidv4} from 'uuid';
 
 const {item} = defineProps(['item']);
 
-const store = useCounterStore()
+const store = useAppStore()
 
 // 动态创建临时的canvas元素
 var tempCanvas = document.createElement("canvas");
@@ -324,6 +322,8 @@ function 鼠标按下(event, v) {
 
 
   }
+  console.log("store.当前组件索引", store.当前组件索引)
+
 
 }
 
