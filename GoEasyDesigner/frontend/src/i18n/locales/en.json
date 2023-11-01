@@ -46,5 +46,23 @@
     "xAxisRollingMode": "xAxis Rolling Mode",
     "yAxisRollingMode": "yAxis Rolling Mode",
     "zIndex": "zIndex"
+  },
+  "componentName": {
+    "按钮": "Button",
+    "编辑框": "Input",
+    "单选框": "Radio",
+    "多选框": "Checkbox",
+    "常用布局": "CommonLayout",
+    "开关": "Switch",
+    "弹性布局": "Flexbox",
+    "提示框": "Tooltip",
+    "标签": "Label",
+    "树形框": "TreeView",
+    "自定义组件": "CustomComponent",
+    "菜单": "Menu",
+    "表格": "Table",
+    "进度条": "ProgressBar",
+    "选择夹": "Tabs",
+    "选择夹tw": "TabsTW"
   }
 }

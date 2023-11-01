@@ -60,7 +60,8 @@
                              style="width: 100%;"
                              @dragstart="拖拽开始($event, item,'el')"
                   >
-                    {{ item }}
+                    {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
+
                   </el-button>
 
                 </el-col>
@@ -73,7 +74,7 @@
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item)"
                   >
-                    {{ item.组件名称 }}
+                    {{ $t('componentName.'+item.组件名称) }}
                   </el-button>
                 </el-col>
               </el-row>
@@ -359,8 +360,10 @@ function 拖拽开始(event, 组件名称,uiName) {
   }
 
   新属性.组件名称 = 组件名称
-  新属性.名称 = 组件名称 + k
-  新属性.标题 = 组件名称 + k
+
+  let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
+  新属性.名称 = newName + k
+  新属性.标题 = newName + k
 
 
   if (组件名称 == "按钮") {
