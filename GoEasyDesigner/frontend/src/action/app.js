@@ -97,6 +97,7 @@ appAction._打开文件加载界面 = function (filepath) {
 }
 
 // 使用 $refs 来引用滚动容器
+import {useI18n} from "vue-i18n";
 
 try {
     EventsOn("运行命令", function (data) {
@@ -104,8 +105,9 @@ try {
         store.调试信息 = store.调试信息 + "<br / >" + data
         store.scrollContainer.scrollTop = store.scrollContainer.scrollHeight;
         if (data == "命令已完成") {
-            store.运行按钮文本 = "运行"
-            store.编译按钮文本 = "编译"
+            store.运行按钮文本 =t("app.run");
+            store.编译按钮文本 =t("app.compile");
+
         }
     })
 } catch (e) {
@@ -204,14 +206,15 @@ appAction.运行 = function () {
         return
     }
 
-    if (store.运行按钮文本 == '运行') {
-        store.运行按钮文本 = '停止'
-        store.调试信息 = "运行中 ..."
+
+    if (store.运行按钮文本 ==t("app.run")) {
+        store.运行按钮文本 = t("app.stop")
+        store.调试信息 = t("app.inOperation")
         store.选择夹_底部现行选中项 = "1"
         E运行命令(store.项目信息.项目根目录, "wails dev -nocolour")
     } else {
-        store.调试信息 = "已停止 ..."
-        store.运行按钮文本 = '运行'
+        store.调试信息 = t('app.stopped')
+        store.运行按钮文本 =t("app.run")
         E停止命令()
     }
 
@@ -234,14 +237,14 @@ appAction.编译 = function () {
         });
         return
     }
-    if (store.编译按钮文本 == '编译') {
+    if (store.编译按钮文本 == t("app.compile")) {
         store.编译按钮文本 = '停止'
         store.调试信息 = "编译中 ..."
         store.选择夹_底部现行选中项 = "1"
         E运行命令(store.项目信息.项目根目录, "wails build")
     } else {
         store.调试信息 = "已停止 ..."
-        store.编译按钮文本 = '编译'
+        store.编译按钮文本 = t("app.compile")
         E停止命令()
     }
 

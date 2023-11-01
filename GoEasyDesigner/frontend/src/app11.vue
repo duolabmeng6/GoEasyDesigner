@@ -4,7 +4,7 @@
     <div class="头部 "></div>
     <div class="属性框 clear-select">
       <el-tabs style="height: 100%" type="border-card">
-        <el-tab-pane label="属性" style="height: 100%;">
+        <el-tab-pane :label="$t('app.Attribute')" style="height: 100%;">
           <div class="app2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
               <el-tree-select
@@ -22,10 +22,10 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="支持库">
+        <el-tab-pane :label="$t('app.support_library')">
           <component is="支持库"/>
         </el-tab-pane>
-        <el-tab-pane label="项目管理">
+        <el-tab-pane :label="$t('app.project_management')">
           <component is="项目管理"/>
         </el-tab-pane>
       </el-tabs>
@@ -33,13 +33,13 @@
     <div class="设计区域">
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
-          <el-tab-pane label="界面设计">
+          <el-tab-pane :label="$t('app.design')">
             <div id="designer" style="position: relative;    margin: 8px;"
             >
               <component is="RenderDesignComponent" v-for="(item, index) in store.list" :key="index" :item="item"/>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="编辑代码">
+          <el-tab-pane :label="$t('app.edit_code')">
 
             <component is="代码编辑器" v-model:value="store.代码编辑器内容"
                        height="100%"
@@ -51,9 +51,9 @@
     </div>
     <div class="工具箱 clear-select">
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
-        <el-tab-pane label="组件">
+        <el-tab-pane :label="$t('app.components')">
           <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
-            <el-collapse-item name="1" title="系统组件">
+            <el-collapse-item name="1" :title="$t('app.system_components')">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames_el" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
@@ -66,7 +66,7 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item name="2" title="自定义组件">
+            <el-collapse-item name="2" :title="$t('app.Custom')">
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
@@ -78,9 +78,7 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item name="3" title="数据展示组件">
 
-            </el-collapse-item>
 
           </el-collapse>
         </el-tab-pane>
@@ -89,7 +87,7 @@
     <div class="调试信息">
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
                type="border-card">
-        <el-tab-pane label="帮助信息">
+        <el-tab-pane :label="$t('app.help_info')">
           <p v-if="!store.客户端模式">
 
             窗口项目需要手动创建
@@ -110,7 +108,7 @@
           ></div>
 
         </el-tab-pane>
-        <el-tab-pane label="调试信息">
+        <el-tab-pane :label="$t('app.debug_info')">
           <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
                v-html="store.调试信息"
           ></div>
@@ -129,28 +127,28 @@
         <el-icon>
           <Sunny/>
         </el-icon>
-        窗口设计师
+        {{ $t('app.name')}}
         <el-text size="small">{{ store.版本号 }}</el-text>
       </el-text>
     </div>
     <div class="工具条 clear-select">
       <el-button-group class="" style="margin-left: -7px;">
         <el-button :icon="Edit" @click="appAction.新建()">{{ $t('app.new') }}</el-button>
-        <el-button :icon="Open" @click="appAction.打开">打开</el-button>
-        <el-button :icon="Coin" @click="appAction.保存设计文件()">保存</el-button>
+        <el-button :icon="Open" @click="appAction.打开">{{ $t('app.open') }}</el-button>
+        <el-button :icon="Coin" @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-button>
         <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
         <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
-        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">项目配置
+        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">{{ $t('app.projectConfig')}}
         </el-button>
-        <el-button :icon="Help" @click="appAction.帮助()">帮助</el-button>
-        <el-button :icon="Help" @click="appAction.运行环境检测()">运行环境检测</el-button>
-        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">检查更新</el-button>
-        <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">下载客户端
+        <el-button :icon="Help" @click="appAction.帮助()">{{$t('app.help')}}</el-button>
+        <el-button :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck' )}}</el-button>
+        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{ $t('app.updateCheck') }}</el-button>
+        <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{ $t('app.downloadClient') }}
         </el-button>
 
         <el-dropdown>
           <el-button type="">
-            语言 {{locale}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+            {{ $t('app.language') }} {{locale}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>

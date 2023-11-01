@@ -1,8 +1,8 @@
 <template>
-  <el-form-item label="名称">
+  <el-form-item :label="$t('attr.name')" >
     <el-input v-model="props.item.名称"/>
   </el-form-item>
-  <el-form-item label="顶边">
+  <el-form-item :label="$t('attr.top')">
     <el-autocomplete
         v-model="props.item.top"
         :fetch-suggestions="querySearch"
@@ -12,7 +12,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item label="左边">
+  <el-form-item  :label="$t('attr.left')">
     <el-autocomplete
         v-model="props.item.left"
         :fetch-suggestions="querySearch"
@@ -22,7 +22,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item label="宽度">
+  <el-form-item  :label="$t('attr.width')">
     <el-autocomplete
         v-model="props.item.width"
         :fetch-suggestions="querySearch"
@@ -32,7 +32,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item label="高度">
+  <el-form-item :label="$t('attr.height')">
     <el-autocomplete
         v-model="props.item.height"
         :fetch-suggestions="querySearch"
@@ -42,24 +42,24 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item label="层级">
+  <el-form-item  :label="$t('attr.zIndex')">
     <el-input v-model="props.item.层级"/>
   </el-form-item>
-  <el-form-item label="禁用">
+  <el-form-item  :label="$t('attr.disable')">
     <el-switch v-model="props.item.禁用"/>
   </el-form-item>
-  <el-form-item label="可视">
+  <el-form-item  :label="$t('attr.visible')">
     <el-switch v-model="props.item.可视"/>
   </el-form-item>
-  <el-form-item label="背景颜色">
+  <el-form-item  :label="$t('attr.backgroundColor')">
     <el-color-picker v-model="props.item.background" show-alpha
                      @active-change="val => props.item.background = val"/>
   </el-form-item>
-  <el-form-item label="背景图片">
+  <el-form-item :label="$t('attr.backgroundImage')">
     <input ref="fileInput" type="file" style="display: none" @change="handleFileChange"/>
     <!--    <el-input v-model="props.item.图片"/>-->
-    <el-button @click="triggerFileInput">选择图片</el-button>
-    <el-button @click="clearImage">清除</el-button>
+    <el-button @click="triggerFileInput">{{$t('app.selectImage')}}</el-button>
+    <el-button @click="clearImage">{{$t('app.clear')}}</el-button>
   </el-form-item>
   <el-form-item label="图片平铺方式" v-show="props.item.图片">
     <el-select v-model="props.item.backgroundRepeat" style="width: 100%">
@@ -102,14 +102,14 @@
     </el-select>
   </el-form-item>
 
-  <el-form-item label="边框">
+  <el-form-item  :label="$t('attr.border')">
     <el-input v-model="props.item.border"/>
   </el-form-item>
-  <el-form-item label="字体大小">
+  <el-form-item  :label="$t('attr.fontSize')">
     <el-input v-model="props.item.fontSize"/>
   </el-form-item>
 
-  <el-form-item label="y轴滚动模式">
+  <el-form-item :label="$t('attr.yAxisRollingMode')">
     <el-select v-model="props.item.y轴滚动模式选项" style="width: 100%">
       <el-option
           v-for="(item, index) in y轴滚动模式选项"
@@ -119,7 +119,7 @@
       />
     </el-select>
   </el-form-item>
-  <el-form-item label="x轴滚动模式" >
+  <el-form-item  :label="$t('attr.xAxisRollingMode')">
     <el-select v-model="props.item.x轴滚动模式选项" style="width: 100%">
       <el-option
           v-for="(item, index) in x轴滚动模式选项"
@@ -237,3 +237,11 @@ const clearImage = () => {
 
 
 </script>
+
+<style>
+.el-form-item__label{
+  width:inherit !important;
+  min-width:100px !important;
+
+}
+</style>

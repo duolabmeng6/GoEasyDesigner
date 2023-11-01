@@ -8,6 +8,7 @@ import {ElMessage} from "element-plus";
 import {InsertCode} from "@/public.js";
 import {appAction} from '@/action/app9.js';
 import {历史记录管理器实例} from '@/stores/历史记录管理器.js';
+import {useI18n} from "vue-i18n";
 
 export const useAppStore = defineStore('AppStore', {
     state: () => {
@@ -150,6 +151,10 @@ export const useAppStore = defineStore('AppStore', {
         },
         init() {
             let dthis = this
+            const { t } = useI18n() // 解构出t方法
+
+            this.运行按钮文本= t("app.run");
+            this.编译按钮文本= t("app.compile");
             try {
                 WindowGetSize().then(function (size) {
                 })

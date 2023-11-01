@@ -6,7 +6,7 @@
         style="max-width: 460px"
     >
       <component is="公用属性" :item="item"/>
-      <el-form-item label="标题">
+      <el-form-item  :label="$t('attr.title')">
         <el-input v-model="props.item.标题"/>
       </el-form-item>
     </el-form>
