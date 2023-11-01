@@ -88,24 +88,10 @@
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
                type="border-card">
         <el-tab-pane :label="$t('app.help_info')">
-          <p v-if="!store.客户端模式">
-
-            窗口项目需要手动创建
-            <el-link href="https://gitee.com/duolabmeng666/go-easy-designer">前往查看运行窗口项目的创建教程 Github
-              GoEasyDesigner
-            </el-link>
-            <br>
-            在浏览器中仅可保存设计界面
-            <br>
-            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境
-
-            <el-link @click="appAction.下载客户端()">点击下载客户端</el-link>
-
+          <p v-if="!store.客户端模式" v-html="$t('app.helpDesc')">
           </p>
+          <br>
 
-          <div ref="" style="height: 100px;overflow-y: auto"
-               v-html="store.帮助信息"
-          ></div>
 
         </el-tab-pane>
         <el-tab-pane :label="$t('app.debug_info')">
