@@ -239,14 +239,14 @@ async function 拖拽放下(event, v) {
   store.当前拖拽组件数据.left = x
   store.当前拖拽组件数据.top = y
 
-  store.历史记录管理器实例.记录(JSON.stringify(store.list))
+  store.HistoryManager.记录(JSON.stringify(store.list))
 
   递归删除(store.list, store.当前拖拽组件数据.id)
   await nextTick()
   递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.id)
   await nextTick()
 
-  store.历史记录管理器实例.记录(JSON.stringify(store.list))
+  store.HistoryManager.记录(JSON.stringify(store.list))
 
   // console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()

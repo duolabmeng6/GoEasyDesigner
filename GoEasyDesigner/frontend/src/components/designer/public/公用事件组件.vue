@@ -24,13 +24,6 @@
 <script setup>
 import {ref, defineProps, defineEmits,onMounted,onBeforeUnmount} from "vue";
 
-onMounted(() => {
-  console.log("onMounted")
-
-});
-onBeforeUnmount(() => {
-  console.log("onBeforeUnmount")
-});
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item', '事件名称']);

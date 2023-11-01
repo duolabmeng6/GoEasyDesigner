@@ -435,11 +435,11 @@ function handleKeyDown(event) {
     //屏蔽浏览器默认行为
     event.preventDefault();
 
-    // console.log("store.历史记录管理器实例.查看当前历史所有记录()", store.历史记录管理器实例.查看当前历史所有记录())
-    // console.log("store.历史记录管理器实例.当前位置()", store.历史记录管理器实例.当前位置)
+    // console.log("store.HistoryManager.查看当前历史所有记录()", store.HistoryManager.查看当前历史所有记录())
+    // console.log("store.HistoryManager.当前位置()", store.HistoryManager.当前位置)
 
 
-    let 旧的数据 = store.历史记录管理器实例.撤销(JSON.stringify(store.list))
+    let 旧的数据 = store.HistoryManager.撤销(JSON.stringify(store.list))
     // console.log("旧的数据", 旧的数据)
     if (旧的数据 == null || 旧的数据 == undefined) {
       return
@@ -452,7 +452,7 @@ function handleKeyDown(event) {
     //恢复
     console.log("恢复");
     event.preventDefault();
-    let 旧的数据 = store.历史记录管理器实例.恢复(JSON.stringify(store.list))
+    let 旧的数据 = store.HistoryManager.恢复(JSON.stringify(store.list))
     // console.log("旧的数据", 旧的数据)
     if (旧的数据 == null || 旧的数据 == undefined) {
       return

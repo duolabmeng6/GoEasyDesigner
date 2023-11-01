@@ -59,7 +59,7 @@
     <input ref="fileInput" type="file" style="display: none" @change="handleFileChange"/>
     <!--    <el-input v-model="props.item.图片"/>-->
     <el-button @click="triggerFileInput">{{$t('app.selectImage')}}</el-button>
-    <el-button @click="clearImage">{{$t('app.clear')}}</el-button>
+    <el-button v-show="props.item.图片" @click="clearImage">{{$t('app.clear')}}</el-button>
   </el-form-item>
   <el-form-item label="图片平铺方式" v-show="props.item.图片">
     <el-select v-model="props.item.backgroundRepeat" style="width: 100%">

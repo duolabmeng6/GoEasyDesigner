@@ -7,7 +7,7 @@ import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js"
 import {ElMessage} from "element-plus";
 import {InsertCode} from "@/public.js";
 import {appAction} from '@/action/app.js';
-import {历史记录管理器实例} from '@/stores/历史记录管理器.js';
+import {HistoryManagerLiving} from '@/stores/HistoryManager.js';
 import {useI18n} from "vue-i18n";
 
 export const useAppStore = defineStore('AppStore', {
@@ -54,7 +54,7 @@ export const useAppStore = defineStore('AppStore', {
             mac下载地址: "",//github的文件信息
             版本号: "",//github的文件信息
             是否为window系统: true,//github的文件信息
-            历史记录管理器实例: 历史记录管理器实例
+            HistoryManager: HistoryManagerLiving
 
         }
     },
@@ -222,8 +222,8 @@ export const useAppStore = defineStore('AppStore', {
 
 
         递归删除id(源数据, id) {
-            // this.历史记录管理器实例.记录(JSON.stringify(this.list))
-            this.历史记录管理器实例.记录(JSON.stringify(this.list))
+            // this.HistoryManager.记录(JSON.stringify(this.list))
+            this.HistoryManager.记录(JSON.stringify(this.list))
 
             this.__递归删除id(源数据, id)
             this.当前组件索引 = "1"
