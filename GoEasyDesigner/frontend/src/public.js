@@ -170,7 +170,7 @@ function InsertCode(jscode, insertionCode) {
     }
 
     // Define the regular expression pattern
-    const pattern = `(\\/\\/事件函数位置不要删除[^\\n]*)`;
+    const pattern = `(\\/\\/Don't delete the event function flag[^\\n]*)`;
 
     // Compile the regular expression
     const re = new RegExp(pattern);

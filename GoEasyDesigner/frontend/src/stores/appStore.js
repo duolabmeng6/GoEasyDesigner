@@ -65,7 +65,7 @@ export const useAppStore = defineStore('AppStore', {
             if (事件名称 == i18n.global.t('attr.addEvent')) {
                 return
             }
-            if(事件名称 == '在此处选择加入事件处理函数'){
+            if (事件名称 == '在此处选择加入事件处理函数') {
                 return
             }
 
@@ -73,25 +73,40 @@ export const useAppStore = defineStore('AppStore', {
             if (this.代码编辑器内容 == "") {
                 this.代码编辑器内容 = 窗口事件代码模板
             }
-            let code = "item.事件" + 事件名称 + "=" + '"' + item.名称 + 事件名称 + '"'
-            console.log("添加事件被选择", item.名称 + 事件名称, item, extData)
+            let 新事件名称 = i18n.global.t('eventName.' + 事件名称) ? i18n.global.t('eventName.' + 事件名称) : 事件名称
+            console.log("i18n.global.locale ",i18n.global.locale.value )
+            if(i18n.global.locale.value == 'Englist'){
+                //转换首字母大写
+                let str = 新事件名称;
+                str = str.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
+                    return m.toUpperCase();
+                });
+                新事件名称 = str;
+
+            }
+
+
+
+            console.log("新事件名称", 新事件名称)
+            let code = "item.事件" + 新事件名称 + "=" + '"' + item.名称 + 新事件名称 + '"'
+            console.log("添加事件被选择", item.名称 + 新事件名称, item, extData)
             eval(code)
             let ncode = '';
             if (extData == undefined) {
                 ncode = `
-    c.{事件名称} = function () {
-        console.log("{事件名称}")
+    c.{新事件名称} = function () {
+        console.log("{新事件名称}")
     }
 `;
             } else {
                 ncode = `
-    c.{事件名称} = ` + extData + ` {
-        console.log("{事件名称}")
+    c.{新事件名称} = ` + extData + ` {
+        console.log("{新事件名称}")
     }
 `;
             }
 
-            ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
+            ncode = ncode.replace(/{新事件名称}/g, item.名称 + 新事件名称)
             console.log(ncode)
 
             if (this.项目信息.窗口事件文件路径 == "") {
@@ -149,16 +164,17 @@ export const useAppStore = defineStore('AppStore', {
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
+                console.log("最终辅助代码",res)
                 dthis.keywordMappings = res
             })
 
         },
         init() {
             let dthis = this
-            const { t } = useI18n() // 解构出t方法
+            const {t} = useI18n() // 解构出t方法
 
-            this.运行按钮文本= t("app.run");
-            this.编译按钮文本= t("app.compile");
+            this.运行按钮文本 = t("app.run");
+            this.编译按钮文本 = t("app.compile");
             try {
                 WindowGetSize().then(function (size) {
                 })

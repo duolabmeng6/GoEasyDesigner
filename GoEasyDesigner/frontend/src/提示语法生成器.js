@@ -7,15 +7,16 @@ function 提取key(components) {
             if (name == "" || name == undefined) {
                 continue
             }
-
-            if (检查是否全部为数字或者字母(name)) {
-                continue
-            }
-            if (检查是否全部为数字或者字母(key)) {
-                continue
-            }
+            // console.log("name", name, key)
+            // if (检查是否全部为数字或者字母(name)) {
+            //     continue
+            // }
+            // if (检查是否全部为数字或者字母(key)) {
+            //     continue
+            // }
             codeLines.push(key);
             codeLines.push(name);
+            console.log("加入自动补全列表",component,name)
 
 
         }
@@ -24,14 +25,19 @@ function 提取key(components) {
             codeLines.push(...childCodeLines);
         }
     }
+    // console.log("提取的key", codeLines)
     return codeLines;
 }
 
 function 检查是否全部为数字或者字母(str) {
-    var reg = /^[A-Za-z0-9]+$/;
+    var reg = /^[0-9a-zA-Z]+$/;
     return reg.test(str);
 }
-
+function 检查是否存在中文(str) {
+    //检查str中是否包含中文字符 不含 数字字母 如果有汉字返回 真 如果没有汉字返回假
+    var reg = /[\u4e00-\u9fa5]/;
+    return reg.test(str);
+}
 
 const 生成提示词 = async (keys, fn) => {
     // const pinyin = require('pinyin-pro')
@@ -55,9 +61,19 @@ const 生成提示词 = async (keys, fn) => {
                 toneType: 'none', type: 'array', pattern: 'first',
             });
             const abbreviation = pinyinArray.join('').toLowerCase();
+            let newNmae = abbreviation
+            console.log("abbreviation", abbreviation, key,检查是否存在中文(key))
+
+            if (检查是否存在中文(key)) {
+                newNmae = abbreviation + key
+
+            }else{
+                newNmae =  key
+
+            }
             keywordMappings[abbreviation] = {
                 insertText: key,
-                label: abbreviation + key,
+                label: newNmae,
             }
         }
         // console.log(keywordMappings)
@@ -67,15 +83,21 @@ const 生成提示词 = async (keys, fn) => {
 
 const 生成提示辅助代码 = async (obj, fn) => {
     let kyes = 提取key(obj);
+    console.log("提取key",JSON.stringify(kyes, null, 4))
+
     let 额外keys = ["组件"]
     kyes = [...kyes, ...额外keys]
     //过滤重复的值
     kyes = [...new Set(kyes)]
     kyes = await 生成提示词(kyes, fn)
-    // console.log(JSON.stringify(kyes, null, 4))
+    console.log("提取key2",JSON.stringify(kyes, null, 4))
     return JSON.stringify(kyes, null, 4);
 }
-// const jsonData = require('/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo/frontend/src/窗口/设计文件.json');
-//
-// 生成辅助代码(jsonData)
+// const jsonData = require('/Users/ll/Documents/GitHub/GoEasyDesigner/go-easy-demo/frontend/src/窗口/设计文件.json');
+// const test = async () => {
+//     let data = await 生成提示辅助代码(jsonData)
+//     console.log('data', data)
+// }
+// test()
+
 export {生成提示辅助代码}

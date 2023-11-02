@@ -180,8 +180,15 @@ import { useI18n } from "vue-i18n";
 
 const { t, availableLocales: languages, locale } = useI18n();
 
+//读取本地存储
+if (localStorage.getItem("locale")) {
+  locale.value = localStorage.getItem("locale");
+}
+
 const onclickLanguageHandle = (item) => {
   item !== locale.value ? (locale.value = item) : false;
+  //写入本地存储
+  localStorage.setItem("locale", item);
 };
 
 
