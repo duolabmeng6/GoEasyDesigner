@@ -27,6 +27,7 @@
     "stopped": "已停止...",
     "support_library": "支持库",
     "system_components": "系统组件",
+    "td_components": "t design",
     "updateCheck": "检查更新"
   },
   "attr": {
@@ -48,37 +49,36 @@
     "zIndex": "层级"
   },
   "componentName": {
-    "Window": "窗口",
     "Button": "按钮",
-    "TextEdit": "编辑框",
-    "RadioButton": "单选框",
     "CheckBox": "多选框",
     "CommonLayout": "常用布局",
-    "Switch": "开关",
-    "FlexLayout": "弹性布局",
-    "Tooltip": "提示框",
-    "Label": "标签",
-    "Tree": "树形框",
     "CustomComponent": "自定义组件",
+    "FlexLayout": "弹性布局",
+    "Label": "标签",
     "Menu": "菜单",
-    "Table": "表格",
     "ProgressBar": "进度条",
+    "RadioButton": "单选框",
+    "Switch": "开关",
+    "Table": "表格",
     "Tabs": "选择夹",
-    "TabsTW": "选择夹tw"
+    "TabsTW": "选择夹tw",
+    "TextEdit": "编辑框",
+    "Tooltip": "提示框",
+    "Tree": "树形框",
+    "Window": "窗口"
   },
-  "event": {
-    "created": "创建完毕",
-    "click": "被单击",
-    "mousedown": "鼠标左键被按下",
-    "mouseup": "鼠标左键被放开",
-    "dblclick": "被双击",
-    "contextmenu": "鼠标右键被按下",
-    "mousemove": "鼠标位置被移动",
-    "focus": "获得焦点",
+  "eventName": {
     "blur": "失去焦点",
+    "click": "被单击",
+    "contextmenu": "鼠标右键被按下",
+    "created": "创建完毕",
+    "dblclick": "被双击",
+    "focus": "获得焦点",
     "keydown": "按下某键",
     "keyup": "放开某键",
+    "mousedown": "鼠标左键被按下",
+    "mousemove": "鼠标位置被移动",
+    "mouseup": "鼠标左键被放开",
     "mousewheel": "滚轮被滚动"
   }
-
 }

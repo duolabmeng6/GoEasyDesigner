@@ -24,9 +24,9 @@
       :style="getItemStyleShape(item)"
   >
     <div
-        v-show="item.可视"
+        v-show="item.可视 || item.visible"
         :id="item.名称"
-        :class="{ 'disabled': item.禁用 }"
+        :class="{ 'disabled': item.禁用 || item.disable }"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
         :style="{
               overflowY: item.y轴滚动模式选项 || 'visible',

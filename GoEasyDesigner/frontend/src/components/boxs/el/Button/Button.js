@@ -9,4 +9,6 @@ export default {
     禁止: false,
     尺寸: "custom",
     层级: 0,
+    标题: "按钮",
+
 }

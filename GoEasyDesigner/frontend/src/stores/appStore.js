@@ -60,50 +60,29 @@ export const useAppStore = defineStore('AppStore', {
     },
 
     actions: {
-        添加事件被选择(事件名称, item, extData) {
+        添加事件被选择(事件名称, 函数名称, item, extData) {
             let dthis = this;
-            if (事件名称 == i18n.global.t('attr.addEvent')) {
-                return
-            }
-            if (事件名称 == '在此处选择加入事件处理函数') {
-                return
-            }
-
             if (this.代码编辑器内容 == "") {
                 this.代码编辑器内容 = 窗口事件代码模板
             }
-            let 新事件名称 = 事件名称;
-            if (i18n.global.locale.value == 'Englist') {
-                //转换首字母大写
-                let str = 事件名称;
-                str = str.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
-                    return m.toUpperCase();
-                });
-                新事件名称 = str;
-            }else{
-                事件名称 = i18n.global.te('eventName.' + 事件名称) ? i18n.global.t('eventName.' + 事件名称) : 事件名称
-            }
-
-            console.log("新事件名称", 新事件名称)
-            let code = "item.event_" + 事件名称 + "=" + '"' + item.名称 + 新事件名称 + '"'
-            console.log("添加事件被选择", item.名称 + 新事件名称, item, extData)
+            let code = `item.event_${事件名称} = "${函数名称}"`
             eval(code)
             let ncode = '';
             if (extData == undefined) {
                 ncode = `
-    c.{新事件名称} = function () {
-        console.log("{新事件名称}")
+    c.${函数名称} = function () {
+        console.log("${函数名称}")
     }
 `;
             } else {
                 ncode = `
-    c.{新事件名称} = ` + extData + ` {
-        console.log("{新事件名称}")
+    c.${函数名称} = ` + extData + ` {
+        console.log("${函数名称}")
     }
 `;
             }
 
-            ncode = ncode.replace(/{新事件名称}/g, item.名称 + 新事件名称)
+            ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
             console.log(ncode)
 
             if (this.项目信息.窗口事件文件路径 == "") {
@@ -156,8 +135,18 @@ export const useAppStore = defineStore('AppStore', {
             // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
             let 事件名称 = this.全局_事件名称列表[0].value
             let ext_data = this.全局_事件名称列表[0].ext_data
+            let nowSelectItem = this.全局_事件名称列表[0]
+            let 函数名称;
+            if (i18n.global.locale.value === "简体中文") {
+                函数名称 = 组件数据.名称 + nowSelectItem.label
+            } else {
+                let 新事件名称 = nowSelectItem.value.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
+                    return m.toUpperCase();
+                });
+                函数名称 = 组件数据.名称 + 新事件名称
+            }
 
-            this.添加事件被选择(事件名称, 组件数据, ext_data)
+            this.添加事件被选择(事件名称, 函数名称, 组件数据, ext_data)
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
@@ -220,8 +209,21 @@ export const useAppStore = defineStore('AppStore', {
 
             return this.当前拖拽组件数据.组件名称 + "Attr"
         },
-
-        获取索引(名称) {
+        获取索引(组件名称){
+            let k = this._获取索引(组件名称)
+            //避免名称重复导致后续代码出问题
+            for (let i = 0; i < 100; i++) {
+                let 名称是否存在 = this.递归查找名称(this.list, 组件名称 + k)
+                // console.log("名称是否存在", 名称是否存在)
+                if (名称是否存在) {
+                    k = this._获取索引(组件名称)
+                } else {
+                    break
+                }
+            }
+            return k
+        },
+        _获取索引(名称) {
             // console.log(this.indexMap[名称])
             if (this.indexMap[名称] === undefined) {
                 this.indexMap[名称] = 1;

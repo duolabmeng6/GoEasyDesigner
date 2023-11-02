@@ -4,13 +4,13 @@ import en from "./locales/en.json";
 
 // 实例化I18n
 const i18n = createI18n({
-    locale: "Englist",
+    locale: "English",
     globalInjection: true,
-    fallbackLocale: "Englist",
+    fallbackLocale: "English",
     legacy: false,
     messages: {
         "简体中文": zhHans,
-        "Englist": en,
+        "English": en,
     },
 })
 

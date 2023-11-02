@@ -92,18 +92,17 @@ let 标签位置选项 = ref([
 
 let 事件名称 = ref([
 
-  {"label": "被单击", "value": "被单击"},
-  {"label": "鼠标左键被按下", "value": "鼠标左键被按下"},
-  {"label": "鼠标左键被放开", "value": "鼠标左键被放开"},
-  {"label": "被双击", "value": "被双击"},
-  {"label": "鼠标右键被按下", "value": "鼠标右键被按下"},
-  {"label": "鼠标右键被放开", "value": "鼠标右键被放开"},
-  {"label": "鼠标位置被移动", "value": "鼠标位置被移动"},
-  {"label": "获得焦点", "value": "获得焦点"},
-  {"label": "失去焦点", "value": "失去焦点"},
-  {"label": "按下某键", "value": "按下某键"},
-  {"label": "放开某键", "value": "放开某键"},
-  {"label": "滚轮被滚动", "value": "滚轮被滚动"}
+  {"label": "被单击", "value": "click"},
+  {"label": "鼠标左键被按下", "value": "mousedown"},
+  {"label": "鼠标左键被放开", "value": "mouseup"},
+  {"label": "被双击", "value": "dblclick"},
+  {"label": "鼠标右键被按下", "value": "contextmenu"},
+  {"label": "鼠标位置被移动", "value": "mousemove"},
+  {"label": "获得焦点", "value": "focus"},
+  {"label": "失去焦点", "value": "blur"},
+  {"label": "按下某键", "value": "keydown"},
+  {"label": "放开某键", "value": "keyup"},
+  {"label": "滚轮被滚动", "value": "mousewheel"}
 ])
 
 function objectToJson(object) {

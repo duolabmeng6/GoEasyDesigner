@@ -1,0 +1,18 @@
+export default {
+    top: "0",
+    left: "0",
+    width: "80",
+    height: "32",
+    禁止放置: true,
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    block: false,
+    ghost: false,
+    loading: false,
+    shape: "rectangle",
+    size: "medium",
+    theme: "primary",
+    variant: "base",
+    text:"按钮",
+}

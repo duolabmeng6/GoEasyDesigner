@@ -55,19 +55,29 @@
           <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
             <el-collapse-item :title="$t('app.system_components')" name="1">
               <el-row>
-                <el-col v-for="(item, index) in BoxComponentNames_el" :span="24" style="margin-bottom: 8px">
+                <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始($event, item,'el')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
-
                   </el-button>
-
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item :title="$t('app.Custom')" name="2">
+            <el-collapse-item :title="$t('app.td_components')" name="2">
+              <el-row>
+                <el-col v-for="(item, index) in BoxComponentNames['tdesign']" :span="24" style="margin-bottom: 8px">
+                  <el-button class="full-width-button" draggable="true"
+                             style="width: 100%;"
+                             @dragstart="拖拽开始($event, item,'td')"
+                  >
+                    {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+            <el-collapse-item :title="$t('app.Custom')" name="3">
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
@@ -181,7 +191,6 @@ import releases_latest from '../public/releases_latest.json'
 
 const store = useAppStore()
 store.init()
-const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
 
 import {useI18n} from "vue-i18n";
@@ -191,6 +200,8 @@ const {t, availableLocales: languages, locale} = useI18n();
 //读取本地存储
 if (localStorage.getItem("locale")) {
   locale.value = localStorage.getItem("locale");
+}else{
+  localStorage.setItem("locale", 'English');
 }
 
 const onclickLanguageHandle = (item) => {
@@ -291,7 +302,6 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
   let 组件默认属性 = item.组件默认属性
 
   function 创建自定义组件json(组件名称, 组件html, 新属性) {
-    // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
     let k = store.获取索引(组件名称)
 
     新属性.id = store.获取随机id()
@@ -339,13 +349,13 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
 
 }
 
-const BoxComponentDefaultValue_el = inject("BoxComponentDefaultValue_el")
+const BoxComponentDefaultValue = inject("BoxComponentDefaultValue")
+const BoxComponentNames = inject("BoxComponentNames")
 
 function 拖拽开始(event, 组件名称, uiName) {
   let 新属性 = ""
   try {
-    新属性 = JSON.parse(JSON.stringify(BoxComponentDefaultValue_el[组件名称]))
-    // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值[组件名称]))
+    新属性 = JSON.parse(JSON.stringify(BoxComponentDefaultValue[uiName][组件名称]))
   } catch (e) {
   }
   if (新属性 == "") {
@@ -363,77 +373,49 @@ function 拖拽开始(event, 组件名称, uiName) {
   }
   let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
   let k = store.获取索引(newName)
-
   新属性.id = store.获取随机id()
-
-  //避免名称重复导致后续代码出问题
-  for (let i = 0; i < 100; i++) {
-    let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
-    // console.log("名称是否存在", 名称是否存在)
-    if (名称是否存在) {
-      k = store.获取索引(组件名称)
-    } else {
-      break
-    }
-  }
-
   新属性.组件名称 = 组件名称
-
   新属性.名称 = k
-  新属性.标题 = k
+  if (新属性.hasOwnProperty("标题")) {
+    新属性.标题 = k
+  }
+  if (新属性.hasOwnProperty("text")) {
+    新属性.text = k
+  }
+  if (新属性.hasOwnProperty("内容")) {
+    新属性.内容 = k
+  }
   //把ui加上前缀比如 el
   新属性.组件名称 = uiName + 组件名称
 
   console.log("当前组件名称", 组件名称)
 
-  if (组件名称 == "Button") {
-  }
   if (组件名称 == "elContainer") {
     新属性.border = "1px solid black"
   }
-  if (组件名称 == "Tabs") {
+  // if (组件名称 == "Tabs") {
+  //   let id = 新属性.id
+  //   for (var i = 0; i < 新属性.子组件.length; i++) {
+  //     新属性.子组件[i].id = store.获取随机id()
+  //     新属性.子组件[i].名称 = store.获取索引(新属性.子组件[i].名称)
+  //     新属性.子组件[i].标题 = store.获取索引(新属性.子组件[i].标题)
+  //     新属性.子组件[i].父容器id = id
+  //   }
+  // }
+
+
+  if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
     let id = 新属性.id
     for (var i = 0; i < 新属性.子组件.length; i++) {
       新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = store.获取索引("content area ")
-      新属性.子组件[i].标题 = store.获取索引("tab")
+      新属性.子组件[i].名称 = store.获取索引(新属性.子组件[i].名称)
       新属性.子组件[i].父容器id = id
+      //检查 新属性.子组件[i].标题 是否存在 如果存在 则修改
+      if (新属性.子组件[i].hasOwnProperty("标题")) {
+        新属性.子组件[i].标题 = store.获取索引(新属性.子组件[i].标题)
+      }
     }
-  }
-  if (组件名称 == "Switch") {
-  }
-  if (组件名称 == "TextEdit") {
-    新属性.内容 = 新属性.标题
-  }
 
-  if (组件名称 == "FlexLayout") {
-    let id = 新属性.id
-    for (var i = 0; i < 新属性.子组件.length; i++) {
-      新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = store.获取索引("content area ")
-      新属性.子组件[i].父容器id = id
-    }
-  }
-
-  if (组件名称 == "CustomComponent") {
-    let id = 新属性.id
-    var i = 0;
-    新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = store.获取索引("content area header")
-    新属性.子组件[i].父容器id = id
-    i++;
-    新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = store.获取索引("content area main")
-    新属性.子组件[i].父容器id = id
-    i++;
-    新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = store.获取索引("content area footer")
-    新属性.子组件[i].父容器id = id
-    i++;
-    新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = store.获取索引("content areaaside")
-    新属性.子组件[i].父容器id = id
-    i++;
   }
 
   store.当前拖拽组件数据 = 新属性

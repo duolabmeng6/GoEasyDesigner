@@ -16,8 +16,8 @@ export default {
     子组件: [
         {
             组件名称: "elContainer",
-            名称: "content area 1",
-            标题: "选项卡1",
+            名称: "content area",
+            标题: "tab",
             top: "0",
             left: "0",
             width: "100%",
@@ -32,8 +32,8 @@ export default {
         },
         {
             组件名称: "elContainer",
-            名称: "content area 1",
-            标题: "选项卡2",
+            名称: "content area",
+            标题: "tab",
             top: "0",
             left: "0",
             width: "100%",

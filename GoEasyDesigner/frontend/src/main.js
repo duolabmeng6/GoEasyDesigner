@@ -4,8 +4,10 @@ import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-// import TDesign from 'tdesign-vue-next'
-// import 'tdesign-vue-next/es/style/index.css'
+
+import TDesign from 'tdesign-vue-next'
+import 'tdesign-vue-next/es/style/index.css'
+
 import i18n from './i18n/index.js'
 
 import App from './app11.vue'
@@ -129,9 +131,7 @@ app.config.warnHandler = function (msg, vm, trace) {
 };
 
 
-//加载组件
-
-function getBoxComponentNames(uiName, meta) {
+function registerBoxComponentNames(uiName, meta) {
     let ComponentNames = []
     const componentsContext = meta;
 
@@ -142,10 +142,9 @@ function getBoxComponentNames(uiName, meta) {
         if (!(name.endsWith("属性") || name.endsWith("Attr"))) {
             ComponentNames.push(name)
         }
-
         app.component(uiName + name, module.default);
         // app.component(name, module.default);
-        console.log("注册组件", uiName, name)
+        // console.log("注册组件", uiName, name)
         return name;
     });
 
@@ -153,7 +152,7 @@ function getBoxComponentNames(uiName, meta) {
 
 }
 
-function getBoxComponentDefaultValue(uiName, meta) {
+function registerBoxComponentDefaultValue(uiName, meta) {
     let ComponentDefaultValue = {}
     const componentsContext = meta;
 
@@ -167,21 +166,30 @@ function getBoxComponentDefaultValue(uiName, meta) {
     return ComponentDefaultValue;
 }
 
-// app.component('布局容器', import('./components/boxs/Container/Container.vue'))
+//注册公用组件
+registerBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
 
-const BoxComponentNames_el = getBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
-console.log("BoxComponentNames_el", BoxComponentNames_el)
+//注册饿了么组件
+const BoxComponentNames_el = registerBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
+console.log("饿了么组件", BoxComponentNames_el)
 let ComponentNameOrder = ['Button', 'TextEdit', 'Label']
 ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el])]
-// 删除布局容器
 ComponentNameOrder = ComponentNameOrder.filter(item => item !== "Container")
 app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
+//注册组件默认属性
+const BoxComponentDefaultValue = {
+    'el': registerBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
+    'td': registerBoxComponentDefaultValue('td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
+}
+app.provide('BoxComponentDefaultValue', BoxComponentDefaultValue)
 
-const BoxComponentDefaultValue_el = getBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true}))
-app.provide('BoxComponentDefaultValue_el', BoxComponentDefaultValue_el)
+const BoxComponentNames_td = registerBoxComponentNames('td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
 
-//注册公用组件
-getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
+const BoxComponentNames = {
+    'system': ComponentNameOrder,
+    'tdesign': BoxComponentNames_td,
+}
+app.provide('BoxComponentNames', BoxComponentNames)
 
 // 把i18n挂在到全局
 
@@ -189,7 +197,7 @@ app.config.globalProperties.t = i18n.global.t
 
 
 app.use(i18n)
-// app.use(TDesign)
+app.use(TDesign)
 app.use(ElementPlus)
 app.mount('#app')
 
