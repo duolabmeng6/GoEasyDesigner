@@ -1,8 +1,23 @@
-# GoEasyDesigner
+<p align="center" style="text-align: center">
 
+</p>
+
+<p align="center">
+</p>
+
+<div align="center">
+<strong>
 <samp>
-[English](README.md) · [简体中文](README.zh-Hans.md)
+
+[English](README.md) · [简体中文](README.zh-Hans.md) 
+
 </samp>
+</strong>
+</div>
+
+
+
+# GoEasyDesigner
 
 ![666](https://github.com/duolabmeng6/GoEasyDesigner/assets/59047063/a89d2ab9-9ba3-4efc-b0fa-0a7dcc3bcfc1)
 ![image-20230828083413650](README.assets/image-20230828083413650.png)
