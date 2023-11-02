@@ -2,8 +2,11 @@
 
   <div class="app" style="margin: 0px 4px">
     <div class="头部 "></div>
-    <div class="属性框 clear-select">
+    <div class="属性框 clear-select" id="left">
+
       <el-tabs style="height: 100%" type="border-card">
+        <DraggableDivider :target-element-id="'left'"></DraggableDivider>
+
         <el-tab-pane :label="$t('app.Attribute')" style="height: 100%;">
           <div class="app2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
@@ -49,8 +52,10 @@
         </el-tabs>
       </el-col>
     </div>
-    <div class="工具箱 clear-select">
+    <div class="工具箱 clear-select" id="right">
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
+        <DraggableDivider :target-element-id="'right'" direction="left"></DraggableDivider>
+
         <el-tab-pane :label="$t('app.components')">
           <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
             <el-collapse-item :title="$t('app.system_components')" name="1">
@@ -96,9 +101,12 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div class="调试信息">
+    <div class="调试信息" style="position: relative" id="footer">
+      <DraggableDivider :target-element-id="'footer'" direction="top"></DraggableDivider>
+
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
                type="border-card">
+
         <el-tab-pane :label="$t('app.help_info')">
           <p v-if="!store.客户端模式" v-html="$t('app.helpDesc')">
           </p>
@@ -194,6 +202,7 @@ store.init()
 const scrollContainer = ref(null);
 
 import {useI18n} from "vue-i18n";
+import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 
 const {t, availableLocales: languages, locale} = useI18n();
 

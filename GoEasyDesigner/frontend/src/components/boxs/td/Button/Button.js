@@ -7,7 +7,7 @@ export default {
     visible: true,
     disable: false,
     zIndex: 0,
-    block: false,
+    block: true,
     ghost: false,
     loading: false,
     shape: "rectangle",

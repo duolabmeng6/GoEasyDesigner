@@ -1,7 +1,7 @@
 
 html, body{
     margin: 0;
-    padding: 4px;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -17,11 +17,14 @@ html, body{
     display: grid;
     grid-template-columns: auto 1fr 1fr 1fr auto;
     grid-template-rows: 0fr 1fr 1fr 1fr 1fr;
-    gap: 6px 6px;
+    gap: 12px 12px;
     grid-auto-flow: row;
     height: 100vh;
     overflow: hidden;
-
+    padding-bottom: 26px;
+    padding-right: 16px;
+    padding-left: 8px;
+    padding-top: 12px
 }
 
 .绘制的组件 * {
@@ -36,22 +39,31 @@ html, body{
 .属性框 {
     grid-area: 2 / 1 / 5 / 2;
     width: 280px;
+    box-shadow: 5px 5px 10px #dddfe5;
+
 }
 
 .设计区域 {
     grid-area: 2 / 2 / 5 / 5;
+    box-shadow: 5px 5px 10px #dddfe5;
+
 }
 
 .工具箱 {
     grid-area: 2 / 5 / 5 / 6;
     width: 160px;
+    box-shadow: 5px 5px 10px #dddfe5;
+
 }
 
 .调试信息 {
+    box-shadow: 5px 5px 10px #dddfe5;
+
     grid-area: 5 / 1 / 6 / 6;
 }
 
 .标题 {
+
     grid-area: 1 / 1 / 2 / 2;
     display: flex;
     justify-content: center;
