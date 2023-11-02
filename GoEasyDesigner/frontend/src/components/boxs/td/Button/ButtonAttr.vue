@@ -135,9 +135,7 @@ onMounted(() => {
     variantOptions.value.forEach((item) => {
       item.label = item.value;
     });
-    enventNames.value.forEach((item) => {
-      item.label = item.value;
-    });
+
   }
 
 });

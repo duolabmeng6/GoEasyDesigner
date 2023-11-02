@@ -25,7 +25,7 @@ let 事件索引 = ref(0)
 
 
 let 事件名称 = ref([
-  {"label": "创建完毕", "value": "创建完毕"},
+  {"label": "创建完毕", "value": "created"},
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
   {"label": "鼠标左键被放开", "value": "mouseup"},

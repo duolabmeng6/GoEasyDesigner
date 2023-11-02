@@ -75,4 +75,12 @@ const 组件事件被选择 = function () {
 store.全局_事件名称列表 = props.事件名称
 
 
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    props.事件名称.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
+
 </script>
