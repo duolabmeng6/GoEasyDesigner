@@ -157,8 +157,8 @@ export const useAppStore = defineStore('AppStore', {
 
         组件双击事件(组件数据) {
             // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
-            let 事件名称 = this.全局_事件名称列表[1].value
-            let ext_data = this.全局_事件名称列表[1].ext_data
+            let 事件名称 = this.全局_事件名称列表[0].value
+            let ext_data = this.全局_事件名称列表[0].ext_data
 
             this.添加事件被选择(事件名称, 组件数据, ext_data)
             let dthis;
