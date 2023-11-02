@@ -1,140 +1,108 @@
 # GoEasyDesigner
 
 <samp>
-
-[English](README.md) · [Simplified Chinese](README.zh-Hans.md)
-
+[English](README.md) · [简体中文](README.zh-Hans.md)
 </samp>
 
-! [666](https://github.com/duolabmeng6/GoEasyDesigner/assets/59047063/a89d2ab9-9ba3-4efc-b0fa-0a7dcc3bcfc1)
+![666](https://github.com/duolabmeng6/GoEasyDesigner/assets/59047063/a89d2ab9-9ba3-4efc-b0fa-0a7dcc3bcfc1)
+![image-20230828083413650](README.assets/image-20230828083413650.png)
+![image-20230828084834120](README.assets/image-20230828084834120.png)
 
-! [image-20230828083413650](README.assets/image-20230828083413650.png)
+Based on the Go language and using the Wails framework, GoEasyDesigner supports Windows, MacOS, Linux, and other systems.
 
-! [image-20230828084834120](README.assets/image-20230828084834120.png)
+Main repository: https://github.com/duolabmeng6/GoEasyDesigner
 
-wails framework based on go language to support Windows Macos Linux and other systems.
+Mirror repository: https://gitee.com/duolabmeng666/go-easy-designer
 
-The main warehouse https://github.com/duolabmeng6/GoEasyDesigner
+**Project Progress:**
 
-Mirror warehouse https://gitee.com/duolabmeng666/go-easy-designer
-
-** Project progress: **
-
-The project is in the active development stage. Welcome the front end big guy pr
+The project is in active development. Front-end experts are welcome to contribute.
 
 Completed tasks:
-
 - [x] Cross-platform compatibility: Windows MacOS Linux
+- [x] Interface design and feature development: Completed the development of core features such as overall interface layout, function flow design, interface drawing, attribute modification, component dragging, and double-clicking on components to jump to corresponding event functions.
+- [x] Smart code editor: Implemented Hanzi initial input reminder in the code editor, improving coding efficiency.
+- [x] Support for the goefun library: [goefun library](https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles), allowing the use of Chinese functions in Golang development.
+- [x] Layout containers: Including common layouts, flex layouts.
+- [x] Completed component library: Buttons, text editors, labels, switches, radio buttons, checkboxes, common layouts, flex layouts, tree boxes, menus, tables, progress bars, and tabs.
+- [x] Custom dynamic components support: Enables the development of templates like login boxes for quick application development.
 
-- [x] Interface design and function development: Completed the development of core functions such as overall interface layout, functional flow design, interface drawing, property modification, component drag and drop, and double-click component to jump to corresponding event functions.
+To-do tasks:
+- [ ] Support for the jsefun library: Planned, under development.
+- [ ] Component library refinement: In progress, further refinement of [element-plus](https://element-plus.org/zh-CN/component/button.html) components.
+- [ ] Integrated development environment: Planned, will implement an environment for development without cumbersome configurations.
+- [ ] Multilingual support: Planned, will support multiple languages such as Chinese and English.
+- [ ] Support for ElectronJS: Planned, will support ElectronJS as a backend technology.
+- [ ] Custom cloud components: Users can upload their own templates for others to use.
 
-- [x] Intelligent code editor: realizes the function of Chinese character first letter input reminder in the code editing box, and improves the coding efficiency.
-
-- [x] goefun library Chinese function library support: Goefun library (https://pkg.go.dev/github.com/duolabmeng6/goefun#section-sourcefiles), allowing the use of Chinese in Golang function development.
-
-- [x] Layout container: Includes common layout and elastic layout
-
-- [x] Completed component library: Button Edit Box Label switch Option Frame Multiple options Common Layout Elastic Layout Tree frame menu table Progress bar Select clip
-
-- [x] User-defined dynamic components Support rapid application development using templates such as login boxes
-
-Tasks to be completed:
-
-- [] jsefun library support: planned, pending development.
-- [] Component library refinement: Further refinement of the [element-plus](https://element-plus.org/zh-CN/component/button.html) component is in progress.
-
-- [] Integrated Development Environment: In the plan, it will realize the direct development environment without complicated configuration.
-
-- [] Multi-language support: In the plan, multiple languages such as Chinese and English will be supported.
-
-- [] Support ElectronJS: In the plan, ElectronJS will be supported as a back-end technology.
-
-- [] User-defined Cloud components Users can upload templates for other users
-
-We will continue to work hard to ensure that the project goes as planned and provides more powerful features and support. Stay tuned for our progress!
+We will continue to work hard to ensure that the project progresses as planned and provide more powerful features and support. Please stay tuned for our updates!
 
 # Online Experience
 
-Thanks to the server provided by friends, you can have a happy online experience
+Thanks to a friend for providing a server, you can now experience it online.
 
 Domestic address: https://go.kenhong.com/
+Overseas address: https://g.yx24.me
 
-Foreign address: https://g.yx24.me
+[Download and run the project](https://github.com/duolabmeng6/wails-template-vue-go-easy), when experiencing online, design the interface in the browser and save it. It will download two files, `Design file.json`, `Auxiliary code.js`. Make sure your browser allows downloading multiple files, and place the design file in the specified location.
 
-Download window to run a project (https://github.com/duolabmeng6/wails-template-vue-go-easy), good in the picture online experience in the browser interface, will download 2 ` design file. Json `, ` auxiliary code. Js ` Note that your browser allows you to download multiple files. Just place the design file in the specified location.
+# Quick Start
 
-# Get Started quickly
+Please install in order.
 
-Please install them in order
+[10-minute video tutorial for beginners](https://www.bilibili.com/video/BV1ou4y1r7WS)
 
-[10 minutes the introductory video tutorial] (https://www.bilibili.com/video/BV1ou4y1r7WS)
+[3-minute video tutorial to learn how to customize components](https://www.bilibili.com/video/BV1ar4y1f7Rq)
 
-[video tutorial 3 minutes to learn custom components encapsulation] (https://www.bilibili.com/video/BV1ar4y1f7Rq)
+### 1. Install Node.js development environment
 
-### 1. Install the node js development environment
+[Node.js download page](https://nodejs.org/zh-cn/download/) Version 18 and above
 
-[node Language Download page](https://nodejs.org/zh-cn/download/) Version 18 or later
+Domestic mirror `npm install -g cnpm --registry=http://registry.npmmirror.com`
 
-Domestic mirror ` NPM install - g ` CNPM - registry=http://registry.npmmirror.com
+Install Vite `npm create vite@latest`
 
-Install vite 'npm create vite@latest'
+### 2. Install Go language development environment
 
-### 2. Install go development environment
+[Go language download page](https://golang.org/dl/) Any version
 
-[go Download page](https://golang.org/dl/) Any version is required
+Install Wails [Wails framework documentation](https://wails.io/zh-Hans/docs/gettingstarted/installation/)
 
-Install wails [wails framework document] (https://wails.io/zh-Hans/docs/gettingstarted/installation/)
-Domestic mirror execution ` go env - w GOPROXY = https://goproxy.cn, direct `
+Execute the domestic mirror `go env -w GOPROXY=https://goproxy.cn,direct`
 
-` ` `
 
-go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-` ` `
+After successful installation, run the `wails` command, and if there is output, it is installed successfully.
 
-After the installation is successful, run the wails command. If any information is displayed, the installation is successful.
+#### Create and run the project window
+This project is for window running environment; your code will be written here.
 
-#### Create a window to run the project
+Create a project
 
-The project for the window running environment your code will also be written here
-
-Create project
-
-` ` `
-
+```
 wails init -n "go-easy-demo" -t https://github.com/duolabmeng6/wails-template-vue-go-easy
+```
 
-` ` `
+Run the window
 
-Run window
-
-` ` `
-
+```
 cd go-easy-demo
-
 wails dev
-
-` ` `
+```
 
 Compile to an executable file
 
-` ` `
-
+```
 cd go-easy-demo
-
 wails build
-
-` ` `
+```
 
 Debug front-end only
 
-` ` `
-
+```
 cd go-easy-demo/frontend
-
 npm run dev
-
-` ` `
+```
 
 ### 3. Download GoEasyDesigner
 
@@ -144,85 +112,74 @@ Run directly
 
 The interface design file is here
 
-` ` `
+```
+go-easy-demo/frontend/src/窗口/设计文件.json
+```
 
-go-easy-demo/frontend/src/ window/design file. json
+### 4. WebStorm IDE Code Navigation Plugin
 
-` ` `
+To experience automatic jumping to the corresponding function in the IDE when double-clicking on a component, please install the QtEasyDesigner plugin in WebStorm. In the project files,
 
-### 4. webstorm IDE code jump plug-in
+After installation, right-click in the IDE editor and see `Configure QtEasyDesigner`
 
-Please install the QtEasyDesigner plug-in in webstorm. In the project file,
+For macOS, fill in the path
 
-Right-click in the IDE editor and see 'Configure your TeasyDesigner'
-
-macos Enter the path
-
-` ` `
-
+```
 /Applications/GoEasyDesigner.app/Contents/MacOS/GoEasyDesigner
+```
 
-` ` `
 
-window Enter the exe path
-
-` ` `
-
+For Windows, fill in the exe path
+```
 C:\GoEasyDesigner\GoEasyDesigner.exe
+```
+For subsequent use, open `Design file.json` in the editor, right-click, and open `QtEasyDesigner`. The interface will appear.
 
-` ` `
+Write JavaScript code in the WebStorm IDE for most code writing. If JavaScript cannot achieve something, then call Go code.
+Go code uses Goland IDE for writing. In general, code should be written in `app.go`.
 
-To use it later, open the 'design file.json', right-click in the editor, open the 'QtEasyDesigner' screen and it will appear
-js code using webstorm ide most of the code should be written in js, if js can not achieve then call go code
+### Developing Components, Please See
 
-go code is written in goland IDE and in general code is written in app.go
+To debug in the IDE, the following configuration is needed
 
-### Develop components see
+Build the package `changeme`
 
-Debugging in the ide requires the following configuration
+Working directory `/Users/ll/Documents/GitHub/GoEasyDesigner/GoEasyDesigner` Change it to your path
 
-Build the package 'changeme'
+Environment variable `CGO_LDFLAGS=-framework UniformTypeIdentifiers` This is required for macOS, not for Windows.
 
-Working directory ` / Users/ll/Documents/lot/GoEasyDesigner GoEasyDesigner ` into your path
+Go tool arguments `-tags dev -gcflags "all=-N -l"`
 
-Environment variable 'CGO_LDFLAGS=-framework UniformTypeIdentifiers' This is required by macos and Windows is not required
+Program arguments (optional) `文件路径=/Users/ll/Documents/GitHub/GoEasyDesigner/go-easy-demo/frontend/src/窗口/设计文件.json port=8080` This is the port of the plugin, which works with the IDE plugin.
 
-go tool argument '-tags dev-gcflags "all=-N -l"'
+Now you can debug with breakpoints in `app.go`.
 
-Program arguments (optional) ` file path = / Users/ll/Documents/lot/GoEasyDesigner/go - easy - demo/frontend/SRC/window/design file. Json ` port = 8080 This is the port for the ide plug-in
+#### `go-easy-demo` is a Template Project
 
-You can now debug breakpoints in app.go.
+Interface data is here
 
-#### go-easy-demo is a template project
+```
+go-easy-demo/frontend/src/窗口/设计文件.json
+```
 
-The interface data is here
+Run, and you can see the effect
 
-` ` `
-
-go-easy-demo/frontend/src/ window/design file. json
-
-` ` `
-
-Run it and you'll see the effect
-
-` ` `
-
+```
 cd go-easy-demo
-
 wails dev
+```
 
-` ` `
 
-# Contribute
 
-The list of contributors is too big for a readme file! All contribute to the project of outstanding people here [contribution list] (https://github.com/duolabmeng6/GoEasyDesigner/graphs/contributors)
 
-We'll make the page later
+# Contribution
+
+The list of contributors is too large for this readme file! All outstanding individuals who have contributed to this project are listed here [Contribution List](https://github.com/duolabmeng6/GoEasyDesigner/graphs/contributors) We will create a page later.
 
 # License
 
-This project is licensed under [GNU Lesser General Public License (LGPL) Version 3](LICENSE). See the license file for details.
+This project is licensed under the [GNU Lesser General Public License (LGPL) version 3](LICENSE). For detailed information, please refer to the license file.
 
-# Learning Communication
+# Learning and Communication
 
-QQ group: 927427009
+QQ Group: 927427009
