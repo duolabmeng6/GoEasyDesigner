@@ -72,9 +72,10 @@
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
                              style="width: 100%;"
-                             @dragstart="拖拽开始_自定义组件($event, item)"
+                             @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
-                    {{ $t('componentName.' + item.组件名称) }}
+                    {{ $te('componentName.' + item.组件名称) ? $t('componentName.' + item.组件名称) : item.组件名称 }}
+
                   </el-button>
                 </el-col>
               </el-row>
@@ -284,7 +285,7 @@ onMounted(() => {
 
 })
 
-async function 拖拽开始_自定义组件(event, item) {
+async function 拖拽开始_自定义组件(event, item, uiname) {
   let 组件名称 = item.组件名称
   let 组件路径 = item.组件路径
   let 组件默认属性 = item.组件默认属性
@@ -296,7 +297,7 @@ async function 拖拽开始_自定义组件(event, item) {
     新属性.id = store.获取随机id()
     //避免名称重复导致后续代码出问题
     for (let i = 0; i < 100; i++) {
-      let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
+      let 名称是否存在 = store.递归查找名称(store.list, k)
       // console.log("名称是否存在", 名称是否存在)
       if (名称是否存在) {
         k = store.获取索引(组件名称)
@@ -304,10 +305,10 @@ async function 拖拽开始_自定义组件(event, item) {
         break
       }
     }
-    新属性.组件名称 = '自定义组件'
+    新属性.组件名称 = uiname + 'CustomComponent'
     新属性.自定义组件名称 = 组件名称
-    新属性.名称 = 组件名称 + k
-    新属性.标题 = 组件名称 + k
+    新属性.名称 = k
+    新属性.标题 = k
     新属性.HTML = 组件html
     store.当前拖拽组件数据 = 新属性
     // console.log("自定义组件创建=============", JSON.stringify(新属性))
@@ -360,7 +361,8 @@ function 拖拽开始(event, 组件名称, uiName) {
     event.stopPropagation()
     return
   }
-  let k = store.获取索引(组件名称)
+  let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
+  let k = store.获取索引(newName)
 
   新属性.id = store.获取随机id()
 
@@ -377,9 +379,8 @@ function 拖拽开始(event, 组件名称, uiName) {
 
   新属性.组件名称 = 组件名称
 
-  let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
-  新属性.名称 = newName + k
-  新属性.标题 = newName + k
+  新属性.名称 = k
+  新属性.标题 = k
   //把ui加上前缀比如 el
   新属性.组件名称 = uiName + 组件名称
 
@@ -392,10 +393,10 @@ function 拖拽开始(event, 组件名称, uiName) {
   }
   if (组件名称 == "Tabs") {
     let id = 新属性.id
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 新属性.子组件.length; i++) {
       新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
-      新属性.子组件[i].标题 = "选项卡" + store.获取索引("选项卡")
+      新属性.子组件[i].名称 = store.获取索引("content area ")
+      新属性.子组件[i].标题 = store.获取索引("tab")
       新属性.子组件[i].父容器id = id
     }
   }
@@ -407,9 +408,9 @@ function 拖拽开始(event, 组件名称, uiName) {
 
   if (组件名称 == "FlexLayout") {
     let id = 新属性.id
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 新属性.子组件.length; i++) {
       新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = "内容区域" + store.获取索引("内容区域")
+      新属性.子组件[i].名称 = store.获取索引("content area ")
       新属性.子组件[i].父容器id = id
     }
   }
@@ -418,19 +419,19 @@ function 拖拽开始(event, 组件名称, uiName) {
     let id = 新属性.id
     var i = 0;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域header" + store.获取索引("内容区域header")
+    新属性.子组件[i].名称 = store.获取索引("content area header")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域main" + store.获取索引("内容区域main")
+    新属性.子组件[i].名称 = store.获取索引("content area main")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域footer" + store.获取索引("内容区域footer")
+    新属性.子组件[i].名称 = store.获取索引("content area footer")
     新属性.子组件[i].父容器id = id
     i++;
     新属性.子组件[i].id = store.获取随机id()
-    新属性.子组件[i].名称 = "内容区域aside" + store.获取索引("内容区域aside")
+    新属性.子组件[i].名称 = store.获取索引("content areaaside")
     新属性.子组件[i].父容器id = id
     i++;
   }

@@ -17,7 +17,7 @@ export default {
     子组件: [
         {
             组件名称: "elContainer",
-            名称: "内容区域1",
+            名称: "content area 1",
             标题: "选项卡1",
             图标: "fa fa-server",
             top: "0",
@@ -34,7 +34,7 @@ export default {
         },
         {
             组件名称: "elContainer",
-            名称: "内容区域1",
+            名称: "content area 1",
             标题: "选项卡2",
             图标: "fa fa-cog",
             top: "0",

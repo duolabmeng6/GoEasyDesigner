@@ -69,26 +69,23 @@ export const useAppStore = defineStore('AppStore', {
                 return
             }
 
-
             if (this.代码编辑器内容 == "") {
                 this.代码编辑器内容 = 窗口事件代码模板
             }
-            let 新事件名称 = i18n.global.t('eventName.' + 事件名称) ? i18n.global.t('eventName.' + 事件名称) : 事件名称
-            console.log("i18n.global.locale ",i18n.global.locale.value )
-            if(i18n.global.locale.value == 'Englist'){
+            let 新事件名称 = 事件名称;
+            if (i18n.global.locale.value == 'Englist') {
                 //转换首字母大写
-                let str = 新事件名称;
+                let str = 事件名称;
                 str = str.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
                     return m.toUpperCase();
                 });
                 新事件名称 = str;
-
+            }else{
+                事件名称 = i18n.global.te('eventName.' + 事件名称) ? i18n.global.t('eventName.' + 事件名称) : 事件名称
             }
 
-
-
             console.log("新事件名称", 新事件名称)
-            let code = "item.事件" + 新事件名称 + "=" + '"' + item.名称 + 新事件名称 + '"'
+            let code = "item.event_" + 事件名称 + "=" + '"' + item.名称 + 新事件名称 + '"'
             console.log("添加事件被选择", item.名称 + 新事件名称, item, extData)
             eval(code)
             let ncode = '';
@@ -164,7 +161,7 @@ export const useAppStore = defineStore('AppStore', {
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
-                console.log("最终辅助代码",res)
+                console.log("最终辅助代码", res)
                 dthis.keywordMappings = res
             })
 
@@ -232,7 +229,7 @@ export const useAppStore = defineStore('AppStore', {
                 this.indexMap[名称]++;
             }
             // console.log("获取索引", 名称, this.indexMap[名称], this.indexMap)
-            return this.indexMap[名称];
+            return 名称 + this.indexMap[名称];
         },
         获取随机id() {
             //生成6为随机数
@@ -289,8 +286,8 @@ export const useAppStore = defineStore('AppStore', {
         新增子组件(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                名称: "内容区域" + this.获取索引("内容区域"),
-                标题: "选项卡" + this.获取索引("选项卡"),
+                名称: this.获取索引("content area"),
+                标题: this.获取索引("tabs"),
                 组件名称: "elContainer",
                 top: "0",
                 left: "0",
@@ -310,7 +307,7 @@ export const useAppStore = defineStore('AppStore', {
             let 插入数据 = {
                 id: this.获取随机id(),
                 组件名称: "elContainer",
-                名称: "内容区域" + this.获取索引("内容区域"),
+                名称: this.获取索引("content area"),
                 top: "0",
                 left: "0",
                 width: "100%",

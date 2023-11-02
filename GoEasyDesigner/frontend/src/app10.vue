@@ -300,7 +300,7 @@ function uiDragStart(event, 组件名称, uiName) {
 
   //避免名称重复导致后续代码出问题
   for (let i = 0; i < 100; i++) {
-    let 名称是否存在 = store.递归查找名称(store.list, 组件名称 + k)
+    let 名称是否存在 = store.递归查找名称(store.list,   k)
     // console.log("名称是否存在", 名称是否存在)
     if (名称是否存在) {
       k = store.获取索引(组件名称)

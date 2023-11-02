@@ -140,6 +140,7 @@ async function loadComponent() {
       }
     },
   }
+  // console.log("动态创建组件",ComponentName)
   remote.value = await loadModule(ComponentName, options);
 }
 

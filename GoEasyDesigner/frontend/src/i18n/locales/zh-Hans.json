@@ -67,6 +67,7 @@
     "TabsTW": "选择夹tw"
   },
   "event": {
+    "created": "创建完毕",
     "click": "被单击",
     "mousedown": "鼠标左键被按下",
     "mouseup": "鼠标左键被放开",

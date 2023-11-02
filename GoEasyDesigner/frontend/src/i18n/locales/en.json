@@ -31,7 +31,7 @@
   },
   "attr": {
     "addEvent": "add event function",
-    "backgroundColor": "background Color",
+    "backgroundColor": "backgroundColor",
     "backgroundImage": "backgroundImage",
     "border": "border",
     "disable": "disable",
@@ -79,6 +79,18 @@
     "失去焦点": "blur",
     "按下某键": "keydown",
     "放开某键": "keyup",
-    "滚轮被滚动": "mousewheel"
+    "滚轮被滚动": "mousewheel",
+    "created": "created",
+    "click": "click",
+    "mousedown": "mousedown",
+    "mouseup": "mouseup",
+    "dblclick": "dblclick",
+    "contextmenu": "contextmenu",
+    "mousemove": "mousemove",
+    "focus": "focus",
+    "blur": "blur",
+    "keydown": "keydown",
+    "keyup": "keyup",
+    "mousewheel": "mousewheel"
   }
 }

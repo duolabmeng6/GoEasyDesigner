@@ -19,7 +19,6 @@ const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const {item} = defineProps(['item']);
 
 let 事件名称 = ref([
-  {"label": "在此处选择加入事件处理函数", "value": "在此处选择加入事件处理函数"},
   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   {"label": "被单击", "value": "被单击"},
   {"label": "鼠标左键被按下", "value": "鼠标左键被按下"},
