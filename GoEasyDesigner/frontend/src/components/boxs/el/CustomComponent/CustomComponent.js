@@ -9,8 +9,7 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
-    自定义渲染:true,
-
+    自定义监听:true,
     data:{
         username: 'admin',
         password: 'admin',

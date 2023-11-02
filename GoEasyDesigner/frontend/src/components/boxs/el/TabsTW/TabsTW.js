@@ -12,13 +12,13 @@ export default {
     x轴滚动模式选项: "hidden",
     风格类型: "border-card",
     标签位置: "top",
-    自定义渲染:true,
+
 
     子组件: [
         {
             组件名称: "elContainer",
-            名称: "content area 1",
-            标题: "选项卡1",
+            名称: "ContentArea",
+            标题: "tab",
             图标: "fa fa-server",
             top: "0",
             left: "0",
@@ -34,8 +34,8 @@ export default {
         },
         {
             组件名称: "elContainer",
-            名称: "content area 1",
-            标题: "选项卡2",
+            名称: "ContentArea",
+            标题: "tab",
             图标: "fa fa-cog",
             top: "0",
             left: "0",

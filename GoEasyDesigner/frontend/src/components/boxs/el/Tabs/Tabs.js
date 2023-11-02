@@ -12,7 +12,7 @@ export default {
     x轴滚动模式选项: "hidden",
     风格类型: "border-card",
     标签位置: "top",
-    自定义渲染:true,
+
     子组件: [
         {
             组件名称: "elContainer",

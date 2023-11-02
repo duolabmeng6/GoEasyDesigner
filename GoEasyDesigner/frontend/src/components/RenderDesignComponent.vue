@@ -63,10 +63,11 @@
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
                    :item="subItem"/>
       </template>
-      <template v-else-if="item.自定义渲染">
-        <component :is="item.组件名称" :item="item"/>
-      </template>
       <template v-else>
+        <component :is="item.组件名称" :item="item" />
+      </template>
+
+      <template v-if="item.组件名称 == 'Window'">
         <component :is="item.组件名称" :item="item"/>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
                    :item="subItem"/>

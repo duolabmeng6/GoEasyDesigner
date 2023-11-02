@@ -8,7 +8,7 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
-    自定义渲染:true,
+
 
     风格类型: "border-card",
     标签位置: "top",

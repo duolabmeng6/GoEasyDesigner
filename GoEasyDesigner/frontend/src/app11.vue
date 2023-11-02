@@ -138,47 +138,56 @@
       </el-text>
     </div>
     <div class="工具条 clear-select">
-      <el-button-group class="" style="margin-left: -7px;">
-        <el-button :icon="Edit" @click="appAction.新建()">{{ $t('app.new') }}</el-button>
-        <el-button :icon="Open" @click="appAction.打开">{{ $t('app.open') }}</el-button>
-        <el-button :icon="Coin" @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-button>
-        <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
-        <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
-        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">
-          {{ $t('app.projectConfig') }}
-        </el-button>
-        <el-button :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</el-button>
-        <el-button :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-button>
-        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
-            $t('app.updateCheck')
-          }}
-        </el-button>
-        <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{ $t('app.downloadClient') }}
-        </el-button>
 
-        <el-dropdown>
-          <el-button type="">
-            {{ $t('app.language') }} {{ locale }}
-            <el-icon class="el-icon--right">
-              <arrow-down/>
-            </el-icon>
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item
-                  v-for="item in languages"
-                  :key="item"
-                  :class="{ 'is-active': item === locale }"
-                  class="lang-item"
-                  @click="onclickLanguageHandle(item)"
-              >{{ item }}
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+      <el-row>
+        <el-col :span="20">
+          <el-button-group class="" style="margin-left: -7px;">
+            <el-button :icon="Edit" @click="appAction.新建()">{{ $t('app.new') }}</el-button>
+            <el-button :icon="Open" @click="appAction.打开">{{ $t('app.open') }}</el-button>
+            <el-button :icon="Coin" @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-button>
+            <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
+            <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
+            <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">
+              {{ $t('app.projectConfig') }}
+            </el-button>
+            <el-button :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</el-button>
+            <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-button>
+            <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
+                $t('app.updateCheck')
+              }}
+            </el-button>
+            <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{ $t('app.downloadClient') }}
+            </el-button>
+          </el-button-group>
+        </el-col>
+        <el-col  :span="4" >
 
-      </el-button-group>
+          <el-dropdown style="
+    position: absolute;
+    right: 0;
+">
+            <el-button type="">
+              <el-icon><Switch /></el-icon> {{ locale }}
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                    v-for="item in languages"
+                    :key="item"
+                    :class="{ 'is-active': item === locale }"
+                    class="lang-item"
+                    @click="onclickLanguageHandle(item)"
+                >{{ item }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </el-col>
 
+      </el-row>
 
     </div>
   </div>
@@ -190,7 +199,7 @@
 import {inject, onMounted, ref} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import {ElMessage} from "element-plus";
-import {Coin, Edit, Help, Key, Open, Tools} from "@element-plus/icons-vue";
+import {Coin, Edit, Help, Key, Open, Tools,Switch} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app.js';
 
 import {E保存, E取配置信息} from "../wailsjs/go/main/App";

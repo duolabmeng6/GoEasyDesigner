@@ -111,10 +111,23 @@ function generateComponentCode(components, parentPath = '') {
     let k = 0;
     let codeLine;
     for (const component of components) {
-        const componentName = component["名称"];
+        let componentName = component["名称"];
         const componentPath = `${parentPath}.子组件[${k}]`;
         const componentPath2 = `${parentPath}`;
         k = k + 1;
+        // componentName 如果带有空格 删除空格 并且把后面1个字母大写
+        if (componentName) {
+            if (componentName.includes(" ")) {
+                const arr = componentName.split(" ");
+                let newName = "";
+                for (let i = 0; i < arr.length; i++) {
+                    newName = newName + arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+                }
+                componentName = newName;
+            }
+        }
+
+
         codeLine = `组件.${componentName} = list[0]${componentPath}`;
         if (componentName == "" || componentName == undefined) {
         } else {

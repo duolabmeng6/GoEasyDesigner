@@ -7,6 +7,8 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
+    自定义监听:true,
+
     HTML: "",
     data: {
         username: 'admin',
