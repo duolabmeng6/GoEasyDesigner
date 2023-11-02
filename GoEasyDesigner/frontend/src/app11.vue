@@ -53,7 +53,7 @@
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <el-tab-pane :label="$t('app.components')">
           <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
-            <el-collapse-item name="1" :title="$t('app.system_components')">
+            <el-collapse-item :title="$t('app.system_components')" name="1">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames_el" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
@@ -67,14 +67,14 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-            <el-collapse-item name="2" :title="$t('app.Custom')">
+            <el-collapse-item :title="$t('app.Custom')" name="2">
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
                   <el-button class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item)"
                   >
-                    {{ $t('componentName.'+item.组件名称) }}
+                    {{ $t('componentName.' + item.组件名称) }}
                   </el-button>
                 </el-col>
               </el-row>
@@ -104,7 +104,7 @@
 
 
     </div>
-    <div class="备案信息" v-if="!store.客户端模式" style="    position: absolute;
+    <div v-if="!store.客户端模式" class="备案信息" style="    position: absolute;
     bottom: 0;
     left: 30%;">
       <el-text>黔ICP备19002063号-4 贵公网安备 52230102000312号</el-text>
@@ -114,7 +114,7 @@
         <el-icon>
           <Sunny/>
         </el-icon>
-        {{ $t('app.name')}}
+        {{ $t('app.name') }}
         <el-text size="small">{{ store.版本号 }}</el-text>
       </el-text>
     </div>
@@ -125,17 +125,24 @@
         <el-button :icon="Coin" @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-button>
         <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
         <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
-        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">{{ $t('app.projectConfig')}}
+        <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">
+          {{ $t('app.projectConfig') }}
         </el-button>
-        <el-button :icon="Help" @click="appAction.帮助()">{{$t('app.help')}}</el-button>
-        <el-button :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck' )}}</el-button>
-        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{ $t('app.updateCheck') }}</el-button>
+        <el-button :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</el-button>
+        <el-button :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-button>
+        <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
+            $t('app.updateCheck')
+          }}
+        </el-button>
         <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{ $t('app.downloadClient') }}
         </el-button>
 
         <el-dropdown>
           <el-button type="">
-            {{ $t('app.language') }} {{locale}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+            {{ $t('app.language') }} {{ locale }}
+            <el-icon class="el-icon--right">
+              <arrow-down/>
+            </el-icon>
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
@@ -143,15 +150,15 @@
                   v-for="item in languages"
                   :key="item"
                   :class="{ 'is-active': item === locale }"
-                  @click="onclickLanguageHandle(item)"
                   class="lang-item"
-              >{{ item }}</el-dropdown-item>
+                  @click="onclickLanguageHandle(item)"
+              >{{ item }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
 
       </el-button-group>
-
 
 
     </div>
@@ -176,9 +183,9 @@ store.init()
 const 创建组件属性默认值 = inject("创建组件属性默认值")
 const scrollContainer = ref(null);
 
-import { useI18n } from "vue-i18n";
+import {useI18n} from "vue-i18n";
 
-const { t, availableLocales: languages, locale } = useI18n();
+const {t, availableLocales: languages, locale} = useI18n();
 
 //读取本地存储
 if (localStorage.getItem("locale")) {
@@ -281,6 +288,7 @@ async function 拖拽开始_自定义组件(event, item) {
   let 组件名称 = item.组件名称
   let 组件路径 = item.组件路径
   let 组件默认属性 = item.组件默认属性
+
   function 创建自定义组件json(组件名称, 组件html, 新属性) {
     // 新属性 = JSON.parse(JSON.stringify(创建组件属性默认值['自定义组件']))
     let k = store.获取索引(组件名称)
@@ -317,7 +325,7 @@ async function 拖拽开始_自定义组件(event, item) {
     const 组件html = await responseHtml.text();
     // console.log("自定义组件的html", 组件html);
     创建自定义组件json(组件名称, 组件html, 新属性);
-  }catch (e){
+  } catch (e) {
     //弹出饿了么的提示框
     console.error(e)
     ElMessage({
@@ -329,9 +337,10 @@ async function 拖拽开始_自定义组件(event, item) {
 
 
 }
+
 const BoxComponentDefaultValue_el = inject("BoxComponentDefaultValue_el")
 
-function 拖拽开始(event, 组件名称,uiName) {
+function 拖拽开始(event, 组件名称, uiName) {
   let 新属性 = ""
   try {
     新属性 = JSON.parse(JSON.stringify(BoxComponentDefaultValue_el[组件名称]))
@@ -371,14 +380,17 @@ function 拖拽开始(event, 组件名称,uiName) {
   let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
   新属性.名称 = newName + k
   新属性.标题 = newName + k
+  //把ui加上前缀比如 el
+  新属性.组件名称 = uiName + 组件名称
 
+  console.log("当前组件名称", 组件名称)
 
-  if (组件名称 == "按钮") {
+  if (组件名称 == "Button") {
   }
-  if (组件名称 == "布局容器") {
+  if (组件名称 == "elContainer") {
     新属性.border = "1px solid black"
   }
-  if (组件名称 == "选择夹") {
+  if (组件名称 == "Tabs") {
     let id = 新属性.id
     for (var i = 0; i < 2; i++) {
       新属性.子组件[i].id = store.获取随机id()
@@ -387,13 +399,13 @@ function 拖拽开始(event, 组件名称,uiName) {
       新属性.子组件[i].父容器id = id
     }
   }
-  if (组件名称 == "开关") {
+  if (组件名称 == "Switch") {
   }
-  if (组件名称 == "编辑框") {
+  if (组件名称 == "TextEdit") {
     新属性.内容 = 新属性.标题
   }
 
-  if (组件名称 == "弹性布局") {
+  if (组件名称 == "FlexLayout") {
     let id = 新属性.id
     for (var i = 0; i < 3; i++) {
       新属性.子组件[i].id = store.获取随机id()
@@ -402,7 +414,7 @@ function 拖拽开始(event, 组件名称,uiName) {
     }
   }
 
-  if (组件名称 == "常用布局") {
+  if (组件名称 == "CustomComponent") {
     let id = 新属性.id
     var i = 0;
     新属性.子组件[i].id = store.获取随机id()

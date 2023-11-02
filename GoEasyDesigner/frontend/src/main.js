@@ -91,6 +91,7 @@ function createCustomProposal(range, insertText, label) {
         range: range,
     };
 }
+
 store.keywordMappings = 编辑器数据
 monaco.languages.register({id: 'javascript'});
 monaco.languages.setMonarchTokensProvider('javascript', ldf);
@@ -142,9 +143,9 @@ function getBoxComponentNames(uiName, meta) {
             ComponentNames.push(name)
         }
 
-        // app.component(uiName +  name, module.default);
-        app.component(name, module.default);
-        console.log("注册组件", name)
+        app.component(uiName + name, module.default);
+        // app.component(name, module.default);
+        console.log("注册组件", uiName, name)
         return name;
     });
 
@@ -166,20 +167,21 @@ function getBoxComponentDefaultValue(uiName, meta) {
     return ComponentDefaultValue;
 }
 
+// app.component('布局容器', import('./components/boxs/Container/Container.vue'))
 
-const BoxComponentNames_el = getBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue',{ eager: true }))
+const BoxComponentNames_el = getBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
 console.log("BoxComponentNames_el", BoxComponentNames_el)
-let ComponentNameOrder = ['按钮', '编辑框', '标签', '开关']
+let ComponentNameOrder = ['Button', 'TextEdit', 'Label']
 ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el])]
 // 删除布局容器
-ComponentNameOrder = ComponentNameOrder.filter(item => item !== "布局容器")
+ComponentNameOrder = ComponentNameOrder.filter(item => item !== "Container")
 app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
 
-const BoxComponentDefaultValue_el = getBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js',{ eager: true }))
+const BoxComponentDefaultValue_el = getBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true}))
 app.provide('BoxComponentDefaultValue_el', BoxComponentDefaultValue_el)
 
 //注册公用组件
-getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue',{ eager: true }))
+getBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
 
 // 把i18n挂在到全局
 

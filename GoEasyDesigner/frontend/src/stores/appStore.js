@@ -215,12 +215,13 @@ export const useAppStore = defineStore('AppStore', {
         },
 
         当前组件名称2() {
+            const {t} = useI18n() // 解构出t方法
 
-            if (this.当前拖拽组件数据.组件名称 == "窗口") {
-                return "窗口属性"
+            if (this.当前拖拽组件数据.组件名称 == t('componentName.Window')) {
+                return "WindowAttr"
             }
 
-            return this.当前拖拽组件数据.组件名称 + "属性"
+            return this.当前拖拽组件数据.组件名称 + "Attr"
         },
 
         获取索引(名称) {
@@ -290,7 +291,7 @@ export const useAppStore = defineStore('AppStore', {
                 id: this.获取随机id(),
                 名称: "内容区域" + this.获取索引("内容区域"),
                 标题: "选项卡" + this.获取索引("选项卡"),
-                组件名称: "布局容器",
+                组件名称: "elContainer",
                 top: "0",
                 left: "0",
                 width: "100%",
@@ -308,7 +309,7 @@ export const useAppStore = defineStore('AppStore', {
         新增子组件2(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                组件名称: "布局容器",
+                组件名称: "elContainer",
                 名称: "内容区域" + this.获取索引("内容区域"),
                 top: "0",
                 left: "0",

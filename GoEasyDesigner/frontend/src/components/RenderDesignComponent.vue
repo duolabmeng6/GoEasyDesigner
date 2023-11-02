@@ -45,10 +45,7 @@
         @click.stop="鼠标按下($event,item)"
 
     >
-      <template v-if="item.组件名称=='按钮'">
-        <component is="按钮" :item="item"/>
-      </template>
-      <template v-else-if="item.组件名称=='布局容器'">
+      <template v-if="item.组件名称=='elContainer'">
         <template v-if="item.子组件.length === 0">
           <div style="width: 100%;
                        background: rgba(10,19,37,.05);
@@ -65,19 +62,9 @@
         </template>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
                    :item="subItem"/>
-
       </template>
-      <template v-else-if="item.组件名称=='选择夹'">
-        <component is="选择夹" :item="item"/>
-      </template>
-      <template v-else-if="item.组件名称=='选择夹tw'">
-        <component is="选择夹tw" :item="item"/>
-      </template>
-      <template v-else-if="item.组件名称.endsWith('布局')">
+      <template v-else-if="item.自定义渲染">
         <component :is="item.组件名称" :item="item"/>
-      </template>
-      <template v-else-if="item.组件名称=='自定义组件'">
-        <component is="自定义组件" :item="item"/>
       </template>
       <template v-else>
         <component :is="item.组件名称" :item="item"/>

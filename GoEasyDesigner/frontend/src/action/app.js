@@ -26,9 +26,9 @@ appAction.新建 = function () {
     function 创建窗口() {
         return {
             "id": "1",
-            "名称": t('componentName.窗口'),
-            "组件名称": "窗口",
-            "标题": "窗口",
+            "名称": t('componentName.Window'),
+            "组件名称": t('componentName.Window'),
+            "标题": t('componentName.Window'),
             "top": "0",
             "left": "0",
             "width": "500",

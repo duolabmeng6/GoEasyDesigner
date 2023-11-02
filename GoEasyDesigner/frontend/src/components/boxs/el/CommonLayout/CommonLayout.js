@@ -8,15 +8,16 @@ export default {
     可视: true,
     禁止: false,
     层级: 0,
+    自定义渲染:true,
+
     风格类型: "border-card",
     标签位置: "top",
     列间隔: 10,
     对齐方式: "start",
     布局方式: "header-main",
     子组件: [
-
         {
-            组件名称: "布局容器",
+            组件名称: "elContainer",
             名称: "内容区域header",
             top: "0",
             left: "0",
@@ -34,7 +35,7 @@ export default {
         },
 
         {
-            组件名称: "布局容器",
+            组件名称: "elContainer",
             名称: "内容区域main",
             top: "0",
             left: "0",
@@ -53,7 +54,7 @@ export default {
         },
 
         {
-            组件名称: "布局容器",
+            组件名称: "elContainer",
             名称: "内容区域footer",
             top: "0",
             left: "0",
@@ -72,7 +73,7 @@ export default {
         },
 
         {
-            组件名称: "布局容器",
+            组件名称: "elContainer",
             名称: "内容区域aside",
             top: "0",
             left: "0",
