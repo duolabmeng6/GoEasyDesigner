@@ -254,7 +254,7 @@ export default {
 }
 
 .bottom-left {
-  bottom: -6px;
+  bottom: -8px;
   left: -6px;
   cursor: sw-resize;
 }
