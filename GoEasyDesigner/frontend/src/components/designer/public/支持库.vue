@@ -66,11 +66,11 @@ const handleNodeClick = (data) => {
 store.支持库列表 = [
   {
     label: 'wails Support library (JS)',
-    help: 'import * as SystemFc from "@/../wailsjs/runtime";',
+    help: 'import * as systemFc from "@/../wailsjs/runtime";',
     children: [
       {
-        label: 'SystemFc',
-        help: 'import * as SystemFc from "@/../wailsjs/runtime";',
+        label: 'systemFc',
+        help: 'import * as systemFc from "@/../wailsjs/runtime";',
         children: systemFcDocHandle
       }
     ]

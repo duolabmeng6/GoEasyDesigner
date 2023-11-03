@@ -98,7 +98,26 @@ function createCustomProposal(range, insertText, label) {
     };
 }
 
+import systemFcDoc from "@/helpDoc/systemFcDoc.json"
+
+const systemFcDocQuickTipQuickTip = {};
+systemFcDoc.forEach(item => {
+    let l = JSON.parse(JSON.stringify(item));
+    try {
+        const extractedContent = item.doc.split(' ')[0];
+        l.label =  item.help  + " " + extractedContent;
+    } catch (e) {
+
+    }
+    systemFcDocQuickTipQuickTip[item.help] = {
+        "insertText": item.help,
+        "label": l.label
+    }
+});
+
+
 store.keywordMappings = 编辑器数据
+
 monaco.languages.register({id: 'javascript'});
 monaco.languages.setMonarchTokensProvider('javascript', ldf);
 monaco.languages.registerCompletionItemProvider("javascript", {
@@ -119,6 +138,14 @@ monaco.languages.registerCompletionItemProvider("javascript", {
                 suggestions.push(createCustomProposal(range, insertText, label));
             }
         });
+        Object.keys(systemFcDocQuickTipQuickTip).forEach(function (keyword) {
+            var regex = new RegExp("^" + word.word, "i");
+            if (regex.test(keyword)) {
+                var {insertText, label} = systemFcDocQuickTipQuickTip[keyword];
+                suggestions.push(createCustomProposal(range, insertText, label));
+            }
+        });
+
         //这里设置排序对输入提示没有影响
         // suggestions.sort((a, b) => {
         //     return a.label.localeCompare(b.label, undefined, { sensitivity: 'base' });
@@ -135,12 +162,11 @@ app.config.warnHandler = function (msg, vm, trace) {
 };
 
 
-
 //注册公用组件
-Helper.registerBoxComponentNames(app,'', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
+Helper.registerBoxComponentNames(app, '', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
 
 //注册饿了么组件
-const BoxComponentNames_el = Helper.registerBoxComponentNames(app,'el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
+const BoxComponentNames_el = Helper.registerBoxComponentNames(app, 'el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
 console.log("饿了么组件", BoxComponentNames_el)
 let ComponentNameOrder = ['Button', 'TextEdit', 'Label']
 ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el])]
@@ -148,12 +174,12 @@ ComponentNameOrder = ComponentNameOrder.filter(item => item !== "Container")
 app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
 //注册组件默认属性
 const BoxComponentDefaultValue = {
-    'el': Helper.registerBoxComponentDefaultValue(app,'el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
-    'td': Helper.registerBoxComponentDefaultValue(app,'td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
+    'el': Helper.registerBoxComponentDefaultValue(app, 'el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
+    'td': Helper.registerBoxComponentDefaultValue(app, 'td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
 }
 app.provide('BoxComponentDefaultValue', BoxComponentDefaultValue)
 
-const BoxComponentNames_td = Helper.registerBoxComponentNames(app,'td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
+const BoxComponentNames_td = Helper.registerBoxComponentNames(app, 'td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
 
 const BoxComponentNames = {
     'system': ComponentNameOrder,
