@@ -27,7 +27,7 @@ appAction.新建 = function () {
         return {
             "id": "1",
             "name": t('componentName.Window'),
-            "componentName": t('componentName.Window'),
+            "componentName": 'Window',
             "text": t('componentName.Window'),
             "top": "0",
             "left": "0",
