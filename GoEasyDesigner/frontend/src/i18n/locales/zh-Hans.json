@@ -67,7 +67,8 @@
     "TextEdit": "编辑框",
     "Tooltip": "提示框",
     "Tree": "树形框",
-    "Window": "窗口"
+    "Window": "窗口",
+    "ControlButton": "窗口控制按钮"
   },
   "eventName": {
     "blur": "失去焦点",

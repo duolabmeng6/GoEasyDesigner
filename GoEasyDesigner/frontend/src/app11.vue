@@ -110,8 +110,7 @@
         <el-tab-pane :label="$t('app.help_info')">
           <p v-if="!store.客户端模式" v-html="$t('app.helpDesc')">
           </p>
-          <br>
-
+          <p  v-if="store.客户端模式">Welcome to use GoEasyDesigner</p>
 
         </el-tab-pane>
         <el-tab-pane :label="$t('app.debug_info')">
