@@ -55,12 +55,11 @@
       </el-form-item>
     </el-form>
 
-    <component
-        is="common-event-component"
-        :item="props.item"
-        :eventName="enventNames"
-    />
+
+
   </div>
+  <component is="common-event-component" :item="props.item"  :eventName="enventNames"/>
+
 </template>
 
 <script setup>
@@ -86,11 +85,7 @@ let enventNames = ref([
 ]);
 
 onMounted(() => {
-  console.log("LinkButtonPropertiesTable.vue onMounted");
-  console.log("--", localStorage.getItem("locale"));
-
   if (localStorage.getItem("locale") === "English") {
-    console.log("英语");
     sizeOptions.value.forEach((item) => {
       item.label = item.value;
     });

@@ -118,11 +118,7 @@ let enventNames = ref([
 
 
 onMounted(() => {
-  console.log("ButtonAttr.vue onMounted");
-  console.log("--",localStorage.getItem("locale") );
-
   if (localStorage.getItem("locale") === "English") {
-    console.log("英语");
     shapeOptions.value.forEach((item) => {
       item.label = item.value;
     });
