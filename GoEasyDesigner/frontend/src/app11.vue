@@ -141,17 +141,30 @@
 
       <el-row>
         <el-col :span="20">
-          <el-button-group class="" style="margin-left: -7px;">
-            <el-button :icon="Edit" @click="appAction.新建()">{{ $t('app.new') }}</el-button>
-            <el-button :icon="Open" @click="appAction.打开">{{ $t('app.open') }}</el-button>
-            <el-button :icon="Coin" @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-button>
+          <el-dropdown style="
+">
+            <el-button type="">
+              <el-icon><Switch /></el-icon> File
+              <el-icon class="el-icon--right">
+                <arrow-down/>
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="appAction.新建()"> {{ $t('app.new') }}</el-dropdown-item>
+                <el-dropdown-item @click="appAction.打开">{{ $t('app.open') }}</el-dropdown-item>
+                <el-dropdown-item @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-dropdown-item>
+                <el-dropdown-item @click="appAction.帮助()">{{ $t('app.help') }}</el-dropdown-item>
+                <el-dropdown-item @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-dropdown-item>
+                <el-dropdown-item @click="e => store.显示项目配置对话框 = true">
+                  {{ $t('app.projectConfig') }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+
+          <el-button-group class="" >
             <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
             <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
-            <el-button v-if="store.客户端模式" :icon="Tools" @click="e => store.显示项目配置对话框 = true">
-              {{ $t('app.projectConfig') }}
-            </el-button>
-            <el-button :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</el-button>
-            <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-button>
             <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}

@@ -46,7 +46,9 @@
     "width": "宽度",
     "xAxisRollingMode": "x轴滚动模式",
     "yAxisRollingMode": "y轴滚动模式",
-    "zIndex": "层级"
+    "zIndex": "层级",
+    "right": "右边",
+    "bottom": "底边"
   },
   "componentName": {
     "Button": "按钮",

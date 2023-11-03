@@ -3,7 +3,7 @@ export default {
     left: "0",
     width: "80",
     height: "32",
-    禁止放置: true,
+    not_place: true,
     visible: true,
     disable: false,
     zIndex: 0,

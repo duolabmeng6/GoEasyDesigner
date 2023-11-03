@@ -38,7 +38,7 @@
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
@@ -72,5 +72,26 @@ let 事件名称 = ref([
   {"label": "放开某键", "value": "keyup"},
   {"label": "滚轮被滚动", "value": "mousewheel"}
 ])
+
+
+
+onMounted(() => {
+  console.log("ButtonAttr.vue onMounted");
+  console.log("--",localStorage.getItem("locale") );
+
+  if (localStorage.getItem("locale") === "English") {
+    console.log("英语");
+    按钮类型选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+    尺寸选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+
+  }
+
+});
+
+
 
 </script>

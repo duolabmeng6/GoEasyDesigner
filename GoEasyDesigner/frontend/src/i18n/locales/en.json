@@ -1,6 +1,6 @@
 {
   "app": {
-    "Attribute": "Attribute",
+    "Attribute": "attribute",
     "Custom": "Custom",
     "clear": "clear",
     "compile": "Compile",
