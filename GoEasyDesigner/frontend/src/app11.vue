@@ -110,8 +110,9 @@
         <el-tab-pane :label="$t('app.help_info')">
           <p v-if="!store.客户端模式" v-html="$t('app.helpDesc')">
           </p>
-          <p  v-if="store.客户端模式">Welcome to use GoEasyDesigner</p>
-
+          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+               v-html="store.帮助信息"
+          ></div>
         </el-tab-pane>
         <el-tab-pane :label="$t('app.debug_info')">
           <div ref="scrollContainer" style="height: 100px;overflow-y: auto"

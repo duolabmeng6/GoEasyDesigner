@@ -1,0 +1,242 @@
+[
+    {
+        "label": "BrowserOpenURL",
+        "help": "SystemFc.BrowserOpenURL(url)",
+        "doc": "浏览器打开URL 在系统默认浏览器打开给定的 URL。"
+    },
+    {
+        "label": "ClipboardGetText",
+        "help": "SystemFc.ClipboardGetText()",
+        "doc": "剪贴板获取文本 从剪切板读取当前存储的文本。"
+    },
+    {
+        "label": "ClipboardSetText",
+        "help": "SystemFc.ClipboardSetText(text)",
+        "doc": "剪贴板设置文本 将文本写入剪切板。"
+    },
+    {
+        "label": "Environment",
+        "help": "SystemFc.Environment()",
+        "doc": "环境 返回当前环境的详细信息。"
+    },
+    {
+        "label": "EventsEmit",
+        "help": "SystemFc.EventsEmit(eventName)",
+        "doc": "触发事件 触发指定的事件。可选数据可以与事件一起传递。"
+    },
+    {
+        "label": "EventsOff",
+        "help": "SystemFc.EventsOff(eventName, ...additionalEventNames)",
+        "doc": "移除事件监听器 移除给定事件名称的监听器,可以移除多个。"
+    },
+    {
+        "label": "EventsOn",
+        "help": "SystemFc.EventsOn(eventName, callback)",
+        "doc": "添加事件监听器 为给定的事件名称设置一个监听器。"
+    },
+    {
+        "label": "EventsOnMultiple",
+        "help": "SystemFc.EventsOnMultiple(eventName, callback, maxCallbacks)",
+        "doc": "添加限次数事件监听器 为给定的事件名称设置一个最多只能触发指定次数的监听器。"
+    },
+    {
+        "label": "EventsOnce",
+        "help": "SystemFc.EventsOnce(eventName, callback)",
+        "doc": "添加一次性事件监听器 为给定的事件名称设置一个只会触发一次的监听器。"
+    },
+    {
+        "label": "Hide",
+        "help": "SystemFc.Hide()",
+        "doc": "隐藏 隐藏应用程序。"
+    },
+    {
+        "label": "LogDebug",
+        "help": "SystemFc.LogDebug(message)",
+        "doc": "Debug日志 在Debug日志级别记录给定的消息。"
+    },
+    {
+        "label": "LogError",
+        "help": "SystemFc.LogError(message)",
+        "doc": "Error日志 在Error日志级别记录给定的消息。"
+    },
+    {
+        "label": "LogFatal",
+        "help": "SystemFc.LogFatal(message)",
+        "doc": "Fatal日志 在Fatal日志级别记录给定的消息。"
+    },
+    {
+        "label": "LogInfo",
+        "help": "SystemFc.LogInfo(message)",
+        "doc": "Info日志 在Info日志级别记录给定的消息。"
+    },
+    {
+        "label": "LogPrint",
+        "help": "SystemFc.LogPrint(message)",
+        "doc": "打印日志 将给定的消息记录为原始消息。"
+    },
+    {
+        "label": "LogTrace",
+        "help": "SystemFc.LogTrace(message)",
+        "doc": "Trace日志 在Trace日志级别记录给定的消息。"
+    },
+    {
+        "label": "LogWarning",
+        "help": "SystemFc.LogWarning(message)",
+        "doc": "Warning日志 在Warning日志级别记录给定的消息。"
+    },
+    {
+        "label": "Quit",
+        "help": "SystemFc.Quit()",
+        "doc": "退出 退出应用程序。"
+    },
+    {
+        "label": "ScreenGetAll",
+        "help": "SystemFc.ScreenGetAll()",
+        "doc": "获取屏幕 返回当前连接的屏幕列表。"
+    },
+    {
+        "label": "Show",
+        "help": "SystemFc.Show()",
+        "doc": "显示 显示应用程序。"
+    },
+    {
+        "label": "WindowCenter",
+        "help": "SystemFc.WindowCenter()",
+        "doc": "窗口居中 使窗口在当前窗口所在的监视器上居中。"
+    },
+    {
+        "label": "WindowFullscreen",
+        "help": "SystemFc.WindowFullscreen()",
+        "doc": "窗口全屏 使窗口全屏。"
+    },
+    {
+        "label": "WindowGetPosition",
+        "help": "SystemFc.WindowGetPosition()",
+        "doc": "获取窗口位置 获取窗口相对于当前监视器的位置。"
+    },
+    {
+        "label": "WindowGetSize",
+        "help": "SystemFc.WindowGetSize()",
+        "doc": "获取窗口大小 获取窗口的宽度和高度。"
+    },
+    {
+        "label": "WindowHide",
+        "help": "SystemFc.WindowHide()",
+        "doc": "隐藏窗口 如果可见,则隐藏窗口。"
+    },
+    {
+        "label": "WindowIsFullscreen",
+        "help": "SystemFc.WindowIsFullscreen()",
+        "doc": "窗口是否全屏 如果窗口是全屏,则返回true。"
+    },
+    {
+        "label": "WindowIsMaximised",
+        "help": "SystemFc.WindowIsMaximised()",
+        "doc": "窗口是否最大化 如果窗口最大化,则返回true。"
+    },
+    {
+        "label": "WindowIsMinimised",
+        "help": "SystemFc.WindowIsMinimised()",
+        "doc": "窗口是否最小化 如果窗口最小化,则返回true。"
+    },
+    {
+        "label": "WindowIsNormal",
+        "help": "SystemFc.WindowIsNormal()",
+        "doc": "窗口是否正常 如果窗口未最小化、最大化或全屏,则返回true。"
+    },
+    {
+        "label": "WindowMaximise",
+        "help": "SystemFc.WindowMaximise()",
+        "doc": "窗口最大化 最大化窗口以填满屏幕。"
+    },
+    {
+        "label": "WindowMinimise",
+        "help": "SystemFc.WindowMinimise()",
+        "doc": "窗口最小化 最小化窗口。"
+    },
+    {
+        "label": "WindowReload",
+        "help": "SystemFc.WindowReload()",
+        "doc": "窗口重载 重新加载当前页面。"
+    },
+    {
+        "label": "WindowReloadApp",
+        "help": "SystemFc.WindowReloadApp()",
+        "doc": "重载应用前端 重新加载应用程序前端。"
+    },
+    {
+        "label": "WindowSetAlwaysOnTop",
+        "help": "SystemFc.WindowSetAlwaysOnTop(b)",
+        "doc": "设置置顶 设置窗口置顶或取消置顶。"
+    },
+    {
+        "label": "WindowSetBackgroundColour",
+        "help": "SystemFc.WindowSetBackgroundColour(R, G, B, A)",
+        "doc": "设置背景色 将窗口的背景颜色设置为给定的RGBA颜色。"
+    },
+    {
+        "label": "WindowSetDarkTheme",
+        "help": "SystemFc.WindowSetDarkTheme()",
+        "doc": "设置深色主题 将窗口主题设置为深色。"
+    },
+    {
+        "label": "WindowSetLightTheme",
+        "help": "SystemFc.WindowSetLightTheme()",
+        "doc": "设置浅色主题 将窗口主题设置为浅色。"
+    },
+    {
+        "label": "WindowSetMaxSize",
+        "help": "SystemFc.WindowSetMaxSize(width, height)",
+        "doc": "设置最大尺寸 设置窗口最大尺寸。如果当前大于设置值,则调整窗口大小。"
+    },
+    {
+        "label": "WindowSetMinSize",
+        "help": "SystemFc.WindowSetMinSize(width, height)",
+        "doc": "设置最小尺寸 设置窗口最小尺寸。如果当前小于设置值,则调整窗口大小。"
+    },
+    {
+        "label": "WindowSetPosition",
+        "help": "SystemFc.WindowSetPosition(x, y)",
+        "doc": "设置窗口位置 设置窗口相对于当前监视器的位置。"
+    },
+    {
+        "label": "WindowSetSize",
+        "help": "SystemFc.WindowSetSize(width, height)",
+        "doc": "设置窗口大小 设置窗口的宽度和高度。"
+    },
+    {
+        "label": "WindowSetSystemDefaultTheme",
+        "help": "SystemFc.WindowSetSystemDefaultTheme()",
+        "doc": "设置系统默认主题 设置窗口主题为系统默认值。"
+    },
+    {
+        "label": "WindowSetTitle",
+        "help": "SystemFc.WindowSetTitle(title)",
+        "doc": "设置窗口标题 设置窗口标题栏中的文本。"
+    },
+    {
+        "label": "WindowShow",
+        "help": "SystemFc.WindowShow()",
+        "doc": "显示窗口 显示窗口,如果它当前是隐藏的。"
+    },
+    {
+        "label": "WindowToggleMaximise",
+        "help": "SystemFc.WindowToggleMaximise()",
+        "doc": "切换窗口最大化 在最大化和未最大化之间切换。"
+    },
+    {
+        "label": "WindowUnfullscreen",
+        "help": "SystemFc.WindowUnfullscreen()",
+        "doc": "取消全屏 恢复全屏之前的窗口尺寸和位置。"
+    },
+    {
+        "label": "WindowUnmaximise",
+        "help": "SystemFc.WindowUnmaximise()",
+        "doc": "取消最大化 将窗口恢复到最大化之前的尺寸和位置。"
+    },
+    {
+        "label": "WindowUnminimise",
+        "help": "SystemFc.WindowUnminimise()",
+        "doc": "取消最小化 将窗口恢复到最小化之前的尺寸和位置。"
+    }
+]

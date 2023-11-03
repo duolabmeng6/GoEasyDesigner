@@ -13,6 +13,7 @@ import Helper from "./Helper.js"
 import i18n from './i18n/index.js'
 
 import App from './app11.vue'
+// import App from './components/designer/public/支持库.vue'
 import {useAppStore} from '@/stores/appStore'
 import RenderDesignComponent from "./components/RenderDesignComponent.vue"
 

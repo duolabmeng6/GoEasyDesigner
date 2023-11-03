@@ -38,7 +38,7 @@ export const useAppStore = defineStore('AppStore', {
             当前代码编辑器路径: ref(""),
             选择夹_中间现行选中项: ref("0"),
             支持库列表: ref([]),
-            帮助信息: ref("GoEasyDesigner 窗口设计师 轻松跨平台开发"),
+            帮助信息: ref("Welcome to use GoEasyDesigner"),
             keywordMappings: ref(""),
             全局_事件名称列表: ref([]),
             代码编写模式: ref(1),//1:网页内代码编辑器 2:代码跳转至IDE
