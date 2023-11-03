@@ -35,7 +35,7 @@
     </div>
     <div class="设计区域">
       <el-col :span="24" style="height: 100%">
-        <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
+        <el-tabs id="tabMainVal" ref="tabMainVal" v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
           <el-tab-pane :label="$t('app.design')">
             <div id="designer" style="position: relative;    margin: 8px;"
             >
@@ -196,7 +196,7 @@
 </template>
 
 <script setup>
-import {inject, onMounted, ref} from 'vue';
+import {inject, nextTick, onMounted, ref} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import {ElMessage} from "element-plus";
 import {Coin, Edit, Help, Key, Open, Tools,Switch} from "@element-plus/icons-vue";
@@ -263,6 +263,25 @@ function 版本号自动检测() {
   }
 }
 
+// const tabLeftVal = ref('0');
+// const tabRightVal = ref('0');
+// const tabFooterVal = ref('0');
+// const tabMainVal = ref(null)
+const tabContentHight = ref(0);
+async function ReSize() {
+  await nextTick()
+  // console.log(tabMainVal)
+  // console.log(tabMainVal.clientHeight)
+  let tabMainVal = document.getElementById("tabMainVal")
+  let contentHeight = tabMainVal.clientHeight
+  let headerHeight = tabMainVal.querySelector('.el-tabs__header').clientHeight
+  // console.log("headerHeight", headerHeight)
+  // console.log("contentHeight", contentHeight)
+  tabContentHight.value = (contentHeight - headerHeight - 16) + 'px'
+  tabMainVal.querySelector('#designer').style.height = tabContentHight.value
+  // tabMainRef.value.querySelector('.t-tabs__content').style.height = (contentHeight - headerHeight) + 'px'
+
+}
 
 onMounted(() => {
   store.scrollContainer = scrollContainer.value;
@@ -292,6 +311,16 @@ onMounted(() => {
   }, 200)
   版本号自动检测()
 
+  ReSize()
+  window.addEventListener('resize', function () {
+    console.log("重新计算高度")
+    ReSize()
+  })
+
+  init_tailwindcss()
+})
+
+function init_tailwindcss() {
 
   const script = document.createElement('script')
   script.src = '/cdn.tailwindcss.com_3.3.3.js'
@@ -311,8 +340,7 @@ onMounted(() => {
     }
   }
 
-
-})
+}
 
 async function 拖拽开始_自定义组件(event, item, uiname) {
   let 组件名称 = item.组件名称
