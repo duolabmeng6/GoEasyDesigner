@@ -261,10 +261,10 @@ export const useAppStore = defineStore('AppStore', {
                     源数据.splice(index, 1);
                     return
                 }
-                if (item.子组件 == undefined) {
+                if (item.childComponents == undefined) {
 
                 } else {
-                    this.递归删除id(item.子组件, id)
+                    this.递归删除id(item.childComponents, id)
                 }
             });
         },
@@ -275,37 +275,37 @@ export const useAppStore = defineStore('AppStore', {
                 if (item.名称 == 名称) {
                     res = true
                 }
-                if (item.子组件 == undefined) {
+                if (item.childComponents == undefined) {
 
                 } else {
-                    res = this.递归查找名称(item.子组件, 名称)
+                    res = this.递归查找名称(item.childComponents, 名称)
                     return res
                 }
             });
             return res
         },
 
-        新增子组件(id) {
+        新增childComponents(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
                 名称: this.获取索引("ContentArea"),
-                标题: this.获取索引("tabs"),
+                text: this.获取索引("tabs"),
                 组件名称: "elContainer",
                 top: "0",
                 left: "0",
                 width: "100%",
                 height: "100%",
                 noPlace: false,
-                禁止拖动: true,
-                可视: true,
-                禁止: false,
-                父容器id: id,
-                子组件: []
+                noDrag: true,
+                visible: true,
+                disable: false,
+                pid: id,
+                childComponents: []
             }
             this.递归添加(this.list, 插入数据, id)
         },
 
-        新增子组件2(id) {
+        新增childComponents2(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
                 组件名称: "elContainer",
@@ -317,13 +317,13 @@ export const useAppStore = defineStore('AppStore', {
                 // background: "#fff",
                 position: "relative",
                 noPlace: false,
-                禁止拖动: true,
-                可视: true,
-                禁止: false,
-                父容器id: id,
-                层级: 0,
+                noDrag: true,
+                visible: true,
+                disable: false,
+                pid: id,
+                zIndex: 0,
                 占比: 8,
-                子组件: []
+                childComponents: []
             }
             this.递归添加(this.list, 插入数据, id)
         },
@@ -331,15 +331,15 @@ export const useAppStore = defineStore('AppStore', {
         递归添加(源数据, 插入数据, id) {
             // console.log("递归添加", 源数据, 插入数据, id)
             源数据.forEach((item, index) => {
-                if (item.子组件 == undefined) {
+                if (item.childComponents == undefined) {
 
                 } else {
                     if (item.id == id) {
-                        item.子组件 = [...item.子组件, 插入数据]
+                        item.childComponents = [...item.childComponents, 插入数据]
                         return true
 
                     } else {
-                        this.递归添加(item.子组件, 插入数据, id)
+                        this.递归添加(item.childComponents, 插入数据, id)
                     }
                 }
             });
@@ -353,8 +353,8 @@ export const useAppStore = defineStore('AppStore', {
             for (const item of 源数据) {
                 if (item.id === id) {
                     return item;
-                } else if (item.子组件) {
-                    const 子结果 = this.__组件通过id查找结构_递归(item.子组件, id);
+                } else if (item.childComponents) {
+                    const 子结果 = this.__组件通过id查找结构_递归(item.childComponents, id);
                     if (子结果) {
                         return 子结果;
                     }
@@ -367,7 +367,7 @@ export const useAppStore = defineStore('AppStore', {
                 let 名称;
                 名称 = item.名称
                 if (名称 == undefined || 名称 == null || 名称 == "") {
-                    名称 = item.标题
+                    名称 = item.text
                 }
                 const newItem = {
                     id: item.id,
@@ -376,12 +376,12 @@ export const useAppStore = defineStore('AppStore', {
                     children: []
                 };
 
-                if (item.子组件) {
-                    item.子组件.forEach(child => {
+                if (item.childComponents) {
+                    item.childComponents.forEach(child => {
                         let 名称;
                         名称 = child.名称
                         if (名称 == undefined || 名称 == null || 名称 == "") {
-                            名称 = child.标题
+                            名称 = child.text
                         }
                         if (名称) {
                             const childItem = transform(child);
@@ -419,8 +419,8 @@ export const useAppStore = defineStore('AppStore', {
                     this.组件列表.push(组件数据)
                 }
                 // console.log("组件列表", this.组件列表)
-                if (item.子组件) {
-                    this.__取组件列表_递归(item.子组件);
+                if (item.childComponents) {
+                    this.__取组件列表_递归(item.childComponents);
                 }
             }
         }

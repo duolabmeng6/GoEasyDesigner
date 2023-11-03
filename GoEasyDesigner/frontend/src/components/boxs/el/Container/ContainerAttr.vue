@@ -5,14 +5,14 @@
       label-width="100px"
       style="max-width: 460px"
   >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
-      <el-form-item label="占比" v-if="props.item.占比>=0">
+      <el-form-item label="span" v-if="props.item.span>=0">
         <el-input-number v-model="props.item.占比" max="24" min="0"/>
       </el-form-item>
     </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
@@ -25,7 +25,7 @@ const props = defineProps(['item']);
 
 let 事件索引 = ref(0)
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
@@ -40,12 +40,4 @@ let 事件名称 = ref([
   {"label": "滚轮被滚动", "value": "mousewheel"}
 ])
 
-
-const handleSelectChange = function () {
-  let a = 事件索引.value
-  const Name = 事件名称.value[a];
-  console.log('添加事件被选择', Name + props.item.名称);
-  事件索引.value = 0
-  emits("添加事件被选择", Name, props.item);
-}
 </script>

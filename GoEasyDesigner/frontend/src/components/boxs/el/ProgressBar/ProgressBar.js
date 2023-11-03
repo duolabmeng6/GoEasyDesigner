@@ -5,13 +5,12 @@ export default {
     height: "30",
     noPlace: true,
 
-    可视: true,
-    禁止: false,
-    尺寸: "custom",
-    层级: 0,
-    最小值:0,
-    最大值:100,
-    步长:1,
-
-
+    visible: true,
+    disable: false,
+    size: "custom",
+    zIndex: 0,
+    min:0,
+    max:100,
+    step:1,
+    n:0,
 }

@@ -4,13 +4,13 @@ export default {
     width: "600",
     height: "100",
     noPlace: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
-    展示模式: "horizontal",
-    是否折叠 : false,
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    mode: "horizontal",
+    collapse : false,
 
-    菜单项目:[
+    menuOption:[
         {
             id: 1,
             label: '菜单 1',

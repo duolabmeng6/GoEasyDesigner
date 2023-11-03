@@ -28,18 +28,18 @@ appAction.新建 = function () {
             "id": "1",
             "名称": t('componentName.Window'),
             "组件名称": t('componentName.Window'),
-            "标题": t('componentName.Window'),
+            "text": t('componentName.Window'),
             "top": "0",
             "left": "0",
             "width": "500",
             "height": "400",
             "background": "rgba(0, 0, 0, 0.05)",
             "noPlace": false,
-            "禁止拖动": true,
-            "禁止": false,
-            "可视": true,
-            "层级": 0,
-            "子组件": []
+            "noDrag": true,
+            "disable": false,
+            "visible": true,
+            "zIndex": 0,
+            "childComponents": []
         }
     }
 
@@ -128,7 +128,7 @@ function 键盘按下(event, index) {
 appAction.保存设计文件 = function () {
     let njson = JSON.stringify(store.list, null, 2)
     console.log("???", store)
-    let 辅助代码 = 生成辅助代码(store.list[0].子组件)
+    let 辅助代码 = 生成辅助代码(store.list[0].childComponents)
 
 
     if (store.客户端模式 == false) {

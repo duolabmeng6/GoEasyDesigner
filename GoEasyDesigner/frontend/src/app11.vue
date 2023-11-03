@@ -377,7 +377,7 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
     新属性.组件名称 = uiname + 'CustomComponent'
     新属性.自定义组件名称 = 组件名称
     新属性.名称 = k
-    新属性.标题 = k
+    新属性.text= k
     新属性.HTML = 组件html
     store.当前拖拽组件数据 = 新属性
     // console.log("自定义组件创建=============", JSON.stringify(新属性))
@@ -436,14 +436,14 @@ function 拖拽开始(event, 组件名称, uiName) {
   新属性.id = store.获取随机id()
   新属性.组件名称 = 组件名称
   新属性.名称 = k
-  if (新属性.hasOwnProperty("标题")) {
-    新属性.标题 = k
+  if (新属性.hasOwnProperty("text")) {
+    新属性.text= k
   }
   if (新属性.hasOwnProperty("text")) {
     新属性.text = k
   }
   if (新属性.hasOwnProperty("内容")) {
-    新属性.内容 = k
+    新属性text = k
   }
   //把ui加上前缀比如 el
   新属性.组件名称 = uiName + 组件名称
@@ -458,21 +458,21 @@ function 拖拽开始(event, 组件名称, uiName) {
   //   for (var i = 0; i < 新属性.子组件.length; i++) {
   //     新属性.子组件[i].id = store.获取随机id()
   //     新属性.子组件[i].名称 = store.获取索引(新属性.子组件[i].名称)
-  //     新属性.子组件[i].标题 = store.获取索引(新属性.子组件[i].标题)
-  //     新属性.子组件[i].父容器id = id
+  //     新属性.子组件[i].text= store.获取索引(新属性.子组件[i].标题)
+  //     新属性.子组件[i].pid = id
   //   }
   // }
 
 
   if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
     let id = 新属性.id
-    for (var i = 0; i < 新属性.子组件.length; i++) {
-      新属性.子组件[i].id = store.获取随机id()
-      新属性.子组件[i].名称 = store.获取索引(新属性.子组件[i].名称)
-      新属性.子组件[i].父容器id = id
-      //检查 新属性.子组件[i].标题 是否存在 如果存在 则修改
-      if (新属性.子组件[i].hasOwnProperty("标题")) {
-        新属性.子组件[i].标题 = store.获取索引(新属性.子组件[i].标题)
+    for (var i = 0; i < 新属性.childComponents.length; i++) {
+      新属性.childComponents[i].id = store.获取随机id()
+      新属性.childComponents[i].名称 = store.获取索引(新属性.childComponents[i].名称)
+      新属性.childComponents[i].pid = id
+      //检查 新属性.子组件[i].text是否存在 如果存在 则修改
+      if (新属性.childComponents[i].hasOwnProperty("text")) {
+        新属性.childComponents[i].text= store.获取索引(新属性.childComponents[i].text)
       }
     }
 

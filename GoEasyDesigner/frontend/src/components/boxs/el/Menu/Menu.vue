@@ -1,11 +1,11 @@
 <template>
   <el-menu
       class=""
-      :mode="item.展示模式"
-      :collapse="item.是否折叠"
+      :mode="item.mode"
+      :collapse="item.collapse"
       @select="handleSelect"
   >
-    <template v-for="menu in item.菜单项目" :key="menu.id">
+    <template v-for="menu in item.menuOption" :key="menu.id">
       <el-menu-item v-if="!menu.children || menu.children.length===0" :index="menu.id.toString()">
         {{ menu.label }}
       </el-menu-item>

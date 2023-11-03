@@ -6,16 +6,16 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
 
-      <el-form-item label="选中">
-        <el-switch v-model="item.选中"/>
+      <el-form-item label="value">
+        <el-switch v-model="item.value"/>
       </el-form-item>
-      <el-form-item label="尺寸">
-        <el-select v-model="props.item.尺寸" style="width: 100%">
+      <el-form-item label="size">
+        <el-select v-model="props.item.size" style="width: 100%">
           <el-option
-              v-for="(item, index) in 尺寸选项"
+              v-for="(item, index) in size选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -23,20 +23,20 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="选中文本">
-        <el-input v-model="props.item.选中文本"/>
+      <el-form-item label="value文本">
+        <el-input v-model="props.item.value文本"/>
       </el-form-item>
-      <el-form-item label="未选中文本">
-        <el-input v-model="props.item.未选中文本"/>
+      <el-form-item label="未value文本">
+        <el-input v-model="props.item.未value文本"/>
       </el-form-item>
-      <el-form-item label="内置文字">
-        <el-switch v-model="props.item.内置文字"/>
+      <el-form-item label="inlinePrompt">
+        <el-switch v-model="props.item.inlinePrompt"/>
       </el-form-item>
 
 
     </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
@@ -45,13 +45,13 @@ import {ref, defineProps, defineEmits} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 尺寸选项 = ref([
+let size选项 = ref([
   {"label": "默认", "value": "default"},
   {"label": "大号", "value": "large"},
   {"label": "小号", "value": "small"},
 ]);
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

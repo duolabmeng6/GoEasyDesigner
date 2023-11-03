@@ -7,12 +7,12 @@
     >
       <component is="common-properties" :item="item"/>
       <el-form-item  :label="$t('attr.title')">
-        <el-input v-model="props.item.标题"/>
+        <el-input v-model="props.item.text"/>
       </el-form-item>
     </el-form>
   </div>
 
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 </template>
 <script setup>
 import {ref, defineProps, defineEmits} from "vue";
@@ -24,7 +24,7 @@ const props = defineProps(['item']);
 let 事件索引 = ref(0)
 
 
-let 事件名称 = ref([
+let eventName = ref([
   {"label": "创建完毕", "value": "created"},
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

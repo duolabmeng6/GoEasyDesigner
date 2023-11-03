@@ -2,11 +2,11 @@
   <el-button
       :style="item.尺寸=='custom' ? getItemStyle(item):''"
       v-show="item.可视"
-      v-bind:disabled="item.禁用"
+      v-bind:disabled="item.disable"
       :type="item.按钮类型"
       :size="item.尺寸=='custom' ?'':item.尺寸"
 
-  >{{ item.标题 }}</el-button>
+  >{{ item.text}}</el-button>
 </template>
 
 <script>

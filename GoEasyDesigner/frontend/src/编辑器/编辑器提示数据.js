@@ -112,12 +112,12 @@ const keywordMappings = {
         "label": "xzj1选择夹1"
     },
     "fglx": {
-        "insertText": "风格类型",
-        "label": "fglx风格类型"
+        "insertText": "type",
+        "label": "fglxtype"
     },
     "bqwz": {
-        "insertText": "标签位置",
-        "label": "bqwz标签位置"
+        "insertText": "tagPosition",
+        "label": "bqwztagPosition"
     },
     "an4": {
         "insertText": "按钮4",
@@ -132,12 +132,12 @@ const keywordMappings = {
         "label": "bq1标签1"
     },
     "slh": {
-        "insertText": "省略号",
-        "label": "slh省略号"
+        "insertText": "truncated",
+        "label": "slhtruncated"
     },
     "wzys": {
-        "insertText": "文字样式",
-        "label": "wzys文字样式"
+        "insertText": "tag",
+        "label": "wzystag"
     },
     "bq2": {
         "insertText": "标签2",
@@ -156,16 +156,16 @@ const keywordMappings = {
         "label": "nr内容"
     },
     "srklx": {
-        "insertText": "输入框类型",
-        "label": "srklx输入框类型"
+        "insertText": "type",
+        "label": "srklxtype"
     },
     "tswb": {
-        "insertText": "提示文本",
-        "label": "tswb提示文本"
+        "insertText": "placeholder",
+        "label": "tswbplaceholder"
     },
     "zdcd": {
-        "insertText": "最大长度",
-        "label": "zdcd最大长度"
+        "insertText": "maxlength",
+        "label": "zdcdmaxlength"
     }
 }
 export default keywordMappings

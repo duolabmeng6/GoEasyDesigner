@@ -6,31 +6,31 @@
       label-width="100px"
       style="max-width: 460px"
   >
-    <component is="公用属性" :item="item"/>
-    <el-form-item label="尺寸">
-      <el-select v-model="props.item.尺寸" style="width: 100%">
+    <component is="common-properties" :item="item"/>
+    <el-form-item label="size">
+      <el-select v-model="props.item.size" style="width: 100%">
         <el-option
-            v-for="(item, index) in 尺寸选项"
+            v-for="(item, index) in sizeOptions"
             :key="item"
             :label="item.label"
             :value="item.value"
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="按钮组">
-      <el-switch v-model="item.按钮组"/>
+    <el-form-item label="buttonGroup">
+      <el-switch v-model="item.buttonGroup"/>
     </el-form-item>
-    <el-form-item label="带边框">
-      <el-switch v-model="item.带边框"/>
+    <el-form-item label="withBorder">
+      <el-switch v-model="item.withBorder"/>
     </el-form-item>
-    <el-form-item label="现行选中项">
-      <el-input v-model="item.现行选中项"/>
+    <el-form-item label="currentSelected">
+      <el-input v-model="item.currentSelected"/>
     </el-form-item>
 
     <el-form label-position="top">
-      <el-form-item label="选项"
+      <el-form-item label="options"
       >
-        <el-row v-for="(item, index) in props.item.选项">
+        <el-row v-for="(item, index) in props.item.options">
           <el-col :span="10">
             <el-input
                 v-model="item.label"
@@ -45,23 +45,23 @@
             />
           </el-col>
           <el-col :span="4">
-            <el-button @click.stop="删除(item.value)" :icon="Delete" size="small"></el-button>
+            <el-button @click.stop="deleteItem(item.value)" :icon="Delete" size="small"></el-button>
 
           </el-col>
         </el-row>
 
-        <el-button @click.stop="增加()" size="small">增加选择夹</el-button>
+        <el-button @click.stop="addItem()" size="small">Add Option</el-button>
       </el-form-item>
     </el-form>
 
   </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 import {Delete} from "@element-plus/icons-vue";
 
 import {useAppStore} from '@/stores/appStore'
@@ -70,24 +70,24 @@ const store = useAppStore()
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 尺寸选项 = ref([
+let sizeOptions = ref([
   {"label": "默认", "value": "default"},
   {"label": "大号", "value": "large"},
   {"label": "小号", "value": "small"},
 ]);
 
-function 删除(value) {
-  let index = props.item.选项.findIndex((item) => item.value === value);
-  props.item.选项.splice(index, 1);
+function deleteItem(value) {
+  let index = props.item.options.findIndex((item) => item.value === value);
+  props.item.options.splice(index, 1);
 }
 
-function 增加() {
-  let k = store.获取索引(props.item.名称 + "选项")
+function addItem() {
+  let k = store.获取索引( "Options")
 
-  props.item.选项.push({"label": "标签" + k, "value": k});
+  props.item.options.push({"label": k, "value": k});
 }
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
@@ -102,5 +102,13 @@ let 事件名称 = ref([
   {"label": "滚轮被滚动", "value": "mousewheel"}
 ])
 
+
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    sizeOptions.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 </script>
 

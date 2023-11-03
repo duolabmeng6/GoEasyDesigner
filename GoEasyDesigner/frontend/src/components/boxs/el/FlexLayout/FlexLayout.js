@@ -3,18 +3,16 @@ export default {
     left: "440",
     width: "300",
     height: "200",
-    现行选中项: "0",
     noPlace: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
+    visible: true,
+    disable: false,
+    zIndex: 0,
 
-
-    风格类型: "border-card",
-    标签位置: "top",
-    列间隔: 10,
-    对齐方式: "start",
-    子组件: [
+    type: "border-card",
+    tagPosition: "top",
+    gutter: 10,
+    justify: "start",
+    childComponents: [
         {
             组件名称: "elContainer",
             名称: "ContentArea",
@@ -25,13 +23,13 @@ export default {
             // background: "#fff",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            父容器id: 0,
-            层级: 0,
-            占比: 8,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            pid: 0,
+            zIndex: 0,
+            span: 8,
+            childComponents: []
         },
         {
             组件名称: "elContainer",
@@ -43,13 +41,13 @@ export default {
             // background: "#fff",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            父容器id: 0,
-            层级: 0,
-            占比: 8,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            pid: 0,
+            zIndex: 0,
+            span: 8,
+            childComponents: []
         },
         {
             组件名称: "elContainer",
@@ -61,13 +59,13 @@ export default {
             // background: "#fff",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            父容器id: 0,
-            层级: 0,
-            占比: 8,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            pid: 0,
+            zIndex: 0,
+            span: 8,
+            childComponents: []
         }
     ]
 }

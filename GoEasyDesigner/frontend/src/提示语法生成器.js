@@ -20,8 +20,8 @@ function 提取key(components) {
 
 
         }
-        if (component["子组件"] && component["子组件"].length > 0) {
-            const childCodeLines = 提取key(component["子组件"]);
+        if (component["childComponents"] && component["childComponents"].length > 0) {
+            const childCodeLines = 提取key(component["childComponents"]);
             codeLines.push(...childCodeLines);
         }
     }

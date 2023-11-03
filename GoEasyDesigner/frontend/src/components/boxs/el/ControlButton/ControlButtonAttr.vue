@@ -11,7 +11,7 @@
   </div>
 
 
-    <component is="公用事件组件" :item="props.item"  :事件名称="enventNames"/>
+    <component is="common-event-component" :item="props.item"  :eventName="enventNames"/>
 
 </template>
 <script setup>

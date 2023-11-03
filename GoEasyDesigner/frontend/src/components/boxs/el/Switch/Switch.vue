@@ -1,11 +1,11 @@
 <template>
     <el-switch
         :getItemStyle="getItemStyle(item)"
-        v-model="item.选中"
-        :size="item.尺寸"
-        :active-text="item.选中文本"
-        :inactive-text="item.未选中文本"
-        :inline-prompt="item.内置文字"
+        v-model="item.value"
+        :size="item.size"
+        :active-text="item.activeText"
+        :inactive-text="item.inactiveText"
+        :inline-prompt="item.inlinePrompt"
     />
 
 </template>

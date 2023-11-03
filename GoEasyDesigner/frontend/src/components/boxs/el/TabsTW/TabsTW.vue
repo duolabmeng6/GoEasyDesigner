@@ -11,18 +11,18 @@
         <div class="flex justify-center border-b-2 border-gray-200 p-4 py-4"
              style="width:100%;background:rgb(251, 251, 251);">
           <template
-              v-for="(tabItem, tabItemIndex) in item.子组件"
+              v-for="(tabItem, tabItemIndex) in item.childComponents"
               :key="tabItemIndex"
-              :label="tabItem.标题"
+              :label="tabItem.text"
           >
-            <input type="radio" v-model="item.现行选中项" :value="tabItemIndex" name="tab" :id="'mytab-'+tabItemIndex"
+            <input type="radio" v-model="item.value" :value="tabItemIndex" name="tab" :id="'mytab-'+tabItemIndex"
                    class="hidden"/>
             <label :for="'mytab-'+tabItemIndex">
               <div class="toolbar-item" :class="{
-                'active': item.现行选中项 == tabItemIndex,
+                'active': item.value == tabItemIndex,
               }">
                 <i :class="tabItem.图标"></i>
-                <span>{{ tabItem.标题 }}</span>
+                <span>{{ tabItem.text}}</span>
               </div>
             </label>
           </template>
@@ -30,12 +30,12 @@
       </div>
       <div class="nav-content flex-1 overflow-y-auto bg-gray-50" style="position: relative">
         <template
-            v-for="(tabItem, tabItemIndex) in item.子组件"
+            v-for="(tabItem, tabItemIndex) in item.childComponents"
             :key="tabItemIndex"
-            :label="tabItem.标题"
+            :label="tabItem.text"
         >
 
-          <div class="tab w-full" v-show="item.现行选中项 == tabItemIndex" style="background:rgb(246, 246, 246); ">
+          <div class="tab w-full" v-show="item.value == tabItemIndex" style="background:rgb(246, 246, 246); ">
             <component is="RenderDesignComponent" v-for="(tabItem2, tabItemIndex2) in [tabItem]" :key="tabItemIndex2"
                        :item="tabItem2"/>
 

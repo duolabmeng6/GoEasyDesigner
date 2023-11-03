@@ -3,12 +3,12 @@
       :style="getItemStyleShape(item)"
   >
     <div
-        v-show="item.可视 || item.visible"
+        v-show="item.visible || item.visible"
         :id="item.名称"
-        :class="{ 'disabled': item.禁用 || item.disable }"
+        :class="{ 'disabled': item.disable || item.disable }"
         :style="{
-              overflowY: item.y轴滚动模式选项 || 'visible',
-              overflowX: item.x轴滚动模式选项 || 'visible'
+              overflowY: item.overflowY || 'visible',
+              overflowX: item.overflowX || 'visible'
         }"
         class="子组件"
         v-demo="item"
@@ -16,10 +16,10 @@
     >
       <template v-if="item.组件名称=='elContainer'">
 
-        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
                    :item="subItem"/>
       </template>
-      <template v-else-if="item.自定义监听">
+      <template v-else-if="item.customListening">
         <component :is="item.组件名称" :item="item"  @CustomEvent="(n,v)=>{onCustomEvent(n,v,item)}"/>
       </template>
       <template v-else>
@@ -28,7 +28,7 @@
 
       <template v-if="item.组件名称 == 'Window'">
         <component :is="item.组件名称" :item="item"/>
-        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
                    :item="subItem"/>
       </template>
 
@@ -76,7 +76,7 @@ const vDemo = {
   }
 }
 const onCustomEvent = (name, data, item) => {
-  console.log("收到自定义事件", "事件名称", name, "数据", data);
+  console.log("收到自定义事件", "eventName", name, "数据", data);
 
   // let callFuncName = item.名称 + "自定义事件"
   let callFuncName = item.名称 + name
@@ -95,7 +95,7 @@ const onCustomEvent = (name, data, item) => {
 <style>
 
 
-.子组件 {
+.childComponents {
   position: relative;
   width: 100%;
   height: 100%;

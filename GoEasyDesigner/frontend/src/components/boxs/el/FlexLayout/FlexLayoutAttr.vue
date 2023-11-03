@@ -5,15 +5,15 @@
       label-width="100px"
       style="max-width: 460px"
   >
-      <component is="公用属性" :item="item"/>
-      <el-form-item label="列间隔">
-        <el-input-number v-model="props.item.列间隔"/>
+      <component is="common-properties" :item="item"/>
+      <el-form-item label="gutter">
+        <el-input-number v-model="props.item.gutter"/>
       </el-form-item>
 
-      <el-form-item label="对齐方式">
-        <el-select v-model="props.item.对齐方式" style="width: 100%">
+      <el-form-item label="justify">
+        <el-select v-model="props.item.justify" style="width: 100%">
           <el-option
-              v-for="(item, index) in 对齐方式选项"
+              v-for="(item, index) in justify选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -22,7 +22,7 @@
       </el-form-item>
 
     </el-form>
-    <el-row v-for="(item, index) in props.item.子组件" style="margin-bottom: 10px">
+    <el-row v-for="(item, index) in props.item.childComponents" style="margin-bottom: 10px">
       <el-col :span="8">
         <el-input
             v-model="item.名称"
@@ -32,7 +32,7 @@
       </el-col>
       <el-col :span="8">
         <el-input
-            v-model.number="item.占比"
+            v-model.number="item.span"
             placeholder=""
         />
       </el-col>
@@ -42,16 +42,16 @@
       </el-col>
     </el-row>
 
-    <el-button size="small" @click.stop="store.新增子组件2(item.id)">增加内容区域</el-button>
+    <el-button size="small" @click.stop="store.新增childComponents2(item.id)">增加内容区域</el-button>
 
 
   </div>
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 import {Delete} from "@element-plus/icons-vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
@@ -63,7 +63,7 @@ const store = useAppStore()
 
 let 事件索引 = ref(0)
 
-let 事件名称 = ref([
+let eventName = ref([
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
   {"label": "鼠标左键被放开", "value": "mouseup"},
@@ -86,7 +86,7 @@ const handleSelectChange = function () {
   emits("添加事件被选择", Name, props.item);
 }
 
-let 对齐方式选项 = ref([
+let justify选项 = ref([
   {"label": "从左边开始", "value": "start"},
   {"label": "从右边开始", "value": "end"},
   {"label": "居中", "value": "center"},
@@ -94,6 +94,13 @@ let 对齐方式选项 = ref([
   {"label": "两端对齐", "value": "space-between"},
   {"label": "均匀分布", "value": "space-evenly"},
 ]);
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
 
+    justify选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 
 </script>

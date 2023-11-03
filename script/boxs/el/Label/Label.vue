@@ -4,12 +4,12 @@
       :style="getItemStyle(item)"
   >
     <el-text
-        :style="{color: item.文字颜色,fontSize: item.字体大小+'px'}"
+        :style="{color: item.textCorlor,fontSize: item.fontSize+'px'}"
         :class="item.标签位置"
         :size="item.尺寸"
         :tag="item.文字样式"
-        :truncated="item.省略号"
-    >{{ item.标题 }}
+        :truncated="item.truncated"
+    >{{ item.text}}
     </el-text>
   </div>
 

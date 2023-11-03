@@ -9,7 +9,7 @@
     </el-form-item>
   </el-form>
   <teleport to="#事件选择器">
-    <component is="公用事件组件" :item="item" :事件名称="事件名称"/>
+    <component is="common-event-component" :item="item" :事件名称="事件名称"/>
   </teleport>
 </template>
 <script setup>

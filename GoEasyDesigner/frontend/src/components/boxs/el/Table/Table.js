@@ -4,15 +4,15 @@ export default {
     width: "300",
     height: "200",
     noPlace: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
-    斑马纹表格: false,
-    边框表格: false,
-    可选: false,
-    表格选中项: [],
-    表格布局: "fixed",
-    表头:[
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    stripe: false,
+    border: false,
+    select: false,
+    value: [],
+    tableLayout: "fixed",
+    header:[
         {
             "label":"日期","prop":"date","width":"180","fixed":true
         },
@@ -23,7 +23,7 @@ export default {
             "label":"地址","prop":"address","width":"180","fixed":false
         },
     ],
-    表格项目:[
+    data:[
         {
             date: '2016-05-03',
             name: 'Tom',

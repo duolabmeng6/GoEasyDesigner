@@ -1,8 +1,8 @@
 <template>
 
-  <el-tabs :type="item.风格类型" v-model="item.现行选中项" :style="getItemStyle(item)" style="overflow: hidden;padding: 0"
+  <el-tabs :type="item.type" v-model="item.现行选中项" :style="getItemStyle(item)" style="overflow: hidden;padding: 0"
            v-show="item.可视"
-           v-bind:disabled="item.禁用"
+           v-bind:disabled="item.disable"
            :tab-position="item.标签位置"
            stretch="true"
   >

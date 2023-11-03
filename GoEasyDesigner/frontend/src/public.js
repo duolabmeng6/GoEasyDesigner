@@ -19,8 +19,8 @@ const getItemStyle = (item) => {
         height: parseDimension(item.height),
         border: item.border,
         background: item.background,
-        zIndex: item.层级,
-        color: item.文字颜色,
+        zIndex: item.zIndex,
+        color: item.corlor,
     };
 
     return style;
@@ -79,7 +79,7 @@ const getItemStyleShape = (item) => {
         height: parseDimension(item.height),
         border: item.border,
         background: item.background,
-        zIndex: item.层级,
+        zIndex: item.zIndex,
         position: 'absolute',
     };
 
@@ -123,7 +123,7 @@ function generateComponentCode(components, parentPath = '') {
     let codeLine;
     for (const component of components) {
         let componentName = component["名称"];
-        const componentPath = `${parentPath}.子组件[${k}]`;
+        const componentPath = `${parentPath}.childComponents[${k}]`;
         const componentPath2 = `${parentPath}`;
         k = k + 1;
         // componentName 如果带有空格 删除空格 并且把后面1个字母大写
@@ -145,8 +145,8 @@ function generateComponentCode(components, parentPath = '') {
             codeLines.push(codeLine);
         }
 
-        if (component["子组件"] && component["子组件"].length > 0) {
-            const childCodeLines = generateComponentCode(component["子组件"], componentPath);
+        if (component["childComponents"] && component["childComponents"].length > 0) {
+            const childCodeLines = generateComponentCode(component["childComponents"], componentPath);
             codeLines.push(...childCodeLines);
         }
     }
@@ -171,7 +171,7 @@ export default __辅助代码
 }
 
 // const jsonData = require('./设计文件.json');
-// console.log(生成辅助代码(jsonData[0].子组件))
+// console.log(生成辅助代码(jsonData[0].childComponents))
 
 
 function 取父目录(path) {

@@ -1,20 +1,20 @@
 <template>
 
-  <el-radio-group v-model="item.现行选中项" :size="item.尺寸">
-    <template v-if="item.按钮组">
+  <el-radio-group v-model="item.value" :size="item.size">
+    <template v-if="item.buttonGroup">
       <el-radio-button
-          v-for="(v, i) in item.选项"
+          v-for="(v, i) in item.options"
           :label="v.value"
-          :border="item.带边框"
+          :border="item.border"
 
       >{{ v.label }}
       </el-radio-button>
     </template>
     <template v-else>
       <el-radio
-          v-for="(v, i) in item.选项"
+          v-for="(v, i) in item.options"
           :label="v.value"
-          :border="item.带边框"
+          :border="item.border"
 
       >{{ v.label }}
 

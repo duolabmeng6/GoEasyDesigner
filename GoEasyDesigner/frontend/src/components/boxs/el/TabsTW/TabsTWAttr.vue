@@ -5,24 +5,24 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
-      <el-form-item label="现行选中项">
-        <el-input v-model="props.item.现行选中项"/>
+      <component is="common-properties" :item="item"/>
+      <el-form-item label="value">
+        <el-input v-model="props.item.value"/>
       </el-form-item>
-      <el-form-item label="风格类型">
-        <el-select v-model="props.item.风格类型" style="width: 100%">
+      <el-form-item label="type">
+        <el-select v-model="props.item.type" style="width: 100%">
           <el-option
-              v-for="(item, index) in 风格类型选项"
+              v-for="(item, index) in type选项"
               :key="item"
               :label="item.label"
               :value="item.value"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="标签位置">
-        <el-select v-model="props.item.标签位置" style="width: 100%">
+      <el-form-item label="tagPosition">
+        <el-select v-model="props.item.tagPosition" style="width: 100%">
           <el-option
-              v-for="(item, index) in 标签位置选项"
+              v-for="(item, index) in tagPosition选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -33,8 +33,8 @@
     <el-form label-position="top">
       <el-form-item label="选项卡"
       >
-        <el-input v-for="(item, index) in props.item.子组件"
-                  v-model="item.标题"
+        <el-input v-for="(item, index) in props.item.childComponents"
+                  v-model="item.text"
                   placeholder=""
                   style="margin-bottom: 10px"
         >
@@ -48,11 +48,11 @@
             <el-button @click.stop="store.递归删除id(store.list, item.id)" :icon="Delete" size="small"></el-button>
           </template>
         </el-input>
-        <el-button @click.stop="store.新增子组件(item.id)" size="small">增加选择夹</el-button>
+        <el-button @click.stop="store.新增childComponents(item.id)" size="small">增加选择夹</el-button>
       </el-form-item>
     </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
@@ -68,19 +68,19 @@ const props = defineProps(['item']);
 const store = useAppStore()
 
 
-let 风格类型选项 = ref([
+let type选项 = ref([
   {"label": "简洁", "value": "card"},
   {"label": "卡片风格", "value": "border-card"},
 ]);
 
-let 标签位置选项 = ref([
+let tagPosition选项 = ref([
   {"label": "左侧", "value": "left"},
   {"label": "右侧", "value": "right"},
   {"label": "顶部", "value": "top"},
   {"label": "底部", "value": "bottom"},
 ]);
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

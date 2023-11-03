@@ -5,24 +5,24 @@
       label-width="100px"
       style="max-width: 460px"
   >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
-      <el-form-item label="位置">
-        <el-input-number  v-model="props.item.位置"/>
+      <el-form-item label="n">
+        <el-input-number  v-model="props.item.n"/>
       </el-form-item>
-      <el-form-item label="最小值">
-        <el-input-number  v-model="props.item.最小值"/>
+      <el-form-item label="min">
+        <el-input-number  v-model="props.item.min"/>
       </el-form-item>
-      <el-form-item label="最大值">
-        <el-input-number  v-model="props.item.最大值"/>
+      <el-form-item label="max">
+        <el-input-number  v-model="props.item.max"/>
       </el-form-item>
-      <el-form-item label="步长">
-        <el-input-number  v-model="props.item.步长"/>
+      <el-form-item label="step">
+        <el-input-number  v-model="props.item.step"/>
       </el-form-item>
-      <el-form-item label="尺寸">
-        <el-select v-model="props.item.尺寸" style="width: 100%">
+      <el-form-item label="size">
+        <el-select v-model="props.item.size" style="width: 100%">
           <el-option
-              v-for="(item, index) in 尺寸选项"
+              v-for="(item, index) in sizeOptions"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -34,16 +34,16 @@
     </el-form>
   </div>
 
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
 
-let 尺寸选项 = ref([
+let sizeOptions = ref([
   {"label": "自定义", "value": "custom"},
   {"label": "默认", "value": "default"},
   {"label": "大号", "value": "large"},
@@ -51,7 +51,7 @@ let 尺寸选项 = ref([
 ]);
 
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
@@ -65,5 +65,13 @@ let 事件名称 = ref([
   {"label": "放开某键", "value": "keyup"},
   {"label": "滚轮被滚动", "value": "mousewheel"}
 ])
+
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    sizeOptions.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 
 </script>

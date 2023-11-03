@@ -33,7 +33,7 @@
     </el-form>
   </div>
 
-  <component is="common-event-component" :item="props.item"  :event-name="eventName"/>
+  <component is="common-event-component" :eventName="eventName" :item="props.item"/>
 
 </template>
 <script setup>
@@ -73,24 +73,16 @@ let eventName = ref([
 ])
 
 
-
 onMounted(() => {
-  console.log("ButtonAttr.vue onMounted");
-  console.log("--",localStorage.getItem("locale") );
-
   if (localStorage.getItem("locale") === "English") {
-    console.log("英语");
     buttonTypeOptions.value.forEach((item) => {
       item.label = item.value;
     });
     sizeOptions.value.forEach((item) => {
       item.label = item.value;
     });
-
   }
-
 });
-
 
 
 </script>

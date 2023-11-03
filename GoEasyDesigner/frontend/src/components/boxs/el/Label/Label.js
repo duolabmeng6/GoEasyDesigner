@@ -4,14 +4,13 @@ export default {
     width: "120",
     height: "40",
     noPlace: true,
-
-    可视: true,
-    禁止: false,
-    层级: 0,
-    尺寸: "自定义",
-    省略号: false,
-    文字样式: "p",
-    标签位置: "text-center",
-    文字颜色: "#606266",
-    标题: "标签"
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    size: "default",
+    truncated: false,
+    tag: "p",
+    tagPosition: "text-center",
+    corlor: "#606266",
+    text: "标签"
 }

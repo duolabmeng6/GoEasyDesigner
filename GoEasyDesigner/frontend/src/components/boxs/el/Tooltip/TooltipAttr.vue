@@ -5,26 +5,26 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
-      <el-form-item label="标题">
-        <el-input v-model="props.item.标题"/>
+      <el-form-item label="text">
+        <el-input v-model="props.item.text"/>
       </el-form-item>
-      <el-form-item label="描述">
-        <el-input v-model="props.item.描述"/>
-      </el-form-item>
-
-      <el-form-item label="文字居中">
-        <el-switch v-model="item.文字居中"/>
-      </el-form-item>
-      <el-form-item label="可否关闭">
-        <el-switch v-model="item.可否关闭"/>
+      <el-form-item label="description">
+        <el-input v-model="props.item.description"/>
       </el-form-item>
 
-      <el-form-item label="提示类型">
-        <el-select v-model="props.item.提示类型" style="width: 100%">
+      <el-form-item label="center">
+        <el-switch v-model="item.center"/>
+      </el-form-item>
+      <el-form-item label="closable">
+        <el-switch v-model="item.closable"/>
+      </el-form-item>
+
+      <el-form-item label="type">
+        <el-select v-model="props.item.type" style="width: 100%">
           <el-option
-              v-for="(item, index) in 提示类型选项"
+              v-for="(item, index) in type选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -35,23 +35,30 @@
     </el-form>
   </div>
 
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 提示类型选项 = ref([
+let type选项 = ref([
   {"label": "成功", "value": "success"},
   {"label": "信息", "value": "info"},
   {"label": "警告", "value": "warning"},
   {"label": "错误", "value": "error"},
 ]);
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
 
+    type选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

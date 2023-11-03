@@ -4,14 +4,14 @@ export default {
     width: "300",
     height: "200",
     noPlace: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
+    visible: true,
+    disable: false,
+    zIndex: 0,
 
-    可选: false,
+    select: false,
     选中项: [],
 
-    树形项目:[
+    data:[
         {
             label: 'Level one 1',
             children: [

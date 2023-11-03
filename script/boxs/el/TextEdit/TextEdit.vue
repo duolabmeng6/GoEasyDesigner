@@ -4,11 +4,11 @@
     <el-input
         style="width: 100%;height: 100%;"
         :getItemStyle="getItemStyle(item)"
-        :type="item.输入框类型"
-        :placeholder="item.提示文本"
-        :maxlength="item.最大长度"
+        :type="item.type"
+        :placeholder="item.placeholder"
+        :maxlength="item.maxlength"
         :size="item.尺寸=='custom' ?'':item.尺寸"
-        v-model="item.内容"/>
+        v-model="itemtext"/>
   </div>
 </template>
 

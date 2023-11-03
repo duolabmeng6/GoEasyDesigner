@@ -5,28 +5,28 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
 
-      <el-form-item label="可选">
-        <el-switch v-model="item.可选"/>
+      <el-form-item label="select">
+        <el-switch v-model="item.select"/>
       </el-form-item>
-      <el-form-item v-if="item.可选" label="选中项">
+      <el-form-item v-if="item.select" label="value">
         <el-input :autosize="{ minRows: 2, maxRows: 4 }"
-                  :value="objectToJson(item.选中项)"
+                  :value="objectToJson(item.value)"
                   type="textarea"
         />
       </el-form-item>
 
-      <el-form-item label="树形项目">
+      <el-form-item label="data">
 
-        <el-button @click="打开修改数据对话框(props.item.树形项目,'树形项目')">编辑</el-button>
+        <el-button @click="打开修改数据对话框(props.item.data,'data')">编辑</el-button>
 
       </el-form-item>
 
     </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
   <!-- Define an edit dialog -->
   <teleport to="body">
@@ -52,21 +52,9 @@ const props = defineProps(['item']);
 
 const store = useAppStore()
 const 显示修改数据对话框状态 = ref(false);
-const editedJSON = ref(JSON.stringify(props.item.表头, null, 2));
+const editedJSON = ref(JSON.stringify(props.item.header, null, 2));
 
-let 表格布局选项 = ref([
-  {"label": "固定", "value": "fixed"},
-  {"label": "自动", "value": "auto"},
-]);
-
-let 标签位置选项 = ref([
-  {"label": "左侧", "value": "left"},
-  {"label": "右侧", "value": "right"},
-  {"label": "顶部", "value": "top"},
-  {"label": "底部", "value": "bottom"},
-]);
-
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
@@ -111,11 +99,11 @@ function 打开修改数据对话框(editData, name) {
 function 保存编辑的JSON数据() {
   try {
     const parsedObject = JSON.parse(editedJSON.value);
-    if (valueName == '表头') {
-      props.item.表头 = parsedObject;
+    if (valueName == 'header') {
+      props.item.header = parsedObject;
     }
-    if (valueName == '树形项目') {
-      props.item.树形项目 = parsedObject;
+    if (valueName == 'data') {
+      props.item.data = parsedObject;
     }
     显示修改数据对话框状态.value = false;
   } catch (error) {

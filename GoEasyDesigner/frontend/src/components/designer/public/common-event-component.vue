@@ -12,7 +12,7 @@
       {{ $t('attr.addEvent') }}
     </el-option>
     <el-option
-        v-for="(item, index) in props.事件名称"
+        v-for="(item, index) in props.eventName"
         :key="index"
         :label="item.label"
         :value="item.value"
@@ -34,7 +34,7 @@ import {ref, defineProps, defineEmits, onMounted, onBeforeUnmount} from "vue";
 const t = i18n.global.t
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
-const props = defineProps(['item', '事件名称']);
+const props = defineProps(['item', 'eventName']);
 import {useAppStore} from '@/stores/appStore'
 import i18n from "../../../i18n";
 
@@ -49,7 +49,7 @@ const 组件事件被选择 = function () {
     return
   }
 
-  const nowSelectItem = props.事件名称.find(item => item.value === 当前选择的事件名称.value);
+  const nowSelectItem = props.eventName.find(item => item.value === 当前选择的事件名称.value);
   const extData = nowSelectItem ? nowSelectItem.ext_data : null;
   const value = nowSelectItem ? nowSelectItem.value : null;
 
@@ -72,12 +72,12 @@ const 组件事件被选择 = function () {
   console.log("组件事件被选择=", props.item.名称, '事件', 当前选择的事件名称.value, 'value', value, 'ext_data', extData, JSON.stringify(props.item, null, 2));
 
 }
-store.全局_事件名称列表 = props.事件名称
+store.全局_事件名称列表 = props.eventName
 
 
 onMounted(() => {
   if (localStorage.getItem("locale") === "English") {
-    props.事件名称.forEach((item) => {
+    props.eventName.forEach((item) => {
       item.label = item.value;
     });
   }

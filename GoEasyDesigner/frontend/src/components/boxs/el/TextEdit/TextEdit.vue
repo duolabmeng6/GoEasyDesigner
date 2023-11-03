@@ -1,14 +1,14 @@
 <template>
 
-  <div :style="item.尺寸=='custom' ? getItemStyle(item):''">
+  <div :style="item.size=='custom' ? getItemStyle(item):''">
     <el-input
         style="width: 100%;height: 100%;"
         :getItemStyle="getItemStyle(item)"
-        :type="item.输入框类型"
-        :placeholder="item.提示文本"
-        :maxlength="item.最大长度"
-        :size="item.尺寸=='custom' ?'':item.尺寸"
-        v-model="item.内容"/>
+        :type="item.type"
+        :placeholder="item.placeholder"
+        :maxlength="item.maxlength"
+        :size="item.size=='custom' ?'':item.size"
+        v-model="itemtext"/>
   </div>
 </template>
 

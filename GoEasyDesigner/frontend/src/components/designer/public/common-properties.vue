@@ -111,10 +111,10 @@
       />
     </el-select>
   </el-form-item>
-  <el-form-item label="图片尺寸" v-show="props.item.图片">
+  <el-form-item label="图片size" v-show="props.item.图片">
     <el-select v-model="props.item.backgroundSize" style="width: 100%">
       <el-option
-          v-for="(item, index) in 图片尺寸选项"
+          v-for="(item, index) in 图片size选项"
           :key="item"
           :label="item.label"
           :value="item.value"
@@ -130,9 +130,9 @@
   </el-form-item>
 
   <el-form-item :label="$t('attr.yAxisRollingMode')">
-    <el-select v-model="props.item.y轴滚动模式选项" style="width: 100%">
+    <el-select v-model="props.item.overflowY" style="width: 100%">
       <el-option
-          v-for="(item, index) in y轴滚动模式选项"
+          v-for="(item, index) in overflowY"
           :key="item"
           :label="item.label"
           :value="item.value"
@@ -140,9 +140,9 @@
     </el-select>
   </el-form-item>
   <el-form-item  :label="$t('attr.xAxisRollingMode')">
-    <el-select v-model="props.item.x轴滚动模式选项" style="width: 100%">
+    <el-select v-model="props.item.overflowX" style="width: 100%">
       <el-option
-          v-for="(item, index) in x轴滚动模式选项"
+          v-for="(item, index) in overflowX"
           :key="item"
           :label="item.label"
           :value="item.value"
@@ -152,7 +152,7 @@
 
 </template>
 <script setup>
-import {defineProps, ref} from "vue";
+import {defineProps, onMounted, ref} from "vue";
 
 const props = defineProps(['item']);
 const handleSelect = (item) => {
@@ -207,7 +207,7 @@ let 图片位置选项 = ref([
   {"label": "居中下", "value": "center bottom"},
   {"label": "右下", "value": "right bottom"},
 ]);
-let 图片尺寸选项 = ref([
+let 图片size选项 = ref([
   {"label": "默认", "value": "auto"},
   {"label": "覆盖", "value": "cover"},
   {"label": "包含", "value": "contain"},
@@ -220,13 +220,13 @@ let 图片固定选项 = ref([
   {"label": "本地", "value": "local"},
 ]);
 
-let y轴滚动模式选项 = ref([
+let overflowY = ref([
   {"label": "超出显示", "value": "visible"},
   {"label": "超出隐藏", "value": "hidden"},
   {"label": "滚动显示", "value": "scroll"},
   {"label": "自动适配", "value": "auto"},
 ]);
-let x轴滚动模式选项 = ref([
+let overflowX = ref([
   {"label": "超出显示", "value": "visible"},
   {"label": "超出隐藏", "value": "hidden"},
   {"label": "滚动显示", "value": "scroll"},
@@ -257,6 +257,31 @@ const clearImage = () => {
   // 清除选择的图片
   props.item.图片 = undefined;
 }
+
+
+
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    overflowX.value.forEach((item) => {
+      item.label = item.value;
+    });
+    overflowY.value.forEach((item) => {
+      item.label = item.value;
+    });
+    图片固定选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+    图片size选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+    图片位置选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+    图片平铺方式选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 
 
 </script>

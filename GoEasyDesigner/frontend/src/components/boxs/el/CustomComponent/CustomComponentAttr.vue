@@ -5,7 +5,7 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
       <el-form-item label="HTML模板">
         <el-button @click="打开修改数据对话框(props.item.HTML,'HTML')">编辑</el-button>
       </el-form-item>
@@ -21,7 +21,7 @@
 
   </div>
   <div id="事件选择器">
-    <component v-if="!remote" is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+    <component v-if="!remote" is="common-event-component" :item="props.item" :eventName="eventName"/>
   </div>
 
   <teleport to="body">
@@ -48,9 +48,9 @@ const props = defineProps(['item']);
 
 const store = useAppStore()
 const 显示修改数据对话框状态 = ref(false);
-const editedJSON = ref(JSON.stringify(props.item.表头, null, 2));
+const editedJSON = ref(JSON.stringify(props.item.header, null, 2));
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   {"label": "被单击", "value": "click"},

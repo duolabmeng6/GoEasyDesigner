@@ -24,13 +24,13 @@
       :style="getItemStyleShape(item)"
   >
     <div
-        v-show="item.可视 || item.visible"
+        v-show="item.visible || item.visible"
         :id="item.名称"
-        :class="{ 'disabled': item.禁用 || item.disable }"
+        :class="{ 'disabled': item.disable || item.disable }"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
         :style="{
-              overflowY: item.y轴滚动模式选项 || 'visible',
-              overflowX: item.x轴滚动模式选项 || 'visible'
+              overflowY: item.overflowY || 'visible',
+              overflowX: item.overflowX || 'visible'
         }"
         class="子组件"
         data-放置="1"
@@ -46,7 +46,7 @@
 
     >
       <template v-if="item.组件名称=='elContainer'">
-        <template v-if="item.子组件.length === 0">
+        <template v-if="item.childComponents.length === 0">
           <div style="width: 100%;
                        background: rgba(10,19,37,.05);
                       border: 1px dashed #ced0d3;
@@ -60,7 +60,7 @@
             {{ item.名称 ? item.名称 : 'ContentArea' }}
           </div>
         </template>
-        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
                    :item="subItem"/>
       </template>
       <template v-else>
@@ -69,7 +69,7 @@
 
       <template v-if="item.组件名称 == 'Window'">
         <component :is="item.组件名称" :item="item"/>
-        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
                    :item="subItem"/>
       </template>
     </div>
@@ -139,7 +139,7 @@ store.start_x = 0;
 store.start_y = 0;
 
 function 拖拽开始(event, v) {
-  if (v.禁止拖动) {
+  if (v.noDrag) {
     event.preventDefault();
     return
   }
@@ -249,16 +249,16 @@ async function 拖拽放下(event, v) {
 function 递归添加(源数据, 插入数据, 放置的容器名称) {
   // console.log("递归添加", 源数据, 插入数据, 放置的容器名称)
   源数据.forEach((item, index) => {
-    if (item.子组件 == undefined) {
+    if (item.childComponents == undefined) {
 
     } else {
       if (item.id == 放置的容器名称) {
-        // console.log("找到了", item.子组件)
+        // console.log("找到了", item.childComponents)
         // 递归添加(item.子组件, 插入数据, "abc")
-        item.子组件 = [...item.子组件, 插入数据]
+        item.childComponents = [...item.childComponents, 插入数据]
 
       } else {
-        递归添加(item.子组件, 插入数据, 放置的容器名称)
+        递归添加(item.childComponents, 插入数据, 放置的容器名称)
       }
     }
   });
@@ -270,25 +270,25 @@ function 递归删除(源数据, 删除的对象名称) {
     if (item.id == 删除的对象名称) {
       源数据.splice(index, 1);
     }
-    if (item.子组件 == undefined) {
+    if (item.childComponents == undefined) {
 
     } else {
-      递归删除(item.子组件, 删除的对象名称)
+      递归删除(item.childComponents, 删除的对象名称)
     }
   });
 }
 
 function 检查放置目标是否为自身组件的子组件(源数据, 对象名称) {
-  if (对象名称 == "" || 对象名称 == undefined || 源数据.子组件 == undefined) {
+  if (对象名称 == "" || 对象名称 == undefined || 源数据.childComponents == undefined) {
     return false
   }
   //遍历源数据
-  for (let i = 0; i < 源数据.子组件.length; i++) {
-    let item = 源数据.子组件[i];
+  for (let i = 0; i < 源数据.childComponents.length; i++) {
+    let item = 源数据.childComponents[i];
     if (item.id == 对象名称) {
       return true
     }
-    if (item.子组件 == undefined) {
+    if (item.childComponents == undefined) {
 
     } else {
       if (检查放置目标是否为自身组件的子组件(item, 对象名称)) {
@@ -306,11 +306,11 @@ function 鼠标按下(event, v) {
   store.当前组件索引 = v.id
   store.当前拖拽组件数据 = v
 
-  if (v.父容器id != undefined) {
-    store.当前组件索引 = v.父容器id
-    // store.当前拖拽组件数据 = store.组件通过id查找结构(v.父容器id)
+  if (v.pid != undefined) {
+    store.当前组件索引 = v.pid
+    // store.当前拖拽组件数据 = store.组件通过id查找结构(v.pid)
     // console.log("当前拖拽组件数据", store.当前拖拽组件数据)
-    // console.log("v.父容器id", v.父容器id)
+    // console.log("v.pid", v.pid)
 
 
   }

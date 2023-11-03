@@ -22,7 +22,7 @@
                 'active': item.现行选中项 == tabItemIndex,
               }">
                 <i :class="tabItem.图标"></i>
-                <span>{{ tabItem.标题 }}</span>
+                <span>{{ tabItem.text}}</span>
               </div>
             </label>
           </template>

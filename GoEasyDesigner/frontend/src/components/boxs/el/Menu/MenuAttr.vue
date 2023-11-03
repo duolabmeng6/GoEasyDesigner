@@ -5,12 +5,12 @@
       label-width="100px"
       style="max-width: 460px"
   >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
-      <el-form-item label="展示模式">
-        <el-select v-model="props.item.展示模式" style="width: 100%">
+      <el-form-item label="mode">
+        <el-select v-model="props.item.mode" style="width: 100%">
           <el-option
-              v-for="(item, index) in 展示模式选项"
+              v-for="(item, index) in mode选项"
               :key="item"
               :label="item.label"
               :value="item.value"
@@ -18,15 +18,15 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="是否折叠(垂直时可用)">
-        <el-switch v-model="item.是否折叠"/>
+      <el-form-item label="collapse(垂直时可用)">
+        <el-switch v-model="item.collapse"/>
       </el-form-item>
     </el-form>
 
 
     <el-form label-position="top">
 
-      <el-form-item label="菜单项目"
+      <el-form-item label="menuOption"
       >
         <el-input v-model="filterText" placeholder="搜索菜单" />
 
@@ -34,7 +34,7 @@
         <el-tree
             ref="treeRef"
             class="filter-tree"
-            :data="props.item.菜单项目"
+            :data="props.item.menuOption"
             :expand-on-click-node="false"
             default-expand-all
             :filter-node-method="filterNode"
@@ -54,17 +54,17 @@
           </template>
         </el-tree>
 
-        <el-button size="small" style="margin-left: 8px" @click="append(props.item.菜单项目,'top')"> 增加菜单</el-button>
+        <el-button size="small" style="margin-left: 8px" @click="append(props.item.menuOption,'top')"> 增加菜单</el-button>
 
       </el-form-item>
     </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item" :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
@@ -77,17 +77,13 @@ const store = useAppStore()
 const filterText =  ref("");
 
 
-let 风格类型选项 = ref([
-  {"label": "简洁", "value": "card"},
-  {"label": "卡片风格", "value": "border-card"},
-]);
 
-let 展示模式选项 = ref([
+let mode选项 = ref([
   {"label": "水平", "value": "horizontal"},
   {"label": "垂直", "value": "vertical"},
 ]);
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
@@ -143,6 +139,14 @@ const treeRef = ref(null)
 
 watch(filterText, function(val) {
   treeRef.value.filter(val);
+});
+
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    mode选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
 });
 
 </script>

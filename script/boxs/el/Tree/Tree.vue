@@ -2,12 +2,12 @@
   <div :style="getItemStyle(item)">
     <el-tree
         ref="treeRef"
-        :data="item.树形项目"
-        :default-checked-keys="item.默认选中"
-        :default-expanded-keys="item.默认展开"
+        :data="item.data"
+        :default-checked-keys="item.defaultCheckedKeys"
+        :default-expanded-keys="item.defaultExpandedKeys"
         :node-key="item.id"
         :props="defaultProps"
-        :show-checkbox="item.可选"
+        :show-checkbox="item.select"
         style="width: 99%; height: 99%"
         @check-change="handleSelectionChange"
     />

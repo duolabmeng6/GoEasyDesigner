@@ -2,12 +2,12 @@
 
   <el-alert
       v-show="item.可视"
-      v-bind:disabled="item.禁用"
-      :type="item.提示类型"
+      v-bind:disabled="item.disable"
+      :type="item.type"
       :title="item.标题"
-      :description="item.描述"
-      :closable="item.可否关闭"
-      :center="item.文字居中"
+      :description="item.description"
+      :closable="item.closable"
+      :center="item.center"
   />
 
 </template>

@@ -60,7 +60,7 @@ async function loadComponent() {
 
 
 function onCustomEvent(name, data) {
-  console.log("收到自定义事件", "事件名称", name, "数据", data);
+  console.log("收到自定义事件", "eventName", name, "数据", data);
   emits("CustomEvent", name, item.data);
 }
 </script>

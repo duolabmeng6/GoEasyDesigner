@@ -1,8 +1,8 @@
 <template>
-  <el-row :gutter="item.列间隔" :justify="item.对齐方式" style="height: 100%">
-    <el-col v-for="(DivItem, DivItemIndex) in item.子组件"
+  <el-row :gutter="item.gutter" :justify="item.justify" style="height: 100%">
+    <el-col v-for="(DivItem, DivItemIndex) in item.childComponents"
             :key="DivItemIndex"
-            :span="DivItem.占比"
+            :span="DivItem.span"
     >
       <component is="RenderDesignComponent" v-for="(item2, DivItemIndex2) in [DivItem]" :key="DivItemIndex2"
                  :item="item2"

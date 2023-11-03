@@ -1,15 +1,15 @@
 <template>
 
-  <el-tabs :type="item.风格类型" v-model="item.现行选中项" :style="getItemStyle(item)" style="overflow: hidden;padding: 0"
-           v-show="item.可视"
-           v-bind:disabled="item.禁用"
-           :tab-position="item.标签位置"
+  <el-tabs :type="item.type" v-model="item.value" :style="getItemStyle(item)" style="overflow: hidden;padding: 0"
+           v-show="item.visible"
+           v-bind:disabled="item.disable"
+           :tab-position="item.tagPosition"
            stretch="true"
   >
     <el-tab-pane
-        v-for="(tabItem, tabItemIndex) in item.子组件"
+        v-for="(tabItem, tabItemIndex) in item.childComponents"
         :key="tabItemIndex"
-        :label="tabItem.标题"
+        :label="tabItem.text"
     >
       <component is="RenderDesignComponent"  v-for="(tabItem2, tabItemIndex2) in [tabItem]" :key="tabItemIndex2" :item="tabItem2"/>
     </el-tab-pane>

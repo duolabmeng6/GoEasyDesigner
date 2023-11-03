@@ -6,31 +6,31 @@
       label-width="100px"
       style="max-width: 460px"
   >
-    <component is="公用属性" :item="item"/>
+    <component is="common-properties" :item="item"/>
     <el-form-item label="内容">
-      <el-input v-model="item.内容"/>
+      <el-input v-model="itemtext"/>
     </el-form-item>
-    <el-form-item label="尺寸">
-      <el-select v-model="props.item.尺寸" style="width: 100%">
+    <el-form-item label="size">
+      <el-select v-model="props.item.size" style="width: 100%">
         <el-option
-            v-for="(item, index) in 尺寸选项"
+            v-for="(item, index) in size选项"
             :key="item"
             :label="item.label"
             :value="item.value"
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="最大长度">
-      <el-input v-model="item.最大长度"/>
+    <el-form-item label="maxlength">
+      <el-input v-model="item.maxlength"/>
     </el-form-item>
-    <el-form-item label="提示文本">
-      <el-input v-model="item.提示文本"/>
+    <el-form-item label="placeholder">
+      <el-input v-model="item.placeholder"/>
     </el-form-item>
 
-    <el-form-item label="输入框类型">
-      <el-select v-model="props.item.输入框类型" style="width: 100%">
+    <el-form-item label="type">
+      <el-select v-model="props.item.type" style="width: 100%">
         <el-option
-            v-for="(item, index) in 输入框类型选项"
+            v-for="(item, index) in type选项"
             :key="item"
             :label="item.label"
             :value="item.value"
@@ -40,29 +40,39 @@
 
   </el-form>
   </div>
-  <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
 
 
 </template>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 尺寸选项 = ref([
+let size选项 = ref([
   {"label": "自定义", "value": "custom"},
   {"label": "大号", "value": "large"},
   {"label": "小号", "value": "small"},
 ]);
-let 输入框类型选项 = ref([
+let type选项 = ref([
   {"label": "单行文本框", "value": "text"},
   {"label": "多行文本框", "value": "textarea"},
   {"label": "密码输入框", "value": "password"},
   {"label": "数字输入框", "value": "number"},
 ]);
+onMounted(() => {
+  if (localStorage.getItem("locale") === "English") {
+    size选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+    type选项.value.forEach((item) => {
+      item.label = item.value;
+    });
+  }
+});
 
 
-let 事件名称 = ref([
+let eventName = ref([
 
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

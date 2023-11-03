@@ -3,19 +3,13 @@ export default {
     left: "440",
     width: "300",
     height: "200",
-    现行选中项: "0",
+    value: "0",
     noPlace: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
-
-
-    风格类型: "border-card",
-    标签位置: "top",
-    列间隔: 10,
-    对齐方式: "start",
-    布局方式: "header-main",
-    子组件: [
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    layoutMethod: "header-main",
+    childComponents: [
         {
             组件名称: "elContainer",
             名称: "ContentAreaHeader",
@@ -27,12 +21,12 @@ export default {
             // background: "#fff",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            父容器id: 0,
-            层级: 0,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            pid: 0,
+            zIndex: 0,
+            childComponents: []
         },
 
         {
@@ -46,13 +40,12 @@ export default {
             // background: "red",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            层级: 0,
-            子容器: true,
-            父容器id: 0,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
         },
 
         {
@@ -67,13 +60,12 @@ export default {
             // background: "green",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            层级: 0,
-            子容器: true,
-            父容器id: 0,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
         },
 
         {
@@ -87,13 +79,12 @@ export default {
             // background: "green",
             position: "relative",
             noPlace: false,
-            禁止拖动: true,
-            可视: true,
-            禁止: false,
-            层级: 0,
-            子容器: true,
-            父容器id: 0,
-            子组件: []
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
         },
 
     ]

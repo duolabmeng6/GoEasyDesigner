@@ -1,5 +1,5 @@
 <template>
-  <template v-if="item.布局方式 == 'header-main'">
+  <template v-if="item.layoutMethod == 'header-main'">
     <el-container :style="getItemStyle(item)">
       <el-header>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in getSubComponents('header')"
@@ -11,7 +11,7 @@
       </el-main>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'header-main-footer'">
+  <template v-if="item.layoutMethod == 'header-main-footer'">
     <el-container :style="getItemStyle(item)">
       <el-header>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in  getSubComponents('header')"
@@ -27,7 +27,7 @@
       </el-footer>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'aside-main'">
+  <template v-if="item.layoutMethod == 'aside-main'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
 
@@ -40,7 +40,7 @@
       </el-main>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'header-aside-main'">
+  <template v-if="item.layoutMethod == 'header-aside-main'">
     <el-container :style="getItemStyle(item)">
       <el-header>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in  getSubComponents('header')"
@@ -58,7 +58,7 @@
       </el-container>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'header-aside-main-footer'">
+  <template v-if="item.layoutMethod == 'header-aside-main-footer'">
     <el-container :style="getItemStyle(item)">
       <el-header>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in  getSubComponents('header')"
@@ -84,7 +84,7 @@
       </el-container>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'aside-header-main'">
+  <template v-if="item.layoutMethod == 'aside-header-main'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
 
@@ -104,7 +104,7 @@
       </el-container>
     </el-container>
   </template>
-  <template v-if="item.布局方式 == 'aside-header-main-footer'">
+  <template v-if="item.layoutMethod == 'aside-header-main-footer'">
     <el-container :style="getItemStyle(item)">
       <el-aside :width="getSubComponents('aside')[0].width">
 
@@ -138,15 +138,15 @@ export default {
     getItemStyle,
     getSubComponents(area) {
       let index;
-      for (let i = 0; i < this.item.子组件.length; i++) {
-        if (this.item.子组件[i].area === area) {
+      for (let i = 0; i < this.item.childComponents.length; i++) {
+        if (this.item.childComponents[i].area === area) {
           index = i;
           break;
         }
       }
       // console.log("json", JSON.stringify(this.item.子组件, null, 2))
       // console.log("index", index)
-      return [this.item.子组件[index]];
+      return [this.item.childComponents[index]];
     },
   },
   props: {
