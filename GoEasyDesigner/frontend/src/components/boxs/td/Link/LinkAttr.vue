@@ -58,7 +58,7 @@
 
 
   </div>
-  <component is="common-event-component" :item="props.item"  :eventName="enventNames"/>
+  <component is="common-event-component" :item="props.item"  :eventName="eventNames"/>
 
 </template>
 
@@ -80,7 +80,7 @@ let themeOptions = ref([
   { label: "警告", value: "warning" },
   { label: "成功", value: "success" },
 ]);
-let enventNames = ref([
+let eventNames = ref([
   { label: "点击事件", value: "click" },
 ]);
 

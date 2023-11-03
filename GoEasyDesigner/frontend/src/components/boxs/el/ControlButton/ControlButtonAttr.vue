@@ -11,7 +11,7 @@
   </div>
 
 
-    <component is="common-event-component" :item="props.item"  :eventName="enventNames"/>
+    <component is="common-event-component" :item="props.item"  :eventName="eventNames"/>
 
 </template>
 <script setup>
@@ -20,7 +20,7 @@ import {ref, defineProps, defineEmits,onMounted} from "vue";
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
 
-let enventNames = ref([
+let eventNames = ref([
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
   {"label": "鼠标左键被放开", "value": "mouseup"},

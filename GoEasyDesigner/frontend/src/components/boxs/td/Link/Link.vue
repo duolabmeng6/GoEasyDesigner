@@ -1,6 +1,5 @@
 <template>
   <t-link
-      v-show="item.visible"
       :content="item.text"
       :disabled="item.disable"
       :download="item.download"

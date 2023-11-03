@@ -9,7 +9,6 @@ export default {
     zIndex: 0,
     customListening:true,
 
-    customValue: [true, false],
     label: ['yes','no'],
     loading: false,
     size: "medium",

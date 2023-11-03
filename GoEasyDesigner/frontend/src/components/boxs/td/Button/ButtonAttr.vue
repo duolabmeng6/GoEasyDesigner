@@ -66,7 +66,7 @@
   </div>
 
 
-    <component is="common-event-component" :item="props.item"  :eventName="enventNames"/>
+    <component is="common-event-component" :item="props.item"  :eventName="eventNames"/>
 
 </template>
 <script setup>
@@ -102,7 +102,7 @@ let variantOptions = ref([
   {"label": "文字", "value": "text"},
 ]);
 
-let enventNames = ref([
+let eventNames = ref([
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
   {"label": "鼠标左键被放开", "value": "mouseup"},
