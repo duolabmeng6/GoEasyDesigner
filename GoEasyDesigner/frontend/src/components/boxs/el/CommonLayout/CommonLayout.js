@@ -18,7 +18,7 @@ export default {
     子组件: [
         {
             组件名称: "elContainer",
-            名称: "content area header",
+            名称: "ContentAreaHeader",
             top: "0",
             left: "0",
             width: "100%",
@@ -36,7 +36,7 @@ export default {
 
         {
             组件名称: "elContainer",
-            名称: "content area main",
+            名称: "ContentAreaMain",
             top: "0",
             left: "0",
             width: "100%",
@@ -55,7 +55,7 @@ export default {
 
         {
             组件名称: "elContainer",
-            名称: "content area footer",
+            名称: "ContentAreaFooter",
             top: "0",
             left: "0",
             width: "100%",
@@ -74,7 +74,7 @@ export default {
 
         {
             组件名称: "elContainer",
-            名称: "content area aside",
+            名称: "ContentAreaAside",
             top: "0",
             left: "0",
             width: "100px",

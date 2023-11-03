@@ -288,7 +288,7 @@ export const useAppStore = defineStore('AppStore', {
         新增子组件(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                名称: this.获取索引("content area"),
+                名称: this.获取索引("ContentArea"),
                 标题: this.获取索引("tabs"),
                 组件名称: "elContainer",
                 top: "0",
@@ -309,7 +309,7 @@ export const useAppStore = defineStore('AppStore', {
             let 插入数据 = {
                 id: this.获取随机id(),
                 组件名称: "elContainer",
-                名称: this.获取索引("content area"),
+                名称: this.获取索引("ContentArea"),
                 top: "0",
                 left: "0",
                 width: "100%",

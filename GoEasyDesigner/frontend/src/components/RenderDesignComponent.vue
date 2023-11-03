@@ -57,7 +57,7 @@
                       align-items: center;
                       pointer-events: none;
 ">
-            {{ item.名称 ? item.名称 : 'content area' }}
+            {{ item.名称 ? item.名称 : 'ContentArea' }}
           </div>
         </template>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.子组件" :key="subIndex"

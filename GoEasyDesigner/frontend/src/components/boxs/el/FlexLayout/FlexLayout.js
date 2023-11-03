@@ -17,7 +17,7 @@ export default {
     子组件: [
         {
             组件名称: "elContainer",
-            名称: "content area 1",
+            名称: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",
@@ -35,7 +35,7 @@ export default {
         },
         {
             组件名称: "elContainer",
-            名称: "content area 2",
+            名称: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",
@@ -53,7 +53,7 @@ export default {
         },
         {
             组件名称: "elContainer",
-            名称: "content area 3",
+            名称: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",
