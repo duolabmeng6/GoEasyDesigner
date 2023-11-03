@@ -224,8 +224,12 @@ async function 拖拽放下(event, v) {
   x = x - store.start_x
   y = y - store.start_y
   // console.log("重新计算", "x", x, "y", y)
-  store.当前拖拽组件数据.left = x
-  store.当前拖拽组件数据.top = y
+  if( store.当前拖拽组件数据.left !='inherit'){
+    store.当前拖拽组件数据.left = x
+  }
+  if( store.当前拖拽组件数据.top !='inherit'){
+    store.当前拖拽组件数据.top = y
+  }
 
   store.HistoryManager.记录(JSON.stringify(store.list))
 
@@ -328,9 +332,13 @@ function isHovered(index) {
 }
 
 function generateUniqueId() {
-  let id = uuidv4();
-  // 截取前面6位
-  return id.substring(0, 6);
+  try{
+    let id = uuidv4();
+    // 截取前面6位
+    return id.substring(0, 6);
+  }catch (e){
+    return 'fail'
+  }
 }
 
 </script>

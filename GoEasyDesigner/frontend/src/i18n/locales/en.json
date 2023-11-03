@@ -42,6 +42,8 @@
     "name": "name",
     "title": "title",
     "top": "top",
+    "right": "right",
+    "bottom": "bottom",
     "visible": "visible",
     "width": "width",
     "xAxisRollingMode": "xAxis Rolling Mode",

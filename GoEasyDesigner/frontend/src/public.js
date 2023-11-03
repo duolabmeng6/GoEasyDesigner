@@ -1,6 +1,12 @@
 const parseDimension = (value) => {
+    //检查是否包含 vw vh % 等单位
     if (typeof value === 'string') {
-        return value.includes('%') ? value : `${parseInt(value)}px`;
+        if(value === "inherit" || value === "auto"){
+            return value;
+        }
+        if(value.includes('v') || value.includes('%')){
+            return value;
+        }
     }
     return `${parseInt(value)}px`;
 };
@@ -67,6 +73,8 @@ const getItemStyleShape = (item) => {
     const style = {
         top: parseDimension(item.top),
         left: parseDimension(item.left),
+        right: parseDimension(item.right),
+        bottom: parseDimension(item.bottom),
         width: parseDimension(item.width),
         height: parseDimension(item.height),
         border: item.border,
@@ -74,6 +82,9 @@ const getItemStyleShape = (item) => {
         zIndex: item.层级,
         position: 'absolute',
     };
+
+
+
     if (item.position !== undefined) {
         style.position = item.position;
     }

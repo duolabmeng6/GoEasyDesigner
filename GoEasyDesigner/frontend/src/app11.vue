@@ -213,7 +213,7 @@ const scrollContainer = ref(null);
 import {useI18n} from "vue-i18n";
 import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 
-const {t, availableLocales: languages, locale} = useI18n();
+const {t,te, availableLocales: languages, locale} = useI18n();
 
 //读取本地存储
 if (localStorage.getItem("locale")) {
@@ -389,7 +389,8 @@ function 拖拽开始(event, 组件名称, uiName) {
     event.stopPropagation()
     return
   }
-  let newName = t('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
+  // newName 检查是否有中文翻译 如果有则使用翻译 没有则使用原来的
+  let newName = te('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
   let k = store.获取索引(newName)
   新属性.id = store.获取随机id()
   新属性.组件名称 = 组件名称

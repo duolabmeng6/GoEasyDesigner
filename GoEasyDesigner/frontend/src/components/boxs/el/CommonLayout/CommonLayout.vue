@@ -139,12 +139,13 @@ export default {
     getSubComponents(area) {
       let index;
       for (let i = 0; i < this.item.子组件.length; i++) {
-        if (this.item.子组件[i].名称.includes(area)) {
+        if (this.item.子组件[i].area === area) {
           index = i;
           break;
         }
       }
-      console.log("index", index)
+      // console.log("json", JSON.stringify(this.item.子组件, null, 2))
+      // console.log("index", index)
       return [this.item.子组件[index]];
     },
   },

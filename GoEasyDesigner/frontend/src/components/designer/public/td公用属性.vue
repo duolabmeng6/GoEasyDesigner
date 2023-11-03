@@ -22,6 +22,26 @@
         @select="handleSelect"
     />
   </el-form-item>
+  <el-form-item :label="$t('attr.right')">
+    <el-autocomplete
+        v-model="props.item.right"
+        :fetch-suggestions="querySearch"
+        class="inline-input w-50"
+        clearable
+        placeholder="单位:1px 100% auto"
+        @select="handleSelect"
+    />
+  </el-form-item>
+  <el-form-item  :label="$t('attr.bottom')">
+    <el-autocomplete
+        v-model="props.item.bottom"
+        :fetch-suggestions="querySearch"
+        class="inline-input w-50"
+        clearable
+        placeholder="单位:1px 100% auto"
+        @select="handleSelect"
+    />
+  </el-form-item>
   <el-form-item  :label="$t('attr.width')">
     <el-autocomplete
         v-model="props.item.width"
@@ -164,6 +184,9 @@ const loadAll = () => {
     {value: '100'},
     {value: '200'},
     {value: '300'},
+    {value: 'inherit'},
+    {value: '100vw'},
+    {value: '100vh'},
   ]
 }
 let 图片平铺方式选项 = ref([
