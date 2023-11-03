@@ -69,7 +69,7 @@
 国内地址: https://go.kenhong.com/
 国外地址: https://g.yx24.me 
 
-[下载窗口运行项目](https://github.com/duolabmeng6/wails-template-vue-go-easy),在线体验时在浏览器中画好界面保存,会下载2个文件 `设计文件.json`,`辅助代码.js` 注意你的浏览器允许下载多个文件的权限,将设计文件放到指定位置即可.
+[下载窗口运行项目](https://github.com/duolabmeng6/wails-template-vue-go-easy),在线体验时在浏览器中画好界面保存,会下载2个文件 `设计文件.json`,`__aux_code.js` 注意你的浏览器允许下载多个文件的权限,将设计文件放到指定位置即可.
 
 # 快速上手
 

@@ -67,7 +67,7 @@
     "TextEdit": "TextEdit",
     "Tooltip": "Tooltip",
     "Tree": "Tree",
-    "Window": "Window"
+    "Window": "Win"
   },
   "eventName": {
     "blur": "blur",

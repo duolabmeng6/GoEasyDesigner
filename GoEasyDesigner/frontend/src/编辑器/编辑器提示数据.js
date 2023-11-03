@@ -36,8 +36,8 @@ const keywordMappings = {
         "label": "ks可视"
     },
     "cj": {
-        "insertText": "层级",
-        "label": "cj层级"
+        "insertText": "zIndex",
+        "label": "cjzIndex"
     },
     "zzj": {
         "insertText": "子组件",

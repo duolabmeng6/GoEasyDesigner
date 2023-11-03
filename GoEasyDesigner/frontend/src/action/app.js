@@ -77,8 +77,8 @@ appAction.打开 = function () {
 
 appAction._打开文件加载界面 = function (filepath) {
     store.项目信息.设计文件路径 = filepath
-    store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/窗口事件.js"
-    store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/辅助代码.js"
+    store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/event.js"
+    store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/__aux_code.js"
     store.项目信息.项目管理目录 = 取父目录(filepath)
     store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
 
@@ -136,13 +136,13 @@ appAction.保存设计文件 = function () {
         const blob = new Blob([njson], {type: 'application/json'})
         const link = document.createElement('a')
         link.href = URL.createObjectURL(blob)
-        link.download = '设计文件.json'
+        link.download = 'design.json'
         link.click()
 
         const blob2 = new Blob([辅助代码], {type: 'application/json'})
         const link2 = document.createElement('a')
         link2.href = URL.createObjectURL(blob2)
-        link2.download = '辅助代码.js'
+        link2.download = '__aux_code.js'
         link2.click()
         return;
     }
@@ -166,8 +166,8 @@ appAction.保存设计文件 = function () {
             }
 
             store.项目信息.设计文件路径 = res
-            store.项目信息.窗口事件文件路径 = 取父目录(res) + "/窗口事件.js"
-            store.项目信息.辅助代码文件路径 = 取父目录(res) + "/辅助代码.js"
+            store.项目信息.窗口事件文件路径 = 取父目录(res) + "/event.js"
+            store.项目信息.辅助代码文件路径 = 取父目录(res) + "/__aux_code.js"
             store.项目信息.项目管理目录 = 取父目录(res)
             store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(res))))
 

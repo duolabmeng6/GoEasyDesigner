@@ -9,7 +9,7 @@
     </el-form-item>
   </el-form>
   <teleport to="#事件选择器">
-    <component is="common-event-component" :item="item" :事件名称="事件名称"/>
+    <component is="common-event-component" :item="item" :eventName="eventName"/>
   </teleport>
 </template>
 <script setup>
@@ -18,7 +18,7 @@ import {defineEmits, defineProps, ref} from "vue";
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const {item} = defineProps(['item']);
 
-let 事件名称 = ref([
+let eventName = ref([
   {"label": "自定义事件", "value": "自定义事件", "ext_data": "自定义事件(事件名称,事件数据)"},
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},

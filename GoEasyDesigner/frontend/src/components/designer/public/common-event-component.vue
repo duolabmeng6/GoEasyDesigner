@@ -77,9 +77,14 @@ store.全局_事件名称列表 = props.eventName
 
 onMounted(() => {
   if (localStorage.getItem("locale") === "English") {
-    props.eventName.forEach((item) => {
-      item.label = item.value;
-    });
+    try {
+      props.eventName.forEach((item) => {
+        item.label = item.value;
+      });
+    }catch (e) {
+      console.log("e", e)
+    }
+
   }
 });
 

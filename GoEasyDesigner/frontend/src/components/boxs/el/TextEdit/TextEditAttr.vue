@@ -8,7 +8,7 @@
   >
     <component is="common-properties" :item="item"/>
     <el-form-item label="内容">
-      <el-input v-model="itemtext"/>
+      <el-input v-model="item.text"/>
     </el-form-item>
     <el-form-item label="size">
       <el-select v-model="props.item.size" style="width: 100%">

@@ -96,7 +96,7 @@ func (a *App) E保存件对话框() string {
 	println("E保存件对话框")
 	result, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
 		Title:           "保存文件",
-		DefaultFilename: "设计文件.json",
+		DefaultFilename: "design.json",
 	})
 	if err != nil {
 		return ""

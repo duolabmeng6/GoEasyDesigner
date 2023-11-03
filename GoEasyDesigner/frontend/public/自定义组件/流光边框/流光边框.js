@@ -5,10 +5,10 @@ export default {
     width: "240",
     height: "80",
     no_place: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
-    自定义监听:true,
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    customListening:true,
 
     fontSize: "24px",
     data:{

@@ -81,6 +81,8 @@ const getItemStyleShape = (item) => {
         background: item.background,
         zIndex: item.zIndex,
         position: 'absolute',
+        overflowY: item.overflowY || 'visible',
+        overflowX: item.overflowX || 'visible'
     };
 
 
@@ -139,7 +141,7 @@ function generateComponentCode(components, parentPath = '') {
         }
 
 
-        codeLine = `组件.${componentName} = list[0]${componentPath}`;
+        codeLine = `comps.${componentName} = list[0]${componentPath}`;
         if (componentName == "" || componentName == undefined) {
         } else {
             codeLines.push(codeLine);
@@ -156,21 +158,21 @@ function generateComponentCode(components, parentPath = '') {
 
 function 生成辅助代码(obj) {
     const codeLines = generateComponentCode(obj);
-    let code = "    组件.窗口 = list[0]\r\n"
+    let code = "    comps.Win = list[0]\r\n"
     for (const codeLine of codeLines) {
         code = code + "    " + codeLine + "\r\n"
     }
     let codeTpl = `
-function __辅助代码(list, 组件) {
+function __aux_code(list, comps) {
 ${code}
-    return 组件
+    return comps
 }
-export default __辅助代码
+export default __aux_code
     `
     return codeTpl
 }
 
-// const jsonData = require('./设计文件.json');
+// const jsonData = require('./design.json');
 // console.log(生成辅助代码(jsonData[0].childComponents))
 
 

@@ -8,6 +8,8 @@ import 'element-plus/dist/index.css'
 import TDesign from 'tdesign-vue-next'
 import 'tdesign-vue-next/es/style/index.css'
 
+import Helper from "./Helper.js"
+
 import i18n from './i18n/index.js'
 
 import App from './app11.vue'
@@ -25,6 +27,7 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import 编辑器数据 from './编辑器/编辑器提示数据.js'
 import ldf from './编辑器/编辑器语法文件.js'
+import helper from "./Helper.js";
 
 const app = createApp(App)
 app.use(createPinia())
@@ -131,46 +134,12 @@ app.config.warnHandler = function (msg, vm, trace) {
 };
 
 
-function registerBoxComponentNames(uiName, meta) {
-    let ComponentNames = []
-    const componentsContext = meta;
-
-    const keys = Object.keys(componentsContext).map((path) => {
-        const name = path.split('/').pop().replace(/\.\w+$/, '');
-        const module = componentsContext[path];
-        //如果名称后面是 属性 或者是 Attr 就不要加入
-        if (!(name.endsWith("属性") || name.endsWith("Attr"))) {
-            ComponentNames.push(name)
-        }
-        app.component(uiName + name, module.default);
-        // app.component(name, module.default);
-        // console.log("注册组件", uiName, name)
-        return name;
-    });
-
-    return ComponentNames;
-
-}
-
-function registerBoxComponentDefaultValue(uiName, meta) {
-    let ComponentDefaultValue = {}
-    const componentsContext = meta;
-
-    const keys = Object.keys(componentsContext).map((path) => {
-        const name = path.split('/').pop().replace(/\.\w+$/, '');
-        const module = componentsContext[path];
-        ComponentDefaultValue[name] = module.default;
-        return name;
-    });
-
-    return ComponentDefaultValue;
-}
 
 //注册公用组件
-registerBoxComponentNames('', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
+Helper.registerBoxComponentNames(app,'', import.meta.glob('./components/designer/public/*.vue', {eager: true}))
 
 //注册饿了么组件
-const BoxComponentNames_el = registerBoxComponentNames('el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
+const BoxComponentNames_el = Helper.registerBoxComponentNames(app,'el', import.meta.glob('./components/boxs/el/**/*.vue', {eager: true}))
 console.log("饿了么组件", BoxComponentNames_el)
 let ComponentNameOrder = ['Button', 'TextEdit', 'Label']
 ComponentNameOrder = [...new Set([...ComponentNameOrder, ...BoxComponentNames_el])]
@@ -178,12 +147,12 @@ ComponentNameOrder = ComponentNameOrder.filter(item => item !== "Container")
 app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
 //注册组件默认属性
 const BoxComponentDefaultValue = {
-    'el': registerBoxComponentDefaultValue('el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
-    'td': registerBoxComponentDefaultValue('td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
+    'el': Helper.registerBoxComponentDefaultValue(app,'el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
+    'td': Helper.registerBoxComponentDefaultValue(app,'td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
 }
 app.provide('BoxComponentDefaultValue', BoxComponentDefaultValue)
 
-const BoxComponentNames_td = registerBoxComponentNames('td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
+const BoxComponentNames_td = Helper.registerBoxComponentNames(app,'td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
 
 const BoxComponentNames = {
     'system': ComponentNameOrder,

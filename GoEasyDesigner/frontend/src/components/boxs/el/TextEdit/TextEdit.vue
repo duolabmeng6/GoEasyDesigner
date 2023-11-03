@@ -8,7 +8,7 @@
         :placeholder="item.placeholder"
         :maxlength="item.maxlength"
         :size="item.size=='custom' ?'':item.size"
-        v-model="itemtext"/>
+        v-model="item.text"/>
   </div>
 </template>
 

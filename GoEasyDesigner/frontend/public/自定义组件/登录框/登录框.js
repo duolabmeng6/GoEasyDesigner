@@ -4,10 +4,10 @@ export default {
     width: "350",
     height: "350",
     no_place: true,
-    可视: true,
-    禁止: false,
-    层级: 0,
-    自定义监听:true,
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    customListening:true,
 
     HTML: "",
     data: {

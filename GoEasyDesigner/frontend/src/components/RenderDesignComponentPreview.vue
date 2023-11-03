@@ -1,18 +1,44 @@
 <template>
-  <div :style="getItemStyleShape(item)">
-    <div v-show="item.visible || item.visible" :id="item.name" :class="{ 'disabled': item.disable || item.disable }"
-         :style="{
-        overflowY: item.overflowY || 'visible',
-        overflowX: item.overflowX || 'visible'
-      }" class="子组件" v-demo="item">
+
+  <div
+      :style="getItemStyleShape(item)"
+  >
+    <div
+        v-show="item.visible || item.visible"
+        :id="item.name"
+        :class="{ 'disabled': item.disable || item.disable }"
+        :style="{
+              overflowY: item.overflowY || 'visible',
+              overflowX: item.overflowX || 'visible'
+        }"
+        class="子组件"
+
+        v-demo="item"
+
+    >
+
       <template v-if="item.componentName == 'Window'">
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
-                   :item="subItem" />
+                   :item="subItem"/>
       </template>
-      <template v-if="item.componentName == 'elContainer'">
 
+      <template v-if="item.componentName=='elContainer'">
+        <template v-if="item.childComponents.length === 0">
+          <div style="width: 100%;
+                       background: rgba(10,19,37,.05);
+                      border: 1px dashed #ced0d3;
+                      color: rgb(184, 186, 191);
+                      height: 100%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      pointer-events: none;
+">
+            {{ item.name ? item.name : 'ContentArea' }}
+          </div>
+        </template>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
-                   :item="subItem" />
+                   :item="subItem"/>
       </template>
       <template v-else-if="item.customListening">
         <component :is="item.componentName" :item="item" @CustomEvent="(n, v) => { onCustomEvent(n, v, item) }" />
@@ -20,8 +46,6 @@
       <template v-else>
         <component :is="item.componentName" :item="item" />
       </template>
-
-
 
     </div>
   </div>
@@ -36,6 +60,7 @@ const { item } = defineProps(['item']);
 const emits = defineEmits(["CustomEvent"]);
 
 const store = 引入窗口数据()
+
 
 const vDemo = {
   mounted: (el, binding) => {
@@ -84,7 +109,9 @@ const onCustomEvent = (name, data, item) => {
 </script>
 
 <style>
-.childComponents {
+
+
+.子组件 {
   position: relative;
   width: 100%;
   height: 100%;
@@ -105,11 +132,12 @@ const onCustomEvent = (name, data, item) => {
 
 .disabled {
   pointer-events: none;
-  opacity: 0.6;
-  /* 可选：降低透明度来表示禁用状态 */
+  opacity: 0.6; /* 可选：降低透明度来表示禁用状态 */
 }
 
 .子组件.高亮 {
   background-color: rgba(0, 166, 255, 0.3);
 }
+
+
 </style>
