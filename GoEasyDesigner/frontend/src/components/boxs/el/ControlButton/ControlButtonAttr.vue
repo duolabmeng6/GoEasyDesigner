@@ -5,7 +5,7 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="td公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
     </el-form>
   </div>

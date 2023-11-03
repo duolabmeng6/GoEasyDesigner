@@ -5,7 +5,7 @@ export default {
     height: "32",
     right: "0",
     bottom: "inherit",
-    禁止放置: true,
+    noPlace: true,
     visible: true,
     disable: false,
     zIndex: 0,

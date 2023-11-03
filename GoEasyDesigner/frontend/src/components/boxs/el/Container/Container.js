@@ -1,5 +1,5 @@
 export default {
-    禁止放置: false,
+    noPlace: false,
     可视: true,
     禁止: false,
     top: "0",

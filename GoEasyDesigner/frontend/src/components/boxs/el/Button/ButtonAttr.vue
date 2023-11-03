@@ -5,26 +5,26 @@
         label-width="100px"
         style="max-width: 460px"
     >
-      <component is="公用属性" :item="item"/>
+      <component is="common-properties" :item="item"/>
 
-      <el-form-item label="标题">
-        <el-input v-model="props.item.标题"/>
+      <el-form-item label="Text">
+        <el-input v-model="props.item.text"/>
       </el-form-item>
-      <el-form-item label="按钮类型">
-        <el-select v-model="props.item.按钮类型" style="width: 100%">
+      <el-form-item label="Button Type">
+        <el-select v-model="props.item.buttonType" style="width: 100%">
           <el-option
-              v-for="(item, index) in 按钮类型选项"
-              :key="item"
+              v-for="(item, index) in buttonTypeOptions"
+              :key="item.value"
               :label="item.label"
               :value="item.value"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="尺寸">
-        <el-select v-model="props.item.尺寸" style="width: 100%">
+      <el-form-item label="Size">
+        <el-select v-model="props.item.size" style="width: 100%">
           <el-option
-              v-for="(item, index) in 尺寸选项"
-              :key="item"
+              v-for="(item, index) in sizeOptions"
+              :key="item.value"
               :label="item.label"
               :value="item.value"
           />
@@ -33,8 +33,7 @@
     </el-form>
   </div>
 
-
-    <component is="公用事件组件" :item="props.item"  :事件名称="事件名称"/>
+  <component is="common-event-component" :item="props.item"  :event-name="eventName"/>
 
 </template>
 <script setup>
@@ -42,7 +41,7 @@ import {ref, defineProps, defineEmits, onMounted} from "vue";
 
 const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
 const props = defineProps(['item']);
-let 按钮类型选项 = ref([
+let buttonTypeOptions = ref([
   {"label": "默认", "value": "default"},
   {"label": "主要", "value": "primary"},
   {"label": "成功", "value": "success"},
@@ -51,7 +50,7 @@ let 按钮类型选项 = ref([
   {"label": "危险", "value": "danger"},
 ]);
 
-let 尺寸选项 = ref([
+let sizeOptions = ref([
   {"label": "自定义", "value": "custom"},
   {"label": "默认", "value": "default"},
   {"label": "大号", "value": "large"},
@@ -59,7 +58,7 @@ let 尺寸选项 = ref([
 ]);
 
 
-let 事件名称 = ref([
+let eventName = ref([
   {"label": "被单击", "value": "click"},
   {"label": "鼠标左键被按下", "value": "mousedown"},
   {"label": "鼠标左键被放开", "value": "mouseup"},
@@ -81,10 +80,10 @@ onMounted(() => {
 
   if (localStorage.getItem("locale") === "English") {
     console.log("英语");
-    按钮类型选项.value.forEach((item) => {
+    buttonTypeOptions.value.forEach((item) => {
       item.label = item.value;
     });
-    尺寸选项.value.forEach((item) => {
+    sizeOptions.value.forEach((item) => {
       item.label = item.value;
     });
 

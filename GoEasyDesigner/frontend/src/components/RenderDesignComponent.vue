@@ -164,7 +164,7 @@ function 拖拽进入(event, v) {
   var img = new Image();
   img.src = tempCanvas.toDataURL();
   event.dataTransfer.setDragImage(img, 0, 0);
-  if (v.禁止放置) {
+  if (v.noPlace) {
     event.stopPropagation();
     return
   }
@@ -183,7 +183,7 @@ function 拖拽离开(event, v) {
 
 async function 拖拽放下(event, v) {
   console.log("拖拽放下", v)
-  if (v.禁止放置) {
+  if (v.noPlace) {
     return
   }
 

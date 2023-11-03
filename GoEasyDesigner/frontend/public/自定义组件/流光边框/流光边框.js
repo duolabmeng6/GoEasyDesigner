@@ -4,7 +4,7 @@ export default {
     left: "440",
     width: "240",
     height: "80",
-    禁止放置: true,
+    no_place: true,
     可视: true,
     禁止: false,
     层级: 0,

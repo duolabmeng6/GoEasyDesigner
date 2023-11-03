@@ -34,7 +34,7 @@ appAction.新建 = function () {
             "width": "500",
             "height": "400",
             "background": "rgba(0, 0, 0, 0.05)",
-            "禁止放置": false,
+            "noPlace": false,
             "禁止拖动": true,
             "禁止": false,
             "可视": true,
