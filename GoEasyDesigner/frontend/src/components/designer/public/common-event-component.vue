@@ -58,18 +58,18 @@ const 组件事件被选择 = function () {
   //驼峰
   let 函数名称;
   if (i18n.global.locale.value === "简体中文") {
-    函数名称 = props.item.名称 + nowSelectItem.label
+    函数名称 = props.item.name + nowSelectItem.label
   } else {
     let 新事件名称 = nowSelectItem.value.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
       return m.toUpperCase();
     });
-    函数名称 = props.item.名称 + 新事件名称
+    函数名称 = props.item.name + 新事件名称
   }
 
   store.添加事件被选择(nowSelectItem.value, 函数名称, props.item, extData) // 添加函数到代码中
   当前选择的事件名称.value = 0
 
-  console.log("组件事件被选择=", props.item.名称, '事件', 当前选择的事件名称.value, 'value', value, 'ext_data', extData, JSON.stringify(props.item, null, 2));
+  console.log("组件事件被选择=", props.item.name, '事件', 当前选择的事件名称.value, 'value', value, 'ext_data', extData, JSON.stringify(props.item, null, 2));
 
 }
 store.全局_事件名称列表 = props.eventName

@@ -16,8 +16,8 @@ export default {
 
     childComponents: [
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             text: "tab",
             图标: "fa fa-server",
             top: "0",
@@ -33,8 +33,8 @@ export default {
             childComponents: []
         },
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             text: "tab",
             图标: "fa fa-cog",
             top: "0",

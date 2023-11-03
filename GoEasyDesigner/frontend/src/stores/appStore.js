@@ -82,7 +82,7 @@ export const useAppStore = defineStore('AppStore', {
 `;
             }
 
-            ncode = ncode.replace(/{事件名称}/g, item.名称 + 事件名称)
+            ncode = ncode.replace(/{事件名称}/g, item.name + 事件名称)
             console.log(ncode)
 
             if (this.项目信息.窗口事件文件路径 == "") {
@@ -138,12 +138,12 @@ export const useAppStore = defineStore('AppStore', {
             let nowSelectItem = this.全局_事件名称列表[0]
             let 函数名称;
             if (i18n.global.locale.value === "简体中文") {
-                函数名称 = 组件数据.名称 + nowSelectItem.label
+                函数名称 = 组件数据.name + nowSelectItem.label
             } else {
                 let 新事件名称 = nowSelectItem.value.toLowerCase().replace(/\b(\w)|\s(\w)/g, function (m) {
                     return m.toUpperCase();
                 });
-                函数名称 = 组件数据.名称 + 新事件名称
+                函数名称 = 组件数据.name + 新事件名称
             }
 
             this.添加事件被选择(事件名称, 函数名称, 组件数据, ext_data)
@@ -197,17 +197,17 @@ export const useAppStore = defineStore('AppStore', {
             if (this.当前组件索引 == -1) {
                 return "画布属性"
             }
-            return this.组件列表[this.当前组件索引].组件名称 + "属性"
+            return this.组件列表[this.当前组件索引].componentName + "属性"
         },
 
         当前组件名称2() {
             const {t} = useI18n() // 解构出t方法
 
-            if (this.当前拖拽组件数据.组件名称 == t('componentName.Window')) {
+            if (this.当前拖拽组件数据.componentName == t('componentName.Window')) {
                 return "WindowAttr"
             }
 
-            return this.当前拖拽组件数据.组件名称 + "Attr"
+            return this.当前拖拽组件数据.componentName + "Attr"
         },
         获取索引(组件名称){
             let k = this._获取索引(组件名称)
@@ -272,7 +272,7 @@ export const useAppStore = defineStore('AppStore', {
         递归查找名称(源数据, 名称) {
             let res = false
             源数据.forEach((item, index) => {
-                if (item.名称 == 名称) {
+                if (item.name == 名称) {
                     res = true
                 }
                 if (item.childComponents == undefined) {
@@ -288,9 +288,9 @@ export const useAppStore = defineStore('AppStore', {
         新增childComponents(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                名称: this.获取索引("ContentArea"),
+                name: this.获取索引("ContentArea"),
                 text: this.获取索引("tabs"),
-                组件名称: "elContainer",
+                componentName: "elContainer",
                 top: "0",
                 left: "0",
                 width: "100%",
@@ -308,8 +308,8 @@ export const useAppStore = defineStore('AppStore', {
         新增childComponents2(id) {
             let 插入数据 = {
                 id: this.获取随机id(),
-                组件名称: "elContainer",
-                名称: this.获取索引("ContentArea"),
+                componentName: "elContainer",
+                name: this.获取索引("ContentArea"),
                 top: "0",
                 left: "0",
                 width: "100%",
@@ -365,7 +365,7 @@ export const useAppStore = defineStore('AppStore', {
         transformData(jsonData) {
             function transform(item) {
                 let 名称;
-                名称 = item.名称
+                名称 = item.name
                 if (名称 == undefined || 名称 == null || 名称 == "") {
                     名称 = item.text
                 }
@@ -379,7 +379,7 @@ export const useAppStore = defineStore('AppStore', {
                 if (item.childComponents) {
                     item.childComponents.forEach(child => {
                         let 名称;
-                        名称 = child.名称
+                        名称 = child.name
                         if (名称 == undefined || 名称 == null || 名称 == "") {
                             名称 = child.text
                         }
@@ -412,10 +412,10 @@ export const useAppStore = defineStore('AppStore', {
         __取组件列表_递归(源数据) {
             for (const item of 源数据) {
                 const 组件数据 = {
-                    label: item.名称,
+                    label: item.name,
                     id: item.id
                 }
-                if (item.名称 !== undefined && item.名称 !== null && item.名称 !== "") {
+                if (item.name !== undefined && item.name !== null && item.name !== "") {
                     this.组件列表.push(组件数据)
                 }
                 // console.log("组件列表", this.组件列表)

@@ -122,7 +122,7 @@ function generateComponentCode(components, parentPath = '') {
     let k = 0;
     let codeLine;
     for (const component of components) {
-        let componentName = component["名称"];
+        let componentName = component["name"];
         const componentPath = `${parentPath}.childComponents[${k}]`;
         const componentPath2 = `${parentPath}`;
         k = k + 1;

@@ -89,7 +89,7 @@
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
-                    {{ $te('componentName.' + item.组件名称) ? $t('componentName.' + item.组件名称) : item.组件名称 }}
+                    {{ $te('componentName.' + item.componentName) ? $t('componentName.' + item.componentName) : item.componentName }}
 
                   </el-button>
                 </el-col>
@@ -356,7 +356,7 @@ function init_tailwindcss() {
 }
 
 async function 拖拽开始_自定义组件(event, item, uiname) {
-  let 组件名称 = item.组件名称
+  let 组件名称 = item.componentName
   let 组件路径 = item.组件路径
   let 组件默认属性 = item.组件默认属性
 
@@ -374,9 +374,9 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
         break
       }
     }
-    新属性.组件名称 = uiname + 'CustomComponent'
+    新属性.componentName = uiname + 'CustomComponent'
     新属性.自定义组件名称 = 组件名称
-    新属性.名称 = k
+    新属性.name = k
     新属性.text= k
     新属性.HTML = 组件html
     store.当前拖拽组件数据 = 新属性
@@ -434,8 +434,8 @@ function 拖拽开始(event, 组件名称, uiName) {
   let newName = te('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
   let k = store.获取索引(newName)
   新属性.id = store.获取随机id()
-  新属性.组件名称 = 组件名称
-  新属性.名称 = k
+  新属性.componentName = 组件名称
+  新属性.name = k
   if (新属性.hasOwnProperty("text")) {
     新属性.text= k
   }
@@ -443,10 +443,10 @@ function 拖拽开始(event, 组件名称, uiName) {
     新属性.text = k
   }
   if (新属性.hasOwnProperty("内容")) {
-    新属性text = k
+    新属性.text = k
   }
   //把ui加上前缀比如 el
-  新属性.组件名称 = uiName + 组件名称
+  新属性.componentName = uiName + 组件名称
 
   console.log("当前组件名称", 组件名称)
 
@@ -468,7 +468,7 @@ function 拖拽开始(event, 组件名称, uiName) {
     let id = 新属性.id
     for (var i = 0; i < 新属性.childComponents.length; i++) {
       新属性.childComponents[i].id = store.获取随机id()
-      新属性.childComponents[i].名称 = store.获取索引(新属性.childComponents[i].名称)
+      新属性.childComponents[i].name = store.获取索引(新属性.childComponents[i].name)
       新属性.childComponents[i].pid = id
       //检查 新属性.子组件[i].text是否存在 如果存在 则修改
       if (新属性.childComponents[i].hasOwnProperty("text")) {

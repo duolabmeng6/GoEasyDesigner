@@ -25,7 +25,7 @@
     <el-row v-for="(item, index) in props.item.childComponents" style="margin-bottom: 10px">
       <el-col :span="8">
         <el-input
-            v-model="item.名称"
+            v-model="item.name"
             placeholder=""
         />
 
@@ -81,7 +81,7 @@ let eventName = ref([
 const handleSelectChange = function () {
   let a = 事件索引.value
   const Name = 事件名称.value[a];
-  console.log('添加事件被选择', Name + props.item.名称);
+  console.log('添加事件被选择', Name + props.item.name);
   事件索引.value = 0
   emits("添加事件被选择", Name, props.item);
 }

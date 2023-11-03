@@ -25,7 +25,7 @@
   >
     <div
         v-show="item.visible || item.visible"
-        :id="item.名称"
+        :id="item.name"
         :class="{ 'disabled': item.disable || item.disable }"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
         :style="{
@@ -45,7 +45,13 @@
         @click.stop="鼠标按下($event,item)"
 
     >
-      <template v-if="item.组件名称=='elContainer'">
+
+      <template v-if="item.componentName == 'Window'">
+        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
+                   :item="subItem"/>
+      </template>
+
+      <template v-if="item.componentName=='elContainer'">
         <template v-if="item.childComponents.length === 0">
           <div style="width: 100%;
                        background: rgba(10,19,37,.05);
@@ -57,21 +63,16 @@
                       align-items: center;
                       pointer-events: none;
 ">
-            {{ item.名称 ? item.名称 : 'ContentArea' }}
+            {{ item.name ? item.name : 'ContentArea' }}
           </div>
         </template>
         <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
                    :item="subItem"/>
       </template>
       <template v-else>
-        <component :is="item.组件名称" :item="item" />
+        <component :is="item.componentName" :item="item" />
       </template>
 
-      <template v-if="item.组件名称 == 'Window'">
-        <component :is="item.组件名称" :item="item"/>
-        <component is="RenderDesignComponent" v-for="(subItem, subIndex) in item.childComponents" :key="subIndex"
-                   :item="subItem"/>
-      </template>
     </div>
   </div>
 </template>
@@ -292,7 +293,7 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
 
     } else {
       if (检查放置目标是否为自身组件的子组件(item, 对象名称)) {
-        console.log("当前对象名称", 对象名称, "当前组件名称", item.名称)
+        console.log("当前对象名称", 对象名称, "当前组件名称", item.name)
         return true
       }
     }

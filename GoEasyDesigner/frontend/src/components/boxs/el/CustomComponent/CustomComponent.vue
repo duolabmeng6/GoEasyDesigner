@@ -31,7 +31,7 @@ async function loadComponent() {
   const Vue = await import('vue');
 
 
-  let ComponentName = "/" + item.名称 + "Component.vue";
+  let ComponentName = "/" + item.name + "Component.vue";
   const options = {
     moduleCache: {vue: Vue},
     async getFile(url) {

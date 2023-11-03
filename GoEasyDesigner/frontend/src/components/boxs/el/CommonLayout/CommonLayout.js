@@ -11,8 +11,8 @@ export default {
     layoutMethod: "header-main",
     childComponents: [
         {
-            组件名称: "elContainer",
-            名称: "ContentAreaHeader",
+            componentName: "elContainer",
+            name: "ContentAreaHeader",
             area: "header",
             top: "0",
             left: "0",
@@ -30,8 +30,8 @@ export default {
         },
 
         {
-            组件名称: "elContainer",
-            名称: "ContentAreaMain",
+            componentName: "elContainer",
+            name: "ContentAreaMain",
             area: "main",
             top: "0",
             left: "0",
@@ -49,8 +49,8 @@ export default {
         },
 
         {
-            组件名称: "elContainer",
-            名称: "ContentAreaFooter",
+            componentName: "elContainer",
+            name: "ContentAreaFooter",
             area: "footer",
 
             top: "0",
@@ -69,8 +69,8 @@ export default {
         },
 
         {
-            组件名称: "elContainer",
-            名称: "ContentAreaAside",
+            componentName: "elContainer",
+            name: "ContentAreaAside",
             area: "aside",
             top: "0",
             left: "0",

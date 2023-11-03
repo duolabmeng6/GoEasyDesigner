@@ -309,10 +309,10 @@ function uiDragStart(event, 组件名称, uiName) {
     }
   }
 
-  新属性.组件名称 = 组件名称
+  新属性.componentName = 组件名称
   新属性.名称 = 组件名称 + k
   新属性.标题 = 组件名称 + k
-  新属性.组件名称 = uiName + 组件名称
+  新属性.componentName = uiName + 组件名称
 
   if (组件名称 == "按钮") {
   }

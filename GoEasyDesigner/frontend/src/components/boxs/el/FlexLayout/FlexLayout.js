@@ -14,8 +14,8 @@ export default {
     justify: "start",
     childComponents: [
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",
@@ -32,8 +32,8 @@ export default {
             childComponents: []
         },
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",
@@ -50,8 +50,8 @@ export default {
             childComponents: []
         },
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             top: "0",
             left: "0",
             width: "100%",

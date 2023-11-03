@@ -15,8 +15,8 @@ export default {
 
     childComponents: [
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             text: "tab",
             top: "0",
             left: "0",
@@ -31,8 +31,8 @@ export default {
             childComponents: []
         },
         {
-            组件名称: "elContainer",
-            名称: "ContentArea",
+            componentName: "elContainer",
+            name: "ContentArea",
             text: "tab",
             top: "0",
             left: "0",

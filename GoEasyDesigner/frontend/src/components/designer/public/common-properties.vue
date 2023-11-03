@@ -1,6 +1,6 @@
 <template>
   <el-form-item :label="$t('attr.name')" >
-    <el-input v-model="props.item.名称"/>
+    <el-input v-model="props.item.name"/>
   </el-form-item>
   <el-form-item :label="$t('attr.top')">
     <el-autocomplete

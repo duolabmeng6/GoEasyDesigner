@@ -12,8 +12,8 @@ const keywordMappings = {
         "label": "ck窗口"
     },
     "zjmc": {
-        "insertText": "组件名称",
-        "label": "zjmc组件名称"
+        "insertText": "componentName",
+        "label": "zjmccomponentName"
     },
     "bt": {
         "insertText": "标题",

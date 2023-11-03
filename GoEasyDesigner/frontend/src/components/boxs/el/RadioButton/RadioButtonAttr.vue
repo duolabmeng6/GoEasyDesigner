@@ -82,7 +82,7 @@ function 删除(value) {
 }
 
 function 增加() {
-  let k = store.获取索引(props.item.名称 + "options")
+  let k = store.获取索引(props.item.name + "options")
 
   props.item.options.push({"label": "标签" + k, "value": k});
 }
