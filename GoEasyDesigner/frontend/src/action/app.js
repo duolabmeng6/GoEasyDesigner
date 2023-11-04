@@ -19,7 +19,6 @@ appAction.init = function () {
     appAction.store = useAppStore()
     store = useAppStore()
     t = useI18n().t
-
 }
 
 appAction.新建 = function () {

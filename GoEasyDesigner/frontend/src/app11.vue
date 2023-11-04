@@ -2,7 +2,7 @@
 
   <div class="app" style="margin: 0px 4px">
     <div class="头部 "></div>
-    <div class="属性框 clear-select" id="left">
+    <div id="left" class="属性框 clear-select">
 
       <el-tabs style="height: 100%" type="border-card">
         <DraggableDivider :target-element-id="'left'"></DraggableDivider>
@@ -26,17 +26,22 @@
           </div>
         </el-tab-pane>
         <el-tab-pane :label="$t('app.support_library')">
-          <component is="支持库"/>
+          <div id="tabLeftSuper" style="width: 100%;overflow: auto">
+            <component is="支持库"/>
+          </div>
         </el-tab-pane>
         <el-tab-pane :label="$t('app.project_management')">
-          <component is="项目管理"/>
+          <div id="tabLeftProject" style="width: 100%;overflow: auto">
+            <component is="项目管理"/>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div class="设计区域">
+    <div class="设计区域" id="tabMainVal" ref="tabMainVal">
       <el-col :span="24" style="height: 100%">
-        <el-tabs id="tabMainVal" ref="tabMainVal" v-model="store.选择夹_中间现行选中项" style="height: 100%" tab-position="top" type="border-card">
-          <el-tab-pane :label="$t('app.design')">
+        <el-tabs  v-model="store.选择夹_中间现行选中项" style="height: 100%"
+                 tab-position="top" type="border-card">
+          <el-tab-pane :label="$t('app.design')" style="overflow: auto">
             <div id="designer" style="position: relative;    margin: 8px;"
             >
               <component is="RenderDesignComponent" v-for="(item, index) in store.list" :key="index" :item="item"/>
@@ -52,7 +57,7 @@
         </el-tabs>
       </el-col>
     </div>
-    <div class="工具箱 clear-select" id="right">
+    <div id="right" class="工具箱 clear-select">
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <DraggableDivider :target-element-id="'right'" direction="left"></DraggableDivider>
 
@@ -89,7 +94,9 @@
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
-                    {{ $te('componentName.' + item.componentName) ? $t('componentName.' + item.componentName) : item.componentName }}
+                    {{
+                      $te('componentName.' + item.componentName) ? $t('componentName.' + item.componentName) : item.componentName
+                    }}
 
                   </el-button>
                 </el-col>
@@ -101,7 +108,7 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div class="调试信息" style="position: relative" id="footer">
+    <div id="footer" class="调试信息" style="position: relative">
       <DraggableDivider :target-element-id="'footer'" direction="top"></DraggableDivider>
 
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
@@ -144,7 +151,10 @@
           <el-dropdown style="
 ">
             <el-button type="">
-              <el-icon><Switch /></el-icon> File
+              <el-icon>
+                <Switch/>
+              </el-icon>
+              File
               <el-icon class="el-icon--right">
                 <arrow-down/>
               </el-icon>
@@ -157,30 +167,36 @@
                 <el-dropdown-item @click="appAction.帮助()">{{ $t('app.help') }}</el-dropdown-item>
                 <el-dropdown-item @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-dropdown-item>
                 <el-dropdown-item @click="e => store.显示项目配置对话框 = true">
-                  {{ $t('app.projectConfig') }}</el-dropdown-item>
+                  {{ $t('app.projectConfig') }}
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
 
-          <el-button-group class="" >
+          <el-button-group class="">
             <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
             <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
             <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}
             </el-button>
-            <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{ $t('app.downloadClient') }}
+            <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
+                $t('app.downloadClient')
+              }}
             </el-button>
           </el-button-group>
         </el-col>
-        <el-col  :span="4" >
+        <el-col :span="4">
 
           <el-dropdown style="
     position: absolute;
     right: 0;
 ">
             <el-button type="">
-              <el-icon><Switch /></el-icon> {{ locale }}
+              <el-icon>
+                <Switch/>
+              </el-icon>
+              {{ locale }}
               <el-icon class="el-icon--right">
                 <arrow-down/>
               </el-icon>
@@ -212,7 +228,7 @@
 import {inject, nextTick, onMounted, ref} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import {ElMessage} from "element-plus";
-import {Coin, Edit, Help, Key, Open, Tools,Switch} from "@element-plus/icons-vue";
+import {Coin, Edit, Help, Key, Open, Tools, Switch} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app.js';
 
 import {E保存, E取配置信息} from "../wailsjs/go/main/App";
@@ -226,12 +242,12 @@ const scrollContainer = ref(null);
 import {useI18n} from "vue-i18n";
 import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 
-const {t,te, availableLocales: languages, locale} = useI18n();
+const {t, te, availableLocales: languages, locale} = useI18n();
 
 //读取本地存储
 if (localStorage.getItem("locale")) {
   locale.value = localStorage.getItem("locale");
-}else{
+} else {
   localStorage.setItem("locale", 'English');
 }
 
@@ -281,19 +297,20 @@ function 版本号自动检测() {
 // const tabFooterVal = ref('0');
 // const tabMainVal = ref(null)
 const tabContentHight = ref(0);
+
 async function ReSize() {
   await nextTick()
-  // console.log(tabMainVal)
-  // console.log(tabMainVal.clientHeight)
   let tabMainVal = document.getElementById("tabMainVal")
   let contentHeight = tabMainVal.clientHeight
-  let headerHeight = tabMainVal.querySelector('.el-tabs__header').clientHeight
-  // console.log("headerHeight", headerHeight)
-  // console.log("contentHeight", contentHeight)
-  tabContentHight.value = (contentHeight - headerHeight - 16) + 'px'
-  tabMainVal.querySelector('#designer').style.height = tabContentHight.value
-  // tabMainRef.value.querySelector('.t-tabs__content').style.height = (contentHeight - headerHeight) + 'px'
+  let headerHeight = document.querySelector('#tabMainVal > div > div > div.el-tabs__header.is-top').clientHeight
+  console.log("headerHeight", headerHeight)
+  console.log("contentHeight", contentHeight)
+  tabContentHight.value = contentHeight - headerHeight
+  // console.log("new contentHeight", tabContentHight.value)
 
+  tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
+  document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
+  document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
 }
 
 onMounted(() => {
@@ -321,10 +338,14 @@ onMounted(() => {
 
   setTimeout(() => {
     store.bodyLoaded = true
+
   }, 200)
   版本号自动检测()
-
+  setTimeout(() => {
+    ReSize()
+  }, 2000)
   ReSize()
+
   window.addEventListener('resize', function () {
     console.log("重新计算高度")
     ReSize()
@@ -377,7 +398,7 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
     新属性.componentName = uiname + 'CustomComponent'
     新属性.自定义组件名称 = 组件名称
     新属性.name = k
-    新属性.text= k
+    新属性.text = k
     新属性.HTML = 组件html
     store.当前拖拽组件数据 = 新属性
     // console.log("自定义组件创建=============", JSON.stringify(新属性))
@@ -437,7 +458,7 @@ function 拖拽开始(event, 组件名称, uiName) {
   新属性.componentName = 组件名称
   新属性.name = k
   if (新属性.hasOwnProperty("text")) {
-    新属性.text= k
+    新属性.text = k
   }
   if (新属性.hasOwnProperty("text")) {
     新属性.text = k
@@ -472,7 +493,7 @@ function 拖拽开始(event, 组件名称, uiName) {
       新属性.childComponents[i].pid = id
       //检查 新属性.子组件[i].text是否存在 如果存在 则修改
       if (新属性.childComponents[i].hasOwnProperty("text")) {
-        新属性.childComponents[i].text= store.获取索引(新属性.childComponents[i].text)
+        新属性.childComponents[i].text = store.获取索引(新属性.childComponents[i].text)
       }
     }
 

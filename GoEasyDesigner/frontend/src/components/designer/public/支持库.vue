@@ -1,11 +1,7 @@
 <template>
-  <div>
-    <el-tree
-        :data="store.支持库列表"
-
-
-        style="overflow: auto; height: 500px" @node-click="handleNodeClick"/>
-  </div>
+  <el-tree
+      :data="store.支持库列表"
+      @node-click="handleNodeClick"/>
 
 </template>
 
