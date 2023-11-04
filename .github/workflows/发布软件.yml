@@ -19,7 +19,7 @@ jobs:
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
-      newBody: ${{ steps.setEnv.outputs.newBody }}
+      newBody: ${{ steps.jobs_v.outputs.newBody }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -33,10 +33,12 @@ jobs:
           chmod 777 ./gitLogSum
           ./gitLogSum > updateLog.md
           cat updateLog.md
-          echo "newBody=$(cat updateLog.md)" >> $GITHUB_ENV
+          echo "newBody=$(cat updateLog.md)" >> $GITHUB_OUTPUT
 
       - name: 检查是否 "发布"
         run: |
+          echo "New Body: ${{ steps.jobs_v.outputs.newBody }}"
+          
           latest_commit_message=$(git log -1 --pretty=%B)
           if [[ $latest_commit_message == *"发布"* ]]; then
             echo "找到发布关键字继续工作流"
@@ -56,7 +58,6 @@ jobs:
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
-          echo "New Body: ${{ steps.setOutput.outputs.newBody }}"
   jobs_macos:
     # 暂停
     #if: false
