@@ -19,26 +19,10 @@ jobs:
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.mmp.outputs.body }} # 版本变更内容
-      newBody: ${{ steps.jobs_v.outputs.newBody }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-          fetch-depth: 0
-      - name: 更新描述文件
-        id: mmp
-        shell: bash
-        run: |
-          pwd
-          cd ./citool/gitLogSum/
-          chmod 777 ./gitLogSum
-          ./gitLogSum > updateLog.md
-          cat updateLog.md
-          echo "SELECTED_COLOR=green" >> "$GITHUB_OUTPUT"
-      - name: Get color
-        env:
-          SELECTED_COLOR: ${{ steps.mmp.outputs.SELECTED_COLOR }}
-        run: echo "The selected color is $SELECTED_COLOR"
       - name: 检查是否 "发布"
         run: |
           echo "New Body: ${{ steps.jobs_v.outputs.newBody }}"
@@ -194,7 +178,8 @@ jobs:
 
 
   jobs4:
-    needs: [ jobs_v,jobs_macos,jobs_window ]
+#    needs: [ jobs_v,jobs_macos,jobs_window ]
+    needs: [ jobs_v ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
@@ -202,6 +187,10 @@ jobs:
       body: ${{ needs.jobs_v.outputs.body }}
       newBody: ${{ needs.jobs_v.outputs.newBody }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
       - name: 下载产物
         id: download
         uses: actions/download-artifact@v3
@@ -212,6 +201,12 @@ jobs:
           echo ${{ format('version {0}', env.version ) }}
           echo ${{steps.download.outputs.download-path}}
           ls -R
+      - name: 检查是否 "发布"
+        run: |
+          cd ./citool/gitLogSum/
+          chmod 777 ./gitLogSum
+          ./gitLogSum > updateLog.md
+          cat updateLog.md
 
       - name: 发布文件
         uses: ncipollo/release-action@v1
@@ -221,6 +216,6 @@ jobs:
           #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
-          body: ${{ env.newBody }} # 输出的内容
+          bodyFile: './citool/gitLogSum/updateLog.md'
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
 
