@@ -8,7 +8,7 @@
         <DraggableDivider :target-element-id="'left'"></DraggableDivider>
 
         <el-tab-pane :label="$t('app.Attribute')" style="height: 100%;">
-          <div class="app2" style="margin: 8px 4px">
+          <div id="tabLeftAttr" class="app2" style="margin: 8px 4px">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
               <el-tree-select
                   v-model="store.当前组件索引"
@@ -37,9 +37,9 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div class="设计区域" id="tabMainVal" ref="tabMainVal">
+    <div id="tabMainVal" ref="tabMainVal" class="设计区域">
       <el-col :span="24" style="height: 100%">
-        <el-tabs  v-model="store.选择夹_中间现行选中项" style="height: 100%"
+        <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%"
                  tab-position="top" type="border-card">
           <el-tab-pane :label="$t('app.design')" style="overflow: auto">
             <div id="designer" style="position: relative;    margin: 8px;"
@@ -311,6 +311,9 @@ async function ReSize() {
   tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
   document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
   document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
+  document.querySelector('#tabLeftAttr').style.height = tabContentHight.value - 16 + 'px'
+
+
 }
 
 onMounted(() => {
@@ -343,7 +346,7 @@ onMounted(() => {
   版本号自动检测()
   setTimeout(() => {
     ReSize()
-  }, 2000)
+  }, 1000)
   ReSize()
 
   window.addEventListener('resize', function () {
