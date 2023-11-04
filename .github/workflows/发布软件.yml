@@ -19,7 +19,7 @@ jobs:
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
-      newBody: ${{ steps.setOutput.outputs.newBody }}
+      newBody: ${{ steps.setEnv.outputs.newBody }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -33,7 +33,7 @@ jobs:
           chmod 777 ./gitLogSum
           ./gitLogSum > updateLog.md
           cat updateLog.md
-          echo "::set-output name=newBody::$(cat updateLog.md)"
+          echo "newBody=$(cat updateLog.md)" >> $GITHUB_ENV
 
       - name: 检查是否 "发布"
         run: |
