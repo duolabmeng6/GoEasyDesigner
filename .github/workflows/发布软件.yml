@@ -33,8 +33,9 @@ jobs:
           chmod 777 ./gitLogSum
           ./gitLogSum > updateLog.md
           cat updateLog.md
-          echo "newBody=$(cat updateLog.md)" >> $GITHUB_OUTPUT
-
+          newBody=$(cat updateLog.md | sed 's/\\/\\\\/g; s/"/\\"/g')
+          echo "newBody=$newBody" >> $GITHUB_OUTPUT
+          
       - name: 检查是否 "发布"
         run: |
           echo "New Body: ${{ steps.jobs_v.outputs.newBody }}"
