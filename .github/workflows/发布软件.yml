@@ -35,7 +35,7 @@ jobs:
       - name: 更新描述文件
         run: |
           pwd
-          ls
+          git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD
           cd ./citool/gitLogSum/
           go run gitLogSum.go > updateLog.md
           cat updateLog.md

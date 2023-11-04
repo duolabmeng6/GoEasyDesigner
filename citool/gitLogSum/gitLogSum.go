@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		fmt.Printf("Command failed with error: %v\n", err)
 		fmt.Printf("Combined Output:\n%s\n", out)
-		panic(err)
+		panic(out)
 	}
 	// 输出结果
 	//println(string(out))
