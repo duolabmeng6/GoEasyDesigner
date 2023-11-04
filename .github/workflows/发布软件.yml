@@ -28,16 +28,9 @@ jobs:
         shell: bash
         run: |
           pwd
+          git log -n 10
           git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' -n 10
-          git describe --tags --abbrev=0
-          git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD
-          
-          cd ./citool/gitLogSum/
-          chmod 777 ./gitLogSum
-          ./gitLogSum > updateLog.md
-          cat updateLog.md
-          echo "::set-output name=newBody::$(cat updateLog.md)"
-          
+
 
       - name: 检查是否 "发布"
         run: |
