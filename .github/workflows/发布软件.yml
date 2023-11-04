@@ -19,10 +19,26 @@ jobs:
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
+      new_body: ${{ steps.create_version.outputs.new_body }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: 安装 go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '^1.21.0'
+          cache-dependency-path: |
+            **/go.sum
+            **/go.mod
+          go-version-file: 'go.mod'
+      - name: 更新描述文件
+        run: |
+          cd ./citool/gitLogSum/gitLogSum.go
+          go run gitLogSum.go > updateLog.md
+          cat updateLog.md
+          echo "::set-output name=new_body::$(cat updateLog.md)"
+
       - name: 检查是否 "发布"
         run: |
           latest_commit_message=$(git log -1 --pretty=%B)
@@ -32,7 +48,6 @@ jobs:
             echo "没有找到发布关键字停止工作流"
             exit 1  # 停止工作流程
           fi
-          
       - uses: release-drafter/release-drafter@v5
         id: create_version
         with:
@@ -40,6 +55,8 @@ jobs:
           disable-autolabeler: false # 禁止自动标签
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
@@ -53,6 +70,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
+      new_body: ${{ needs.jobs_v.outputs.new_body }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -121,6 +139,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
+      new_body: ${{ needs.jobs_v.outputs.new_body }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -178,6 +197,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
+      new_body: ${{ needs.jobs_v.outputs.new_body }}
     steps:
       - name: 下载产物
         id: download
@@ -198,6 +218,6 @@ jobs:
           #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
-          body: ${{ env.body }} # 输出的内容
+          body: ${{ env.new_body }} # 输出的内容
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
 
