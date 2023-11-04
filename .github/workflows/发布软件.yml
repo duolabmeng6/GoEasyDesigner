@@ -34,7 +34,9 @@ jobs:
           go-version-file: 'go.mod'
       - name: 更新描述文件
         run: |
-          cd ./citool/gitLogSum/gitLogSum.go
+          pwd
+          ls
+          cd ./citool/gitLogSum/
           go run gitLogSum.go > updateLog.md
           cat updateLog.md
           echo "::set-output name=new_body::$(cat updateLog.md)"
