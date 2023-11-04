@@ -34,7 +34,7 @@ jobs:
           ./gitLogSum > updateLog.md
           cat updateLog.md
           newBody=$(cat updateLog.md | base64)
-          echo "newBody=$newBody" >> $GITHUB_OUTPUT
+          echo "newBody=$newBody" >> "$GITHUB_OUTPUT"
 
       - name: 检查是否 "发布"
         run: |
