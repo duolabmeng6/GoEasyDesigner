@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	cmdStr := "sh -c 'git log --pretty=format:\"%an|%s|%h|%ad|%H\" --date=format:\"%Y-%m-%d %H:%M\" $(git describe --tags --abbrev=0)^..HEAD'"
-	cmd := exec.Command("bash", "-c", cmdStr)
+	cmdStr := "git log --pretty=format:\"%an|%s|%h|%ad|%H\" --date=format:\"%Y-%m-%d %H:%M\" $(git describe --tags --abbrev=0)^..HEAD"
+	cmd := exec.Command("sh", "-c", cmdStr)
 
 	// 执行命令并返回结果（输出到控制台）
 	out, err := cmd.CombinedOutput()
