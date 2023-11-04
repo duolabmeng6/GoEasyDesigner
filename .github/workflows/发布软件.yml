@@ -19,27 +19,19 @@ jobs:
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
-      new_body: ${{ steps.create_version.outputs.new_body }}
+      newBody: ${{ steps.setOutput.outputs.newBody }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-      - name: 安装 go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '^1.21.0'
-          cache-dependency-path: |
-            **/go.sum
-            **/go.mod
-          go-version-file: 'go.mod'
       - name: 更新描述文件
         run: |
           pwd
-          git log --pretty=format:"%an | %s | %h | %ad | %H" --date=format:'%Y-%m-%d %H:%M' $(git describe --tags --abbrev=0)^..HEAD
           cd ./citool/gitLogSum/
-          go run gitLogSum.go > updateLog.md
+          chmod 777 ./gitLogSum
+          ./gitLogSum > updateLog.md
           cat updateLog.md
-          echo "::set-output name=new_body::$(cat updateLog.md)"
+          echo "::set-output name=newBody::$(cat updateLog.md)"
 
       - name: 检查是否 "发布"
         run: |
@@ -62,7 +54,7 @@ jobs:
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
-
+          echo "New Body: ${{ steps.setOutput.outputs.newBody }}"
   jobs_macos:
     # 暂停
     #if: false
@@ -72,7 +64,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
-      new_body: ${{ needs.jobs_v.outputs.new_body }}
+      newBody: ${{ needs.jobs_v.outputs.newBody }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -88,6 +80,8 @@ jobs:
         run: |
           pwd
           ls -la
+          echo "New Body: ${{ env.newBody }}"
+
       - name: 安装 go
         uses: actions/setup-go@v4
         with:
@@ -141,7 +135,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
-      new_body: ${{ needs.jobs_v.outputs.new_body }}
+      newBody: ${{ needs.jobs_v.outputs.newBody }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -199,7 +193,7 @@ jobs:
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.body }}
-      new_body: ${{ needs.jobs_v.outputs.new_body }}
+      newBody: ${{ needs.jobs_v.outputs.newBody }}
     steps:
       - name: 下载产物
         id: download
@@ -220,6 +214,6 @@ jobs:
           #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
-          body: ${{ env.new_body }} # 输出的内容
+          body: ${{ env.newBody }} # 输出的内容
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
 
