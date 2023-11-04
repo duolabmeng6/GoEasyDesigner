@@ -178,8 +178,7 @@ jobs:
 
 
   jobs4:
-#    needs: [ jobs_v,jobs_macos,jobs_window ]
-    needs: [ jobs_v ]
+    needs: [ jobs_v,jobs_macos,jobs_window ]
     name: 发布版本
     runs-on: ubuntu-latest
     env:
