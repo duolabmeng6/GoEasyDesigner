@@ -35,7 +35,6 @@ jobs:
           ./gitLogSum > updateLog.md
           cat updateLog.md
           echo "SELECTED_COLOR=green" >> "$GITHUB_OUTPUT"
-          echo "newBody=$(cat updateLog.md | base64)" >> "$GITHUB_OUTPUT"
       - name: Get color
         env:
           SELECTED_COLOR: ${{ steps.mmp.outputs.SELECTED_COLOR }}
