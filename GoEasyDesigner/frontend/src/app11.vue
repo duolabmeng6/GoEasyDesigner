@@ -108,7 +108,7 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div id="footer" class="调试信息" style="position: relative">
+    <div id="footer" class="调试信息" style="position: relative;min-height: 200px">
       <DraggableDivider :target-element-id="'footer'" direction="top"></DraggableDivider>
 
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
@@ -311,7 +311,7 @@ async function ReSize() {
   tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
   document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
   document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
-  document.querySelector('#tabLeftAttr').style.height = tabContentHight.value - 16 + 'px'
+  // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
 
 
 }
