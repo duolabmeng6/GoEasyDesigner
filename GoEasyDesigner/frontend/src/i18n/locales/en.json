@@ -11,7 +11,7 @@
     "edit_code": "edit code",
     "environmentCheck": "Environment Check",
     "help": "Help",
-    "helpDesc": "Window projects need to be created manually.\n\n<br>\n\nOnly the design interface can be saved in the browser.\n\n<br>\n\nIt is recommended to use the client to save it more simply. At present, you still need to install the go and node environment by yourself.",
+    "helpDesc": "Window projects need to be created manually.\n wails init -n \"go-easy-demo\" -t https://github.com/duolabmeng6/wails-template-vue-go-easy \n<br>\n\nOnly the design interface can be saved in the browser.\n\n<br>\n\nIt is recommended to use the client to save it more simply. At present, you still need to install the go and node environment by yourself.",
     "help_info": "Help information",
     "inOperation": "in operation...",
     "language": "language",

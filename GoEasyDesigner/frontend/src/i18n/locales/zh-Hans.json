@@ -11,7 +11,7 @@
     "edit_code": "编辑代码",
     "environmentCheck": "运行环境检测",
     "help": "帮助",
-    "helpDesc": "            窗口项目需要手动创建\n            <br>\n            在浏览器中仅可保存设计界面\n            <br>\n            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境",
+    "helpDesc": "窗口项目需要手动创建\n     wails init -n \"go-easy-demo\" -t https://github.com/duolabmeng6/wails-template-vue-go-easy       <br>\n            在浏览器中仅可保存设计界面\n            <br>\n            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境",
     "help_info": "帮助信息",
     "inOperation": "运行中...",
     "language": "语言",
