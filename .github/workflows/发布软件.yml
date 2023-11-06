@@ -17,16 +17,15 @@ jobs:
     name: 构建版本号和变更信息
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.create_version.outputs.tag_name }} # 版本号
-      body: ${{ steps.mmp.outputs.body }} # 版本变更内容
+      version: ${{ steps.create_version.outputs.NewVersion }}  # 版本号
+      body: ${{ steps.create_body.outputs.Body }} # 版本变更内容
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
       - name: 检查是否 "发布"
         run: |
-          echo "New Body: ${{ steps.jobs_v.outputs.newBody }}"
-          
           latest_commit_message=$(git log -1 --pretty=%B)
           if [[ $latest_commit_message == *"发布"* ]]; then
             echo "找到发布关键字继续工作流"
@@ -34,18 +33,23 @@ jobs:
             echo "没有找到发布关键字停止工作流"
             exit 1  # 停止工作流程
           fi
-      - uses: release-drafter/release-drafter@v5
+      - name: 递增版本号
         id: create_version
+        uses: duolabmeng6/action-autotag-python@master
         with:
-          config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
-          disable-autolabeler: false # 禁止自动标签
-        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 获取更新日志
+        id: create_body
+        uses: duolabmeng6/action-Releases-log@main
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: 查看变量
+          FILE: .github/releasesText.md
+          KEYS: bug,改进,优化,新增,删除
+      - name: 查看版本号和更新日志
         run: |
-          echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
+          echo ${{ format('version={0}', steps.create_version.outputs.NewVersion ) }}
+          echo "${{ steps.create_body.outputs.Body }}"
+
   jobs_macos:
     # 暂停
     #if: false
@@ -54,8 +58,7 @@ jobs:
     runs-on: macos-12
     env:
       version: ${{ needs.jobs_v.outputs.version }}
-      body: ${{ needs.jobs_v.outputs.body }}
-      newBody: ${{ needs.jobs_v.outputs.newBody }}
+      body: ${{ needs.jobs_v.outputs.Body }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -71,7 +74,7 @@ jobs:
         run: |
           pwd
           ls -la
-          echo "New Body: ${{ env.newBody }}"
+          echo "New Body: ${{ env.body }}"
 
       - name: 安装 go
         uses: actions/setup-go@v4
@@ -125,8 +128,7 @@ jobs:
     runs-on: windows-2022
     env:
       version: ${{ needs.jobs_v.outputs.version }}
-      body: ${{ needs.jobs_v.outputs.body }}
-      newBody: ${{ needs.jobs_v.outputs.newBody }}
+      body: ${{ needs.jobs_v.outputs.Body }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -183,8 +185,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       version: ${{ needs.jobs_v.outputs.version }}
-      body: ${{ needs.jobs_v.outputs.body }}
-      newBody: ${{ needs.jobs_v.outputs.newBody }}
+      body: ${{ needs.jobs_v.outputs.Body }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -200,13 +201,6 @@ jobs:
           echo ${{ format('version {0}', env.version ) }}
           echo ${{steps.download.outputs.download-path}}
           ls -R
-      - name: 检查是否 "发布"
-        run: |
-          cd ./citool/gitLogSum/
-          chmod 777 ./gitLogSum
-          ./gitLogSum > updateLog.md
-          cat updateLog.md
-
       - name: 发布文件
         uses: ncipollo/release-action@v1
         with:
@@ -215,6 +209,6 @@ jobs:
           #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
           tag: ${{ env.version }} # 版本号 v0.1.0
-          bodyFile: './citool/gitLogSum/updateLog.md'
+          body: ${{ env.body }}
           artifacts: "macos/*.zip,macos/*.dmg,window/*.exe,window/*.zip"
 
