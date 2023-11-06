@@ -62,7 +62,8 @@
         <DraggableDivider :target-element-id="'right'" direction="left"></DraggableDivider>
 
         <el-tab-pane :label="$t('app.components')">
-          <el-collapse accordion model-value="1" style="border: none;padding: 0px 8px">
+
+          <el-collapse accordion v-model="BoxActiveName" style="border: none;padding: 0px 8px">
             <el-collapse-item :title="$t('app.system_components')" name="1">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
@@ -225,7 +226,7 @@
 </template>
 
 <script setup>
-import {inject, nextTick, onMounted, ref} from 'vue';
+import {inject, nextTick, onMounted, ref,watch} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import {ElMessage} from "element-plus";
 import {Coin, Edit, Help, Key, Open, Tools, Switch} from "@element-plus/icons-vue";
@@ -316,6 +317,14 @@ async function ReSize() {
 
 }
 
+const BoxActiveName = ref('1')
+//记录 BoxActiveName 的变化写到本地存储
+watch(BoxActiveName, function BoxActiveNameChange() {
+  localStorage.setItem("BoxActiveName", BoxActiveName.value)
+})
+
+
+
 onMounted(() => {
   store.scrollContainer = scrollContainer.value;
   appAction.init()
@@ -355,6 +364,10 @@ onMounted(() => {
   })
 
   init_tailwindcss()
+  // 恢复
+  if (localStorage.getItem("BoxActiveName")) {
+    BoxActiveName.value = localStorage.getItem("BoxActiveName")
+  }
 })
 
 function init_tailwindcss() {
