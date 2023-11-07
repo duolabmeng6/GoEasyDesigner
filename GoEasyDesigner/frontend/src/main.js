@@ -2,10 +2,10 @@ import './assets/main.css'
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
-import ElementPlus from 'element-plus'
+// import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-import TDesign from 'tdesign-vue-next'
+// import TDesign from 'tdesign-vue-next'
 import 'tdesign-vue-next/es/style/index.css'
 
 import Helper from "./Helper.js"
@@ -193,8 +193,8 @@ app.config.globalProperties.t = i18n.global.t
 
 
 app.use(i18n)
-app.use(TDesign)
-app.use(ElementPlus)
+// app.use(TDesign)
+// app.use(ElementPlus)
 app.mount('#app')
 
 
