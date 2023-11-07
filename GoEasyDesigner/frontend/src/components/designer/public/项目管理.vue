@@ -11,10 +11,10 @@ import {ElMessage} from "element-plus";
 const store = useAppStore()
 
 const handleNodeClick = (data) => {
-  store.当前代码编辑器路径 = data.path
+  store.代码编辑框.路径 = data.path
   E读入文件(data.path ).then((res) => {
     console.log(res)
-    store.代码编辑器内容 = res
+    store.代码编辑器.内容 = res
     store.选择夹_中间现行选中项= "1"
   })
 }

@@ -40,18 +40,22 @@
     <div id="tabMainVal" ref="tabMainVal" class="设计区域">
       <el-col :span="24" style="height: 100%">
         <el-tabs v-model="store.选择夹_中间现行选中项" style="height: 100%"
-                 tab-position="top" type="border-card">
+                 tab-position="top" type="border-card" @tab-change="appAction.设计区域被改变">
           <el-tab-pane :label="$t('app.design')" style="overflow: auto">
             <div id="designer" style="position: relative;    margin: 8px;"
             >
               <component is="RenderDesignComponent" v-for="(item, index) in store.list" :key="index" :item="item"/>
             </div>
           </el-tab-pane>
-          <el-tab-pane :label="$t('app.edit_code')">
-
-            <component is="代码编辑器" v-model:value="store.代码编辑器内容"
+          <el-tab-pane :label="$t('app.edit_code')" style="overflow: auto">
+            <div id="codeEdit" style="position: relative;    margin: 8px;"
+            >
+            <component
+                ref="codeEditorRef"
+                is="代码编辑器" v-model:value="store.代码编辑器.内容"
                        height="100%"
             />
+            </div>
 
           </el-tab-pane>
         </el-tabs>
@@ -226,22 +230,21 @@
 </template>
 
 <script setup>
-import {inject, nextTick, onMounted, ref,watch} from 'vue';
+import {inject, nextTick, onMounted, ref, watch} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import {ElMessage} from "element-plus";
-import {Coin, Edit, Help, Key, Open, Tools, Switch} from "@element-plus/icons-vue";
+import {Help, Key, Switch} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app.js';
 
 import {E保存, E取配置信息} from "../wailsjs/go/main/App";
 import releases_latest from '../public/releases_latest.json'
+import {useI18n} from "vue-i18n";
+import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 
 
 const store = useAppStore()
 store.init()
 const scrollContainer = ref(null);
-
-import {useI18n} from "vue-i18n";
-import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 
 const {t, te, availableLocales: languages, locale} = useI18n();
 
@@ -313,6 +316,7 @@ async function ReSize() {
   document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
   document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
   // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
+  tabMainVal.querySelector('#codeEdit').style.height = tabContentHight.value - 16 + 'px'
 
 
 }
@@ -324,24 +328,21 @@ watch(BoxActiveName, function BoxActiveNameChange() {
 })
 
 
-
-onMounted(() => {
+onMounted(async () => {
   store.scrollContainer = scrollContainer.value;
   appAction.init()
   appAction.新建()
   store.取组件列表()
   store.当前拖拽组件数据 = store.组件通过id查找结构("1")
   try {
-    E取配置信息().then((res) => {
-      res = JSON.parse(res)
-      console.log("取配置信息", res)
-      store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
-      store.项目信息.设计文件路径 = res.设计文件路径
-      if (store.项目信息.设计文件路径 != "") {
-        appAction._打开文件加载界面(store.项目信息.设计文件路径)
-      }
-
-    })
+    let res = await E取配置信息()
+    res = JSON.parse(res)
+    console.log("取配置信息", res)
+    store.项目信息.IDE插件地址 = "http://127.0.0.1:" + res.IDE插件端口号
+    store.项目信息.设计文件路径 = res.设计文件路径
+    if (store.项目信息.设计文件路径 != "") {
+      appAction._打开文件加载界面(store.项目信息.设计文件路径)
+    }
   } catch (e) {
 
   }
@@ -576,14 +577,12 @@ function handleKeyDown(event) {
     }
 
     if (store.项目信息.窗口事件文件路径 != "") {
-      E保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容).then((res) => {
-        console.log(res)
-        ElMessage({
-          message: res,
-          type: 'success',
-          duration: 3000, // 设置显示时间为5秒，单位为毫秒
-        });
-      })
+      appAction.保存设计文件()
+      ElMessage({
+        message: '已保存',
+        type: 'success',
+        duration: 3000, // 设置显示时间为5秒，单位为毫秒
+      });
     }
   }
 }

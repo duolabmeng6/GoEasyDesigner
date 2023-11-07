@@ -26,6 +26,11 @@ export const useAppStore = defineStore('AppStore', {
                 项目管理目录: "",//"win\\",
                 IDE插件地址: "http://127.0.0.1:17810",
             }),
+            代码编辑器: ref({
+                路径: "",
+                文件时间: "",
+                内容: "",
+            }),
             客户端模式: ref(false),
             list: ref(null),
             当前拖拽组件数据: ref(null),
@@ -34,8 +39,6 @@ export const useAppStore = defineStore('AppStore', {
             indexMap: ref({}),
             显示项目配置对话框: ref(false),
             项目文件列表: ref([]),
-            代码编辑器内容: ref(""),
-            当前代码编辑器路径: ref(""),
             选择夹_中间现行选中项: ref("0"),
             支持库列表: ref([]),
             帮助信息: ref("Welcome to use GoEasyDesigner"),
@@ -56,28 +59,31 @@ export const useAppStore = defineStore('AppStore', {
             版本号: "",//github的文件信息
             是否为window系统: true,//github的文件信息
             HistoryManager: HistoryManagerLiving,
+            putPosition: {},
         }
     },
 
     actions: {
-        添加事件被选择(事件名称, 函数名称, item, extData) {
+        添加事件被选择: async function (事件名称, 函数名称, item, extData) {
             let dthis = this;
-            if (this.代码编辑器内容 == "") {
-                this.代码编辑器内容 = 窗口事件代码模板
+            if (this.代码编辑器.内容 == "") {
+                this.代码编辑器.内容 = 窗口事件代码模板
             }
             let code = `item.event_${事件名称} = "${函数名称}"`
             eval(code)
             let ncode = '';
             if (extData == undefined) {
                 ncode = `
-    c.${函数名称} = function () {
+    c.${函数名称} = async function () {
         console.log("${函数名称}")
+        
     }
 `;
             } else {
                 ncode = `
-    c.${函数名称} = ` + extData + ` {
+    c.${函数名称} = async function ` + extData + ` {
         console.log("${函数名称}")
+        
     }
 `;
             }
@@ -91,43 +97,29 @@ export const useAppStore = defineStore('AppStore', {
                     type: 'success',
                     duration: 3000, // 设置显示时间为5秒，单位为毫秒
                 });
-                this.代码编辑器内容 = InsertCode(this.代码编辑器内容, ncode)
+                this.代码编辑器.内容 = InsertCode(this.代码编辑器.内容, ncode)
                 this.选择夹_中间现行选中项 = "1"
+                this.putPosition(ncode)
+
+
                 return;
             }
             //读入 窗口事件 文件内容
-            appAction.保存设计文件()
-            setTimeout(function () {
-                E读入文件(dthis.项目信息.窗口事件文件路径).then((res) => {
-                    dthis.代码编辑器内容 = InsertCode(res, ncode)
-                    dthis.选择夹_中间现行选中项 = "1"
-                    E保存(dthis.项目信息.窗口事件文件路径, dthis.代码编辑器内容).then((res) => {
-                        let 跳转位置 = dthis.代码编辑器内容.indexOf(ncode)
-                        if (跳转位置 != -1) {
-                            console.log("跳转位置", 跳转位置)
-                            E发送跳转代码到ide(
-                                dthis.项目信息.IDE插件地址,
-                                dthis.项目信息.窗口事件文件路径,
-                                跳转位置
-                            )
-                        }
-                    })
-                })
-            }, 100)
+            dthis.代码编辑器.内容 = InsertCode(this.代码编辑器.内容, ncode)
+            dthis.选择夹_中间现行选中项 = "1"
+            this.putPosition(ncode)
 
+            await appAction.保存设计文件()
 
-            // try {
-            //     // 替换 {事件名称} 为 事件名称
-            //     console.log(this.项目信息.窗口事件文件路径)
-            //     E创建函数(this.项目信息.窗口事件文件路径, ncode, this.项目信息.IDE插件地址).then(
-            //         (res) => {
-            //             console.log(res)
-            //         }
-            //     )
-            //     // 保存()
-            // } catch (e) {
-            //     console.log("需要客户端中运行")
-            // }
+            let 跳转位置 = dthis.代码编辑器.内容.indexOf(ncode)
+            if (跳转位置 != -1) {
+                console.log("跳转位置", 跳转位置)
+                E发送跳转代码到ide(
+                    dthis.项目信息.IDE插件地址,
+                    dthis.项目信息.窗口事件文件路径,
+                    跳转位置
+                )
+            }
 
         },
 
@@ -209,7 +201,7 @@ export const useAppStore = defineStore('AppStore', {
 
             return this.当前拖拽组件数据.componentName + "Attr"
         },
-        获取索引(组件名称){
+        获取索引(组件名称) {
             let k = this._获取索引(组件名称)
             //避免名称重复导致后续代码出问题
             for (let i = 0; i < 100; i++) {

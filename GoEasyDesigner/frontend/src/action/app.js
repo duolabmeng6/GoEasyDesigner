@@ -1,8 +1,10 @@
 import {useAppStore} from '@/stores/appStore.js'
+import * as goFc from "../../wailsjs/go/main/App";
 import {
     E保存,
     E保存件对话框,
     E停止命令,
+    E取文件修改时间,
     E打开文件对话框,
     E检查更新,
     E读入文件,
@@ -11,10 +13,38 @@ import {
 import {取父目录, 生成辅助代码} from "@/public";
 import {ElMessage} from "element-plus";
 import {BrowserOpenURL, EventsOn} from "../../wailsjs/runtime";
+// 使用 $refs 来引用滚动容器
+import {useI18n} from "vue-i18n";
 
 export const appAction = {};
 let store = {}; // 我想在这里作类型标注 useAppStore()怎么处理怎么写
 let t = {}
+
+const 代码编辑器类 = {};
+try {
+    EventsOn("文件被修改", function (data) {
+        console.log("文件被修改", data)
+        setTimeout(function () {
+            appAction.检查代码编辑器的内容是否为最新的()
+
+        }, 500)
+    })
+} catch (e) {
+
+}
+代码编辑器类.打开 = async function (文件路径) {
+    store.代码编辑器.路径 = 文件路径
+    store.代码编辑器.内容 = await E读入文件(文件路径)
+    store.代码编辑器.文件时间 = await E取文件修改时间(文件路径)
+    console.log("代码编辑器.文件时间", store.代码编辑器.文件时间)
+    console.log("代码编辑器.路径", store.代码编辑器.路径)
+    goFc.E添加文件监视(文件路径)
+
+    return store.代码编辑器.内容
+}
+
+appAction.代码编辑器操作 = 代码编辑器类
+
 appAction.init = function () {
     appAction.store = useAppStore()
     store = useAppStore()
@@ -44,9 +74,9 @@ appAction.新建 = function () {
 
     appAction.store.list = [创建窗口()]
     appAction.store.indexMap = {}
-    appAction.store.代码编辑器内容 = ""
+    appAction.store.代码编辑器.内容 = ""
 }
-appAction.打开 = function () {
+appAction.打开 = async function () {
     if (appAction.store.客户端模式 == false) {
         const input = document.createElement('input')
         input.type = 'file'
@@ -65,41 +95,39 @@ appAction.打开 = function () {
         input.click()
         return
     }
-    console.log("打开")
-    E打开文件对话框().then((文件路径) => {
-        if (文件路径 == "") {
-            return
-        }
-        appAction._打开文件加载界面(文件路径)
-    })
-}
 
-appAction._打开文件加载界面 = function (filepath) {
+    console.log("打开")
+    let 文件路径 = await E打开文件对话框();
+    if (文件路径 === "") {
+        return
+    }
+    appAction._打开文件加载界面(文件路径)
+}
+appAction._打开项目设计文件 = function (filepath) {
     store.项目信息.设计文件路径 = filepath
     store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/event.js"
     store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/__aux_code.js"
     store.项目信息.项目管理目录 = 取父目录(filepath)
     store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
+}
 
+appAction._打开文件加载界面 = async function (filepath) {
+    appAction._打开项目设计文件(filepath)
 
     console.log("设计文件路径", store.项目信息.设计文件路径)
     console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-    E读入文件(store.项目信息.设计文件路径).then((文件内容) => {
-        // console.log(文件内容)
-        // 初始化界面(文件内容)
-        store.list = JSON.parse(文件内容)
-        store.取组件列表()
+    let 文件内容 = await E读入文件(store.项目信息.设计文件路径)
+    // console.log(文件内容)
 
-    })
-    E读入文件(store.项目信息.窗口事件文件路径).then((res) => {
-        // console.log(res)
-        store.代码编辑器内容 = res
-    })
+    store.list = JSON.parse(文件内容)
+    // await nextTick();
+    store.取组件列表()
+    store.当前拖拽组件数据 = store.组件通过id查找结构("1")
+
+    await appAction.代码编辑器操作.打开(store.项目信息.窗口事件文件路径)
     store.项目管理刷新()
-}
 
-// 使用 $refs 来引用滚动容器
-import {useI18n} from "vue-i18n";
+}
 
 try {
     EventsOn("运行命令", function (data) {
@@ -124,11 +152,10 @@ function 键盘按下(event, index) {
 }
 
 
-appAction.保存设计文件 = function () {
+appAction.保存设计文件 = async function () {
     let njson = JSON.stringify(store.list, null, 2)
-    console.log("???", store)
+    console.log("保存设计文件", store)
     let 辅助代码 = 生成辅助代码(store.list[0].childComponents)
-
 
     if (store.客户端模式 == false) {
         //浏览器打开就发起保存
@@ -147,47 +174,54 @@ appAction.保存设计文件 = function () {
     }
 
     // 客户端直接保存
-    function _保存(p, d) {
+    async function _保存(p, d) {
         d = String(d)
         p = String(p)
-        E保存(p, d)
+        await E保存(p, d)
     }
 
     if (store.项目信息.设计文件路径 == "") {
-        E保存件对话框().then((res) => {
-            if (res == "") {
-                ElMessage({
-                    message: "未选择文件",
-                    type: 'success',
-                    duration: 3000, // 设置显示时间为5秒，单位为毫秒
-                });
-                return
-            }
-
-            store.项目信息.设计文件路径 = res
-            store.项目信息.窗口事件文件路径 = 取父目录(res) + "/event.js"
-            store.项目信息.辅助代码文件路径 = 取父目录(res) + "/__aux_code.js"
-            store.项目信息.项目管理目录 = 取父目录(res)
-            store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(res))))
-
-            store.项目管理刷新()
-
-            console.log("窗口事件文件路径", store.项目信息.窗口事件文件路径)
-            if (store.代码编辑器内容 !== "") {
-                _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
-                _保存(store.项目信息.辅助代码文件路径, 辅助代码)
-            }
-            _保存(store.项目信息.设计文件路径, njson)
-        })
-        return
+        let 设计文件路径 = await E保存件对话框()
+        if (设计文件路径 === "") {
+            ElMessage({message: "未选择文件", type: 'success', duration: 3000});
+            return
+        }
+        appAction._打开项目设计文件(设计文件路径)
     }
-    if (store.代码编辑器内容 !== "") {
-        _保存(store.项目信息.窗口事件文件路径, store.代码编辑器内容)
-        _保存(store.项目信息.辅助代码文件路径, 辅助代码)
+
+    if (store.代码编辑器.内容 !== "") {
+        if (store.代码编辑器.路径 === store.项目信息.窗口事件文件路径) {
+            await _保存(store.项目信息.窗口事件文件路径, store.代码编辑器.内容)
+            store.代码编辑器.文件时间 = await E取文件修改时间(store.项目信息.窗口事件文件路径)
+            console.log("保存后 代码编辑器.文件时间", store.代码编辑器.文件时间)
+        }
+        await _保存(store.项目信息.辅助代码文件路径, 辅助代码)
     }
-    _保存(store.项目信息.设计文件路径, njson)
+    await _保存(store.项目信息.设计文件路径, njson)
 
 }
+appAction.检查代码编辑器的内容是否为最新的 = async function () {
+    if (store.代码编辑器.内容 !== "") {
+        let 文件时间 = await E取文件修改时间(store.项目信息.窗口事件文件路径)
+        console.log("文件时间", 文件时间)
+        console.log("store.代码编辑器.文件时间", store.代码编辑器.文件时间)
+        if (文件时间 > store.代码编辑器.文件时间) {
+            console.log("发现变化代码已更新")
+            appAction.代码编辑器操作.打开(store.项目信息.窗口事件文件路径)
+        } else {
+            console.log("不需要更新")
+        }
+    }
+}
+appAction.设计区域被改变 = function () {
+    // console.log("设计区域被改变",store.选择夹_中间现行选中项 )
+    // if(store.选择夹_中间现行选中项 == "1"){
+    //     appAction.检查代码编辑器的内容是否为最新的()
+    //
+    // }
+
+}
+
 
 appAction.运行 = function () {
     if (store.客户端模式 == false) {

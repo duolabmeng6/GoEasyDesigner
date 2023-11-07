@@ -8,7 +8,11 @@
   />
 </template>
 <script lang="ts" setup>
-import {ref, shallowRef} from 'vue'
+import {defineExpose, shallowRef} from 'vue'
+import {useAppStore} from '@/stores/appStore'
+
+const store = useAppStore()
+
 
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true,
@@ -27,17 +31,49 @@ const MONACO_EDITOR_OPTIONS = {
 
 // const code = ref('function hello() {\n\talert("Hello world!");\n}')
 const editorRef = shallowRef()
-const handleMount = editor => (editorRef.value = editor)
+
+const handleMount = (editor) => {
+  editorRef.value = editor;
+  store.putPosition = putPosition
+};
+
+// 在你的 Vue 组件中的某个方法中执行搜索和跳转操作
+function searchAndJumpToText(searchText) {
+  const editor = editorRef.value; // 获取编辑器实例
+  const model = editor.getModel(); // 获取编辑器的模型
+
+  if (model) {
+    const searchRange = model.getFullModelRange(); // 搜索整个文档范围
+    const match = model.findNextMatch(searchText, searchRange); // 查找匹配文本的位置
+    console.log('match', match)
+    if (match) {
+      const lineNumber = match.range.startLineNumber;
+      editor.revealLineInCenter(lineNumber); // 将匹配的行居中显示
+      editor.setPosition({lineNumber: lineNumber + 3, column: 16});
+    } else {
+      console.log('未找到匹配的文本');
+    }
+  }
+}
 
 
-
-
-
-
-
+function putPosition(搜索文本) {
+  console.log('========putPosition')
+  // editorRef.value.getAction('editor.action.formatDocument').run()
+  setTimeout(() => {
+    // editorRef.value.trigger('keyboard', 'type', { text: 'hello world' });
+    // editorRef.value.setPosition({ lineNumber: 5, column: 10 });
+    searchAndJumpToText(搜索文本)
+    editorRef.value.focus();
+  }, 100);
+}
 
 // your action
 function formatCode() {
   editorRef.value?.getAction('editor.action.formatDocument').run()
 }
+
+defineExpose({
+  putPosition,
+});
 </script>

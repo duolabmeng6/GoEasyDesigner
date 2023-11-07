@@ -59,7 +59,7 @@ function getPosStyle() {
     style.height = "4px"
     style.cursor = "row-resize"
   }
-  console.log("props.direction", props.direction,style)
+  // console.log("props.direction", props.direction,style)
   return style
 }
 

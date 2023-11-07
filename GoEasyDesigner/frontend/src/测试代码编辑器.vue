@@ -1,7 +1,7 @@
 <template>
   <el-button @click="重新生成提示">重新生成提示</el-button>
   <div style="height: 100vh;width: 100vh">
-    <component is="代码编辑器" v-model:value="store.代码编辑器内容"
+    <component is="代码编辑器" v-model:value="store.代码编辑器.内容"
                height="100%"
     />
   </div>
@@ -10,7 +10,7 @@
 import {inject} from 'vue'
 import {useCounterStore} from '@/stores/counter'
 const store = useCounterStore()
-store.代码编辑器内容 = `
+store.代码编辑器.内容 = `
 export function 绑定窗口事件(c, 组件) {
     c.窗口创建完毕 = function () {
         console.log("窗口创建完毕")
