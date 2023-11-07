@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/duolabmeng6/goefun v1.3.6
+	github.com/fsnotify/fsnotify v1.5.4
 	github.com/ncruces/zenity v0.10.10
 	github.com/wailsapp/wails/v2 v2.6.0
 )

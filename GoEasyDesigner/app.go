@@ -21,11 +21,17 @@ type App struct {
 	terminal *Terminal.Terminal
 	IDE插件端口号 string
 	S设计文件路径  string
+	文件监视     *mymodel.E文件监视模块
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	a := &App{}
+	a.文件监视, _ = mymodel.New文件监视模块()
+	go func() {
+		a.文件监视.E开始()
+	}()
+	return a
 }
 
 // startup is called when the app starts. The context is saved
@@ -162,4 +168,28 @@ func (a *App) E检查更新() string {
 		mymodel.E检查更新_window()
 	}
 	return "检查更新"
+}
+
+func (a *App) E取文件修改时间(文件路径 string) string {
+	// 获取文件最新的修改时间
+	文件信息, err := os.Stat(文件路径)
+	if err != nil {
+		return ""
+	}
+	//转换为时间戳
+	时间戳 := 文件信息.ModTime().Unix()
+	return fmt.Sprintf("%d", 时间戳)
+}
+
+func (a *App) E添加文件监视(文件路径 string) string {
+	a.文件监视.E添加监视文件(文件路径, func(文件路径 string) {
+		println("文件被修改，触发处理函数:", 文件路径)
+		// 在这里可以添加通知你的程序的逻辑
+		runtime.EventsEmit(a.ctx, "文件被修改", 文件路径)
+	})
+	return "添加文件监视"
+}
+func (a *App) E清空文件监视() string {
+	a.文件监视.E清空()
+	return "清空文件监视"
 }

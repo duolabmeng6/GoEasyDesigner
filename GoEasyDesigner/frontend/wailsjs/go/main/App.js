@@ -22,6 +22,10 @@ export function E发送跳转代码到ide(arg1, arg2, arg3) {
   return window['go']['main']['App']['E发送跳转代码到ide'](arg1, arg2, arg3);
 }
 
+export function E取文件修改时间(arg1) {
+  return window['go']['main']['App']['E取文件修改时间'](arg1);
+}
+
 export function E取配置信息(arg1) {
   return window['go']['main']['App']['E取配置信息'](arg1);
 }
@@ -36,6 +40,14 @@ export function E文件枚举(arg1) {
 
 export function E检查更新() {
   return window['go']['main']['App']['E检查更新']();
+}
+
+export function E添加文件监视(arg1) {
+  return window['go']['main']['App']['E添加文件监视'](arg1);
+}
+
+export function E清空文件监视() {
+  return window['go']['main']['App']['E清空文件监视']();
 }
 
 export function E读入文件(arg1) {
