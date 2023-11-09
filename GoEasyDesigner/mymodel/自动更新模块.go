@@ -128,7 +128,7 @@ func E获取Github仓库Releases版本和更新内容() *ReleaseInfo {
 		return nil
 	}
 	//var err error
-	//body := ecore.E读入文件("/Users/chensuilong/Desktop/goproject/v3fanyi/mymodel/githubdata.json")
+	//body := ecore.E读入文件("/Users/ll/Desktop/goproject/v3fanyi/mymodel/githubdata.json")
 
 	var releases GithubJSONData
 
@@ -266,7 +266,7 @@ func 取自身MacOs应用路径() string {
 		return ""
 	}
 	// 调试模式下的路径
-	//编译后路径 = "/Users/chensuilong/Desktop/goproject/v3fanyi/bin/qoq.app/Contents/MacOS/qoq"
+	//编译后路径 = "/Users/ll/Desktop/goproject/v3fanyi/bin/qoq.app/Contents/MacOS/qoq"
 	// 编译后路径 取父目录
 	编译后路径 = 编译后路径[:strings.LastIndex(编译后路径, "/")]
 
@@ -281,22 +281,27 @@ func 取自身MacOs应用路径() string {
 }
 
 func E更新自己MacOS应用(资源压缩包 string, 应用名称 string) (bool, string) {
-	// 资源压缩包 := "/Users/chensuilong/Desktop/pythonproject/autotest/dist/my_app.2.0.zip"
-	// 应用名称 := "my_app.app"
-	MacOs应用路径 := 取自身MacOs应用路径()
-	fmt.Println("MacOs应用路径", MacOs应用路径)
-	//MacOs应用路径 = "/Users/chensuilong/Downloads/qoq.app"
+	//资源压缩包 = "/Users/ll/Downloads/GoEasyDesigner_MacOS.zip"
+	//应用名称 = "GoEasyDesigner.app"
+	//println("资源压缩包", 资源压缩包)
+	//println("应用名称", 应用名称)
+
+	//MacOs应用路径 := 取自身MacOs应用路径()
+	//fmt.Println("MacOs应用路径", MacOs应用路径)
+	MacOs应用路径 := "/Users/ll/Downloads/" + 应用名称
 	if MacOs应用路径 != "" {
 		app目录父目录 := MacOs应用路径[:strings.LastIndex(MacOs应用路径, "/")]
-		fmt.Printf("资源压缩包 %s app目录父目录%s MacOs应用路径%s\n", 资源压缩包, app目录父目录, MacOs应用路径)
+		fmt.Printf("资源压缩包 %s app目录父目录%s MacOs应用路径%s \r\n", 资源压缩包, app目录父目录, MacOs应用路径)
 		if MacOs应用路径 != "" {
-			zip解压2(资源压缩包, app目录父目录, []string{应用名称 + "/Contents/"})
+			解压结果 := zip解压2(资源压缩包, app目录父目录, []string{应用名称 + "/Contents/"})
+			println("解压结果", 解压结果)
 			// 解压完成后删除压缩包
 			//os.Remove(资源压缩包)
 			MacOs应用路径 = filepath.Join(app目录父目录, 应用名称)
 			// QApplication.quit()
 			应用名称 = 应用名称[:strings.LastIndex(应用名称, ".")]
 			运行命令 := fmt.Sprintf("killall %s && open -n -a %s", 应用名称, MacOs应用路径)
+			println("运行命令", 运行命令)
 			cmd := exec.Command("sh", "-c", 运行命令)
 			err := cmd.Run()
 			if err != nil {
@@ -518,7 +523,7 @@ func E检查更新() {
 		return
 	}
 	fmt.Println("下载完成了")
-	flag, s := E更新自己MacOS应用(下载文件夹路径+"/GoEasyDesigner_MacOS.zip", "qoq.app")
+	flag, s := E更新自己MacOS应用(下载文件夹路径+"/GoEasyDesigner_MacOS.zip", "GoEasyDesigner.app")
 	println(flag, s)
 }
 

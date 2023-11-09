@@ -15,10 +15,11 @@ func TestE获取Github仓库Releases版本和更新内容(t *testing.T) {
 }
 
 func Test下载(t *testing.T) {
-	err := E下载带进度回调("https://github.com/duolabmeng6/GoEasyDesigner/releases/download/v1.0.7/qoq_MacOS.zip", "./mactest.zip", func(进度 float64) {
-		// 进度回调函数
-		fmt.Println("正在下载...", 进度)
-	})
+	err := E下载带进度回调("https://github.com/duolabmeng6/GoEasyDesigner/releases/download/v0.2.4/GoEasyDesigner_MacOS.zip",
+		"/Users/ll/Downloads/GoEasyDesigner_MacOS.zip", func(进度 float64) {
+			// 进度回调函数
+			fmt.Println("正在下载...", 进度)
+		})
 	if err != nil {
 		fmt.Println("下载出错:", err)
 	} else {
@@ -35,15 +36,11 @@ func Test系统版本(t *testing.T) {
 }
 
 func Test解压缩(t *testing.T) {
-	//info := E获取Github仓库Releases版本和更新内容()
-
-	//os.Setenv("DEBUG", "1")
-	压缩包的路径 := "/Users/ll/Desktop/goproject/v3fanyi/mymodel/mactest.zip"
+	压缩包的路径 := "/Users/ll/Downloads/GoEasyDesigner_MacOS.zip"
 	//解压目录 := "/Users/ll/Desktop/goproject/v3fanyi/mymodel/testzip/"
 	//允许解压路径前缀 := []string{"qoq.app/Contents/"}
-	//
 	//println(zip解压2(压缩包的路径, 解压目录, 允许解压路径前缀))
-	E更新自己MacOS应用(压缩包的路径, "qoq.app")
+	E更新自己MacOS应用(压缩包的路径, "GoEasyDesigner.app")
 }
 func Test更新流程MacOS(t *testing.T) {
 
