@@ -6,13 +6,20 @@ import (
 	"github.com/ncruces/zenity"
 	"os/user"
 	"path/filepath"
+	"runtime"
 	"testing"
 )
 
+func Test简单(t *testing.T) {
+	if E是否为macOS系统() {
+		E检查更新_Mac()
+	}
+	if E是否为window系统() {
+		E检查更新_window()
+	}
+}
 func TestE获取Github仓库Releases版本和更新内容(t *testing.T) {
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
-	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	info := E获取Github仓库Releases版本和更新内容()
 	ecore.E调试输出(info)
 
 }
@@ -46,8 +53,6 @@ func Test解压缩(t *testing.T) {
 	E更新自己MacOS应用(压缩包的路径, "GoEasyDesigner.app")
 }
 func Test更新流程MacOS(t *testing.T) {
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
 	usr, err := user.Current()
 	if err != nil {
 		panic(err)
@@ -55,7 +60,7 @@ func Test更新流程MacOS(t *testing.T) {
 	下载文件夹路径 := filepath.Join(usr.HomeDir, "Downloads")
 
 	println(下载文件夹路径)
-	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	info := E获取Github仓库Releases版本和更新内容()
 
 	err = E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/mactest.zip", func(进度 float64) {
 		// 进度回调函数
@@ -97,12 +102,9 @@ func Test更新流程Window(t *testing.T) {
 }
 
 func Test整个流程(t *testing.T) {
-	应用名称 := "GoEasyDesigner"
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
 
 	下载文件夹路径 := E取用户下载文件夹路径()
-	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	info := E获取Github仓库Releases版本和更新内容()
 	println(info.MacDownloadURL)
 	println(下载文件夹路径)
 	if info.Version == Version {
@@ -151,4 +153,16 @@ func Test整个流程(t *testing.T) {
 	fmt.Println("下载完成了")
 	flag, s := E更新自己MacOS应用(下载文件夹路径+"/"+应用名称+"_MacOS.zip", 应用名称+".app")
 	println(flag, s)
+}
+
+func E是否为window系统() bool {
+	return runtime.GOOS == "windows"
+}
+
+func E是否为macOS系统() bool {
+	return runtime.GOOS == "darwin"
+}
+
+func E是否为UbuntuLinux系统() bool {
+	return runtime.GOOS == "linux"
 }

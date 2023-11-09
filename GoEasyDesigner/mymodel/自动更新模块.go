@@ -17,6 +17,10 @@ import (
 	"time"
 )
 
+var 应用名称 = "GoEasyDesigner"
+var owner = "duolabmeng6"   // GitHub 仓库的所有者
+var repo = "GoEasyDesigner" // GitHub 仓库的名称
+
 type GithubJSONData []struct {
 	URL       string `json:"url"`
 	AssetsURL string `json:"assets_url"`
@@ -98,29 +102,29 @@ type ReleaseInfo struct {
 	ReleaseTime    string   `json:"发布时间"`
 }
 
-func E获取Github仓库Releases版本和更新内容(owner, repo string) *ReleaseInfo {
+func E获取Github仓库Releases版本和更新内容() *ReleaseInfo {
 	//owner := "duolabmeng6"   // GitHub 仓库的所有者
 	//repo := "GoEasyDesigner" // GitHub 仓库的名称
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases", owner, repo)
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-
-		resp, err = http.Get("https://go.kenhong.com/releases_latest.json")
-		if err != nil && resp.StatusCode != http.StatusOK {
-			fmt.Println("请求失败2:", err)
-			return nil
+	var urls []string
+	_url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases", owner, repo)
+	urls = append(urls, _url)
+	_url = fmt.Sprintf("https://go.kenhong.com/releases_latest.json")
+	urls = append(urls, _url)
+	// 访问urls中的内容 如果第一个访问失败了 就继续下一个
+	var resp *http.Response
+	var err error
+	for _, url := range urls {
+		resp, err = http.Get(url)
+		if err == nil {
+			if resp.StatusCode != http.StatusOK {
+				fmt.Println("请求失败:", resp.Status, url)
+				continue
+			}
+			break
 		}
-		//return nil
+		fmt.Println("请求失败:", err)
 	}
-
 	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		fmt.Println("请求失败:", resp.Status, url)
-
-		return nil
-	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
@@ -286,14 +290,14 @@ func E更新自己MacOS应用(资源压缩包 string, 应用名称 string) (bool
 	//println("资源压缩包", 资源压缩包)
 	//println("应用名称", 应用名称)
 
-	//MacOs应用路径 := 取自身MacOs应用路径()
+	MacOs应用路径 := 取自身MacOs应用路径()
 	//fmt.Println("MacOs应用路径", MacOs应用路径)
-	MacOs应用路径 := "/Users/ll/Downloads/" + 应用名称
+	//MacOs应用路径 := "/Users/ll/Downloads/" + 应用名称
 	if MacOs应用路径 != "" {
 		app目录父目录 := MacOs应用路径[:strings.LastIndex(MacOs应用路径, "/")]
 		fmt.Printf("资源压缩包 %s app目录父目录%s MacOs应用路径%s \r\n", 资源压缩包, app目录父目录, MacOs应用路径)
 		if MacOs应用路径 != "" {
-			解压结果 := zip解压2(资源压缩包, app目录父目录, []string{应用名称 + "/Contents/"})
+			解压结果 := zip解压(资源压缩包, app目录父目录, []string{应用名称 + "/Contents/"})
 			println("解压结果", 解压结果)
 			// 解压完成后删除压缩包
 			//os.Remove(资源压缩包)
@@ -318,7 +322,7 @@ func E更新自己MacOS应用(资源压缩包 string, 应用名称 string) (bool
 	return false, "应用路径为空"
 }
 
-func zip解压2(压缩包的路径 string, 解压目录 string, 允许解压路径前缀 []string) bool {
+func zip解压(压缩包的路径 string, 解压目录 string, 允许解压路径前缀 []string) bool {
 	// 保持权限和软连接解压
 	// 允许解压路径前缀 例如 ["my_app.app/Contents/"] 不填则全部解压
 
@@ -474,12 +478,9 @@ func E更新自己Window应用(exe资源文件路径 string) (bool, string) {
 }
 
 func E检查更新_Mac() {
-	应用名称 := "GoEasyDesigner"
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
 
 	下载文件夹路径 := E取用户下载文件夹路径()
-	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	info := E获取Github仓库Releases版本和更新内容()
 	println(info.MacDownloadURL)
 	println(下载文件夹路径)
 	if info.Version == Version {
@@ -531,11 +532,9 @@ func E检查更新_Mac() {
 }
 
 func E检查更新_window() {
-	应用名称 := "GoEasyDesigner"
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
+
 	下载文件夹路径 := E取用户下载文件夹路径()
-	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	info := E获取Github仓库Releases版本和更新内容()
 	if info == nil {
 		zenity.Info("网络原因无法获取更新信息")
 		return
