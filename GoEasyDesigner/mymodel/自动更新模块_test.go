@@ -3,13 +3,16 @@ package mymodel
 import (
 	"fmt"
 	"github.com/duolabmeng6/goefun/ecore"
+	"github.com/ncruces/zenity"
 	"os/user"
 	"path/filepath"
 	"testing"
 )
 
 func TestE获取Github仓库Releases版本和更新内容(t *testing.T) {
-	info := E获取Github仓库Releases版本和更新内容()
+	owner := "duolabmeng6"   // GitHub 仓库的所有者
+	repo := "GoEasyDesigner" // GitHub 仓库的名称
+	info := E获取Github仓库Releases版本和更新内容(owner, repo)
 	ecore.E调试输出(info)
 
 }
@@ -43,7 +46,8 @@ func Test解压缩(t *testing.T) {
 	E更新自己MacOS应用(压缩包的路径, "GoEasyDesigner.app")
 }
 func Test更新流程MacOS(t *testing.T) {
-
+	owner := "duolabmeng6"   // GitHub 仓库的所有者
+	repo := "GoEasyDesigner" // GitHub 仓库的名称
 	usr, err := user.Current()
 	if err != nil {
 		panic(err)
@@ -51,7 +55,7 @@ func Test更新流程MacOS(t *testing.T) {
 	下载文件夹路径 := filepath.Join(usr.HomeDir, "Downloads")
 
 	println(下载文件夹路径)
-	info := E获取Github仓库Releases版本和更新内容()
+	info := E获取Github仓库Releases版本和更新内容(owner, repo)
 
 	err = E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/mactest.zip", func(进度 float64) {
 		// 进度回调函数
@@ -90,4 +94,61 @@ func Test更新流程Window(t *testing.T) {
 	flag, s := E更新自己Window应用(下载文件夹路径 + "/GoEasyDesigner.exe")
 	println(flag, s)
 
+}
+
+func Test整个流程(t *testing.T) {
+	应用名称 := "GoEasyDesigner"
+	owner := "duolabmeng6"   // GitHub 仓库的所有者
+	repo := "GoEasyDesigner" // GitHub 仓库的名称
+
+	下载文件夹路径 := E取用户下载文件夹路径()
+	info := E获取Github仓库Releases版本和更新内容(owner, repo)
+	println(info.MacDownloadURL)
+	println(下载文件夹路径)
+	if info.Version == Version {
+		err := zenity.Info("当前已经是最新版本")
+		if err != nil {
+			return
+		}
+		return
+	}
+
+	err := zenity.Question("软件有新版本可用，是否更新？\n当前版本:"+
+		Version+
+		"\n最新版本:"+info.Version,
+		zenity.Title("更新提示"),
+		zenity.Icon(zenity.QuestionIcon),
+		zenity.OKLabel("更新"),
+		zenity.CancelLabel("取消"))
+	ecore.E调试输出(err)
+	println("更新", err)
+	if err != nil {
+		return
+	}
+	progress, _ := zenity.Progress(
+		zenity.Title("软件更新"),
+		zenity.MaxValue(100), // 设置最大进度值为100
+	)
+
+	progress.Text("正在下载...")
+
+	err = E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/"+应用名称+"_MacOS.zip", func(进度 float64) {
+		fmt.Println("正在下载...", 进度)
+		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
+		progress.Value(int(进度))
+	})
+	if err != nil {
+		fmt.Println("下载出错:", err)
+		zenity.Info("下载错误,检查你的网络")
+		progress.Close()
+		return
+	}
+	progress.Text("下载完成 即将完成更新")
+	if progress.Close() != nil {
+		fmt.Println("点击了取消")
+		return
+	}
+	fmt.Println("下载完成了")
+	flag, s := E更新自己MacOS应用(下载文件夹路径+"/"+应用名称+"_MacOS.zip", 应用名称+".app")
+	println(flag, s)
 }

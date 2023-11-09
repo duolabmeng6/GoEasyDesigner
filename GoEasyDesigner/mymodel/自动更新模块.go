@@ -98,9 +98,9 @@ type ReleaseInfo struct {
 	ReleaseTime    string   `json:"发布时间"`
 }
 
-func E获取Github仓库Releases版本和更新内容() *ReleaseInfo {
-	owner := "duolabmeng6"   // GitHub 仓库的所有者
-	repo := "GoEasyDesigner" // GitHub 仓库的名称
+func E获取Github仓库Releases版本和更新内容(owner, repo string) *ReleaseInfo {
+	//owner := "duolabmeng6"   // GitHub 仓库的所有者
+	//repo := "GoEasyDesigner" // GitHub 仓库的名称
 	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases", owner, repo)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -473,10 +473,13 @@ func E更新自己Window应用(exe资源文件路径 string) (bool, string) {
 	return true, ""
 }
 
-func E检查更新() {
+func E检查更新_Mac() {
+	应用名称 := "GoEasyDesigner"
+	owner := "duolabmeng6"   // GitHub 仓库的所有者
+	repo := "GoEasyDesigner" // GitHub 仓库的名称
 
 	下载文件夹路径 := E取用户下载文件夹路径()
-	info := E获取Github仓库Releases版本和更新内容()
+	info := E获取Github仓库Releases版本和更新内容(owner, repo)
 	println(info.MacDownloadURL)
 	println(下载文件夹路径)
 	if info.Version == Version {
@@ -506,7 +509,7 @@ func E检查更新() {
 
 	progress.Text("正在下载...")
 
-	err = E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/GoEasyDesigner_MacOS.zip", func(进度 float64) {
+	err = E下载带进度回调(info.MacDownloadURL, 下载文件夹路径+"/"+应用名称+"_MacOS.zip", func(进度 float64) {
 		fmt.Println("正在下载...", 进度)
 		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
 		progress.Value(int(进度))
@@ -523,13 +526,16 @@ func E检查更新() {
 		return
 	}
 	fmt.Println("下载完成了")
-	flag, s := E更新自己MacOS应用(下载文件夹路径+"/GoEasyDesigner_MacOS.zip", "GoEasyDesigner.app")
+	flag, s := E更新自己MacOS应用(下载文件夹路径+"/"+应用名称+"_MacOS.zip", 应用名称+".app")
 	println(flag, s)
 }
 
 func E检查更新_window() {
+	应用名称 := "GoEasyDesigner"
+	owner := "duolabmeng6"   // GitHub 仓库的所有者
+	repo := "GoEasyDesigner" // GitHub 仓库的名称
 	下载文件夹路径 := E取用户下载文件夹路径()
-	info := E获取Github仓库Releases版本和更新内容()
+	info := E获取Github仓库Releases版本和更新内容(owner, repo)
 	if info == nil {
 		zenity.Info("网络原因无法获取更新信息")
 		return
@@ -561,7 +567,7 @@ func E检查更新_window() {
 
 	progress.Text("正在下载...")
 
-	err = E下载带进度回调(info.WinDownloadURL, 下载文件夹路径+"/GoEasyDesigner.exe", func(进度 float64) {
+	err = E下载带进度回调(info.WinDownloadURL, 下载文件夹路径+"/"+应用名称+".exe", func(进度 float64) {
 		fmt.Println("正在下载...", 进度)
 		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
 		progress.Value(int(进度))
@@ -578,6 +584,6 @@ func E检查更新_window() {
 		return
 	}
 	fmt.Println("下载完成了")
-	flag, s := E更新自己Window应用(下载文件夹路径 + "/GoEasyDesigner.exe")
+	flag, s := E更新自己Window应用(下载文件夹路径 + "/" + 应用名称 + ".exe")
 	println(flag, s)
 }

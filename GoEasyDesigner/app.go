@@ -163,7 +163,7 @@ func (a *App) E停止命令() string {
 
 func (a *App) E检查更新() string {
 	if myfunc.E是否为macOS系统() {
-		mymodel.E检查更新()
+		mymodel.E检查更新_Mac()
 	}
 	if myfunc.E是否为window系统() {
 		mymodel.E检查更新_window()
