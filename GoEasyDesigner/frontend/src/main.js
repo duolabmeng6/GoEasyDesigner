@@ -2,7 +2,7 @@ import './assets/main.css'
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
-// import ElementPlus from 'element-plus'
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 // import TDesign from 'tdesign-vue-next'
@@ -56,7 +56,12 @@ let 自定义组件名称列表 = []
     组件路径: "./自定义组件/登录框/登录框.vue",
     组件默认属性: "./自定义组件/登录框/登录框.js",
     组件属性框: "./自定义组件/登录框/登录框属性.vue",
-
+})
+自定义组件名称列表.push({
+    componentName: "TimeProgressBar",
+    组件路径: "./自定义组件/TimeProgressBar/TimeProgressBar.vue",
+    组件默认属性: "./自定义组件/TimeProgressBar/TimeProgressBar.js",
+    组件属性框: "./自定义组件/TimeProgressBar/TimeProgressBarAttr.vue",
 })
 console.log("自定义组件名称列表", JSON.stringify(自定义组件名称列表))
 app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
@@ -194,7 +199,7 @@ app.config.globalProperties.t = i18n.global.t
 
 app.use(i18n)
 // app.use(TDesign)
-// app.use(ElementPlus)
+app.use(ElementPlus)
 app.mount('#app')
 
 

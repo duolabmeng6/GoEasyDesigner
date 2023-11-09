@@ -256,7 +256,7 @@ if (localStorage.getItem("locale")) {
 }
 
 const onclickLanguageHandle = (item) => {
-  item !== locale.value ? (locale.value = item) : false;
+  item !== locale.value ? (locale.vaEventsOnlue = item) : false;
   //写入本地存储
   localStorage.setItem("locale", item);
 };

@@ -31,6 +31,7 @@ func NewApp() *App {
 	go func() {
 		a.文件监视.E开始()
 	}()
+
 	return a
 }
 
