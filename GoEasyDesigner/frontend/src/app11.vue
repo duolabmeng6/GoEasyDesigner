@@ -50,11 +50,11 @@
           <el-tab-pane :label="$t('app.edit_code')" style="overflow: auto">
             <div id="codeEdit" style="position: relative;    margin: 8px;"
             >
-            <component
-                ref="codeEditorRef"
-                is="代码编辑器" v-model:value="store.代码编辑器.内容"
-                       height="100%"
-            />
+              <component
+                  ref="codeEditorRef"
+                  is="代码编辑器" v-model:value="store.代码编辑器.内容"
+                  height="100%"
+              />
             </div>
 
           </el-tab-pane>
@@ -62,6 +62,9 @@
       </el-col>
     </div>
     <div id="right" class="工具箱 clear-select">
+      <t-button v-menus:right="menus"> 更多...</t-button>
+
+
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <DraggableDivider :target-element-id="'right'" direction="left"></DraggableDivider>
 
@@ -227,6 +230,8 @@
   </div>
   <component is="项目配置对话框" v-model="store.显示项目配置对话框" @确定="store.显示项目配置对话框=false"
              @关闭="store.显示项目配置对话框=false"></component>
+
+
 </template>
 
 <script setup>
@@ -236,7 +241,7 @@ import {ElMessage} from "element-plus";
 import {Help, Key, Switch} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app.js';
 
-import {E保存, E取配置信息} from "../wailsjs/go/main/App";
+import {E取配置信息} from "../wailsjs/go/main/App";
 import releases_latest from '../public/releases_latest.json'
 import {useI18n} from "vue-i18n";
 import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
@@ -278,6 +283,7 @@ function 版本号自动检测() {
     store.版本号 = releases_latest[0].tag_name
     store.releases_latest = releases_latest
   }
+
   if (!store.客户端模式) {
     版本信息(releases_latest)
     fetch('./releases_latest.json')
@@ -523,6 +529,7 @@ function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
   // 键盘按下(event, store.当前组件索引)
+
   if (event.key === "Delete") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法
@@ -591,6 +598,65 @@ function 组件树选中(data) {
   store.当前拖拽组件数据 = store.组件通过id查找结构(data.id)
   console.log('组件树选中', store.当前拖拽组件数据)
   store.当前组件索引 = store.当前拖拽组件数据.id
+}
+
+store.rightClickMenus = {
+  menus: [
+    {
+      label: "等宽",
+      click: () => {
+
+      }
+    },
+    {
+      label: "等高",
+      click: () => {
+
+      }
+    },
+    {
+      label: "等宽高",
+      click: () => {
+
+      }
+    },
+    {
+      label: "左对齐",
+      click: () => {
+
+      }
+    },
+    {
+      label: "右对齐",
+      click: () => {
+
+      }
+    },
+    {
+      label: "顶对齐",
+      click: () => {
+
+      }
+    },
+    {
+      label: "底对齐",
+      click: () => {
+
+      }
+    },
+    {
+      label: "水平两端平均分布",
+      click: () => {
+
+      }
+    },
+    {
+      label: "垂直两端平均分布",
+      click: () => {
+
+      }
+    },
+  ]
 }
 
 </script>

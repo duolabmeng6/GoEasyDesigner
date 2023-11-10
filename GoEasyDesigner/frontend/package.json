@@ -19,6 +19,7 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.4",
     "vue-i18n": "^9.6.1",
+    "vue3-menus": "^1.1.2",
     "vue3-sfc-loader": "^0.8.4"
   },
   "devDependencies": {

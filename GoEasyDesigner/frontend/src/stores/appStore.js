@@ -34,6 +34,7 @@ export const useAppStore = defineStore('AppStore', {
             客户端模式: ref(false),
             list: ref(null),
             当前拖拽组件数据: ref(null),
+            当前多选组件ID: ref([]),
             start_x: ref(0),
             start_y: ref(0),
             indexMap: ref({}),
@@ -60,6 +61,7 @@ export const useAppStore = defineStore('AppStore', {
             是否为window系统: true,//github的文件信息
             HistoryManager: HistoryManagerLiving,
             putPosition: {},
+            rightClickMenus:ref({}),
         }
     },
 

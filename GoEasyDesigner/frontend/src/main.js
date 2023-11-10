@@ -5,6 +5,7 @@ import {createPinia} from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+import Menus from 'vue3-menus';
 // import TDesign from 'tdesign-vue-next'
 import 'tdesign-vue-next/es/style/index.css'
 
@@ -200,6 +201,7 @@ app.config.globalProperties.t = i18n.global.t
 app.use(i18n)
 // app.use(TDesign)
 app.use(ElementPlus)
+app.use(Menus);
 app.mount('#app')
 
 

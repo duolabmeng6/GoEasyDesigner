@@ -1,7 +1,7 @@
 <template>
   <teleport to="#designer">
     <shape
-        v-if="store.bodyLoaded && store.当前组件索引 == item.id"
+        v-if="store.bodyLoaded && 检查id是否在选中数组中(item.id)"
         :data-id="item.data_id ? item.data_id : (item.data_id = generateUniqueId())"
         :index="item.id"
         :item_data="item"
@@ -11,7 +11,7 @@
         style="position: absolute;pointer-events: none;"
         @update-style="updateStyle"
         @删除="id=>store.递归删除id(store.list,id)"
-
+        @contextmenu="openMenu(item)"
     />
     <div
         :class="{ 'custom-input': isHovered(item.data_id) }"
@@ -43,7 +43,7 @@
         @dragleave.prevent="拖拽离开($event,item)"
         @drop.stop="拖拽放下($event,item)"
         @click.stop="鼠标按下($event,item)"
-
+        @contextmenu="rightClick"
     >
 
       <template v-if="item.componentName == 'Window'">
@@ -70,7 +70,7 @@
                    :item="subItem"/>
       </template>
       <template v-else>
-        <component :is="item.componentName" :item="item" />
+        <component :is="item.componentName" :item="item"/>
       </template>
 
     </div>
@@ -83,6 +83,7 @@ import {useAppStore} from '@/stores/appStore'
 import Shape from "@/components/Shape.vue";
 import {getItemStyle2, getItemStyleShape} from "@/public";
 import {v4 as uuidv4} from 'uuid';
+import {menusEvent} from "vue3-menus";
 
 const {item} = defineProps(['item']);
 
@@ -225,10 +226,10 @@ async function 拖拽放下(event, v) {
   x = x - store.start_x
   y = y - store.start_y
   // console.log("重新计算", "x", x, "y", y)
-  if( store.当前拖拽组件数据.left !='inherit'){
+  if (store.当前拖拽组件数据.left != 'inherit') {
     store.当前拖拽组件数据.left = x
   }
-  if( store.当前拖拽组件数据.top !='inherit'){
+  if (store.当前拖拽组件数据.top != 'inherit') {
     store.当前拖拽组件数据.top = y
   }
 
@@ -301,22 +302,41 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
   return false
 }
 
+function rightClick(event) {
+  menusEvent(event, store.rightClickMenus);
+  event.preventDefault();
+}
+
+function 检查id是否在选中数组中(id) {
+  return store.当前多选组件ID.includes(id)
+}
 
 function 鼠标按下(event, v) {
   console.log("鼠标按下", v)
+  if (event.shiftKey) {
+    console.log('Shift键被按住了！');
+    // 加入数组 store.当前多选组件ID
+    if (store.当前多选组件ID.includes(v.id)) {
+      //存在就删除
+      store.当前多选组件ID.splice(store.当前多选组件ID.indexOf(v.id), 1)
+      return
+    }
+
+    store.当前多选组件ID.push(v.id)
+    console.log(store.当前多选组件ID)
+    return
+  } else {
+    store.当前多选组件ID = [v.id]
+  }
+
+
   store.当前组件索引 = v.id
   store.当前拖拽组件数据 = v
 
   if (v.pid != undefined) {
     store.当前组件索引 = v.pid
-    // store.当前拖拽组件数据 = store.组件通过id查找结构(v.pid)
-    // console.log("当前拖拽组件数据", store.当前拖拽组件数据)
-    // console.log("v.pid", v.pid)
-
-
   }
   console.log("store.当前组件索引", store.当前组件索引)
-
 
 }
 
@@ -333,13 +353,18 @@ function isHovered(index) {
 }
 
 function generateUniqueId() {
-  try{
+  try {
     let id = uuidv4();
     // 截取前面6位
     return id.substring(0, 6);
-  }catch (e){
+  } catch (e) {
     return 'fail'
   }
+}
+
+function openMenu() {
+  store.showMenu = true
+
 }
 
 </script>
