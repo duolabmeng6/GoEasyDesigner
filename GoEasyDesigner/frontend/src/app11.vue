@@ -278,10 +278,8 @@ function 版本号自动检测() {
     store.版本号 = releases_latest[0].tag_name
     store.releases_latest = releases_latest
   }
-
-  版本信息(releases_latest)
-  //网络读取最新的
   if (!store.客户端模式) {
+    版本信息(releases_latest)
     fetch('./releases_latest.json')
         .then(response => response.json())
         .then(data => {
@@ -343,6 +341,8 @@ onMounted(async () => {
     if (store.项目信息.设计文件路径 != "") {
       appAction._打开文件加载界面(store.项目信息.设计文件路径)
     }
+    store.版本号 = res.Version
+
   } catch (e) {
 
   }

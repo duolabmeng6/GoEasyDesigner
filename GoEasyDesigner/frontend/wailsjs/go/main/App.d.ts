@@ -13,7 +13,7 @@ export function E发送跳转代码到ide(arg1:string,arg2:string,arg3:number):P
 
 export function E取文件修改时间(arg1:string):Promise<string>;
 
-export function E取配置信息(arg1:string):Promise<string>;
+export function E取配置信息():Promise<string>;
 
 export function E打开文件对话框():Promise<string>;
 

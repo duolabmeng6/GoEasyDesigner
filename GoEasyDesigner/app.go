@@ -46,10 +46,11 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
-func (a *App) E取配置信息(name string) string {
+func (a *App) E取配置信息() string {
 	data := map[string]string{
 		"IDE插件端口号": a.IDE插件端口号,
 		"设计文件路径":   a.S设计文件路径,
+		"Version":  mymodel.Version,
 	}
 	return ecore.E到文本(data)
 }

@@ -26,8 +26,8 @@ export function E取文件修改时间(arg1) {
   return window['go']['main']['App']['E取文件修改时间'](arg1);
 }
 
-export function E取配置信息(arg1) {
-  return window['go']['main']['App']['E取配置信息'](arg1);
+export function E取配置信息() {
+  return window['go']['main']['App']['E取配置信息']();
 }
 
 export function E打开文件对话框() {
