@@ -68,100 +68,105 @@ console.log("自定义组件名称列表", JSON.stringify(自定义组件名称�
 app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
 
 
-app.use(VueMonacoEditorPlugin, {
-    paths: {
-        // The default CDN config
-        // vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
-        vs: ''
-    },
-})
-
-self.MonacoEnvironment = {
-    getWorker(_, label) {
-        if (label === "json") {
-            return new jsonWorker()
-        }
-        if (label === "css" || label === "scss" || label === "less") {
-            return new cssWorker()
-        }
-        if (label === "html" || label === "handlebars" || label === "razor") {
-            return new htmlWorker()
-        }
-        if (label === "typescript" || label === "javascript") {
-            return new tsWorker()
-        }
-        return new editorWorker()
-    }
-}
-
-function createCustomProposal(range, insertText, label) {
-    return {
-        label: label,
-        kind: monaco.languages.CompletionItemKind.Function,
-        documentation: "",
-        insertText: insertText,
-        range: range,
-    };
-}
-
 import systemFcDoc from "@/helpDoc/systemFcDoc.json"
+function loadEidtCode(){
 
-const systemFcDocQuickTipQuickTip = {};
-systemFcDoc.forEach(item => {
-    let l = JSON.parse(JSON.stringify(item));
-    try {
-        const extractedContent = item.doc.split(' ')[0];
-        l.label =  item.help  + " " + extractedContent;
-    } catch (e) {
+    app.use(VueMonacoEditorPlugin, {
+        paths: {
+            // The default CDN config
+            // vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.36.0/min/vs'
+            vs: ''
+        },
+    })
 
+    self.MonacoEnvironment = {
+        getWorker(_, label) {
+            if (label === "json") {
+                return new jsonWorker()
+            }
+            if (label === "css" || label === "scss" || label === "less") {
+                return new cssWorker()
+            }
+            if (label === "html" || label === "handlebars" || label === "razor") {
+                return new htmlWorker()
+            }
+            if (label === "typescript" || label === "javascript") {
+                return new tsWorker()
+            }
+            return new editorWorker()
+        }
     }
-    systemFcDocQuickTipQuickTip[item.help] = {
-        "insertText": item.help,
-        "label": l.label
-    }
-});
 
-
-store.keywordMappings = 编辑器数据
-
-monaco.languages.register({id: 'javascript'});
-monaco.languages.setMonarchTokensProvider('javascript', ldf);
-monaco.languages.registerCompletionItemProvider("javascript", {
-    provideCompletionItems: function (model, position) {
-        var word = model.getWordUntilPosition(position);
-        var range = {
-            startLineNumber: position.lineNumber,
-            endLineNumber: position.lineNumber,
-            startColumn: word.startColumn,
-            endColumn: word.endColumn,
+    function createCustomProposal(range, insertText, label) {
+        return {
+            label: label,
+            kind: monaco.languages.CompletionItemKind.Function,
+            documentation: "",
+            insertText: insertText,
+            range: range,
         };
-        // 检查用户输入的关键词是否在映射中
-        var suggestions = [];
-        Object.keys(store.keywordMappings).forEach(function (keyword) {
-            var regex = new RegExp("^" + word.word, "i");
-            if (regex.test(keyword)) {
-                var {insertText, label} = store.keywordMappings[keyword];
-                suggestions.push(createCustomProposal(range, insertText, label));
-            }
-        });
-        Object.keys(systemFcDocQuickTipQuickTip).forEach(function (keyword) {
-            var regex = new RegExp("^" + word.word, "i");
-            if (regex.test(keyword)) {
-                var {insertText, label} = systemFcDocQuickTipQuickTip[keyword];
-                suggestions.push(createCustomProposal(range, insertText, label));
-            }
-        });
+    }
 
-        //这里设置排序对输入提示没有影响
-        // suggestions.sort((a, b) => {
-        //     return a.label.localeCompare(b.label, undefined, { sensitivity: 'base' });
-        // });
-        // console.log(JSON.stringify(suggestions, null, 2))
-        return {suggestions: suggestions};
-    },
-});
 
-loader.config({monaco})
+    const systemFcDocQuickTipQuickTip = {};
+    systemFcDoc.forEach(item => {
+        let l = JSON.parse(JSON.stringify(item));
+        try {
+            const extractedContent = item.doc.split(' ')[0];
+            l.label =  item.help  + " " + extractedContent;
+        } catch (e) {
+
+        }
+        systemFcDocQuickTipQuickTip[item.help] = {
+            "insertText": item.help,
+            "label": l.label
+        }
+    });
+
+
+    store.keywordMappings = 编辑器数据
+
+    monaco.languages.register({id: 'javascript'});
+    monaco.languages.setMonarchTokensProvider('javascript', ldf);
+    monaco.languages.registerCompletionItemProvider("javascript", {
+        provideCompletionItems: function (model, position) {
+            var word = model.getWordUntilPosition(position);
+            var range = {
+                startLineNumber: position.lineNumber,
+                endLineNumber: position.lineNumber,
+                startColumn: word.startColumn,
+                endColumn: word.endColumn,
+            };
+            // 检查用户输入的关键词是否在映射中
+            var suggestions = [];
+            Object.keys(store.keywordMappings).forEach(function (keyword) {
+                var regex = new RegExp("^" + word.word, "i");
+                if (regex.test(keyword)) {
+                    var {insertText, label} = store.keywordMappings[keyword];
+                    suggestions.push(createCustomProposal(range, insertText, label));
+                }
+            });
+            Object.keys(systemFcDocQuickTipQuickTip).forEach(function (keyword) {
+                var regex = new RegExp("^" + word.word, "i");
+                if (regex.test(keyword)) {
+                    var {insertText, label} = systemFcDocQuickTipQuickTip[keyword];
+                    suggestions.push(createCustomProposal(range, insertText, label));
+                }
+            });
+
+            //这里设置排序对输入提示没有影响
+            // suggestions.sort((a, b) => {
+            //     return a.label.localeCompare(b.label, undefined, { sensitivity: 'base' });
+            // });
+            // console.log(JSON.stringify(suggestions, null, 2))
+            return {suggestions: suggestions};
+        },
+    });
+    loader.config({monaco})
+
+}
+// loadEidtCode()
+
 
 app.config.warnHandler = function (msg, vm, trace) {
     // 自定义处理警告的逻辑，或者什么都不做以屏蔽

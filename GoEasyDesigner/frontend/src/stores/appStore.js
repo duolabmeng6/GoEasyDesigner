@@ -238,8 +238,14 @@ export const useAppStore = defineStore('AppStore', {
         递归删除id(源数据, id) {
             // this.HistoryManager.记录(JSON.stringify(this.list))
             this.HistoryManager.记录(JSON.stringify(this.list))
-
-            this.__递归删除id(源数据, id)
+            //检查id是否为数组
+            if (id instanceof Array) {
+                id.forEach((v, i) => {
+                    this.__递归删除id(源数据, v)
+                })
+            }else{
+                this.__递归删除id(源数据, id)
+            }
             this.当前组件索引 = "1"
             this.当前拖拽组件数据 = this.组件通过id查找结构("1")
             this.取组件列表()

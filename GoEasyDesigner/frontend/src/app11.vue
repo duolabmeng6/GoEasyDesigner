@@ -307,20 +307,25 @@ function 版本号自动检测() {
 const tabContentHight = ref(0);
 
 async function ReSize() {
-  await nextTick()
-  let tabMainVal = document.getElementById("tabMainVal")
-  let contentHeight = tabMainVal.clientHeight
-  let headerHeight = document.querySelector('#tabMainVal > div > div > div.el-tabs__header.is-top').clientHeight
-  console.log("headerHeight", headerHeight)
-  console.log("contentHeight", contentHeight)
-  tabContentHight.value = contentHeight - headerHeight
-  // console.log("new contentHeight", tabContentHight.value)
+  try {
+    await nextTick()
+    let tabMainVal = document.getElementById("tabMainVal")
+    let contentHeight = tabMainVal.clientHeight
+    let headerHeight = document.querySelector('#tabMainVal > div > div > div.el-tabs__header.is-top').clientHeight
+    console.log("headerHeight", headerHeight)
+    console.log("contentHeight", contentHeight)
+    tabContentHight.value = contentHeight - headerHeight
+    // console.log("new contentHeight", tabContentHight.value)
 
-  tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
-  document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
-  document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
-  // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
-  tabMainVal.querySelector('#codeEdit').style.height = tabContentHight.value - 16 + 'px'
+    tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
+    document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
+    document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
+    // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
+    tabMainVal.querySelector('#codeEdit').style.height = tabContentHight.value - 16 + 'px'
+
+  } catch (e) {
+
+  }
 
 
 }
@@ -528,14 +533,15 @@ function 拖拽开始(event, 组件名称, uiName) {
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
-  // 键盘按下(event, store.当前组件索引)
+
 
   if (event.key === "Delete") {
     event.preventDefault(); // 阻止浏览器默认保存行为
     // 在这里执行你想要的操作，比如保存数据或触发特定的方法
     console.log("按下了删除 Delete", store.当前拖拽组件数据);
 
-    store.递归删除id(store.list, store.当前组件索引)
+    store.递归删除id(store.list, store.当前多选组件ID)
+    // store.递归删除id(store.list, store.当前组件索引)
 
 
   }
@@ -605,54 +611,117 @@ store.rightClickMenus = {
     {
       label: "等宽",
       click: () => {
-
+        console.log("等宽", store.当前多选组件ID)
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          item.width = store.当前拖拽组件数据.width
+        })
       }
     },
     {
       label: "等高",
       click: () => {
-
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          item.height = store.当前拖拽组件数据.height
+        })
       }
     },
     {
       label: "等宽高",
       click: () => {
-
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          item.width = store.当前拖拽组件数据.width
+          item.height = store.当前拖拽组件数据.height
+        })
       }
     },
     {
       label: "左对齐",
       click: () => {
-
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          item.left = store.当前拖拽组件数据.left
+        })
       }
     },
     {
       label: "右对齐",
       click: () => {
+        let left = parseInt(store.当前拖拽组件数据.left)
+        let width = parseInt(store.当前拖拽组件数据.width)
+        let right = left + width
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          let value = right - item.width
+          item.left = value
+        })
+
 
       }
     },
     {
       label: "顶对齐",
       click: () => {
-
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          item.top = store.当前拖拽组件数据.top
+        })
       }
     },
     {
       label: "底对齐",
       click: () => {
-
+        let top = parseInt(store.当前拖拽组件数据.top)
+        let height = parseInt(store.当前拖拽组件数据.height)
+        let bottom = top + height
+        store.当前多选组件ID.forEach(id => {
+          let item = store.组件通过id查找结构(id)
+          let value = bottom - item.height
+          item.top = value
+        })
       }
     },
     {
       label: "水平两端平均分布",
       click: () => {
-
+        const sortedComponents = store.当前多选组件ID
+            .map(id => ({id, left: store.组件通过id查找结构(id).left, width: store.组件通过id查找结构(id).width}))
+            .sort((a, b) => a.left - b.left);
+        const firstComponent = sortedComponents[0];
+        const lastComponent = sortedComponents[sortedComponents.length - 1];
+        const maxLeft = parseInt(lastComponent.left);
+        const minLeft = parseInt(firstComponent.left);
+        const leftSide = (maxLeft - minLeft) / (store.当前多选组件ID.length - 1)
+        sortedComponents.forEach((component, index) => {
+          let item = store.组件通过id查找结构(component.id);
+          const newPosition = minLeft + index * leftSide;
+          console.log("newPosition", newPosition);
+          item.left = newPosition;
+        });
       }
     },
     {
       label: "垂直两端平均分布",
       click: () => {
+        const sortedComponents = store.当前多选组件ID
+            .map(id => ({id, top: store.组件通过id查找结构(id).top, height: store.组件通过id查找结构(id).height}))
+            .sort((a, b) => a.top - b.top);
+
+        const firstComponent = sortedComponents[0];
+        const lastComponent = sortedComponents[sortedComponents.length - 1];
+        const maxTop = parseInt(lastComponent.top);
+        const minTop = parseInt(firstComponent.top);
+        const topSide = (maxTop - minTop) / (store.当前多选组件ID.length - 1);
+
+        sortedComponents.forEach((component, index) => {
+          let item = store.组件通过id查找结构(component.id);
+          const newPosition = minTop + index * topSide;
+          console.log("newPosition", newPosition);
+          item.top = newPosition;
+        });
+
 
       }
     },

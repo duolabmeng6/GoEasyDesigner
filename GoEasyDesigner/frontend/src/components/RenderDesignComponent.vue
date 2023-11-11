@@ -11,7 +11,6 @@
         style="position: absolute;pointer-events: none;"
         @update-style="updateStyle"
         @删除="id=>store.递归删除id(store.list,id)"
-        @contextmenu="openMenu(item)"
     />
     <div
         :class="{ 'custom-input': isHovered(item.data_id) }"
@@ -22,6 +21,10 @@
   </teleport>
   <div
       :style="getItemStyleShape(item)"
+      @contextmenu.stop="rightClick($event,item)"
+      @keydown.stop="handleKeyDown($event)"
+      style="tab-index: 0;"
+
   >
     <div
         v-show="item.visible || item.visible"
@@ -43,7 +46,6 @@
         @dragleave.prevent="拖拽离开($event,item)"
         @drop.stop="拖拽放下($event,item)"
         @click.stop="鼠标按下($event,item)"
-        @contextmenu="rightClick"
     >
 
       <template v-if="item.componentName == 'Window'">
@@ -113,13 +115,36 @@ const shapeRect = ref({
 
 async function updateStyle(item, newStyle) {
   const properties = ['width', 'height', 'top', 'left'];
+  // for (const property of properties) {
+  //   if (newStyle[property] !== undefined) {
+  //     item[property] = `${newStyle[property]}`;
+  //   }
+  // }
 
+  // 先改变其他组件的位置
+  store.当前多选组件ID.forEach(id => {
+    if (id == item.id) {
+      return
+    }
+    let _item = store.组件通过id查找结构(id)
+    for (const property of properties) {
+      if (newStyle[property] !== undefined) {
+        _item[property] = parseInt(_item[property]) + (parseInt(newStyle[property]) - parseInt(item[property]))
+        console.log(_item.id, property, _item[property])
+
+      }
+    }
+    // _item.width = parseInt(_item.width) + width
+    // _item.height =  parseInt(_item.height) + height
+    // _item.top =  parseInt(_item.top) + top
+    // _item.left =  parseInt(_item.left) + left
+  })
+  //最后才改变自己的位置,这样子就可以计算出差值
   for (const property of properties) {
     if (newStyle[property] !== undefined) {
       item[property] = `${newStyle[property]}`;
     }
   }
-  upShapeRect(item);
   return item
 }
 
@@ -128,14 +153,10 @@ let timerId;
 watch(item, (newValue, oldValue) => {
   clearTimeout(timerId);
   timerId = setTimeout(() => {
-    upShapeRect(item);
+    shapeRect.value = getItemStyle2(item)
   }, 100);
 });
 
-
-async function upShapeRect(item) {
-  shapeRect.value = getItemStyle2(item)
-}
 
 store.start_x = 0;
 store.start_y = 0;
@@ -245,6 +266,7 @@ async function 拖拽放下(event, v) {
   // console.log(JSON.stringify(store.list, null, 2))
   store.取组件列表()
   store.当前组件索引 = store.当前拖拽组件数据.id
+  store.当前多选组件ID = [store.当前组件索引]
 
 }
 
@@ -274,7 +296,7 @@ function 递归删除(源数据, 删除的对象名称) {
     }
     if (item.childComponents == undefined) {
 
-    } else {
+      // } else {
       递归删除(item.childComponents, 删除的对象名称)
     }
   });
@@ -302,9 +324,16 @@ function 检查放置目标是否为自身组件的子组件(源数据, 对象�
   return false
 }
 
-function rightClick(event) {
-  menusEvent(event, store.rightClickMenus);
+function rightClick(event, v) {
   event.preventDefault();
+  store.当前组件索引 = v.id
+  store.当前拖拽组件数据 = v
+  console.log("右键组件的数据", v)
+  //如果 store.当前多选组件ID 大于2才弹出
+  if (store.当前多选组件ID.length > 1) {
+    menusEvent(event, store.rightClickMenus);
+
+  }
 }
 
 function 检查id是否在选中数组中(id) {
@@ -315,13 +344,10 @@ function 鼠标按下(event, v) {
   console.log("鼠标按下", v)
   if (event.shiftKey) {
     console.log('Shift键被按住了！');
-    // 加入数组 store.当前多选组件ID
     if (store.当前多选组件ID.includes(v.id)) {
-      //存在就删除
       store.当前多选组件ID.splice(store.当前多选组件ID.indexOf(v.id), 1)
       return
     }
-
     store.当前多选组件ID.push(v.id)
     console.log(store.当前多选组件ID)
     return
@@ -362,8 +388,80 @@ function generateUniqueId() {
   }
 }
 
-function openMenu() {
-  store.showMenu = true
+function handleKeyDown(event) {
+  event.preventDefault()
+
+  // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
+  console.log("按下某键盘", event.key)
+
+  //如果同时按下shift加方向键则是调整宽度高度
+  if (event.shiftKey) {
+    console.log('Shift键被按住了！');
+    if (event.key === "ArrowLeft") {
+      store.当前多选组件ID.forEach(id => {
+        let item = store.组件通过id查找结构(id)
+        item.width = parseInt(item.width) - 1
+      })
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault()
+
+      store.当前多选组件ID.forEach(id => {
+        let item = store.组件通过id查找结构(id)
+        item.width = parseInt(item.width) + 1
+      })
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault()
+
+      store.当前多选组件ID.forEach(id => {
+        let item = store.组件通过id查找结构(id)
+        item.height = parseInt(item.height) - 1
+      })
+    }
+    if (event.key === "ArrowDown") {
+      event.preventDefault()
+
+      store.当前多选组件ID.forEach(id => {
+        let item = store.组件通过id查找结构(id)
+        item.height = parseInt(item.height) + 1
+      })
+    }
+    return
+  }
+
+  // 键盘按下(event, store.当前组件索引)
+  if (event.key === "ArrowLeft") {
+    store.当前多选组件ID.forEach(id => {
+      let item = store.组件通过id查找结构(id)
+      item.left = parseInt(item.left) - 1
+    })
+  }
+  if (event.key === "ArrowRight") {
+    event.preventDefault()
+
+    store.当前多选组件ID.forEach(id => {
+      let item = store.组件通过id查找结构(id)
+      item.left = parseInt(item.left) + 1
+    })
+  }
+  if (event.key === "ArrowUp") {
+    event.preventDefault()
+
+    store.当前多选组件ID.forEach(id => {
+      let item = store.组件通过id查找结构(id)
+      item.top = parseInt(item.top) - 1
+    })
+  }
+  if (event.key === "ArrowDown") {
+    event.preventDefault()
+
+    store.当前多选组件ID.forEach(id => {
+      let item = store.组件通过id查找结构(id)
+      item.top = parseInt(item.top) + 1
+    })
+  }
+
 
 }
 
