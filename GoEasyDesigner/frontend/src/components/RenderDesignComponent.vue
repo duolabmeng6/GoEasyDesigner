@@ -255,6 +255,7 @@ async function 拖拽放下(event, v) {
   }
 
   store.HistoryManager.记录(JSON.stringify(store.list))
+  console.log("删除组件");
 
   递归删除(store.list, store.当前拖拽组件数据.id)
   await nextTick()
@@ -296,7 +297,7 @@ function 递归删除(源数据, 删除的对象名称) {
     }
     if (item.childComponents == undefined) {
 
-      // } else {
+    } else {
       递归删除(item.childComponents, 删除的对象名称)
     }
   });
@@ -388,7 +389,6 @@ function generateUniqueId() {
   }
 }
 
-let 复制组件 = []
 
 function handleKeyDown(event) {
   event.preventDefault()
@@ -396,19 +396,19 @@ function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
   // ctrl+c 复制组件
-  if (event.key === "c" && event.ctrlKey) {
+  if ((event.metaKey || event.ctrlKey) && event.key === "c") {
     console.log('Ctrl + C键被按住了！');
-    复制组件 = store.当前多选组件ID
+    store.复制组件 = store.当前多选组件ID
     return
   }
   // ctrl+v 粘贴组件
-  if (event.key === "v" && event.ctrlKey) {
+  if ((event.metaKey || event.ctrlKey) && event.key === "v") {
     console.log('Ctrl + V键被按住了！');
-    if (复制组件.length == 0) {
+    if (store.复制组件.length == 0) {
       return
     }
     store.当前多选组件ID = []
-    复制组件.forEach((item, index) => {
+    store.复制组件.forEach((item, index) => {
       let _item = store.组件通过id查找结构(item)
       let 新属性 = JSON.parse(JSON.stringify(_item))
       新属性.id = generateUniqueId()

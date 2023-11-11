@@ -323,7 +323,8 @@ export const useAppStore = defineStore('AppStore', {
                 pid: id,
                 zIndex: 0,
                 占比: 8,
-                childComponents: []
+                childComponents: [],
+                复制组件:[],
             }
             this.递归添加(this.list, 插入数据, id)
         },
