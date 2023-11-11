@@ -165,7 +165,7 @@ function loadEidtCode(){
     loader.config({monaco})
 
 }
-// loadEidtCode()
+loadEidtCode()
 
 
 app.config.warnHandler = function (msg, vm, trace) {
