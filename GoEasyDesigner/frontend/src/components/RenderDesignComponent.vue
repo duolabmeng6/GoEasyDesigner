@@ -259,6 +259,7 @@ async function 拖拽放下(event, v) {
 
   递归删除(store.list, store.当前拖拽组件数据.id)
   await nextTick()
+  store.当前拖拽组件数据.fid = 放置目标组件数据.id
   递归添加(store.list, store.当前拖拽组件数据, 放置目标组件数据.id)
   await nextTick()
 
@@ -338,6 +339,7 @@ function rightClick(event, v) {
 }
 
 function 检查id是否在选中数组中(id) {
+
   return store.当前多选组件ID.includes(id)
 }
 
@@ -349,13 +351,15 @@ function 鼠标按下(event, v) {
       store.当前多选组件ID.splice(store.当前多选组件ID.indexOf(v.id), 1)
       return
     }
-    store.当前多选组件ID.push(v.id)
+    if (v.pid != undefined) {
+      store.当前多选组件ID.push(v.pid)
+    }else{
+      store.当前多选组件ID.push(v.id)
+    }
     console.log(store.当前多选组件ID)
-    return
   } else {
     store.当前多选组件ID = [v.id]
   }
-
 
   store.当前组件索引 = v.id
   store.当前拖拽组件数据 = v
@@ -431,8 +435,11 @@ function handleKeyDown(event) {
         }
 
       }
-
-      store.递归添加(store.list, 新属性, "1")
+      let pid = "1"
+      if (新属性.fid != undefined) {
+        pid = 新属性.fid
+      }
+      store.递归添加(store.list, 新属性, pid)
       console.log("复制的组件", 新属性)
     });
     store.HistoryManager.记录(JSON.stringify(store.list))
