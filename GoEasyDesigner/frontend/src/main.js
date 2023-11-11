@@ -165,6 +165,7 @@ function loadEidtCode(){
     loader.config({monaco})
 
 }
+
 loadEidtCode()
 
 
