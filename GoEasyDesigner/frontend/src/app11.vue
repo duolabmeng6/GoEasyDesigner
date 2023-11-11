@@ -484,6 +484,7 @@ function 拖拽开始(event, 组件名称, uiName) {
   let k = store.获取索引(newName)
   新属性.id = store.获取随机id()
   新属性.componentName = 组件名称
+  新属性.componentRawName = 组件名称
   新属性.name = k
   if (新属性.hasOwnProperty("text")) {
     新属性.text = k
@@ -512,7 +513,6 @@ function 拖拽开始(event, 组件名称, uiName) {
   //   }
   // }
 
-
   if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
     let id = 新属性.id
     for (var i = 0; i < 新属性.childComponents.length; i++) {
@@ -529,6 +529,8 @@ function 拖拽开始(event, 组件名称, uiName) {
 
   store.当前拖拽组件数据 = 新属性
 }
+
+let 复制组件 = []
 
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）

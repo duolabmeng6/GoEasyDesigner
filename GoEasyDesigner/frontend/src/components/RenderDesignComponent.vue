@@ -388,11 +388,57 @@ function generateUniqueId() {
   }
 }
 
+let 复制组件 = []
+
 function handleKeyDown(event) {
   event.preventDefault()
 
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
+  // ctrl+c 复制组件
+  if (event.key === "c" && event.ctrlKey) {
+    console.log('Ctrl + C键被按住了！');
+    复制组件 = store.当前多选组件ID
+    return
+  }
+  // ctrl+v 粘贴组件
+  if (event.key === "v" && event.ctrlKey) {
+    console.log('Ctrl + V键被按住了！');
+    if (复制组件.length == 0) {
+      return
+    }
+    store.当前多选组件ID = []
+    复制组件.forEach((item, index) => {
+      let _item = store.组件通过id查找结构(item)
+      let 新属性 = JSON.parse(JSON.stringify(_item))
+      新属性.id = generateUniqueId()
+      新属性.data_id = generateUniqueId()
+      新属性.left = parseInt(新属性.left) + 10
+      新属性.top = parseInt(新属性.top) + 10
+      let 组件名称 = 新属性.componentRawName
+      let k = store.获取索引(组件名称)
+      新属性.name = k
+      if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
+        let id = 新属性.id
+        for (var i = 0; i < 新属性.childComponents.length; i++) {
+          新属性.childComponents[i].id = store.获取随机id()
+          新属性.childComponents[i].name = store.获取索引(新属性.childComponents[i].name)
+          新属性.childComponents[i].pid = id
+          //检查 新属性.子组件[i].text是否存在 如果存在 则修改
+          if (新属性.childComponents[i].hasOwnProperty("text")) {
+            新属性.childComponents[i].text = store.获取索引(新属性.childComponents[i].text)
+          }
+        }
+
+      }
+
+      store.递归添加(store.list, 新属性, "1")
+      console.log("复制的组件", 新属性)
+    });
+    store.HistoryManager.记录(JSON.stringify(store.list))
+    store.取组件列表()
+    return
+  }
 
   //如果同时按下shift加方向键则是调整宽度高度
   if (event.shiftKey) {
