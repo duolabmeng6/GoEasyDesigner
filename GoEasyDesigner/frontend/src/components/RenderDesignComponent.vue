@@ -358,7 +358,11 @@ function 鼠标按下(event, v) {
     }
     console.log(store.当前多选组件ID)
   } else {
-    store.当前多选组件ID = [v.id]
+    if (v.pid != undefined) {
+      store.当前多选组件ID = [v.pid]
+    }else{
+      store.当前多选组件ID = [v.id]
+    }
   }
 
   store.当前组件索引 = v.id
