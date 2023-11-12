@@ -1,8 +1,7 @@
 <template>
   <el-select ref="select" v-model="当前选择的事件名称"
              class=""
-             size="large"
-             style="width: 100%"
+             style="width: 100%; padding: 0px 6px 10px 6px;"
              @change="组件事件被选择">
 
     <el-option

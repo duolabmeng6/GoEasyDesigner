@@ -1,5 +1,6 @@
 {
   "app": {
+    "File": "文件",
     "Attribute": "属性",
     "Custom": "自定义组件",
     "clear": "清除",

@@ -11,7 +11,8 @@
           height: tabContentHight + 'px',
         }">
           <div id="tabLeftAttr" class="app2" style="height: 100%;">
-            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表" style="padding-top: 10px; padding-left: 6px; padding-right: 6px;">
+            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表"
+                 style="padding-top: 10px; padding-left: 6px; padding-right: 6px;">
               <el-tree-select
                   v-model="store.当前组件索引"
                   :data="store.组件列表tree"
@@ -76,8 +77,8 @@
                 <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
 
-                             style="width: 100%;"
-                             @dragstart="拖拽开始($event, item,'el')"
+                            style="width: 100%;"
+                            @dragstart="拖拽开始($event, item,'el')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
                   </t-button>
@@ -88,8 +89,8 @@
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['tdesign']" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
-                             style="width: 100%;"
-                             @dragstart="拖拽开始($event, item,'td')"
+                            style="width: 100%;"
+                            @dragstart="拖拽开始($event, item,'td')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
                   </t-button>
@@ -100,8 +101,8 @@
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
-                             style="width: 100%;"
-                             @dragstart="拖拽开始_自定义组件($event, item,'el')"
+                            style="width: 100%;"
+                            @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
                     {{
                       $te('componentName.' + item.componentName) ? $t('componentName.' + item.componentName) : item.componentName
@@ -157,43 +158,54 @@
 
       <el-row>
         <el-col :span="20">
-          <el-dropdown style="
-">
-            <el-button type="">
-              <el-icon>
-                <Switch/>
-              </el-icon>
-              File
-              <el-icon class="el-icon--right">
-                <arrow-down/>
-              </el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="appAction.新建()"> {{ $t('app.new') }}</el-dropdown-item>
-                <el-dropdown-item @click="appAction.打开">{{ $t('app.open') }}</el-dropdown-item>
-                <el-dropdown-item @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-dropdown-item>
-                <el-dropdown-item @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-dropdown-item>
-                <el-dropdown-item @click="e => store.显示项目配置对话框 = true">
-                  {{ $t('app.projectConfig') }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <t-dropdown :options="[
+  {
+    content: $t('app.new') ,
+    value: 1,
+    onClick: () => appAction.新建(),
+  },
+  {
+    content: $t('app.open') ,
+    value: 2,
+    onClick: () => appAction.打开(),
+  },
+  {
+    content: $t('app.save') ,
+    value: 3,
+    onClick: () => appAction.保存设计文件(),
+  },
+  {
+    content: $t('app.environmentCheck') ,
+    value: 4,
+    onClick: () => appAction.运行环境检测(),
+  },
+  {
+    content: $t('app.projectConfig') ,
+    value: 5,
+    onClick: () => store.显示项目配置对话框 = true,
+  },
+]" :min-column-width="112" >
+            <t-button variant="text">
+              {{  $t('app.File') }}
+              <template #suffix>
+                <chevron-down-icon size="16"/>
+              </template>
+            </t-button>
+          </t-dropdown>
 
           <el-button-group class="">
-            <t-button theme="default"  :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
-            <t-button theme="default"  :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
+            <t-button theme="default" :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
+            <t-button theme="default" :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
 
-            <t-button theme="default"  v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
+            <t-button theme="default" v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}
             </t-button>
-            <t-button theme="default"  v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
+            <t-button theme="default" v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
                 $t('app.downloadClient')
               }}
             </t-button>
-            <t-button theme="default"  :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</t-button>
+            <t-button theme="default" :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</t-button>
 
 
           </el-button-group>
@@ -249,27 +261,31 @@ import {E取配置信息} from "../wailsjs/go/main/App";
 import releases_latest from '../public/releases_latest.json'
 import {useI18n} from "vue-i18n";
 import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
-
-
-const store = useAppStore()
-store.init()
-const scrollContainer = ref(null);
-
+import {ChevronDownIcon} from "tdesign-icons-vue-next";
 const {t, te, availableLocales: languages, locale} = useI18n();
-
 //读取本地存储
 if (localStorage.getItem("locale")) {
   locale.value = localStorage.getItem("locale");
 } else {
   localStorage.setItem("locale", 'English');
 }
+const scrollContainer = ref(null);
 
-const onclickLanguageHandle = (item) => {
+const store = useAppStore()
+store.init()
+
+const onclickLanguageHandle = async (item) => {
   item !== locale.value ? (locale.value = item) : false;
   locale.value = item;
   //写入本地存储
-  console.log("设置语言",item)
+  console.log("设置语言", item)
   localStorage.setItem("locale", item);
+  store.运行按钮文本 = t("app.run");
+  store.编译按钮文本 = t("app.compile");
+  store.取组件列表()
+  store.当前拖拽组件数据 = null
+  await nextTick()
+  store.当前拖拽组件数据 = store.组件通过id查找结构("1")
 };
 
 
