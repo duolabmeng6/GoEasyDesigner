@@ -9,7 +9,6 @@
         :shape="item.shape"
         :size="item.size"
         :theme="item.theme"
-        :variant="item.variant"
     >{{ item.text }}</t-button>
 
 

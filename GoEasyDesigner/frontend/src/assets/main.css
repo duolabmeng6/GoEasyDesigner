@@ -107,6 +107,7 @@ html, body{
 .属性表格 {
     grid-area: 属性表格;
     overflow-y: auto;
+    padding-left: 6px;
 }
 
 .添加组件事件 {

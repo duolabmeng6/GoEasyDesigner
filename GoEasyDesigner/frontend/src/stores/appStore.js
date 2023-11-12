@@ -1,7 +1,7 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E保存, E发送跳转代码到ide, E文件枚举, E读入文件} from "../../wailsjs/go/main/App";
+import {E发送跳转代码到ide, E文件枚举} from "../../wailsjs/go/main/App";
 import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
@@ -61,7 +61,7 @@ export const useAppStore = defineStore('AppStore', {
             是否为window系统: true,//github的文件信息
             HistoryManager: HistoryManagerLiving,
             putPosition: {},
-            rightClickMenus:ref({}),
+            rightClickMenus: ref({}),
         }
     },
 
@@ -71,6 +71,30 @@ export const useAppStore = defineStore('AppStore', {
             if (this.代码编辑器.内容 == "") {
                 this.代码编辑器.内容 = 窗口事件代码模板
             }
+            let rawName = item[`event_${事件名称}`]
+            if (rawName != undefined) {
+                let 跳转位置 = this.代码编辑器.内容.indexOf(rawName)
+                if (跳转位置 != -1) {
+
+                    if (this.项目信息.窗口事件文件路径 == "") {
+                        this.选择夹_中间现行选中项 = "1"
+                        this.putPosition(rawName)
+                        return
+                    }
+
+                    this.选择夹_中间现行选中项 = "1"
+                    this.putPosition(rawName)
+                    //已存在事件
+                    console.log("跳转位置", 跳转位置)
+                    E发送跳转代码到ide(
+                        this.项目信息.IDE插件地址,
+                        this.项目信息.窗口事件文件路径,
+                        跳转位置
+                    )
+                    return
+                }
+            }
+
             let code = `item.event_${事件名称} = "${函数名称}"`
             eval(code)
             let ncode = '';
@@ -243,7 +267,7 @@ export const useAppStore = defineStore('AppStore', {
                 id.forEach((v, i) => {
                     this.__递归删除id(源数据, v)
                 })
-            }else{
+            } else {
                 this.__递归删除id(源数据, id)
             }
             this.当前组件索引 = "1"
@@ -324,7 +348,7 @@ export const useAppStore = defineStore('AppStore', {
                 zIndex: 0,
                 占比: 8,
                 childComponents: [],
-                复制组件:[],
+                复制组件: [],
             }
             this.递归添加(this.list, 插入数据, id)
         },

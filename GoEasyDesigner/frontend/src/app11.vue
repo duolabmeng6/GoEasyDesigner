@@ -7,9 +7,11 @@
       <el-tabs style="height: 100%" type="border-card">
         <DraggableDivider :target-element-id="'left'"></DraggableDivider>
 
-        <el-tab-pane :label="$t('app.Attribute')" style="height: 100%;">
-          <div id="tabLeftAttr" class="app2" style="margin: 8px 4px">
-            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表">
+        <el-tab-pane id="tabLeftAttrPane" :label="$t('app.Attribute')" style="height: 100%;" :style="{
+          height: tabContentHight + 'px',
+        }">
+          <div id="tabLeftAttr" class="app2" style="height: 100%;">
+            <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表" style="padding-top: 10px; padding-left: 6px; padding-right: 6px;">
               <el-tree-select
                   v-model="store.当前组件索引"
                   :data="store.组件列表tree"
@@ -171,7 +173,6 @@
                 <el-dropdown-item @click="appAction.新建()"> {{ $t('app.new') }}</el-dropdown-item>
                 <el-dropdown-item @click="appAction.打开">{{ $t('app.open') }}</el-dropdown-item>
                 <el-dropdown-item @click="appAction.保存设计文件()">{{ $t('app.save') }}</el-dropdown-item>
-                <el-dropdown-item @click="appAction.帮助()">{{ $t('app.help') }}</el-dropdown-item>
                 <el-dropdown-item @click="appAction.运行环境检测()">{{ $t('app.environmentCheck') }}</el-dropdown-item>
                 <el-dropdown-item @click="e => store.显示项目配置对话框 = true">
                   {{ $t('app.projectConfig') }}
@@ -181,16 +182,20 @@
           </el-dropdown>
 
           <el-button-group class="">
-            <el-button :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</el-button>
-            <el-button :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</el-button>
-            <el-button v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
+            <t-button theme="default"  :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
+            <t-button theme="default"  :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
+
+            <t-button theme="default"  v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}
-            </el-button>
-            <el-button v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
+            </t-button>
+            <t-button theme="default"  v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
                 $t('app.downloadClient')
               }}
-            </el-button>
+            </t-button>
+            <t-button theme="default"  :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</t-button>
+
+
           </el-button-group>
         </el-col>
         <el-col :span="4">
@@ -321,6 +326,8 @@ async function ReSize() {
     tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
     document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
     document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
+    document.querySelector('#tabLeftAttrPane').style.height = tabContentHight.value + 'px'
+
     // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
     tabMainVal.querySelector('#codeEdit').style.height = tabContentHight.value - 16 + 'px'
 

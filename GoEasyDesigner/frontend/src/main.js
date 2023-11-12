@@ -165,9 +165,7 @@ function loadEidtCode() {
 
 }
 
-// if (store.客户端模式) {
-    loadEidtCode()
-// }
+loadEidtCode()
 
 
 app.config.warnHandler = function (msg, vm, trace) {

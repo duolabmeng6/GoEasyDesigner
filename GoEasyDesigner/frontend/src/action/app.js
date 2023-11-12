@@ -90,9 +90,12 @@ appAction.打开 = async function () {
                 console.log(data)
                 // 初始化界面(data)
                 store.list = JSON.parse(data)
+                store.取组件列表()
+
             }
         }
         input.click()
+
         return
     }
 
@@ -102,6 +105,7 @@ appAction.打开 = async function () {
         return
     }
     appAction._打开文件加载界面(文件路径)
+
 }
 appAction._打开项目设计文件 = function (filepath) {
     store.项目信息.设计文件路径 = filepath

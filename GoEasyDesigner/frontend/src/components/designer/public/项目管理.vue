@@ -11,7 +11,9 @@ import {ElMessage} from "element-plus";
 const store = useAppStore()
 
 const handleNodeClick = (data) => {
-  store.代码编辑框.路径 = data.path
+  //这里暂时不处理
+  return
+  store.代码编辑器.路径 = data.path
   E读入文件(data.path ).then((res) => {
     console.log(res)
     store.代码编辑器.内容 = res
