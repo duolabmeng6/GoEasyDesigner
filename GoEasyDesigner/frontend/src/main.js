@@ -166,7 +166,7 @@ function loadEidtCode(){
 
 }
 
-// loadEidtCode()
+loadEidtCode()
 
 
 app.config.warnHandler = function (msg, vm, trace) {

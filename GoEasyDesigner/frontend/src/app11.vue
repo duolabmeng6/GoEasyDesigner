@@ -85,7 +85,7 @@
             <el-collapse-item :title="$t('app.td_components')" name="2">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['tdesign']" :span="24" style="margin-bottom: 8px">
-                  <t-button class="full-width-button" draggable="true"
+                  <t-button theme="default" class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始($event, item,'td')"
                   >
@@ -97,7 +97,7 @@
             <el-collapse-item :title="$t('app.Custom')" name="3">
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
-                  <t-button class="full-width-button" draggable="true"
+                  <t-button theme="default" class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
