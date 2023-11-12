@@ -29,7 +29,7 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker"
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import 编辑器数据 from './编辑器/编辑器提示数据.js'
 import ldf from './编辑器/编辑器语法文件.js'
-import helper from "./Helper.js";
+import systemFcDoc from "@/helpDoc/systemFcDoc.json"
 
 const app = createApp(App)
 app.use(createPinia())
@@ -68,8 +68,7 @@ console.log("自定义组件名称列表", JSON.stringify(自定义组件名称�
 app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
 
 
-import systemFcDoc from "@/helpDoc/systemFcDoc.json"
-function loadEidtCode(){
+function loadEidtCode() {
 
     app.use(VueMonacoEditorPlugin, {
         paths: {
@@ -113,7 +112,7 @@ function loadEidtCode(){
         let l = JSON.parse(JSON.stringify(item));
         try {
             const extractedContent = item.doc.split(' ')[0];
-            l.label =  item.help  + " " + extractedContent;
+            l.label = item.help + " " + extractedContent;
         } catch (e) {
 
         }
@@ -166,7 +165,9 @@ function loadEidtCode(){
 
 }
 
-loadEidtCode()
+// if (store.客户端模式) {
+    loadEidtCode()
+// }
 
 
 app.config.warnHandler = function (msg, vm, trace) {
