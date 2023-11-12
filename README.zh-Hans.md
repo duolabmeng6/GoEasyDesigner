@@ -82,7 +82,7 @@
 
 ### 1.安装 node js语言开发环境
 
-[node语言下载页面](https://nodejs.org/zh-cn/download/) 版本18以上
+[node语言下载页面](https://nodejs.org/) 版本18以上
 
 国内镜像 `npm install -g cnpm --registry=http://registry.npmmirror.com`
 

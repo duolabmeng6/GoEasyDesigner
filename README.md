@@ -71,7 +71,7 @@ Please install in order.
 
 ### 1. Install Node.js development environment
 
-[Node.js download page](https://nodejs.org/zh-cn/download/) Version 18 and above
+[Node.js download page](https://nodejs.org/) Version 18 and above
 
 Domestic mirror `npm install -g cnpm --registry=http://registry.npmmirror.com`
 
