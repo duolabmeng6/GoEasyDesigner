@@ -62,8 +62,6 @@
       </el-col>
     </div>
     <div id="right" class="工具箱 clear-select">
-      <t-button v-menus:right="menus"> 更多...</t-button>
-
 
       <el-tabs class="demo-tabs" style="height: 100%" tab-position="top" type="border-card">
         <DraggableDivider :target-element-id="'right'" direction="left"></DraggableDivider>
@@ -74,31 +72,32 @@
             <el-collapse-item :title="$t('app.system_components')" name="1">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
-                  <el-button class="full-width-button" draggable="true"
+                  <t-button theme="default" class="full-width-button" draggable="true"
+
                              style="width: 100%;"
                              @dragstart="拖拽开始($event, item,'el')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
-                  </el-button>
+                  </t-button>
                 </el-col>
               </el-row>
             </el-collapse-item>
             <el-collapse-item :title="$t('app.td_components')" name="2">
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['tdesign']" :span="24" style="margin-bottom: 8px">
-                  <el-button class="full-width-button" draggable="true"
+                  <t-button class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始($event, item,'td')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
-                  </el-button>
+                  </t-button>
                 </el-col>
               </el-row>
             </el-collapse-item>
             <el-collapse-item :title="$t('app.Custom')" name="3">
               <el-row>
                 <el-col v-for="(item, index) in 自定义组件名称列表" :span="24" style="margin-bottom: 8px">
-                  <el-button class="full-width-button" draggable="true"
+                  <t-button class="full-width-button" draggable="true"
                              style="width: 100%;"
                              @dragstart="拖拽开始_自定义组件($event, item,'el')"
                   >
@@ -106,7 +105,7 @@
                       $te('componentName.' + item.componentName) ? $t('componentName.' + item.componentName) : item.componentName
                     }}
 
-                  </el-button>
+                  </t-button>
                 </el-col>
               </el-row>
             </el-collapse-item>
@@ -261,8 +260,10 @@ if (localStorage.getItem("locale")) {
 }
 
 const onclickLanguageHandle = (item) => {
-  item !== locale.value ? (locale.vaEventsOnlue = item) : false;
+  item !== locale.value ? (locale.value = item) : false;
+  locale.value = item;
   //写入本地存储
+  console.log("设置语言",item)
   localStorage.setItem("locale", item);
 };
 
