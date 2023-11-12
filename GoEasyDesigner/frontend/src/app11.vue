@@ -185,7 +185,7 @@
     onClick: () => store.显示项目配置对话框 = true,
   },
 ]" :min-column-width="112" >
-            <t-button variant="text">
+            <t-button  theme="default">
               {{  $t('app.File') }}
               <template #suffix>
                 <chevron-down-icon size="16"/>
@@ -194,18 +194,18 @@
           </t-dropdown>
 
           <el-button-group class="">
-            <t-button theme="default" :icon="Key" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
-            <t-button theme="default" :icon="Key" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
+            <t-button theme="default" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
+            <t-button theme="default" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
 
-            <t-button theme="default" v-if="store.客户端模式" :icon="Help" @click="appAction.检查更新()">{{
+            <t-button theme="default" v-if="store.客户端模式"  @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}
             </t-button>
-            <t-button theme="default" v-if="!store.客户端模式" :icon="Help" @click="appAction.下载客户端()">{{
+            <t-button theme="default" v-if="!store.客户端模式"  @click="appAction.下载客户端()">{{
                 $t('app.downloadClient')
               }}
             </t-button>
-            <t-button theme="default" :icon="Help" @click="appAction.帮助()">{{ $t('app.help') }}</t-button>
+            <t-button theme="default"  @click="appAction.帮助()">{{ $t('app.help') }}</t-button>
 
 
           </el-button-group>
