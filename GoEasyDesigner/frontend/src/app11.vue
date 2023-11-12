@@ -561,16 +561,7 @@ function handleKeyDown(event) {
   console.log("按下某键盘", event.key)
 
 
-  if (event.key === "Delete") {
-    event.preventDefault(); // 阻止浏览器默认保存行为
-    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
-    console.log("按下了删除 Delete", store.当前拖拽组件数据);
 
-    store.递归删除id(store.list, store.当前多选组件ID)
-    // store.递归删除id(store.list, store.当前组件索引)
-
-
-  }
   if ((event.metaKey || event.ctrlKey) && event.key === "z") {
     //撤销
     console.log("撤销");

@@ -130,7 +130,7 @@ async function updateStyle(item, newStyle) {
     for (const property of properties) {
       if (newStyle[property] !== undefined) {
         _item[property] = parseInt(_item[property]) + (parseInt(newStyle[property]) - parseInt(item[property]))
-        console.log(_item.id, property, _item[property])
+        // console.log(_item.id, property, _item[property])
 
       }
     }
@@ -353,14 +353,14 @@ function 鼠标按下(event, v) {
     }
     if (v.pid != undefined) {
       store.当前多选组件ID.push(v.pid)
-    }else{
+    } else {
       store.当前多选组件ID.push(v.id)
     }
     console.log(store.当前多选组件ID)
   } else {
     if (v.pid != undefined) {
       store.当前多选组件ID = [v.pid]
-    }else{
+    } else {
       store.当前多选组件ID = [v.id]
     }
   }
@@ -403,6 +403,14 @@ function handleKeyDown(event) {
 
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
+  if (event.key === "Delete") {
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了删除 Delete", store.当前拖拽组件数据);
+    store.递归删除id(store.list, store.当前多选组件ID)
+    // store.递归删除id(store.list, store.当前组件索引)
+  }
+
   // ctrl+c 复制组件
   if ((event.metaKey || event.ctrlKey) && event.key === "c") {
     console.log('Ctrl + C键被按住了！');
