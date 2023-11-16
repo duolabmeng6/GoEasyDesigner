@@ -10,6 +10,7 @@ import (
 	"github.com/duolabmeng6/goefun/ecore"
 	"os/exec"
 	"sync"
+	"syscall"
 )
 
 type Terminal struct {
@@ -35,6 +36,8 @@ func (t *Terminal) StartCommand(command string, fn func(string, error)) bool {
 
 	cmd := exec.Command("cmd", "/C", command)
 	// 隐藏黑色窗口
+	// For Windows, use Start instead of Run to hide the console window
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
