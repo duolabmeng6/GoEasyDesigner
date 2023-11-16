@@ -218,6 +218,9 @@ cd go-easy-demo
 wails dev
 ```
 
+# 窗口设计师开发案例
+
+[多多投屏](https://gitee.com/duolabmeng666/projection_screen_tv) 轻轻松松在MacOS和Window中将视频文件投屏到电视上,跟手机的投屏功能一致,无需nas等繁琐操作.直接文件投屏.
 
 # 贡献
 
