@@ -17,8 +17,7 @@
 
 # 窗口设计师
 ![666](https://github.com/duolabmeng6/GoEasyDesigner/assets/59047063/a89d2ab9-9ba3-4efc-b0fa-0a7dcc3bcfc1)
-![image-20230828083413650](README.assets/image-20230828083413650.png)
-![image-20230828084834120](README.assets/image-20230828084834120.png)
+
 
 这是一个简单易用的可视化界面设计工具，基于Go语言开发，使用Wails框架，支持Windows、MacOS、Linux等系统。
 
