@@ -86,6 +86,8 @@ import Shape from "@/components/Shape.vue";
 import {getItemStyle2, getItemStyleShape} from "@/public";
 import {v4 as uuidv4} from 'uuid';
 import {menusEvent} from "vue3-menus";
+import {useI18n} from "vue-i18n";
+const {t, te, availableLocales: languages, locale} = useI18n();
 
 const {item} = defineProps(['item']);
 
@@ -103,7 +105,7 @@ tempCtx.font = "12px Arial";
 tempCtx.fillStyle = "white";
 tempCtx.strokeStyle = "rgb(112, 139, 219)";
 tempCtx.strokeRect(0, 0, tempCanvas.width, tempCanvas.height);
-tempCtx.fillText("松开放置", 10, 20);
+tempCtx.fillText(t('app.ReleaseAndPlace'), 10, 20);
 
 
 const shapeRect = ref({

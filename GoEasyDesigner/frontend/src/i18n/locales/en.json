@@ -30,7 +30,8 @@
     "system_components": "System",
     "td_components": "T Design",
     "updateCheck": "Check Update",
-    "inCompile": "in compile..."
+    "inCompile": "in compile...",
+    "ReleaseAndPlace": "Release and place"
   },
   "attr": {
     "addEvent": "add event function",
