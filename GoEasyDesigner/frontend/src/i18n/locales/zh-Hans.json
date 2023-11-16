@@ -29,7 +29,8 @@
     "support_library": "支持库",
     "system_components": "系统组件",
     "td_components": "t design",
-    "updateCheck": "检查更新"
+    "updateCheck": "检查更新",
+    "inCompile": "编译中..."
   },
   "attr": {
     "addEvent": "在此处选择加入事件处理函数",

@@ -278,8 +278,8 @@ appAction.编译 = function () {
         return
     }
     if (store.编译按钮文本 == t("app.compile")) {
-        store.编译按钮文本 = '停止'
-        store.调试信息 = "编译中 ..."
+        store.编译按钮文本 = t("app.stop")
+        store.调试信息 = t("app.inCompile")
         store.选择夹_底部现行选中项 = "1"
         E运行命令(store.项目信息.项目根目录, "wails build")
     } else {

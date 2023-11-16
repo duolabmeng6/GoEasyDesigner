@@ -29,7 +29,8 @@
     "support_library": "Library",
     "system_components": "System",
     "td_components": "T Design",
-    "updateCheck": "Check Update"
+    "updateCheck": "Check Update",
+    "inCompile": "in compile..."
   },
   "attr": {
     "addEvent": "add event function",
