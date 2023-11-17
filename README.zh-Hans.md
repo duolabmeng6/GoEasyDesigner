@@ -97,17 +97,17 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 ## 方式2 Window可下载完整的运行环境包
 
-[123云盘下载地址](https://www.123pan.com/s/KLRJjv-Jz8WH.html)
+[小飞机网盘下载地址 免登录](https://share.feijipan.com/s/zpU4avYO)
 
-[小飞机网盘下载地址](https://share.feijipan.com/s/xcU4U9OU)
+[123云盘下载地址](https://www.123pan.com/s/KLRJjv-Jz8WH.html)
 
 下载 `GoEasyDesigner.2023.11.16.包含运行环境.zip` 解压
 
-`env_soft.7z` 运行环境包含 `go` 和 `node` 解压找到 `一键配置环境.bat` 以管理员身份运行  
+`env_soft.7z` 运行环境包含 `go` 和 `node` 解压找到 `一键配置环境.exe` 以管理员身份运行  
 
 如果安装成功你就可以直接打开 `GoEasyDesigner.exe`
 
-没有配置成功的话，自己添加环境变量到 系统的 `PATH` 添加后运行  `一键配置环境.bat`  即可
+没有配置成功的话，自己添加环境变量到 系统的 `PATH` 添加后运行  `一键配置环境.exe`  即可
 
 ```
 C:\GoEasyDesigner\env_soft\go1.21.4\bin
