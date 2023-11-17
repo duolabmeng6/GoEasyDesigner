@@ -97,7 +97,7 @@ go install github.com/wailsapp/wails/v2/cmd/wails@latest
 安装成功后，运行 wails 命令，有内容输出即为安装成功。
 ## 方式2 Window可下载完整的运行环境包
 
-[小飞机网盘下载地址 免登录](https://share.feijipan.com/s/zpU4avYO)
+[小飞机网盘下载地址 免登录](https://share.feijipan.com/s/T2U4eiZS)
 
 [123云盘下载地址](https://www.123pan.com/s/KLRJjv-Jz8WH.html)
 
