@@ -1,4 +1,5 @@
 <p align="center" style="text-align: center">
+<img src="GoEasyDesigner/build/appicon.png" width=256  height=256 />
 
 </p>
 
