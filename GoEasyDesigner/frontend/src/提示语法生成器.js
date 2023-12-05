@@ -3,7 +3,8 @@ function 提取key(components) {
     for (const component of components) {
         // 遍历 component 所有的 key
         for (const key in component) {
-            let name = component["名称"];
+            // console.log("component", component)
+            let name = component["name"];
             if (name == "" || name == undefined) {
                 continue
             }
@@ -17,7 +18,6 @@ function 提取key(components) {
             codeLines.push(key);
             codeLines.push(name);
             console.log("加入自动补全列表",component,name)
-
 
         }
         if (component["childComponents"] && component["childComponents"].length > 0) {
