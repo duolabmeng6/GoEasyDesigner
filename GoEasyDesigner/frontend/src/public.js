@@ -163,6 +163,8 @@ function 生成辅助代码(obj) {
         code = code + "    " + codeLine + "\r\n"
     }
     let codeTpl = `
+import designData from './design.json';
+    
 function __aux_code(list, comps) {
 ${code}
     return comps
