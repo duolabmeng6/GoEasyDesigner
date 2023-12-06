@@ -160,6 +160,8 @@ appAction.保存设计文件 = async function () {
     let njson = JSON.stringify(store.list, null, 2)
     console.log("保存设计文件", store)
     let 辅助代码 = 生成辅助代码(store.list[0].childComponents)
+    console.log("辅助代码", 辅助代码)
+
 
     if (store.客户端模式 == false) {
         //浏览器打开就发起保存
