@@ -17,7 +17,7 @@ function 提取key(components) {
             // }
             codeLines.push(key);
             codeLines.push(name);
-            console.log("加入自动补全列表",component,name)
+            // console.log("加入自动补全列表",component,name)
 
         }
         if (component["childComponents"] && component["childComponents"].length > 0) {
@@ -62,7 +62,7 @@ const 生成提示词 = async (keys, fn) => {
             });
             const abbreviation = pinyinArray.join('').toLowerCase();
             let newNmae = abbreviation
-            console.log("abbreviation", abbreviation, key,检查是否存在中文(key))
+            // console.log("abbreviation", abbreviation, key,检查是否存在中文(key))
 
             if (检查是否存在中文(key)) {
                 newNmae = abbreviation + key
@@ -83,14 +83,15 @@ const 生成提示词 = async (keys, fn) => {
 
 const 生成提示辅助代码 = async (obj, fn) => {
     let kyes = 提取key(obj);
-    console.log("提取key",JSON.stringify(kyes, null, 4))
+    // console.log("提取key",JSON.stringify(kyes, null, 4))
 
+    // let 额外keys = ["组件"]
     let 额外keys = ["组件"]
     kyes = [...kyes, ...额外keys]
     //过滤重复的值
     kyes = [...new Set(kyes)]
     kyes = await 生成提示词(kyes, fn)
-    console.log("提取key2",JSON.stringify(kyes, null, 4))
+    // console.log("提取key2",JSON.stringify(kyes, null, 4))
     return JSON.stringify(kyes, null, 4);
 }
 // const jsonData = require('/Users/ll/Documents/GitHub/GoEasyDesigner/go-easy-demo/frontend/src/窗口/设计文件.json');
