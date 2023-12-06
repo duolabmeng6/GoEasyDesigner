@@ -176,8 +176,8 @@ func E获取Github仓库Releases版本和更新内容() *ReleaseInfo {
 	releaseInfo := &ReleaseInfo{
 		Version:        version,
 		DownloadURLs:   downloadURLs,
-		MacDownloadURL: "https://ghproxy.com/" + macDownloadURL,
-		WinDownloadURL: "https://ghproxy.com/" + winDownloadURL,
+		MacDownloadURL: "https://mirror.ghproxy.com/" + macDownloadURL,
+		WinDownloadURL: "https://mirror.ghproxy.com/" + winDownloadURL,
 		Changelog:      latestRelease.Body,
 		ReleaseTime:    ecore.E到时间(latestRelease.CreatedAt.String()).E时间到文本("Y-m-d H:i:s"),
 	}
