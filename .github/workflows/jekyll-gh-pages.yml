@@ -15,6 +15,11 @@ on:
       - .gitignore
       - .editorconfig
 
+  workflow_run:
+    workflows: ["发布软件"]
+    types:
+      - success
+
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
