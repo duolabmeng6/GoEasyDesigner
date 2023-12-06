@@ -168,7 +168,7 @@ export const useAppStore = defineStore('AppStore', {
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
-                console.log("最终辅助代码", res)
+                console.log("提示辅助代码", res)
                 dthis.keywordMappings = res
             })
 
