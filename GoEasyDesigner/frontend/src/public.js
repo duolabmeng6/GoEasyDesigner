@@ -141,7 +141,7 @@ function generateComponentCode(components, parentPath = '') {
         }
 
 
-        codeLine = `comps.${componentName} = list[0]${componentPath}`;
+        codeLine = `${componentName} : designData[0]${componentPath}`;
         if (componentName == "" || componentName == undefined) {
         } else {
             codeLines.push(codeLine);
@@ -158,16 +158,17 @@ function generateComponentCode(components, parentPath = '') {
 
 function 生成辅助代码(obj) {
     const codeLines = generateComponentCode(obj);
-    let code = "    comps.Win = list[0]\r\n"
+    let code = "        Win : designData[0],\r\n"
     for (const codeLine of codeLines) {
-        code = code + "    " + codeLine + "\r\n"
+        code = code + "        " + codeLine + ",\r\n"
     }
     let codeTpl = `
 import designData from './design.json';
     
-function __aux_code(list, comps) {
+function __aux_code() {
+    return {
 ${code}
-    return comps
+    }
 }
 export default __aux_code
     `

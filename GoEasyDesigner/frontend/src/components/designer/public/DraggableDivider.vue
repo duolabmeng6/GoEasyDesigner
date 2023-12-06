@@ -102,6 +102,8 @@ const handleDrag = function (e) {
       const newHeight = startHeight + (e.clientY - startY);
       targetElement.value.style.height = newHeight + 'px';
     }
+    window.dispatchEvent(new Event('resize'));
+
   }
 }
 
@@ -109,5 +111,7 @@ const stopDrag = function () {
   isDragging = false;
   document.removeEventListener('mousemove', handleDrag);
   document.removeEventListener('mouseup', stopDrag);
+  //触发 resize
+
 }
 </script>

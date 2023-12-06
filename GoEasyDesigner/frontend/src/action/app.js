@@ -124,6 +124,7 @@ appAction._打开文件加载界面 = async function (filepath) {
     // console.log(文件内容)
 
     store.list = JSON.parse(文件内容)
+
     // await nextTick();
     store.取组件列表()
     store.当前拖拽组件数据 = store.组件通过id查找结构("1")

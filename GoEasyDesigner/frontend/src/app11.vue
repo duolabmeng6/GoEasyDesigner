@@ -77,7 +77,7 @@
                 <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
 
-                            style="width: 100%;"
+                            style="width: 100%;text-align: left;"
                             @dragstart="拖拽开始($event, item,'el')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
@@ -89,7 +89,7 @@
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['tdesign']" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
-                            style="width: 100%;"
+                            style="width: 100%;text-align: left;"
                             @dragstart="拖拽开始($event, item,'td')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
@@ -118,21 +118,29 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div id="footer" class="调试信息" style="position: relative;min-height: 200px">
-      <DraggableDivider :target-element-id="'footer'" direction="top"></DraggableDivider>
+    <div id="tabFooterVal" class="调试信息" style="position: relative;min-height: 200px">
+      <DraggableDivider :target-element-id="'tabFooterVal'" direction="top"></DraggableDivider>
 
       <el-tabs v-model="store.选择夹_底部现行选中项" class="demo-tabs" style="height: 100%" tab-position="top"
                type="border-card">
 
-        <el-tab-pane :label="$t('app.help_info')">
+        <el-tab-pane id="tabFooterAttrPane1" :label="$t('app.help_info')"
+       :style="{
+          height: tabFooterContentHight + 'px',
+        }"
+        >
           <p v-if="!store.客户端模式" v-html="$t('app.helpDesc')">
           </p>
-          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+          <div ref="scrollContainer" style="height: 100%;overflow-y: auto"
                v-html="store.帮助信息"
           ></div>
         </el-tab-pane>
-        <el-tab-pane :label="$t('app.debug_info')">
-          <div ref="scrollContainer" style="height: 100px;overflow-y: auto"
+        <el-tab-pane id="tabFooterAttrPane2" :label="$t('app.debug_info')"
+       :style="{
+          height: tabFooterContentHight + 'px',
+        }"
+        >
+          <div ref="scrollContainer" style="height: 100%;overflow-y: auto"
                v-html="store.调试信息"
           ></div>
         </el-tab-pane>
@@ -327,6 +335,7 @@ function 版本号自动检测() {
 // const tabFooterVal = ref('0');
 // const tabMainVal = ref(null)
 const tabContentHight = ref(0);
+const tabFooterContentHight = ref(0);
 
 async function ReSize() {
   try {
@@ -337,15 +346,18 @@ async function ReSize() {
     console.log("headerHeight", headerHeight)
     console.log("contentHeight", contentHeight)
     tabContentHight.value = contentHeight - headerHeight
-    // console.log("new contentHeight", tabContentHight.value)
-
     tabMainVal.querySelector('#designer').style.height = tabContentHight.value - 16 + 'px'
     document.querySelector('#tabLeftSuper').style.height = tabContentHight.value + 'px'
     document.querySelector('#tabLeftProject').style.height = tabContentHight.value + 'px'
     document.querySelector('#tabLeftAttrPane').style.height = tabContentHight.value + 'px'
-
-    // document.querySelector('#left > div > div.el-tabs__content').style.height = tabContentHight.value - 16 + 'px'
     tabMainVal.querySelector('#codeEdit').style.height = tabContentHight.value - 16 + 'px'
+
+    let tabFooterVal = document.getElementById("tabFooterVal")
+    let contentHeight2 = tabFooterVal.clientHeight
+    let headerHeight2 = document.querySelector('#tabFooterVal > div.el-tabs.el-tabs--top.el-tabs--border-card.demo-tabs > div.el-tabs__header.is-top').clientHeight
+    tabFooterContentHight.value = contentHeight2 - headerHeight2
+    document.querySelector('#tabFooterAttrPane1').style.height = tabFooterContentHight.value - 16 + 'px'
+    document.querySelector('#tabFooterAttrPane2').style.height = tabFooterContentHight.value - 16 + 'px'
 
   } catch (e) {
 
