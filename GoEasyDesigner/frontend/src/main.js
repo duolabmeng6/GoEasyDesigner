@@ -202,6 +202,8 @@ app.provide('BoxComponentNames', BoxComponentNames)
 
 app.config.globalProperties.t = i18n.global.t
 
+//设置全局变量 用于判断是否为设计模式
+app.config.globalProperties.designMode = true
 
 app.use(i18n)
 // app.use(TDesign)
