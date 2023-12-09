@@ -10,16 +10,19 @@
             v-model="项目URL"
             :options="options"
             placeholder="请选择模板项目"
-            clearable
-            @focus="onFocus"
-            @blur="onBlur"
         ></t-select>
 
       </el-form-item>
       <el-form-item label="模板项目地址">
         <el-input v-model="项目URL"/>
       </el-form-item>
-
+      <el-form-item label="GitHub镜像加速">
+        <t-select
+            v-model="GitHub镜像加速"
+            :options="options2"
+            placeholder="请选择是否需要加速"
+        ></t-select>
+      </el-form-item>
       <el-form-item label="项目目录">
         <el-input v-model="当前项目目录"/>
         <el-button  @click="选择目录">选择目录</el-button>
@@ -57,12 +60,17 @@ const options = [
   { label: '自定义远程Github项目', value: "" },
 ];
 
+const options2 = [
+  { label: '不需要', value: "" },
+  { label: 'https://mirror.ghproxy.com/', value: "https://mirror.ghproxy.com/" },
+];
 
 
 const 项目URL = ref(options[0].value);
 let 当前项目目录 = ref("");
 let 项目目录 = ref("");
 let 项目名称 = ref("myporject");
+let GitHub镜像加速 = ref("");
 
 onMounted(async () => {
   项目目录.value = await goFc.E取当前目录();
@@ -88,6 +96,7 @@ onMounted(async () => {
 
 
 });
+
 // 我需要项目名称修改了以后 项目目录 为 项目目录/项目名称
 watch(项目名称, (newName, oldName) => {
   当前项目目录.value = 项目目录.value + '/' + 项目名称.value;
@@ -97,13 +106,7 @@ watch(项目目录, (newName, oldName) => {
   当前项目目录.value = 项目目录.value + '/' + 项目名称.value;
 });
 
-const onFocus = (ctx) => {
-  console.log('focus:', ctx);
-};
 
-const onBlur = (ctx) => {
-  console.log('blur:', ctx);
-};
 
 const 选择目录 = async () => {
   const result = await goFc.E打开选择文件夹对话框();
@@ -125,8 +128,13 @@ async function 创建项目事件(){
     });
     return
   }
+  //检查 项目url是否包含https://
+  let pjurl = 项目URL.value
+  if(项目URL.value.indexOf("https://") !== -1){
+    pjurl = GitHub镜像加速.value + 项目URL.value
+  }
 
-  let ret = await goFc.E下载github项目(项目URL.value,当前项目目录.value)
+  let ret = await goFc.E下载github项目(pjurl,当前项目目录.value)
   if(ret === 'success'){
     emits('关闭')
   }else{

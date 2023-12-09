@@ -12,6 +12,8 @@ func E下载github项目(github项目地址, 保存目录 string) error {
 	// 我希望通过https下载github的项目到指定的目录上
 	//修改 GitHub 项目地址以指向 ZIP 压缩包
 	//检查github项目地址 是否包含https://
+	fmt.Println("下载URL", github项目地址)
+
 	name := ecore.E文件取文件名(github项目地址, false)
 	savePath := 保存目录 + "/" + name + "_project.zip"
 	删除文件 := false
