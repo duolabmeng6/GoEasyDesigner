@@ -7,12 +7,12 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  push:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.yml'
-      - .gitignore
-      - .editorconfig
+#  push:
+#    paths-ignore:
+#      - '**/*.md'
+#      - '**/*.yml'
+#      - .gitignore
+#      - .editorconfig
 
   workflow_run:
     workflows: ["发布软件"]
