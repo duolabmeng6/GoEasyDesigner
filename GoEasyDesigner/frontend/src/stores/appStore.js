@@ -10,6 +10,12 @@ import {appAction} from '@/action/app.js';
 import {HistoryManagerLiving} from '@/stores/HistoryManager.js';
 import {useI18n} from "vue-i18n";
 import i18n from "../i18n";
+import * as systemFc from "@/../wailsjs/runtime";
+
+// 写一个延迟函数 async/await的
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 export const useAppStore = defineStore('AppStore', {
     state: () => {
@@ -25,6 +31,7 @@ export const useAppStore = defineStore('AppStore', {
                 辅助代码文件路径: "",//"win\\__aux_code.js",
                 项目管理目录: "",//"win\\",
                 IDE插件地址: "http://127.0.0.1:17810",
+                双击事件成功后最小化窗口: true,
             }),
             代码编辑器: ref({
                 路径: "",
@@ -39,6 +46,7 @@ export const useAppStore = defineStore('AppStore', {
             start_y: ref(0),
             indexMap: ref({}),
             显示项目配置对话框: ref(false),
+            显示新建项目对话框: ref(false),
             项目文件列表: ref([]),
             选择夹_中间现行选中项: ref("0"),
             支持库列表: ref([]),
@@ -73,26 +81,8 @@ export const useAppStore = defineStore('AppStore', {
             }
             let rawName = item[`event_${事件名称}`]
             if (rawName != undefined) {
-                let 跳转位置 = this.代码编辑器.内容.indexOf(rawName)
-                if (跳转位置 != -1) {
-
-                    if (this.项目信息.窗口事件文件路径 == "") {
-                        this.选择夹_中间现行选中项 = "1"
-                        this.putPosition(rawName)
-                        return
-                    }
-
-                    this.选择夹_中间现行选中项 = "1"
-                    this.putPosition(rawName)
-                    //已存在事件
-                    console.log("跳转位置", 跳转位置)
-                    E发送跳转代码到ide(
-                        this.项目信息.IDE插件地址,
-                        this.项目信息.窗口事件文件路径,
-                        跳转位置
-                    )
-                    return
-                }
+                this.跳转代码(rawName)
+                return
             }
 
             let code = `item.event_${事件名称} = "${函数名称}"`
@@ -119,7 +109,7 @@ export const useAppStore = defineStore('AppStore', {
 
             if (this.项目信息.窗口事件文件路径 == "") {
                 ElMessage({
-                    message: "浏览器中运行无法保存请注意...",
+                    message: "当前无法自动保存代码请注意...",
                     type: 'success',
                     duration: 3000, // 设置显示时间为5秒，单位为毫秒
                 });
@@ -134,21 +124,50 @@ export const useAppStore = defineStore('AppStore', {
             dthis.代码编辑器.内容 = InsertCode(this.代码编辑器.内容, ncode)
             dthis.选择夹_中间现行选中项 = "1"
             this.putPosition(ncode)
-
             await appAction.保存设计文件()
 
-            let 跳转位置 = dthis.代码编辑器.内容.indexOf(ncode)
-            if (跳转位置 != -1) {
-                console.log("跳转位置", 跳转位置)
-                E发送跳转代码到ide(
-                    dthis.项目信息.IDE插件地址,
-                    dthis.项目信息.窗口事件文件路径,
-                    跳转位置
-                )
-            }
+
+            rawName = item[`event_${事件名称}`]
+            this.跳转代码(rawName)
 
         },
+        跳转代码: async function (函数名称) {
+            let dthis = this;
+            let 跳转位置 = this.代码编辑器.内容.indexOf(函数名称)
+            if (跳转位置 != -1) {
+                if (this.项目信息.窗口事件文件路径 == "") {
+                    this.选择夹_中间现行选中项 = "1"
+                    this.putPosition(函数名称)
+                    return
+                }
+                this.选择夹_中间现行选中项 = "1"
+                this.putPosition(函数名称)
+                //已存在事件
 
+                //循环2次
+                let ret;
+                for (let i = 0; i < 2; i++) {
+                    ret = await E发送跳转代码到ide(
+                        this.项目信息.IDE插件地址,
+                        this.项目信息.窗口事件文件路径,
+                        跳转位置
+                    )
+                    console.log("跳转位置", 跳转位置, ret)
+                    if (ret) {
+                        if (dthis.项目信息.双击事件成功后最小化窗口) {
+                            systemFc.WindowMinimise()
+                        }
+                        return
+                    }
+
+                    await delay(300)
+
+                }
+
+
+                return
+            }
+        },
         组件双击事件(组件数据) {
             // console.log(this.全局_事件名称列表,this.全局_事件名称列表[1].value)
             let 事件名称 = this.全局_事件名称列表[0].value
@@ -165,6 +184,7 @@ export const useAppStore = defineStore('AppStore', {
             }
 
             this.添加事件被选择(事件名称, 函数名称, 组件数据, ext_data)
+
             let dthis;
             dthis = this
             生成提示辅助代码(this.list, function (res) {
@@ -229,10 +249,11 @@ export const useAppStore = defineStore('AppStore', {
         },
         获取索引(组件名称) {
             let k = this._获取索引(组件名称)
+            console.log("获取索引", k)
             //避免名称重复导致后续代码出问题
             for (let i = 0; i < 100; i++) {
-                let 名称是否存在 = this.递归查找名称(this.list, 组件名称 + k)
-                // console.log("名称是否存在", 名称是否存在)
+                let 名称是否存在 = this.递归查找名称(this.list, k)
+                console.log("名称是否存在", 名称是否存在,组件名称,k)
                 if (名称是否存在) {
                     k = this._获取索引(组件名称)
                 } else {
@@ -294,21 +315,29 @@ export const useAppStore = defineStore('AppStore', {
         },
 
         递归查找名称(源数据, 名称) {
-            let res = false
-            源数据.forEach((item, index) => {
-                if (item.name == 名称) {
-                    res = true
+            return 源数据.some(item => {
+                if (item.name === 名称) {
+                    return true;
                 }
-                if (item.childComponents == undefined) {
-
-                } else {
-                    res = this.递归查找名称(item.childComponents, 名称)
-                    return res
+                if (item.childComponents) {
+                    return this.递归查找名称(item.childComponents, 名称);
+                }
+                return false;
+            });
+        },
+        递归查找名称数量(源数据, 名称) {
+            let 数量 = 0
+            源数据.forEach(item => {
+                if (item.name === 名称) {
+                    数量++
+                }
+                if (item.childComponents) {
+                    数量 += this.递归查找名称数量(item.childComponents, 名称);
                 }
             });
-            return res
-        },
+            return 数量;
 
+        },
         新增childComponents(id) {
             let 插入数据 = {
                 id: this.获取随机id(),

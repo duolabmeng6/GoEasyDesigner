@@ -85,9 +85,8 @@ func (a *App) E创建函数(窗口事件文件路径 string, 插入函数 string
 	myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
 	return "保存成功"
 }
-func (a *App) E发送跳转代码到ide(插件URL地址 string, 窗口事件文件路径 string, 跳转位置 int) string {
-	myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
-	return "发送跳转代码"
+func (a *App) E发送跳转代码到ide(插件URL地址 string, 窗口事件文件路径 string, 跳转位置 int) bool {
+	return myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
 }
 
 func (a *App) E打开文件对话框() string {
@@ -194,4 +193,45 @@ func (a *App) E添加文件监视(文件路径 string) string {
 func (a *App) E清空文件监视() string {
 	a.文件监视.E清空()
 	return "清空文件监视"
+}
+
+func (a *App) E打开选择文件夹对话框() string {
+	println("E打开选择文件夹对话框")
+	result, err := runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "选择文件夹",
+	})
+	if err != nil {
+		return ""
+	}
+	return result
+}
+func (a *App) E取当前目录() string {
+	return ecore.E取当前目录()
+}
+
+func (a *App) E下载github项目(github项目地址 string, 保存目录 string) string {
+	err := mymodel.E下载github项目(github项目地址, 保存目录)
+	if err != nil {
+		return err.Error()
+	}
+
+	return "success"
+}
+
+func (a *App) E文件是否存在(路径 string) bool {
+	return ecore.E文件是否存在(路径)
+}
+
+func (a *App) E搜索文件(路径 string, 文件名 string) []string {
+	//func E文件枚举(欲寻找的目录 string, 欲寻找的文件名 string, files *[]string, 是否带路径 bool, 是否遍历子目录 bool) error {
+	var files []string
+	ecore.E文件枚举(路径, 文件名, &files, true, true)
+	//for _, v := range files {
+	//	println(v)
+	//}
+	return files
+}
+
+func (a *App) E取运行目录() string {
+	return ecore.E取运行目录()
 }

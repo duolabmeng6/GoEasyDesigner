@@ -49,7 +49,7 @@ function searchAndJumpToText(searchText) {
     if (match) {
       const lineNumber = match.range.startLineNumber;
       editor.revealLineInCenter(lineNumber); // 将匹配的行居中显示
-      editor.setPosition({lineNumber: lineNumber + 3, column: 16});
+      editor.setPosition({lineNumber: lineNumber + 2, column: 16});
     } else {
       console.log('未找到匹配的文本');
     }

@@ -192,6 +192,11 @@ func E下载带进度回调(下载地址 string, 文件保存路径 string, fc f
 	}
 	defer resp.Body.Close()
 
+	父目录 := ecore.E文件取父目录(文件保存路径)
+	if ecore.E文件是否存在(父目录) == false {
+		ecore.E创建目录(父目录)
+	}
+
 	out, err := os.Create(文件保存路径)
 	if err != nil {
 		return err
@@ -348,6 +353,77 @@ func zip解压(压缩包的路径 string, 解压目录 string, 允许解压路�
 		}
 
 		文件名 := info.Name
+
+		目标文件路径 := filepath.Join(解压目录, 文件名)
+
+		权限 := info.Mode().Perm()
+		if info.Mode()&os.ModeSymlink != 0 { // 检查是否为软连接
+			软连接位置, err := readLink(info)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			// 检查目标文件路径是否存在，如果存在就删除，防止创建失败
+			if _, err := os.Lstat(目标文件路径); err == nil {
+				os.Remove(目标文件路径)
+			}
+			err = os.Symlink(软连接位置, 目标文件路径)
+			if err != nil {
+				fmt.Println(err)
+			}
+		} else {
+			// 删除文件重新解压
+			if _, err := os.Lstat(目标文件路径); err == nil {
+				// 检查是否为文件
+				if !info.Mode().IsDir() {
+					os.Remove(目标文件路径)
+				}
+			}
+			err = extractFile(info, 目标文件路径)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			// 修改文件权限
+			if _, err := os.Lstat(目标文件路径); err == nil {
+				err = os.Chmod(目标文件路径, 权限)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+		}
+	}
+
+	return true
+}
+
+func zip解压2(压缩包的路径 string, 解压目录 string, 允许解压路径前缀 []string, fn func(解压路径 string) string) bool {
+	// 保持权限和软连接解压
+	// 允许解压路径前缀 例如 ["my_app.app/Contents/"] 不填则全部解压
+
+	文件, err := zip.OpenReader(压缩包的路径)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	defer 文件.Close()
+
+	for _, info := range 文件.File {
+		// 检查目标文件路径是否在允许解压路径前缀中
+		if len(允许解压路径前缀) > 0 {
+			允许解压 := false
+			for _, 路径 := range 允许解压路径前缀 {
+				if strings.HasPrefix(info.Name, 路径) {
+					允许解压 = true
+				}
+			}
+			if !允许解压 {
+				continue
+			}
+		}
+
+		文件名 := info.Name
+		文件名 = fn(文件名)
 
 		目标文件路径 := filepath.Join(解压目录, 文件名)
 

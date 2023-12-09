@@ -19,6 +19,8 @@
                   default-expand-all
                   style="width: 100%;"
                   @node-click="data=>组件树选中(data)"
+                  :filter-node-method="filterNodeMethod"
+                  filterable
               />
 
             </div>
@@ -168,6 +170,16 @@
         <el-col :span="20">
           <t-dropdown :options="[
   {
+    content: $t('app.NewProject') ,
+    value: 6,
+    onClick: () => appAction.新建项目(),
+  },
+  {
+    content: $t('app.OpenProject') ,
+    value: 7,
+    onClick: () => appAction.打开项目(),
+  },
+  {
     content: $t('app.new') ,
     value: 1,
     onClick: () => appAction.新建(),
@@ -255,13 +267,14 @@
   <component is="项目配置对话框" v-model="store.显示项目配置对话框" @确定="store.显示项目配置对话框=false"
              @关闭="store.显示项目配置对话框=false"></component>
 
+  <component is="新建项目对话框" v-model="store.显示新建项目对话框" @关闭="store.显示新建项目对话框=false"></component>
 
 </template>
 
 <script setup>
 import {inject, nextTick, onMounted, ref, watch} from 'vue';
 import {useAppStore} from '@/stores/appStore'
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import {Help, Key, Switch} from "@element-plus/icons-vue";
 import {appAction} from '@/action/app.js';
 
@@ -373,6 +386,7 @@ watch(BoxActiveName, function BoxActiveNameChange() {
 })
 
 
+
 onMounted(async () => {
   store.scrollContainer = scrollContainer.value;
   appAction.init()
@@ -416,6 +430,31 @@ onMounted(async () => {
   if (localStorage.getItem("BoxActiveName")) {
     BoxActiveName.value = localStorage.getItem("BoxActiveName")
   }
+
+  // 检查是否打开了项目
+  if (appAction.store.项目信息.项目根目录 == "" && store.客户端模式 == true){
+    ElMessageBox.confirm('当前还没有创建项目或者打开项目', '提示', {
+      confirmButtonText: '新建项目',
+      cancelButtonText: '打开项目',
+      showCancelButton: true,
+      showClose: true,
+      type: 'warning',
+      distinguishCancelAndClose: true,
+      closeOnClickModal: false, // Add this line
+    }).then(() => {
+      console.log('新建项目');
+      appAction.store.显示新建项目对话框 = true
+    }).catch(action => {
+      if (action === 'cancel') {
+        console.log('打开项目');
+        appAction.打开项目()
+      } else if (action === 'close') {
+        console.log('取消');
+      }
+    });
+  }
+
+
 })
 
 function init_tailwindcss() {
@@ -757,6 +796,7 @@ store.rightClickMenus = {
   ]
 }
 
+const filterNodeMethod = (value, data) => data.label.toLowerCase().includes(value.toLowerCase())
 </script>
 
 <style>

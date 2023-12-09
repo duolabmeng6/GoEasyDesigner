@@ -1,8 +1,11 @@
 {
   "app": {
-    "File": "文件",
+    "NewProject": "新建项目",
+    "OpenProject": "打开项目",
     "Attribute": "属性",
     "Custom": "自定义组件",
+    "File": "文件",
+    "ReleaseAndPlace": "松开放置",
     "clear": "清除",
     "compile": "编译",
     "components": "组件",
@@ -14,6 +17,7 @@
     "help": "帮助",
     "helpDesc": "窗口项目需要手动创建\n     wails init -n \"go-easy-demo\" -t https://github.com/duolabmeng6/wails-template-vue-go-easy       <br>\n            在浏览器中仅可保存设计界面\n            <br>\n            建议使用客户端保存更简单 目前仍需自行安装 go 和 node 环境",
     "help_info": "帮助信息",
+    "inCompile": "编译中...",
     "inOperation": "运行中...",
     "language": "语言",
     "name": "窗口设计师",
@@ -29,35 +33,33 @@
     "support_library": "支持库",
     "system_components": "系统组件",
     "td_components": "T Design",
-    "updateCheck": "检查更新",
-    "inCompile": "编译中...",
-    "ReleaseAndPlace": "松开放置"
-
+    "updateCheck": "检查更新"
   },
   "attr": {
     "addEvent": "在此处选择加入事件处理函数",
     "backgroundColor": "背景颜色",
     "backgroundImage": "背景图片",
     "border": "边框",
+    "bottom": "底边",
     "disable": "禁用",
     "fontSize": "字体大小",
     "height": "高度",
     "left": "左边",
     "name": "名称",
+    "right": "右边",
     "title": "标题",
     "top": "顶边",
     "visible": "可视",
     "width": "宽度",
     "xAxisRollingMode": "x轴滚动模式",
     "yAxisRollingMode": "y轴滚动模式",
-    "zIndex": "层级",
-    "right": "右边",
-    "bottom": "底边"
+    "zIndex": "层级"
   },
   "componentName": {
     "Button": "按钮",
     "CheckBox": "多选框",
     "CommonLayout": "常用布局",
+    "ControlButton": "窗口控制按钮",
     "CustomComponent": "自定义组件",
     "FlexLayout": "弹性布局",
     "Label": "标签",
@@ -71,8 +73,7 @@
     "TextEdit": "编辑框",
     "Tooltip": "提示框",
     "Tree": "树形框",
-    "Window": "窗口",
-    "ControlButton": "窗口控制按钮"
+    "Window": "窗口"
   },
   "eventName": {
     "blur": "失去焦点",

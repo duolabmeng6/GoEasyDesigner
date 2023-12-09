@@ -23,6 +23,9 @@
       <el-form-item label="IDE插件地址">
         <el-input v-model="store.项目信息.IDE插件地址"/>
       </el-form-item>
+      <el-form-item label="跳转IDE代码成功后最小化窗口">
+        <el-switch v-model="store.项目信息.双击事件成功后最小化窗口"/>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">

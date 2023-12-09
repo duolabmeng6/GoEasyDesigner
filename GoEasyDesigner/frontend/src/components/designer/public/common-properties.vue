@@ -1,6 +1,7 @@
 <template>
-  <el-form-item :label="$t('attr.name')" >
+  <el-form-item :label="$t('attr.name')">
     <el-input v-model="props.item.name"/>
+    <div v-if="是否存在" style="color:red">名称已存在</div>
   </el-form-item>
   <el-form-item :label="$t('attr.top')">
     <el-autocomplete
@@ -12,7 +13,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item  :label="$t('attr.left')">
+  <el-form-item :label="$t('attr.left')">
     <el-autocomplete
         v-model="props.item.left"
         :fetch-suggestions="querySearch"
@@ -32,7 +33,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item  :label="$t('attr.bottom')">
+  <el-form-item :label="$t('attr.bottom')">
     <el-autocomplete
         v-model="props.item.bottom"
         :fetch-suggestions="querySearch"
@@ -42,7 +43,7 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item  :label="$t('attr.width')">
+  <el-form-item :label="$t('attr.width')">
     <el-autocomplete
         v-model="props.item.width"
         :fetch-suggestions="querySearch"
@@ -62,24 +63,24 @@
         @select="handleSelect"
     />
   </el-form-item>
-  <el-form-item  :label="$t('attr.zIndex')">
+  <el-form-item :label="$t('attr.zIndex')">
     <el-input v-model="props.item.zIndex"/>
   </el-form-item>
-  <el-form-item  :label="$t('attr.disable')">
+  <el-form-item :label="$t('attr.disable')">
     <el-switch v-model="props.item.disable"/>
   </el-form-item>
-  <el-form-item  :label="$t('attr.visible')">
+  <el-form-item :label="$t('attr.visible')">
     <el-switch v-model="props.item.visible"/>
   </el-form-item>
-  <el-form-item  :label="$t('attr.backgroundColor')">
+  <el-form-item :label="$t('attr.backgroundColor')">
     <el-color-picker v-model="props.item.background" show-alpha
                      @active-change="val => props.item.background = val"/>
   </el-form-item>
   <el-form-item :label="$t('attr.backgroundImage')">
     <input ref="fileInput" type="file" style="display: none" @change="handleFileChange"/>
     <!--    <el-input v-model="props.item.图片"/>-->
-    <el-button @click="triggerFileInput">{{$t('app.selectImage')}}</el-button>
-    <el-button v-show="props.item.图片" @click="clearImage">{{$t('app.clear')}}</el-button>
+    <el-button @click="triggerFileInput">{{ $t('app.selectImage') }}</el-button>
+    <el-button v-show="props.item.图片" @click="clearImage">{{ $t('app.clear') }}</el-button>
   </el-form-item>
   <el-form-item label="图片平铺方式" v-show="props.item.图片">
     <el-select v-model="props.item.backgroundRepeat" style="width: 100%">
@@ -122,10 +123,10 @@
     </el-select>
   </el-form-item>
 
-  <el-form-item  :label="$t('attr.border')">
+  <el-form-item :label="$t('attr.border')">
     <el-input v-model="props.item.border"/>
   </el-form-item>
-  <el-form-item  :label="$t('attr.fontSize')">
+  <el-form-item :label="$t('attr.fontSize')">
     <el-input v-model="props.item.fontSize"/>
   </el-form-item>
 
@@ -139,7 +140,7 @@
       />
     </el-select>
   </el-form-item>
-  <el-form-item  :label="$t('attr.xAxisRollingMode')">
+  <el-form-item :label="$t('attr.xAxisRollingMode')">
     <el-select v-model="props.item.overflowX" style="width: 100%">
       <el-option
           v-for="(item, index) in overflowX"
@@ -151,10 +152,16 @@
   </el-form-item>
 
 </template>
+
 <script setup>
-import {defineProps, onMounted, ref} from "vue";
+import {defineProps, onMounted, ref, watch} from "vue";
+import {useAppStore} from '@/stores/appStore'
 
 const props = defineProps(['item']);
+
+const store = useAppStore()
+
+
 const handleSelect = (item) => {
   console.log(item)
 }
@@ -259,7 +266,6 @@ const clearImage = () => {
 }
 
 
-
 onMounted(() => {
   if (localStorage.getItem("locale") === "English") {
     overflowX.value.forEach((item) => {
@@ -283,13 +289,39 @@ onMounted(() => {
   }
 });
 
+// watch(()=>props.item.name, (newVal, oldVal) => {
+//   if (newVal !== oldVal) {
+//     //检查新值是否已经存在
+//     let 是否存在 = store.递归查找名称(store.list, newVal)
+//     console.log("是否存在", 是否存在,newVal)
+//
+//     console.log("刷新")
+//     store.取组件列表()
+//
+//
+//   }
+// });
+
+const 是否存在 = ref(false);
+let n = store.递归查找名称数量(store.list, props.item.name);
+是否存在.value = n >= 2;
+
+watch(() => props.item.name, (newVal, oldVal) => {
+  if (newVal !== oldVal) {
+    let n = store.递归查找名称数量(store.list, newVal);
+    是否存在.value = n >= 2;
+    console.log("是否存在", 是否存在.value, newVal);
+    console.log("刷新");
+    store.取组件列表();
+  }
+});
 
 </script>
 
 <style>
-.el-form-item__label{
-  width:inherit !important;
-  min-width:100px !important;
+.el-form-item__label {
+  width: inherit !important;
+  min-width: 100px !important;
 
 }
 </style>

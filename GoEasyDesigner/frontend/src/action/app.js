@@ -50,6 +50,35 @@ appAction.init = function () {
     store = useAppStore()
     t = useI18n().t
 }
+appAction.新建项目 = function () {
+    store.显示新建项目对话框 = true
+
+}
+appAction.打开项目 = async function () {
+    const result = await goFc.E打开选择文件夹对话框();
+    if (result === "") {
+        //弹出饿了么信息框 提示创建失败
+        ElMessage({
+            message: '未选择项目目录',
+            type: 'error',
+        });
+        return false
+    }
+
+    let files = await goFc.E搜索文件(result,"design.json")
+    if (files.length === 0){
+        //弹出饿了么信息框 提示创建失败
+        ElMessage({
+            message: '项目目录下没有找到design.json文件',
+            type: 'error',
+        });
+        return false
+    }
+    console.log("搜索文件",files)
+    appAction._打开文件加载界面(files[0])
+    return true
+
+}
 
 appAction.新建 = function () {
     function 创建窗口() {
