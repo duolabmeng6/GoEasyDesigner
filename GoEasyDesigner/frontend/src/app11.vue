@@ -329,7 +329,7 @@ function 版本号自动检测() {
 
   if (!store.客户端模式) {
     版本信息(releases_latest)
-    fetch('./releases_latest.json')
+    fetch('./releases_latest.json?t=' + new Date().getTime())
         .then(response => response.json())
         .then(data => {
           // 在这里处理获取到的数据
