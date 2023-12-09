@@ -18,7 +18,7 @@ on:
   workflow_run:
     workflows: ["发布软件"]
     types:
-      - success
+      - completed
 
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
