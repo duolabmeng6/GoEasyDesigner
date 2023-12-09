@@ -14,3 +14,4 @@ URL="https://api.github.com/repos/duolabmeng6/GoEasyDesigner/releases"
 
 echo "正在下载最新的releases..."
 curl -o "$JSON_FILE" "$URL"
+cat $JSON_FILE
