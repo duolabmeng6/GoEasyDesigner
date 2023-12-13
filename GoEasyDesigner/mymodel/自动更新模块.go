@@ -529,7 +529,7 @@ func 取自身路径Window() (string, error) {
 	return exe, nil
 }
 
-func E更新自己Window应用(exe资源文件路径 string) (bool, string) {
+func E更新自己Window应用(新exe资源文件路径 string) (bool, string) {
 	// window更新方法
 	自身路径Window, _ := 取自身路径Window()
 
@@ -542,7 +542,15 @@ func E更新自己Window应用(exe资源文件路径 string) (bool, string) {
 	}
 
 	os.Rename(自身路径Window, 旧的文件名)
-	os.Rename(exe资源文件路径, 自身路径Window)
+
+	err := os.Rename(新exe资源文件路径, 自身路径Window)
+	//zenity.Info("新exe资源文件路径:" + 新exe资源文件路径)
+	//zenity.Info("自身路径Window:" + 自身路径Window)
+
+	if err != nil {
+		zenity.Info("新文件复制失败了 原因:" + err.Error())
+		return false, ""
+	}
 
 	// 结束自身运行然后重启自己
 	cmd := exec.Command(自身路径Window)
@@ -608,8 +616,9 @@ func E检查更新_Mac() {
 }
 
 func E检查更新_window() {
-
-	下载文件夹路径 := E取用户下载文件夹路径()
+	下载文件夹路径, _ := 取自身路径Window()
+	下载文件夹路径 = ecore.E文件取父目录(下载文件夹路径)
+	新文件名 := 下载文件夹路径 + "/" + 应用名称 + "_latest.exe"
 	info := E获取Github仓库Releases版本和更新内容()
 	if info == nil {
 		zenity.Info("网络原因无法获取更新信息")
@@ -642,7 +651,7 @@ func E检查更新_window() {
 
 	progress.Text("正在下载...")
 
-	err = E下载带进度回调(info.WinDownloadURL, 下载文件夹路径+"/"+应用名称+".exe", func(进度 float64) {
+	err = E下载带进度回调(info.WinDownloadURL, 新文件名, func(进度 float64) {
 		fmt.Println("正在下载...", 进度)
 		progress.Text("正在下载..." + fmt.Sprintf("%.2f", 进度) + "%")
 		progress.Value(int(进度))
@@ -659,6 +668,6 @@ func E检查更新_window() {
 		return
 	}
 	fmt.Println("下载完成了")
-	flag, s := E更新自己Window应用(下载文件夹路径 + "/" + 应用名称 + ".exe")
+	flag, s := E更新自己Window应用(新文件名)
 	println(flag, s)
 }
