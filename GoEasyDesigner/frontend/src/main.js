@@ -64,6 +64,12 @@ let 自定义组件名称列表 = []
     组件默认属性: "./自定义组件/TimeProgressBar/TimeProgressBar.js",
     组件属性框: "./自定义组件/TimeProgressBar/TimeProgressBarAttr.vue",
 })
+自定义组件名称列表.push({
+    componentName: "ColorfulText",
+    组件路径: "./自定义组件/ColorfulText/ColorfulText.vue",
+    组件默认属性: "./自定义组件/ColorfulText/ColorfulText.js",
+    组件属性框: "./自定义组件/ColorfulText/ColorfulTextAttr.vue",
+})
 console.log("自定义组件名称列表", JSON.stringify(自定义组件名称列表))
 app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
 
