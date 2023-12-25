@@ -7,7 +7,7 @@
       style="max-width: 460px"
   >
     <component is="common-properties" :item="item"/>
-    <el-form-item label="内容">
+    <el-form-item label="text">
       <el-input v-model="item.text"/>
     </el-form-item>
     <el-form-item label="size">
