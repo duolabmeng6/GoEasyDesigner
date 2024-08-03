@@ -460,10 +460,10 @@ onMounted(async () => {
 function init_tailwindcss() {
 
   const script = document.createElement('script')
-  script.src = '/cdn.tailwindcss.com_3.3.3.js'
+  script.src = '/cdn.tailwindcss.com_3.4.5.js'
   document.body.appendChild(script)
   script.onload = () => {
-    console.log('tailwindcss.com_3.3.3.js 加载完成')
+    console.log('tailwindcss.com 加载完成')
     tailwind.config = {
       plugins: [
         function ({addBase}) {
@@ -512,7 +512,7 @@ async function 拖拽开始_自定义组件(event, item, uiname) {
     const dataDefaultAttributes = await responseDefaultAttributes.text();
     const blob = new Blob([dataDefaultAttributes], {type: 'application/javascript'});
     const url = URL.createObjectURL(blob);
-    const module = await import(url);
+    const module = await import(/* @vite-ignore */url);
     const 新属性 = module.default;
     // console.log("自定义组件默认属性", 新属性);
     const responseHtml = await fetch(组件路径);
