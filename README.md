@@ -51,9 +51,7 @@ Tasks to be completed:
 
 Thanks to a friend's server, you can now enjoy an online experience.
 
-Domestic address: https://go.kenhong.com/
-
-International address: https://g.yx24.me
+International address: https://go-easy-designer.vercel.app
 
 [Download Window Running Project](https://github.com/duolabmeng6/wails-template-vue-go-easy), during online experience, design the interface in the browser and save. Two files will be downloaded: `design.json`, `__aux_code.js`. Make sure your browser allows downloading multiple files, and place the design files in the specified location.
 

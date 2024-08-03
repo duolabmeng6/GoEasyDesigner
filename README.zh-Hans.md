@@ -47,26 +47,22 @@
 
 - [x] 多语言支持：应用支持中文和英文等多种语言。
 
+- [x] jsefun库支持：已开发 https://www.npmjs.com/package/jsefun
+
+- [x] 支持ElectronJS：将支持ElectronJS作为后端技术。 [Electron 启动模板](https://github.com/duolabmeng6/electron-template-easy-desinger)
+
 待完成任务：
 
-- [ ] jsefun库支持：计划中，等待开发中。
-
 - [ ] 组件库完善：正在进行中， [element-plus](https://element-plus.org/zh-CN/component/button.html) 组件的进一步完善。
-
-- [ ] 支持ElectronJS：计划中，将支持ElectronJS作为后端技术。
-
 - [ ] 自定义云组件 用户可以自己上传模板供其他用户使用
 
 # 在线体验
 
 感谢朋友提供的服务器,可以愉快的在线体验了
 
-国内地址: https://go.kenhong.com/
-
-国外地址: https://g.yx24.me 
+国外地址: https://go-easy-designer.vercel.app
 
 [下载窗口运行项目](https://github.com/duolabmeng6/wails-template-vue-go-easy),在线体验时在浏览器中画好界面保存,会下载2个文件 `design.json`,`__aux_code.js` 注意你的浏览器允许下载多个文件的权限,将设计文件放到指定位置即可.
-
 
 [视频教程10分钟了入门](https://www.bilibili.com/video/BV1ou4y1r7WS)
 
