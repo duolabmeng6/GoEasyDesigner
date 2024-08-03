@@ -108,8 +108,8 @@ func E获取Github仓库Releases版本和更新内容() *ReleaseInfo {
 	var urls []string
 	_url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases", owner, repo)
 	urls = append(urls, _url)
-	_url = fmt.Sprintf("https://go.kenhong.com/releases_latest.json")
-	urls = append(urls, _url)
+	//_url = fmt.Sprintf("https://go.kenhong.com/releases_latest.json")
+	//urls = append(urls, _url)
 	// 访问urls中的内容 如果第一个访问失败了 就继续下一个
 	var resp *http.Response
 	var err error

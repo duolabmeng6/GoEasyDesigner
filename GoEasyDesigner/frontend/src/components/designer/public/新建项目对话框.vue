@@ -56,7 +56,9 @@ import {appAction} from "@/action/app";
 
 const options = [
   { label: '示例项目', value: "https://github.com/duolabmeng6/wails-template-vue-go-easy" },
+  { label: 'electron示例项目', value: "https://github.com/duolabmeng6/electron-template-easy-desinger" },
   { label: '投屏软件示例项目', value: "https://github.com/duolabmeng6/projection_screen_tv" },
+  { label: 'ollama管理面板示例项目', value: "https://github.com/duolabmeng6/ollama_ui" },
   { label: '自定义远程Github项目', value: "" },
 ];
 
