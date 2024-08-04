@@ -13,15 +13,41 @@
           <div id="tabLeftAttr" class="app2" style="height: 100%;">
             <div v-if="store.当前拖拽组件数据 != undefined" class="组件列表"
                  style="padding-top: 10px; padding-left: 6px; padding-right: 6px;">
+<!--              <el-tree-select-->
+<!--                  v-model="store.当前组件索引"-->
+<!--                  :data="store.组件列表tree"-->
+<!--                  default-expand-all-->
+<!--                  style="width: 100%;"-->
+<!--                  @node-click="data=>组件树选中(data)"-->
+<!--                  :filter-node-method="filterNodeMethod"-->
+<!--                  filterable-->
+<!--              />-->
               <el-tree-select
                   v-model="store.当前组件索引"
                   :data="store.组件列表tree"
                   default-expand-all
                   style="width: 100%;"
-                  @node-click="data=>组件树选中(data)"
+                  @node-click="data => 组件树选中(data)"
                   :filter-node-method="filterNodeMethod"
                   filterable
-              />
+              >
+                <template #default="{ node, data }">
+                  <!-- 使用flex布局让内容和按钮分开对齐 -->
+                  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <!-- 左侧显示节点内容 -->
+                    <span>{{ node.label }}</span>
+                    <!-- 右侧删除按钮 -->
+                    <el-button
+                        v-if="data.id !== '1'"
+                        type="danger"
+                        size="small"
+                        @click.stop="store.递归删除id(store.list,data.id);console.log(data)"
+                    >
+                      删除
+                    </el-button>
+                  </div>
+                </template>
+              </el-tree-select>
 
             </div>
             <component :is="store.当前组件名称2()"
@@ -621,6 +647,14 @@ let 复制组件 = []
 function handleKeyDown(event) {
   // 如果按下的是Cmd + S（Mac）或Ctrl + S（Windows/Linux）
   console.log("按下某键盘", event.key)
+  if ((event.metaKey || event.ctrlKey) && event.key === "Backspace" || event.key === "Delete" ) {
+    //删除组件
+    event.preventDefault(); // 阻止浏览器默认保存行为
+    // 在这里执行你想要的操作，比如保存数据或触发特定的方法
+    console.log("按下了删除 Delete", store.当前拖拽组件数据);
+    store.递归删除id(store.list, store.当前多选组件ID)
+
+  }
 
 
 
