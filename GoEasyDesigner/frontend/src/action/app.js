@@ -141,7 +141,13 @@ appAction._打开项目设计文件 = function (filepath) {
     store.项目信息.窗口事件文件路径 = 取父目录(filepath) + "/event.js"
     store.项目信息.辅助代码文件路径 = 取父目录(filepath) + "/__aux_code.js"
     store.项目信息.项目管理目录 = 取父目录(filepath)
-    store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
+    //检查路径设计文件路径是否包含 renderer
+    if (store.项目信息.设计文件路径.indexOf("renderer") == -1){
+        store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(filepath))))
+    }else{
+        store.项目信息.项目根目录 = 取父目录(取父目录(取父目录(取父目录(取父目录(filepath)))))
+
+    }
 }
 
 appAction._打开文件加载界面 = async function (filepath) {
@@ -259,7 +265,7 @@ appAction.设计区域被改变 = function () {
 }
 
 
-appAction.运行 = function () {
+appAction.运行 = async function () {
     if (store.客户端模式 == false) {
         //弹出提示
         ElMessage({
@@ -283,11 +289,28 @@ appAction.运行 = function () {
         store.运行按钮文本 = t("app.stop")
         store.调试信息 = t("app.inOperation")
         store.选择夹_底部现行选中项 = "1"
-        E运行命令(store.项目信息.项目根目录, "wails dev -nocolour")
+        let ptext = await E读入文件(store.项目信息.项目根目录+"/package.json")
+        // console.log("ptext",ptext)
+        // console.log("store.项目信息.项目根目录",store.项目信息.项目根目录)
+        let devShell = "wails dev -nocolour"
+        try{
+            let pjson = JSON.parse(ptext)
+            if (pjson.scripts.dev !== undefined){
+                devShell = 'npm run dev'
+            }
+        }catch (e) {
+
+        }
+        console.log("devShell",devShell)
+        console.log("项目根目录",store.项目信息.项目根目录)
+
+        E运行命令(store.项目信息.项目根目录, devShell)
+
+        // E运行命令(store.项目信息.项目根目录, "wails dev -nocolour")
     } else {
         store.调试信息 = t('app.stopped')
         store.运行按钮文本 = t("app.run")
-        E停止命令()
+        // E停止命令()
     }
 
 }

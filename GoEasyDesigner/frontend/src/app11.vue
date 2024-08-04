@@ -114,7 +114,18 @@
                 </el-col>
               </el-row>
             </el-collapse-item>
-
+            <el-collapse-item :title="$t('app.tw_components')" name="4">
+              <el-row>
+                <el-col v-for="(item, index) in BoxComponentNames['tailwindcss']" :span="24" style="margin-bottom: 8px">
+                  <t-button theme="default" class="full-width-button" draggable="true"
+                            style="width: 100%;text-align: left;"
+                            @dragstart="拖拽开始($event, item,'tw')"
+                  >
+                    {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
+                  </t-button>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
 
           </el-collapse>
         </el-tab-pane>
