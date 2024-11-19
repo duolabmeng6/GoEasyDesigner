@@ -220,3 +220,9 @@ This project is licensed under the [GNU Lesser General Public License (LGPL) Ver
 # Learning and Exchange
 
 QQ Group: 927427009
+
+# Appreciation
+
+If this project has been helpful to you, you can buy the author a coffee
+
+<img src="README.assets/swskm.jpg" width=256  height=256 />

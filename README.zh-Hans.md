@@ -229,3 +229,9 @@ wails dev
 # 学习交流
 
 QQ群: 927427009
+
+# 赞赏
+
+如果这个项目对你有帮助，可以请作者喝杯咖啡
+
+<img src="README.assets/swskm.jpg" width=256  height=256 />
