@@ -10,7 +10,7 @@
 <strong>
 <samp>
 
-[English](README.md) · [Simplified Chinese](README.zh-Hans.md)
+[English](README.md) · [简体中文](README.zh-Hans.md)
 
 </samp>
 </strong>
@@ -225,4 +225,4 @@ QQ Group: 927427009
 
 If this project has been helpful to you, you can buy the author a coffee
 
-<img src="README.assets/swskm.jpg" width=256  height=256 />
+![](README.assets/swskm.jpg)
