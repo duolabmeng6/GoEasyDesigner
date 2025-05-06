@@ -53,13 +53,13 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { 引入窗口数据 } from '@/窗口/窗口数据'
+import { __load_data } from '@/win/__load_data'
 import { getItemStyleShape } from "@/public";
 
 const { item } = defineProps(['item']);
 const emits = defineEmits(["CustomEvent"]);
 
-const store = 引入窗口数据()
+const store = __load_data()
 
 
 const vDemo = {
