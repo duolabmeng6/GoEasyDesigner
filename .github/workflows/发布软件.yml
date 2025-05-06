@@ -79,7 +79,7 @@ jobs:
       - name: 安装 go
         uses: actions/setup-go@v4
         with:
-          go-version: '^1.21.0'
+          go-version: '^1.23.8'
           cache-dependency-path: |
             **/go.sum
             **/go.mod
@@ -147,7 +147,7 @@ jobs:
       - name: 安装 go
         uses: actions/setup-go@v4
         with:
-          go-version: '^1.21.0'
+          go-version: '^1.23.8'
           cache-dependency-path: |
             **/go.sum
             **/go.mod
