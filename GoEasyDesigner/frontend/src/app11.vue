@@ -873,8 +873,8 @@ function 点击添加组件(组件名称, uiName) {
   新属性.componentName = uiName + 组件名称
 
   // 关键：设置初始位置为 (0,0)
-  新属性.left = 20
-  新属性.top = 20
+  新属性.left = 100
+  新属性.top = 100
 
   // 处理特殊组件
   if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
@@ -889,12 +889,19 @@ function 点击添加组件(组件名称, uiName) {
     }
   }
 
-  // 添加到设计区
+  // 添加到根组件
   store.list.push(新属性)
-  // 选中刚添加的组件
+  
+  // 记录历史
+  store.HistoryManager.记录(JSON.stringify(store.list))
+  
+  // 更新组件列表
+  store.取组件列表()
+  
+  // 设置当前选中组件
+  store.当前组件索引 = 新属性.id
   store.当前拖拽组件数据 = 新属性
-  store.当前组件索引 = store.当前拖拽组件数据.id
-  store.当前多选组件ID = [store.当前组件索引]
+  store.当前多选组件ID = [新属性.id]
 }
 </script>
 

@@ -9,7 +9,7 @@
         @click.stop
     ></div>
 
-    <div v-if="nowIndex!=='1'" class="调整整体位置">
+    <div v-if="nowIndex!=='1'" class="调整整体位置" :style="工具条位置">
       <el-button-group
       >
         <el-button :icon="Aim" size="small" title="调整组件位置"
@@ -36,6 +36,42 @@ export default {
     },
     Aim() {
       return Aim
+    },
+    工具条位置() {
+      const top = parseInt(this.item_data.top);
+      const left = parseInt(this.item_data.left);
+      const width = parseInt(this.item_data.width);
+      
+      // 工具条尺寸
+      const toolbarWidth = 100;
+      const toolbarOffset = 40;
+      
+      // 默认位置在顶部居中
+      let position = {
+        top: `-${toolbarOffset}px`,
+        bottom: 'auto',
+        left: '0%',
+        transform: 'translateX(-0%)'
+      };
+      
+      // 如果顶部空间不足，显示在底部
+      if (top < toolbarOffset) {
+        position.top = 'auto';
+        position.bottom = `-${toolbarOffset}px`;
+      }
+      
+      // 如果组件太靠左，工具条显示在右侧
+      if (left < toolbarWidth) {
+        position.left = `${width + 10}px`;
+        position.transform = 'none';
+      }
+      // 如果组件太靠右，工具条显示在左侧
+      else if (left + width + toolbarWidth > window.innerWidth) {
+        position.left = `${-toolbarWidth - 10}px`;
+        position.transform = 'none';
+      }
+      
+      return position;
     }
   },
   components: {
@@ -271,11 +307,7 @@ export default {
   height: 24px;
   cursor: pointer;
   z-index: 666;
-  margin-top: -40px;
-  margin-left: 50%;
   position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .Shape div {

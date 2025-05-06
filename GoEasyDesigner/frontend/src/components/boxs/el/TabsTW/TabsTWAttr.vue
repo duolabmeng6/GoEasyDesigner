@@ -31,24 +31,37 @@
       </el-form-item>
     </el-form>
     <el-form label-position="top">
-      <el-form-item label="选项卡"
-      >
-        <el-input v-for="(item, index) in props.item.childComponents"
-                  v-model="item.text"
-                  placeholder=""
-                  style="margin-bottom: 10px"
-        >
-
-          <template #append>
-            <el-input
-                v-model="item.图标"
-                placeholder=""
-                style="margin-bottom: 10px"
-            />
-            <el-button @click.stop="store.递归删除id(store.list, item.id)" :icon="Delete" size="small"></el-button>
-          </template>
-        </el-input>
-        <el-button @click.stop="store.新增childComponents(item.id)" size="small">增加选择夹</el-button>
+      <el-form-item label="选项卡">
+        <div v-for="(item, index) in props.item.childComponents" 
+             :key="index" 
+             class="tab-item-container"
+             style="display: flex; align-items: center; margin-bottom: 12px; gap: 8px;">
+          <el-input
+              v-model="item.text"
+              placeholder="选项卡标题"
+              style="flex: 2;"
+          />
+          <el-input
+              v-model="item.图标"
+              placeholder="图标类名"
+              style="flex: 1;"
+          />
+          <el-button 
+              @click.stop="store.递归删除id(store.list, item.id)" 
+              :icon="Delete" 
+              type="danger"
+              size="small"
+              style="flex-shrink: 0;"
+          />
+        </div>
+        <el-button 
+            @click.stop="store.新增childComponents(item.id)" 
+            type="primary"
+            size="small"
+            style="width: 100%; margin-top: 8px;">
+          <el-icon class="el-icon--left"><Plus /></el-icon>
+          增加选项卡
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -58,7 +71,7 @@
 </template>
 <script setup>
 import {defineEmits, defineProps, ref} from "vue";
-import {Delete} from "@element-plus/icons-vue";
+import {Delete, Plus} from "@element-plus/icons-vue";
 
 import {useAppStore} from '@/stores/appStore'
 
