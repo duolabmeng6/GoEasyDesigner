@@ -1,7 +1,7 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {WindowGetSize} from "../../wailsjs/runtime";
-import {E发送跳转代码到ide, E文件枚举} from "../../wailsjs/go/main/App";
+import {E发送跳转代码到ide, E发送跳转代码到ide_命令行方式, E文件枚举} from "../../wailsjs/go/main/App";
 import {生成提示辅助代码} from "@/提示语法生成器.js";
 import {窗口事件代码模板} from "@/编辑器/窗口事件代码模板.js";
 import {ElMessage} from "element-plus";
@@ -32,6 +32,10 @@ export const useAppStore = defineStore('AppStore', {
                 项目管理目录: "",//"win\\",
                 IDE插件地址: "http://127.0.0.1:17810",
                 双击事件成功后最小化窗口: true,
+                选择的IDE:  "goland",
+                命令行方式跳转至IDE: true
+
+
             }),
             代码编辑器: ref({
                 路径: "",
@@ -142,10 +146,19 @@ export const useAppStore = defineStore('AppStore', {
                 }
                 this.选择夹_中间现行选中项 = "1"
                 this.putPosition(函数名称)
+                let ret;
+
                 //已存在事件
+                if(this.项目信息.命令行方式跳转至IDE){
+                    ret = await E发送跳转代码到ide_命令行方式(
+                        this.项目信息.选择的IDE,
+                        this.项目信息.窗口事件文件路径,
+                        函数名称
+                    )
+                    return
+                }
 
                 //循环2次
-                let ret;
                 for (let i = 0; i < 2; i++) {
                     ret = await E发送跳转代码到ide(
                         this.项目信息.IDE插件地址,

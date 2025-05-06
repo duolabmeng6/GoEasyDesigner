@@ -88,7 +88,9 @@ func (a *App) E创建函数(窗口事件文件路径 string, 插入函数 string
 func (a *App) E发送跳转代码到ide(插件URL地址 string, 窗口事件文件路径 string, 跳转位置 int) bool {
 	return myfunc.E发送跳转代码到ide(插件URL地址, 窗口事件文件路径, 跳转位置)
 }
-
+func (a *App) E发送跳转代码到ide_命令行方式(ide string, 文件路径 string, 跳转字符串 string) bool {
+	return myfunc.E发送跳转代码到ide_命令行方式(ide, 文件路径, 跳转字符串)
+}
 func (a *App) E打开文件对话框() string {
 	println("E打开文件对话框")
 	result, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{

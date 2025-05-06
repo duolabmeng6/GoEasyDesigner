@@ -49,6 +49,12 @@ func TestE发送跳转代码到ide(t *testing.T) {
 	E发送跳转代码到ide(插件URL地址, 文件路径, 跳转位置)
 }
 
+func TestE发送跳转代码到ide_命令行方式(t *testing.T) {
+	文件路径 := "/Users/ll/Documents/GitHub/GoEasyDesigner/GoEasyDesigner/myfunc/myfunc_test.go"
+	//E发送跳转代码到ide_vscode("code",文件路径, "wails dev")
+	E发送跳转代码到ide_命令行方式("cursor", 文件路径, "wails dev")
+}
+
 func TestE运行命令(t *testing.T) {
 	项目根目录 := "/Users/ll/Documents/GitHub/GoEasyDesigner/wails-demo"
 	执行命令 := "wails dev"

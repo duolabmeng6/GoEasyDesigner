@@ -13,6 +13,8 @@ export function E创建函数(arg1:string,arg2:string,arg3:string):Promise<strin
 
 export function E发送跳转代码到ide(arg1:string,arg2:string,arg3:number):Promise<boolean>;
 
+export function E发送跳转代码到ide_命令行方式(arg1:string,arg2:string,arg3:string):Promise<boolean>;
+
 export function E取当前目录():Promise<string>;
 
 export function E取文件修改时间(arg1:string):Promise<string>;

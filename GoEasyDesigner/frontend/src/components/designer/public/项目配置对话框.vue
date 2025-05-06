@@ -20,12 +20,28 @@
       <el-form-item label="项目管理目录">
         <el-input v-model="store.项目信息.项目管理目录"/>
       </el-form-item>
-      <el-form-item label="IDE插件地址">
+
+      <el-form-item label="跳转代码方式 命令行/插件跳转">
+        <el-switch v-model="store.项目信息.命令行方式跳转至IDE"/>
+      </el-form-item>
+
+      <el-form-item v-show="!store.项目信息.命令行方式跳转至IDE" label="IDE插件地址">
         <el-input v-model="store.项目信息.IDE插件地址"/>
       </el-form-item>
-      <el-form-item label="跳转IDE代码成功后最小化窗口">
+
+      <el-form-item v-show="store.项目信息.命令行方式跳转至IDE" label="选择IDE">
+        <el-select v-show="store.项目信息.命令行方式跳转至IDE" v-model="store.项目信息.选择的IDE" placeholder="请选择IDE">
+          <el-option label="VSCode" value="vscode" />
+          <el-option label="Goland" value="goland" />
+          <el-option label="WebStorm" value="webstorm" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item v-show="!store.项目信息.命令行方式跳转至IDE" label="跳转IDE代码成功后最小化窗口">
         <el-switch v-model="store.项目信息.双击事件成功后最小化窗口"/>
       </el-form-item>
+
+
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -39,7 +55,8 @@
 </template>
 
 <script setup>
-import { useAppStore } from "@/stores/appStore";
+import {useAppStore} from "@/stores/appStore";
+
 const store = useAppStore();
 const emits = defineEmits(["确定","关闭"]);
 

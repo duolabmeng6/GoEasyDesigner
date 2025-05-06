@@ -1,6 +1,7 @@
 package myfunc
 
 import (
+	"fmt"
 	"github.com/duolabmeng6/goefun/ecore"
 	. "github.com/duolabmeng6/goefun/ehttp"
 	"regexp"
@@ -39,6 +40,62 @@ func E发送跳转代码到ide(插件URL地址 string, 文件路径 string, 跳�
 		println("调用pycharm代码跳转", err.Error())
 		return false
 	}
+	return true
+}
+
+// 计算跳转位置
+func 计算跳转位置(文件内容 string, 跳转字符串 string) (int, int, bool) {
+	跳转位置行 := 0
+	跳转位置列 := 0
+
+	if 文件内容 != "" && 跳转字符串 != "" {
+		index := strings.Index(文件内容, 跳转字符串)
+		if index != -1 {
+			lines := strings.Split(文件内容, "\n")
+			current := 0
+			for i, line := range lines {
+				lineLength := len(line) + 1 // 加 1 是为了算上换行符
+				if current+lineLength > index {
+					跳转位置行 = i + 1           // 行号从 1 开始
+					跳转位置列 = index - current // 列号从 0 开始
+					return 跳转位置行, 跳转位置列, true
+				}
+				current += lineLength
+			}
+		} else {
+			ecore.E调试输出("未找到跳转字符串", 跳转字符串)
+			return 0, 0, false
+		}
+	} else {
+		ecore.E调试输出("文件内容或跳转字符串为空", 跳转字符串)
+		return 0, 0, false
+	}
+
+	return 0, 0, false
+}
+
+func E发送跳转代码到ide_命令行方式(ide string, 文件路径 string, 跳转字符串 string) bool {
+	文件内容 := ecore.E读入文本(文件路径)
+	跳转位置行, 跳转位置列, 成功 := 计算跳转位置(文件内容, 跳转字符串)
+	if !成功 {
+		return false
+	}
+	跳转URL := ""
+	if ide == "vscode" {
+		跳转URL = fmt.Sprintf("code -g %s:%d:%d", 文件路径, 跳转位置行, 跳转位置列)
+	} else if ide == "goland" {
+		跳转URL = fmt.Sprintf("goland --line %d %s", 跳转位置行, 文件路径)
+	} else if ide == "webstorm" {
+		跳转URL = fmt.Sprintf("webstorm --line %d %s", 跳转位置行, 文件路径)
+	} else if ide == "cursor" {
+		跳转URL = fmt.Sprintf("cursor -g %s:%d:%d", 文件路径, 跳转位置行, 跳转位置列)
+	} else {
+		ecore.E调试输出("未知的IDE", ide)
+	}
+	ecore.E调试输出("调用代码跳转", 跳转URL)
+	ecore.E运行_mac(跳转URL, true, func(line string) {
+		println(line)
+	})
 	return true
 }
 

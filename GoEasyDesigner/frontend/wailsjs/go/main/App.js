@@ -26,6 +26,10 @@ export function E发送跳转代码到ide(arg1, arg2, arg3) {
   return window['go']['main']['App']['E发送跳转代码到ide'](arg1, arg2, arg3);
 }
 
+export function E发送跳转代码到ide_命令行方式(arg1, arg2, arg3) {
+  return window['go']['main']['App']['E发送跳转代码到ide_命令行方式'](arg1, arg2, arg3);
+}
+
 export function E取当前目录() {
   return window['go']['main']['App']['E取当前目录']();
 }
