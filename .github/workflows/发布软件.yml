@@ -55,7 +55,7 @@ jobs:
     #if: false
     needs: [ jobs_v ]
     name: 构建macos软件
-    runs-on: macos-12
+    runs-on: macos-15
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.Body }}
