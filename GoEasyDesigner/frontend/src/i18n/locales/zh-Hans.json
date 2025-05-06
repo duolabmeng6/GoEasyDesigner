@@ -33,6 +33,7 @@
     "support_library": "支持库",
     "system_components": "系统组件",
     "td_components": "T Design",
+    "tw_components": "tailwindcss",
     "updateCheck": "检查更新"
   },
   "attr": {

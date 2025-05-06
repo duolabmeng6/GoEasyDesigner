@@ -33,6 +33,7 @@
     "support_library": "Library",
     "system_components": "System",
     "td_components": "T Design",
+    "tw_components": "tailwindcss",
     "updateCheck": "Check Update"
   },
   "attr": {

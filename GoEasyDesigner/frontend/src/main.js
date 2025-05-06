@@ -192,15 +192,18 @@ app.config.globalProperties.BoxComponentNames_el = ComponentNameOrder
 //注册组件默认属性
 const BoxComponentDefaultValue = {
     'el': Helper.registerBoxComponentDefaultValue(app, 'el', import.meta.glob('./components/boxs/el/**/*.js', {eager: true})),
-    'td': Helper.registerBoxComponentDefaultValue(app, 'td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true}))
+    'td': Helper.registerBoxComponentDefaultValue(app, 'td', import.meta.glob('./components/boxs/td/**/*.js', {eager: true})),
+    'tw': Helper.registerBoxComponentDefaultValue(app, 'tw', import.meta.glob('./components/boxs/tw/**/*.js', {eager: true}))
 }
 app.provide('BoxComponentDefaultValue', BoxComponentDefaultValue)
 
 const BoxComponentNames_td = Helper.registerBoxComponentNames(app, 'td', import.meta.glob('./components/boxs/td/**/*.vue', {eager: true}))
+const BoxComponentNames_tw = Helper.registerBoxComponentNames(app, 'tw', import.meta.glob('./components/boxs/tw/**/*.vue', {eager: true}))
 
 const BoxComponentNames = {
     'system': ComponentNameOrder,
     'tdesign': BoxComponentNames_td,
+    'tailwindcss': BoxComponentNames_tw,
 }
 app.provide('BoxComponentNames', BoxComponentNames)
 
