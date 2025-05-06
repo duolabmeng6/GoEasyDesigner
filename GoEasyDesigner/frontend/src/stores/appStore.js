@@ -51,6 +51,7 @@ export const useAppStore = defineStore('AppStore', {
             indexMap: ref({}),
             显示项目配置对话框: ref(false),
             显示新建项目对话框: ref(false),
+            显示预览对话框: ref(false),
             项目文件列表: ref([]),
             选择夹_中间现行选中项: ref("0"),
             支持库列表: ref([]),

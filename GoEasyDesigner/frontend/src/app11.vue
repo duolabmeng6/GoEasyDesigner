@@ -254,7 +254,7 @@
           <el-button-group class="">
             <t-button theme="default" @click="appAction.运行()">{{ store.运行按钮文本 }}</t-button>
             <t-button theme="default" @click="appAction.编译()">{{ store.编译按钮文本 }}</t-button>
-
+            <t-button theme="default" @click="store.显示预览对话框 = true">{{ $t('app.preview') }}</t-button>
             <t-button theme="default" v-if="store.客户端模式"  @click="appAction.检查更新()">{{
                 $t('app.updateCheck')
               }}
@@ -306,7 +306,8 @@
              @关闭="store.显示项目配置对话框=false"></component>
 
   <component is="新建项目对话框" v-model="store.显示新建项目对话框" @关闭="store.显示新建项目对话框=false"></component>
-
+  
+  <PreviewDialog v-if="store.显示预览对话框" v-model="store.显示预览对话框"></PreviewDialog>
 </template>
 
 <script setup>
@@ -321,6 +322,7 @@ import releases_latest from '../public/releases_latest.json'
 import {useI18n} from "vue-i18n";
 import DraggableDivider from "./components/designer/public/DraggableDivider.vue";
 import {ChevronDownIcon} from "tdesign-icons-vue-next";
+import PreviewDialog from "./components/designer/PreviewDialog.vue";
 const {t, te, availableLocales: languages, locale} = useI18n();
 //读取本地存储
 if (localStorage.getItem("locale")) {
@@ -626,7 +628,7 @@ function 拖拽开始(event, 组件名称, uiName) {
   //   }
   // }
 
-  if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
+  if (组件名称.toLowerCase().startsWith('tabs') || 组件名称.endsWith('layout')) {
     let id = 新属性.id
     for (var i = 0; i < 新属性.childComponents.length; i++) {
       新属性.childComponents[i].id = store.获取随机id()
@@ -877,7 +879,7 @@ function 点击添加组件(组件名称, uiName) {
   新属性.top = 100
 
   // 处理特殊组件
-  if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
+  if (组件名称.toLowerCase().startsWith('tabs') || 组件名称.endsWith('layout')) {
     let id = 新属性.id
     for (var i = 0; i < 新属性.childComponents.length; i++) {
       新属性.childComponents[i].id = store.获取随机id()

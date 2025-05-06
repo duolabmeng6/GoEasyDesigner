@@ -17,7 +17,7 @@ import App from './app11.vue'
 // import App from './components/designer/public/支持库.vue'
 import {useAppStore} from '@/stores/appStore'
 import RenderDesignComponent from "./components/RenderDesignComponent.vue"
-
+import RenderDesignComponentWin from "./components/RenderDesignComponentWin.vue"
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import {install as VueMonacoEditorPlugin, loader} from '@guolao/vue-monaco-editor'
 
@@ -39,6 +39,7 @@ const store = useAppStore()
 store.是否为window系统 = navigator.platform.includes("Win")
 
 app.component('RenderDesignComponent', RenderDesignComponent)
+app.component('RenderDesignComponentWin', RenderDesignComponentWin)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
