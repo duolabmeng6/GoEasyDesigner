@@ -3,7 +3,7 @@
   "name": "GoEasyDesigner",
   "outputfilename": "GoEasyDesigner",
   "frontend:install": "pnpm install",
-  "123frontend:build": "pnpm run build",
+  "frontend:build": "pnpm run build",
   "frontend:dev:watcher": "pnpm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
