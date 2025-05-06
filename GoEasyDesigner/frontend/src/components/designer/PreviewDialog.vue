@@ -78,9 +78,17 @@ const dialogStyle = computed(() => {
 })
 
 const contentStyle = computed(() => {
+    //如果包含了%或者v或者auto那么就转换成px
+    if (typeof height.value === 'string' && (height.value.includes('%') || height.value.includes('v') || height.value === 'auto')) {
+        height.value = 600
+    }
+    if (typeof width.value === 'string' && (width.value.includes('%') || width.value.includes('v') || width.value === 'auto')) {
+        width.value = 800
+    }
+
     return {
-        height: height.value + "px",
-        width: width.value + "px",
+        height: height.value+"px",
+        width: width.value+"px",
         position: "relative"
     }
 })
