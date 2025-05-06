@@ -125,7 +125,7 @@ jobs:
     needs: jobs_v # 等待 jobs_v 任务完成才执行
     name: 构建window软件
     timeout-minutes: 20
-    runs-on: windows-2022
+    runs-on: windows-latest
     env:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.Body }}
