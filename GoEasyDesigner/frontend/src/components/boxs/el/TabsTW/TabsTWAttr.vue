@@ -41,9 +41,9 @@
               placeholder="选项卡标题"
               style="flex: 2;"
           />
-          <el-input
+          <icon-selector
               v-model="item.图标"
-              placeholder="图标类名"
+              placeholder="选择图标"
               style="flex: 1;"
           />
           <el-button 
@@ -72,6 +72,7 @@
 <script setup>
 import {defineEmits, defineProps, ref} from "vue";
 import {Delete, Plus} from "@element-plus/icons-vue";
+import IconSelector from '@/components/common/IconSelector.vue'
 
 import {useAppStore} from '@/stores/appStore'
 
