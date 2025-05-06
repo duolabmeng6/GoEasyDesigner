@@ -104,9 +104,9 @@
               <el-row>
                 <el-col v-for="(item, index) in BoxComponentNames['system']" :span="24" style="margin-bottom: 8px">
                   <t-button theme="default" class="full-width-button" draggable="true"
-
                             style="width: 100%;text-align: left;"
                             @dragstart="拖拽开始($event, item,'el')"
+                            @click="点击添加组件(item, 'el')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
                   </t-button>
@@ -119,6 +119,7 @@
                   <t-button theme="default" class="full-width-button" draggable="true"
                             style="width: 100%;text-align: left;"
                             @dragstart="拖拽开始($event, item,'td')"
+                            @click="点击添加组件(item, 'td')"
                   >
                     {{ $te('componentName.' + item) ? $t('componentName.' + item) : item }}
                   </t-button>
@@ -842,6 +843,59 @@ store.rightClickMenus = {
 }
 
 const filterNodeMethod = (value, data) => data.label.toLowerCase().includes(value.toLowerCase())
+
+function 点击添加组件(组件名称, uiName) {
+  let 新属性 = ""
+  try {
+    新属性 = JSON.parse(JSON.stringify(BoxComponentDefaultValue[uiName][组件名称]))
+  } catch (e) {
+  }
+  if (新属性 == "") {
+    ElMessage({
+      message: "组件未配置默认属性",
+      type: 'success',
+      duration: 3000,
+    });
+    return
+  }
+  let newName = te('componentName.' + 组件名称) ? t('componentName.' + 组件名称) : 组件名称;
+  let k = store.获取索引(newName)
+  新属性.id = store.获取随机id()
+  新属性.componentName = 组件名称
+  新属性.componentRawName = 组件名称
+  新属性.name = k
+  if (新属性.hasOwnProperty("text")) {
+    新属性.text = k
+  }
+  if (新属性.hasOwnProperty("内容")) {
+    新属性.text = k
+  }
+  新属性.componentName = uiName + 组件名称
+
+  // 关键：设置初始位置为 (0,0)
+  新属性.left = 20
+  新属性.top = 20
+
+  // 处理特殊组件
+  if (组件名称 == "FlexLayout" || 组件名称 == "CommonLayout" || 组件名称 == "Tabs") {
+    let id = 新属性.id
+    for (var i = 0; i < 新属性.childComponents.length; i++) {
+      新属性.childComponents[i].id = store.获取随机id()
+      新属性.childComponents[i].name = store.获取索引(新属性.childComponents[i].name)
+      新属性.childComponents[i].pid = id
+      if (新属性.childComponents[i].hasOwnProperty("text")) {
+        新属性.childComponents[i].text = store.获取索引(新属性.childComponents[i].text)
+      }
+    }
+  }
+
+  // 添加到设计区
+  store.list.push(新属性)
+  // 选中刚添加的组件
+  store.当前拖拽组件数据 = 新属性
+  store.当前组件索引 = store.当前拖拽组件数据.id
+  store.当前多选组件ID = [store.当前组件索引]
+}
 </script>
 
 <style>
