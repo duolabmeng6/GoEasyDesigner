@@ -61,9 +61,9 @@ jobs:
       body: ${{ needs.jobs_v.outputs.Body }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 构建缓存
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/.npm
@@ -134,11 +134,11 @@ jobs:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.Body }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: 构建缓存
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             C:\npm\cache
@@ -195,13 +195,13 @@ jobs:
       version: ${{ needs.jobs_v.outputs.version }}
       body: ${{ needs.jobs_v.outputs.Body }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
       - name: 下载产物
         id: download
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ./
       - name: 读入环境信息
