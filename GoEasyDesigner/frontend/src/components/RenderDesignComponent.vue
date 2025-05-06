@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import {defineProps, nextTick, watch} from 'vue';
+import {defineProps, nextTick, watch,onBeforeUnmount} from 'vue';
 import {useAppStore} from '@/stores/appStore'
 import Shape from "@/components/Shape.vue";
 import {getItemStyle2, getItemStyleShape} from "@/public";
@@ -152,13 +152,18 @@ async function updateStyle(item, newStyle) {
 
 let timerId;
 
-watch(item, (newValue, oldValue) => {
+watch(() => item, (newValue, oldValue) => {
   clearTimeout(timerId);
   timerId = setTimeout(() => {
+    // 你的逻辑代码
     shapeRect.value = getItemStyle2(item)
-  }, 100);
+  }, 100); // 可选延迟时间
 });
-
+onBeforeUnmount(() => {
+  if (timerId) {
+    clearTimeout(timerId);
+  }
+});
 
 store.start_x = 0;
 store.start_y = 0;
