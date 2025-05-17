@@ -1,0 +1,28 @@
+{
+    "components": [
+        {
+            "componentName": "流光边框",
+            "组件路径": "/自定义组件/流光边框/流光边框.vue",
+            "组件默认属性": "/自定义组件/流光边框/流光边框.js",
+            "组件属性框": "/自定义组件/流光边框/流光边框属性.vue"
+        },
+        {
+            "componentName": "登录框",
+            "组件路径": "/自定义组件/登录框/登录框.vue",
+            "组件默认属性": "/自定义组件/登录框/登录框.js",
+            "组件属性框": "/自定义组件/登录框/登录框属性.vue"
+        },
+        {
+            "componentName": "TimeProgressBar",
+            "组件路径": "/自定义组件/TimeProgressBar/TimeProgressBar.vue",
+            "组件默认属性": "/自定义组件/TimeProgressBar/TimeProgressBar.js",
+            "组件属性框": "/自定义组件/TimeProgressBar/TimeProgressBarAttr.vue"
+        },
+        {
+            "componentName": "ColorfulText",
+            "组件路径": "/自定义组件/ColorfulText/ColorfulText.vue",
+            "组件默认属性": "/自定义组件/ColorfulText/ColorfulText.js",
+            "组件属性框": "/自定义组件/ColorfulText/ColorfulTextAttr.vue"
+        }
+    ]
+} 

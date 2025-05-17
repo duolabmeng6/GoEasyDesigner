@@ -45,35 +45,25 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
-// 检索 ./自定义组件/流光边框/* 所有文件夹名称
+// 检索自定义组件
 let 自定义组件名称列表 = []
-自定义组件名称列表.push({
-    componentName: "流光边框",
-    组件路径: "./自定义组件/流光边框/流光边框.vue",
-    组件默认属性: "./自定义组件/流光边框/流光边框.js",
-    组件属性框: "./自定义组件/流光边框/流光边框属性.vue",
-})
-自定义组件名称列表.push({
-    componentName: "登录框",
-    组件路径: "./自定义组件/登录框/登录框.vue",
-    组件默认属性: "./自定义组件/登录框/登录框.js",
-    组件属性框: "./自定义组件/登录框/登录框属性.vue",
-})
-自定义组件名称列表.push({
-    componentName: "TimeProgressBar",
-    组件路径: "./自定义组件/TimeProgressBar/TimeProgressBar.vue",
-    组件默认属性: "./自定义组件/TimeProgressBar/TimeProgressBar.js",
-    组件属性框: "./自定义组件/TimeProgressBar/TimeProgressBarAttr.vue",
-})
-自定义组件名称列表.push({
-    componentName: "ColorfulText",
-    组件路径: "./自定义组件/ColorfulText/ColorfulText.vue",
-    组件默认属性: "./自定义组件/ColorfulText/ColorfulText.js",
-    组件属性框: "./自定义组件/ColorfulText/ColorfulTextAttr.vue",
-})
-console.log("自定义组件名称列表", JSON.stringify(自定义组件名称列表))
-app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表
 
+async function load自定义组件() {
+    try {
+        const response = await fetch('/自定义组件/components.json');
+        const data = await response.json();
+        自定义组件名称列表 = data.components;
+        console.log("加载到的组件列表：", 自定义组件名称列表);
+        
+        // 将组件列表添加到全局配置中
+        app.config.globalProperties.自定义组件名称列表 = 自定义组件名称列表;
+    } catch (error) {
+        console.error("加载组件列表失败：", error);
+    }
+}
+
+// 在创建应用后立即加载组件
+load自定义组件();
 
 function loadEidtCode() {
 
